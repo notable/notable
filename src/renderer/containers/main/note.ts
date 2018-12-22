@@ -404,6 +404,8 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( !note ) return;
 
+    if ( _.isEqual ( note.metadata.tags, tags ) ) return;
+
     const nextNote = _.cloneDeep ( note );
 
     nextNote.metadata.tags = this.sanitizeTags ( tags );
