@@ -84,7 +84,7 @@ class Import extends Container<ImportState, MainCTX> {
       switch ( ext ) {
 
         case '.enex':
-          this._importEnex ( filePath );
+          await this._importEnex ( filePath );
           break;
 
         case '.md':
@@ -95,7 +95,7 @@ class Import extends Container<ImportState, MainCTX> {
         case '.markdn':
         case '.mdtxt':
         case '.mdtext':
-          this._importMarkdown ( filePath, importTag );
+          await this._importMarkdown ( filePath, importTag );
           break;
 
         default:
