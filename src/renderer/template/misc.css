@@ -250,6 +250,7 @@
 
 #mainbar .multi-editor .tagbox-partial {
   margin: 0 5px 10px !important;
+  min-width: 7.5em !important;
 }
 
 .layout .layout-header {
