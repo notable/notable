@@ -34,7 +34,7 @@ class Tagbox extends React.PureComponent<any, any> {
 
     return (
       <div className="multiple joined fluid">
-        <div className="tagbox bordered fluid">
+        <div className="tagbox bordered fluid" data-options='{"addOnBlur": true}'>
           <input name="name" defaultValue="" className="hidden" />
           <div className="tagbox-tags">
             <input placeholder={placeholder} className="tagbox-partial autogrow compact small" />
