@@ -1,0 +1,17 @@
+
+Usability:
+  ☐ add platform-aware shortcuts-codes to buttons' titles @next
+  ☐ maybe add global shortcut for quickly adding a new note @next
+
+Drag & Drop:
+  ☐ note(s) into tag @next
+  ☐ markdown file(s) into middlebar/tag @next
+  ☐ attachment(s) into note @next
+
+Others:
+  ☐ ensure rendering notes doesn't block the main thread @next
+  ☐ run import logic into another process @next
+  ☐ search (non fuzzyly) the content of notes too @next
+  ☐ dark theme @next
+  ☐ note versioning (via git?) @next
+  ☐ encrypted notes/attachments (easy?) @next

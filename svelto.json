@@ -1,0 +1,86 @@
+{
+  "components": {
+    "core": {
+      "jquery/helpers/diff": false,
+      "jquery/vendor/cash": true
+    },
+    "decorators": {
+      "attached": false,
+      "blurred": false,
+      "highlighted": false,
+      "obscured": false,
+      "raisable": false
+    },
+    "lib": {
+      "emoji": false,
+      "emojify": false,
+      "fetch": false,
+      "markdown": false,
+      "n_times_action": false,
+      "notification": false,
+      "one_time_action": false,
+      "slide": false
+    },
+    "widgets": {
+      "accordion": false,
+      "avatar": false,
+      "background_generator": false,
+      "breadcrumb": false,
+      "carousel": false,
+      "chart": false,
+      "chat": false,
+      "checkbox": false,
+      "colorpicker": false,
+      "datatables": false,
+      "editor": false,
+      "emoji": false,
+      "expander": false,
+      "figure": false,
+      "flag": false,
+      "flippable": false,
+      "form/ajax": false,
+      "icon/fonts": false,
+      "justified_layout": false,
+      "label/tag": false,
+      "lazy": false,
+      "liker": false,
+      "modal": false,
+      "numbox": false,
+      "overlay": false,
+      "pagination": false,
+      "panel": false,
+      "parallax": false,
+      "prism": false,
+      "progressbar": false,
+      "radio": false,
+      "rails": false,
+      "rater": false,
+      "remote": false,
+      "selectable": false,
+      "slider": false,
+      "spinner/overlay": false,
+      "statistic": false,
+      "subscriber": false,
+      "switch": false,
+      "tabs": false,
+      "typography/kbd": false,
+      "tooltip": false,
+      "zoomable": false
+    }
+  },
+  "paths": {
+    "tokens": {
+      "src": "src/renderer/template/src",
+      "dist": "src/renderer/template/dist",
+      "bundle": "notable"
+    },
+    "output": {
+      "javascript": {
+        "unminified": false
+      },
+      "css": {
+        "unminified": false
+      }
+    }
+  }
+}

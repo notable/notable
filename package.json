@@ -1,0 +1,195 @@
+{
+  "name": "notable",
+  "productName": "Notable",
+  "description": "The markdown-based note-taking app that doesn't suck.",
+  "version": "1.0.0",
+  "scripts": {
+    "clean:deps": "del 'node_modules/**/{README,LICENSE,license,.travis.yml,tsconfig.json,*.{md,MD,map,png,svg,ts}}' '!node_modules/**/*.d.ts'",
+    "clean:dist": "del dist",
+    "clean:releases": "del releases",
+    "clean": "npm-run-all -p clean:dist clean:releases",
+    "compile": "npm run svelto:prod && electron-webpack app --env.minify=false",
+    "build:mac": "npm run compile && electron-builder --mac",
+    "build:win": "npm run compile && electron-builder --win",
+    "build:linux": "npm run compile && electron-builder --linux",
+    "build:all": "npm run compile && electron-builder -mwl",
+    "svelto:dev": "svelto build --env development",
+    "svelto:prod": "svelto build",
+    "iconfont": "icon-font-buildr",
+    "tutorial": "tar cf ./src/renderer/template//dist/tutorial.tar -C ./resources/tutorial .",
+    "dev": "electron-webpack dev",
+    "prod": "npm run clean:deps && npm run prepare && npm run compile && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dir && open releases/mac/*.app",
+    "publish": "electron-builder --publish onTag"
+  },
+  "electronWebpack": {
+    "staticSourceDirectory": "src/renderer/template/dist",
+    "main": {
+      "webpackConfig": "webpack.js"
+    },
+    "renderer": {
+      "webpackConfig": "webpack.js"
+    }
+  },
+  "build": {
+    "appId": "com.fabiospampinato.notable",
+    "copyright": "Copyright © 2018-present Fabio Spampinato",
+    "directories": {
+      "output": "releases"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "pkg",
+        "zip"
+      ],
+      "category": "public.app-category.utilities",
+      "icon": "resources/icon/icon.png",
+      "type": "distribution"
+    },
+    "dmg": {
+      "background": "resources/dmg_background/background.png",
+      "iconSize": 160,
+      "iconTextSize": 12,
+      "window": {
+        "width": 660,
+        "height": 400
+      },
+      "contents": [
+        {
+          "x": 180,
+          "y": 170,
+          "type": "file"
+        },
+        {
+          "x": 480,
+          "y": 170,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "pkg": {
+      "license": "LICENSE"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable",
+        "zip"
+      ],
+      "icon": "resources/icon/icon.ico"
+    },
+    "nsis": {
+      "installerIcon": "resources/icon/icon.ico",
+      "license": "LICENSE",
+      "warningsAsErrors": false
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "snap"
+      ],
+      "icon": "resources/icon/icon.png",
+      "category": "Utility"
+    },
+    "snap": {
+      "grade": "stable",
+      "summary": "The markdown-based note-taking app that doesn't suck."
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "fabiospampinato",
+      "releaseType": "release",
+      "publishAutoUpdate": true
+    }
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Fabio Spampinato",
+    "email": "spampinabio@gmail.com"
+  },
+  "homepage": "https://github.com/fabiospampinato/notable",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabiospampinato/notable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fabiospampinato/notable/issues"
+  },
+  "tutorial": {
+    "url": "https://github.com/fabiospampinato/notable/tree/master/resources/tutorial/notes"
+  },
+  "keywords": [
+    "electron",
+    "react",
+    "webpack"
+  ],
+  "dependencies": {
+    "calls-batch": "^1.0.0",
+    "chokidar": "^2.0.4",
+    "codemirror": "git://github.com/fabiospampinato/CodeMirror.git",
+    "codemirror-github-light": "^0.4.2",
+    "crc-32": "^1.2.0",
+    "decompress": "^4.2.0",
+    "electron-context-menu": "^0.10.1",
+    "electron-dialog": "^1.0.0",
+    "electron-is": "^3.0.0",
+    "electron-localshortcut": "^3.1.0",
+    "electron-store": "^2.0.0",
+    "electron-updater": "^4.0.5",
+    "electron-window-state": "^4.1.1",
+    "enex-dump": "^1.3.0",
+    "filenamify": "^2.1.0",
+    "globby": "^8.0.1",
+    "gray-matter": "^4.0.1",
+    "highlight.js": "^9.13.1",
+    "js-yaml": "^3.12.0",
+    "lodash": "^4.17.11",
+    "mkdirp": "^0.5.1",
+    "overstated": "^1.1.2",
+    "pify": "^4.0.1",
+    "primer-markdown": "^3.7.11",
+    "react": "^16.6.3",
+    "react-codemirror2": "^5.1.0",
+    "react-component-identity": "^1.0.1",
+    "react-component-renderless": "^1.0.2",
+    "react-dom": "^16.6.3",
+    "react-router-static": "^1.0.0",
+    "react-window": "^1.3.1",
+    "recompose": "^0.30.0",
+    "remark": "^10.0.1",
+    "sha1": "^1.1.1",
+    "shallowequal": "^1.1.0",
+    "showdown": "^1.9.0",
+    "showdown-highlight": "^2.1.3",
+    "showdown-target-blank": "^1.0.2",
+    "strip-markdown": "^3.0.3"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "@types/codemirror": "0.0.70",
+    "@types/lodash": "^4.14.118",
+    "@types/node": "^10.12.12",
+    "@types/react": "^16.7.13",
+    "@types/react-dom": "^16.0.11",
+    "del-cli": "^1.1.0",
+    "electron": "3.0.10",
+    "electron-builder": "^20.38.2",
+    "electron-builder-squirrel-windows": "^20.38.2",
+    "electron-devtools-installer": "^2.2.4",
+    "electron-webpack": "git://github.com/fabiospampinato/electron-webpack.git#package-electron-webpack",
+    "electron-webpack-ts": "^3.1.0",
+    "icon-font-buildr": "^1.2.4",
+    "node-sass": "^4.10.0",
+    "react-hot-loader": "^4.3.12",
+    "react-log-updates": "^1.0.7",
+    "sass-loader": "^7.1.0",
+    "svelto": "^1.1.0",
+    "terser-webpack-plugin": "^1.1.0",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.2.2",
+    "webpack": "^4.27.1"
+  }
+}

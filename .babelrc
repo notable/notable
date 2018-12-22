@@ -1,0 +1,5 @@
+{
+  "ignore": [
+    "./src/renderer/template/dist"
+  ]
+}

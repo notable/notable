@@ -1,0 +1,241 @@
+
+/* IMPORT */
+
+import * as _ from 'lodash';
+import Dialog from 'electron-dialog';
+import {Container} from 'overstated';
+import Tags from '@renderer/utils/tags';
+
+/* EDITOR */
+
+class MultiEditor extends Container<MultiEditorState, MainCTX> {
+
+  /* STATE */
+
+  state = {
+    notes: [] as NoteObj[]
+  };
+
+  /* HELPERS */
+
+  _confirm ( message: string ) {
+
+    const notes = this.getNotes ();
+
+    message = message.replace ( /\[notes-nr\]/g, String ( notes.length ) );
+
+    return Dialog.confirm ( message );
+
+  }
+
+  async _callAll ( method: Function, args: any[] = [] ) {
+
+    const notes = this.getNotes ();
+
+    for ( let note of notes ) {
+
+      await method.call ( undefined, note, ...args );
+
+    }
+
+  }
+
+  /* API */
+
+  toggleNote = ( note: NoteObj, force?: boolean ) => {
+
+    const notes = this.getNotes (),
+          index = notes.indexOf ( note );
+
+    let notesNext;
+
+    if ( force !== true && index >= 0 ) { // Remove
+
+      notesNext = notes.filter ( ( note, i ) => i !== index );
+
+    } else if ( force !== false ) { // Add
+
+      notesNext = notes.concat ([ note ]);
+
+    }
+
+    return this.setNotes ( notesNext );
+
+  }
+
+  getNotes = (): NoteObj[] => {
+
+    return this.state.notes;
+
+  }
+
+  setNotes = async ( notes: NoteObj[] ) => {
+
+    if ( notes.length === 0 ) {
+
+      const note = this.ctx.note.get (),
+            notes = note ? [note] : [];
+
+      return this.setState ({ notes });
+
+    } else if ( notes.length === 1 ) {
+
+      const note = this.ctx.note.get ();
+
+      await this.setState ({ notes });
+
+      if ( note !== notes[0] ) {
+
+        return this.ctx.note.set ( notes[0] );
+
+      }
+
+    } else {
+
+      return this.setState ({ notes });
+
+    }
+
+  }
+
+  isEditing = (): boolean => {
+
+    return this.getNotes ().length > 1;
+
+  }
+
+  isNoteSelected = ( note: NoteObj ): boolean => {
+
+    const notes = this.getNotes ();
+
+    return notes.includes ( note );
+
+  }
+
+  selectAll = () => {
+
+    const notesAll = this.ctx.search.getNotes ();
+
+    return this.setNotes ( notesAll );
+
+  }
+
+  selectInvert = () => {
+
+    const notesAll = this.ctx.search.getNotes (),
+          notes = this.getNotes (),
+          notesInverted = notesAll.filter ( note => !notes.includes ( note ) );
+
+    return this.setNotes ( notesInverted );
+
+  }
+
+  selectClear = () => {
+
+    return this.setNotes ([]);
+
+  }
+
+  update = () => {
+
+    const notesAll = this.ctx.search.getNotes (),
+          notes = this.getNotes (),
+          notesNext = notes.map ( note => notesAll.find ( note2 => note.filePath === note2.filePath ) ).filter ( _.identity ) as NoteObj[];
+
+    return this.setNotes ( notesNext );
+
+  }
+
+  /* API - ACTIONS */
+
+  favorite = () => {
+
+    if ( !this._confirm ( 'Are you sure you want to favorite [notes-nr] notes?' ) ) return;
+
+    return this._callAll ( this.ctx.note.toggleFavorite, [true] );
+
+  }
+
+  unfavorite = () => {
+
+    if ( !this._confirm ( 'Are you sure you want to unfavorite [notes-nr] notes?' ) ) return;
+
+    return this._callAll ( this.ctx.note.toggleFavorite, [false] );
+
+  }
+
+  pin = () => {
+
+    if ( !this._confirm ( 'Are you sure you want to pin [notes-nr] notes?' ) ) return;
+
+    return this._callAll ( this.ctx.note.togglePin, [true] );
+
+  }
+
+  unpin = () => {
+
+    if ( !this._confirm ( 'Are you sure you want to unpin [notes-nr] notes?' ) ) return;
+
+    return this._callAll ( this.ctx.note.togglePin, [false] );
+
+  }
+
+  trash = () => {
+
+    if ( !this._confirm ( 'Are you sure you want to move to trash [notes-nr] notes?' ) ) return;
+
+    return this._callAll ( this.ctx.note.toggleDeleted, [true] );
+
+  }
+
+  untrash = () => {
+
+    if ( !this._confirm ( 'Are you sure you want to restore [notes-nr] notes?' ) ) return;
+
+    return this._callAll ( this.ctx.note.toggleDeleted, [false] );
+
+  }
+
+  delete = () => {
+
+    if ( !this._confirm ( 'Are you sure you want to permanently delete [notes-nr] notes?' ) ) return;
+
+    return this._callAll ( this.ctx.note.delete, [true] );
+
+  }
+
+  tagsAdd = async ( tags: string[] ) => {
+
+    if ( !tags.length ) return Dialog.alert ( 'No tags provided' );
+
+    tags = Tags.sort ( tags ) as string[];
+
+    if ( !this._confirm ( `Are you sure you want to add these tags [notes-nr] notes: ${tags.map ( tag => `"${tag}"`).join ( ', ' )}?` ) ) return;
+
+    return this._callAll ( this.ctx.note.addTags, [tags] );
+
+  }
+
+  tagsRemove = async ( tags: string[] ) => {
+
+    if ( !tags.length ) return Dialog.alert ( 'No tags provided' );
+
+    tags = Tags.sort ( tags ) as string[];
+
+    if ( !this._confirm ( `Are you sure you want to remove these tags [notes-nr] notes: ${tags.map ( tag => `"${tag}"`).join ( ', ' )}?` ) ) return;
+
+    return this._callAll ( this.ctx.note.removeTags, [tags] );
+
+  }
+
+  openInApp = () => {
+
+    return this._callAll ( this.ctx.note.openInApp );
+
+  }
+
+}
+
+/* EXPORT */
+
+export default MultiEditor;

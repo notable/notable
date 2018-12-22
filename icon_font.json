@@ -1,0 +1,41 @@
+{
+  "sources": [
+    "./resources/font_icons/[icon].svg",
+    "https://raw.githubusercontent.com/Templarian/MaterialDesign/master/icons/svg/[icon].svg"
+  ],
+  "icons": [
+    "chevron-down",
+    "close",
+    "delete-forever",
+    "delete-restore",
+    "delete",
+    "folder-search",
+    "magnify",
+    "note",
+    "notebook-multiple",
+    "notebook",
+    "open-in-new",
+    "paperclip",
+    "pencil",
+    "pin-outline",
+    "pin",
+    "plus",
+    "star-outline",
+    "star",
+    "tag-crossed",
+    "tag-minus",
+    "tag-multiple",
+    "tag-outline-multiple",
+    "tag-outline",
+    "tag-plus",
+    "tag"
+  ],
+  "output": {
+    "icons": "./resources/font_icons",
+    "fonts": "./src/renderer/template/dist/fonts",
+    "fontName": "IconFont",
+    "formats": [
+      "woff2"
+    ]
+  }
+}
