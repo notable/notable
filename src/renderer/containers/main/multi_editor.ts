@@ -210,7 +210,7 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
 
     tags = Tags.sort ( tags ) as string[];
 
-    if ( !this._confirm ( `Are you sure you want to add these tags [notes-nr] notes: ${tags.map ( tag => `"${tag}"`).join ( ', ' )}?` ) ) return;
+    if ( !this._confirm ( `Are you sure you want to add these tags to [notes-nr] notes: ${tags.map ( tag => `"${tag}"`).join ( ', ' )}?` ) ) return;
 
     return this._callAll ( this.ctx.note.addTags, [tags] );
 
@@ -222,7 +222,7 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
 
     tags = Tags.sort ( tags ) as string[];
 
-    if ( !this._confirm ( `Are you sure you want to remove these tags [notes-nr] notes: ${tags.map ( tag => `"${tag}"`).join ( ', ' )}?` ) ) return;
+    if ( !this._confirm ( `Are you sure you want to remove these tags from [notes-nr] notes: ${tags.map ( tag => `"${tag}"`).join ( ', ' )}?` ) ) return;
 
     return this._callAll ( this.ctx.note.removeTags, [tags] );
 
