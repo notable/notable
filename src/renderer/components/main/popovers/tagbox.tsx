@@ -38,8 +38,8 @@ class Tagbox extends React.PureComponent<any, any> {
 
     return (
       <div className={`tagbox card-footer bordered ${className}`}>
-        <input name="name" defaultValue={tags} className="hidden" />
-        <input autoFocus={true} name="partial_name" placeholder="Add tags..." className="tagbox-partial autogrow autofocus compact small" />
+        <input defaultValue={tags} className="hidden" />
+        <input autoFocus={true} placeholder="Add tags..." className="tagbox-partial autogrow autofocus compact small" />
       </div>
     );
 

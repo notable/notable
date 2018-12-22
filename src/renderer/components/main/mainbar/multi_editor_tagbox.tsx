@@ -37,7 +37,7 @@ class Tagbox extends React.PureComponent<any, any> {
         <div className="tagbox bordered fluid">
           <input name="name" defaultValue="" className="hidden" />
           <div className="tagbox-tags">
-            <input name="partial_name" placeholder={placeholder} className="tagbox-partial autogrow compact small" />
+            <input placeholder={placeholder} className="tagbox-partial autogrow compact small" />
           </div>
         </div>
         <Button icon={icon} title={title} onClick={this.onClick} />
