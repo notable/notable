@@ -122,9 +122,10 @@
     "url": "https://github.com/fabiospampinato/notable/tree/master/resources/tutorial/notes"
   },
   "keywords": [
+    "note",
+    "markdown",
     "electron",
-    "react",
-    "webpack"
+    "react"
   ],
   "dependencies": {
     "calls-batch": "^1.0.0",
