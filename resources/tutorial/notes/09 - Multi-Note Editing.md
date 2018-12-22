@@ -24,7 +24,7 @@ These are the actions you can take on selected note:
 - Move to trash/restore/permanently delete them.
 - Open them in the default app.
 - Add one or multiple tags to them. Useful when importing exported Evernote notebooks since the notebook tag is not preserved.
-- Remove one or multiple tags from them. Useful when editing imported notes, which get automatically tagged with a special `Imported-XXXX` tag, so that you can easily select them all for multi-editing.
+- Remove one or multiple tags from them. Useful when editing imported notes, which get automatically tagged with a special `Import-XXXX` tag, so that you can easily select them all for multi-editing.
 
 ## Advanced
 

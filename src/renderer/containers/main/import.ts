@@ -21,7 +21,7 @@ class Import extends Container<ImportState, MainCTX> {
   _getImportTag ( str: string ): string {
 
     const importId = sha1 ( str ).slice ( 0, 4 ),
-          importTag = `Imported-${importId}`;
+          importTag = `Import-${importId}`;
 
     return importTag;
 
