@@ -93,6 +93,7 @@ class Note extends Container<NoteState, MainCTX> {
     await this.ctx.notes.set ( notes );
 
     await this.ctx.tags.refresh ();
+    await this.ctx.tag.update ();
     await this.ctx.search.update ();
 
   }
@@ -413,6 +414,7 @@ class Note extends Container<NoteState, MainCTX> {
     await this.write ( nextNote );
 
     await this.ctx.tags.refresh ();
+    await this.ctx.tag.update ();
 
   }
 
@@ -711,7 +713,7 @@ class Note extends Container<NoteState, MainCTX> {
     await this.ctx.notes.set ( notes );
 
     await this.ctx.tags.refresh ();
-
+    await this.ctx.tag.update ();
     await this.ctx.search.update ( index ); //OPTIMIZE: This could be skipped
 
     if ( isActiveNote && this.ctx.search.getNoteIndex ( nextNote ) >= 0 ) {
