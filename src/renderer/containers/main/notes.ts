@@ -94,6 +94,7 @@ class Notes extends Container<NotesState, MainCTX> {
       if ( !note ) return add ( nextFilePath );
       const nextNote = await this.ctx.note.read ( nextFilePath );
       if ( !nextNote ) return;
+      if ( this.ctx.note.is ( note, nextNote ) ) return;
       await this.ctx.note.replace ( note, nextNote );
     };
 

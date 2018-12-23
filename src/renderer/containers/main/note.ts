@@ -200,7 +200,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   is = ( note1?: NoteObj, note2?: NoteObj ): boolean => {
 
-    return note1 === note2 || ( !!note1 && !!note2 && ( note1.filePath === note2.filePath && note1.plainContent === note2.plainContent ) ); //TODO: Should we compare the content also?
+    return note1 === note2 || ( !!note1 && !!note2 && note1.filePath === note2.filePath && note1.plainContent === note2.plainContent && note1.metadata.title === note2.metadata.title && note1.metadata.deleted === note2.metadata.deleted && note1.metadata.favorited === note2.metadata.favorited && note1.metadata.pinned === note2.metadata.pinned && _.isEqual ( note1.metadata.attachments, note2.metadata.attachments ) && _.isEqual ( note1.metadata.tags, note2.metadata.tags ) );
 
   }
 
@@ -555,6 +555,8 @@ class Note extends Container<NoteState, MainCTX> {
       const notePrev = this.get ( note.filePath );
 
       if ( notePrev && notePrev !== note ) {
+
+        note.metadata.dateModified = new Date ();
 
         await this.replace ( notePrev, note );
 
