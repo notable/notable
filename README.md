@@ -1,4 +1,4 @@
-# Notable ([DOWNLOAD](https://github.com/fabiospampinato/noty/releases))
+# Notable ([DOWNLOAD](https://github.com/fabiospampinato/notable/releases))
 
 <p align="center">
   <img src="resources/demo/main.png" alt="Notable" width="500">
