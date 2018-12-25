@@ -201,7 +201,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   is = ( note1?: NoteObj, note2?: NoteObj ): boolean => {
 
-    return note1 === note2 || ( !!note1 && !!note2 && note1.filePath === note2.filePath && note1.plainContent === note2.plainContent && note1.metadata.title === note2.metadata.title && note1.metadata.deleted === note2.metadata.deleted && note1.metadata.favorited === note2.metadata.favorited && note1.metadata.pinned === note2.metadata.pinned && _.isEqual ( note1.metadata.attachments, note2.metadata.attachments ) && _.isEqual ( note1.metadata.tags, note2.metadata.tags ) );
+    return note1 === note2 || ( !!note1 && !!note2 && note1.filePath === note2.filePath && note1.content === note2.content );
 
   }
 
@@ -515,8 +515,8 @@ class Note extends Container<NoteState, MainCTX> {
           title = ( titleLinePrev !== titleLineNext ) ? await this._inferTitleFromLine ( titleLineNext ) : note.metadata.title,
           didTitleChange = ( title !== note.metadata.title );
 
-    nextNote.metadata.title = note.metadata.title = title;
-    nextNote.content = nextNote.plainContent = note.plainContent = plainContent;
+    nextNote.metadata.title = title;
+    nextNote.plainContent = plainContent;
 
     let filePathNext = note.filePath;
 
@@ -552,6 +552,20 @@ class Note extends Container<NoteState, MainCTX> {
 
   write = async ( note: NoteObj ) => {
 
+    const metadata = _.clone ( note.metadata );
+
+    delete metadata.stat;
+    delete metadata.dateCreated;
+    delete metadata.dateModified;
+
+    if ( !this.getAttachments ( note ).length ) delete metadata.attachments;
+    if ( !this.getTags ( note ).length ) delete metadata.tags;
+    if ( !this.isDeleted ( note ) ) delete metadata.deleted;
+    if ( !this.isFavorited ( note ) ) delete metadata.favorited;
+    if ( !this.isPinned ( note ) ) delete metadata.pinned;
+
+    note.content = Metadata.set ( note.plainContent, metadata );
+
     if ( Config.flags.OPTIMISTIC_RENDERING ) {
 
       const notePrev = this.get ( note.filePath );
@@ -566,21 +580,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     }
 
-    const metadata = _.clone ( note.metadata );
-
-    delete metadata.stat;
-    delete metadata.dateCreated;
-    delete metadata.dateModified;
-
-    if ( !this.getAttachments ( note ).length ) delete metadata.attachments;
-    if ( !this.getTags ( note ).length ) delete metadata.tags;
-    if ( !this.isDeleted ( note ) ) delete metadata.deleted;
-    if ( !this.isFavorited ( note ) ) delete metadata.favorited;
-    if ( !this.isPinned ( note ) ) delete metadata.pinned;
-
-    const content = Metadata.set ( note.content, metadata );
-
-    File.write ( note.filePath, content );
+    File.write ( note.filePath, note.content );
 
   }
 
