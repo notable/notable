@@ -247,7 +247,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     const tags = note.metadata.tags;
 
-    return startingWith ? tags.filter ( tag => tag === startingWith || tag.startsWith ( `${startingWith}/` ) ) : tags;
+    return startingWith ? tags.filter ( tag => tag === startingWith || tag.startsWith ( `${startingWith}${Tags.SEPARATOR}` ) ) : tags;
 
   }
 
