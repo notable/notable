@@ -20,6 +20,12 @@ import Utils from '@renderer/utils/utils';
 
 class Note extends Container<NoteState, MainCTX> {
 
+  /* VARIABLES */
+
+  autosuspend = {
+    methods: /^(?!_|middleware|(?:(?:get|is|has)(?![a-z0-9]))|read|sanitize|scrollTo)/
+  };
+
   /* STATE */
 
   state = {
