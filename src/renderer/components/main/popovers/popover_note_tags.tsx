@@ -25,7 +25,7 @@ const PopoverNoteTags = ({ tags, isEditing, toggleEditing, replaceTags }) => (
         )}
       </div>
     </div>
-    <Tagbox className="card-footer" tags={tags} onChange={tags => replaceTags ( undefined, Tags.sort ( tags ) )} />
+    <Tagbox className="card-footer" tags={_.clone ( tags )} onChange={tags => replaceTags ( undefined, Tags.sort ( tags ) )} />
   </Popover>
 );
 
