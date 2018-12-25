@@ -77,6 +77,12 @@ class Notes extends Container<NotesState, MainCTX> {
         if ( call[0] === unlink && index < lastDeleteIndex ) call[1][1] = false;
         return call;
       });
+      /* SKIPPING UPDATES ON MULTIPLE CHANGES */
+      const lastChangeIndex = _.findLastIndex ( queueNext, call => call[0] === change );
+      queueNext = queueNext.map ( ( call, index ) => {
+        if ( call[0] === change && index < lastChangeIndex ) call[1][1] = false;
+        return call;
+      });
       /* SET */
       batch.set ( queueNext );
     }
@@ -94,12 +100,12 @@ class Notes extends Container<NotesState, MainCTX> {
       await this.ctx.note.add ( note, _refresh );
     };
 
-    const change = async ( filePath ) => {
+    const change = async ( filePath, _refresh?: boolean ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
-      await rename ( filePath, filePath );
+      await rename ( filePath, filePath, _refresh );
     };
 
-    const rename = async ( filePath, nextFilePath ) => {
+    const rename = async ( filePath, nextFilePath, _refresh?: boolean ) => {
       if ( !isFilePathSupported ( nextFilePath ) ) {
         if ( isFilePathSupported ( filePath ) ) return unlink ( filePath );
         return;
@@ -109,7 +115,7 @@ class Notes extends Container<NotesState, MainCTX> {
       const nextNote = await this.ctx.note.read ( nextFilePath );
       if ( !nextNote ) return;
       if ( this.ctx.note.is ( note, nextNote ) ) return;
-      await this.ctx.note.replace ( note, nextNote );
+      await this.ctx.note.replace ( note, nextNote, _refresh );
     };
 
     const unlink = async ( filePath, _refresh?: boolean ) => {

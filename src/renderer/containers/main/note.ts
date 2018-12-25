@@ -715,7 +715,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  replace = async ( note: NoteObj, nextNote: NoteObj ) => {
+  replace = async ( note: NoteObj, nextNote: NoteObj, _refresh: boolean = true ) => {
 
     const isSameFile = ( note.filePath === nextNote.filePath ),
           isActiveNote = this.state.note && this.state.note.filePath === note.filePath;
@@ -736,6 +736,9 @@ class Note extends Container<NoteState, MainCTX> {
     await this.ctx.notes.set ( notes );
 
     await this.ctx.tags.update ({ add: [nextNote], remove: [note] });
+
+    if ( !_refresh ) return;
+
     await this.ctx.tag.update ();
     await this.ctx.search.update ( index ); //OPTIMIZE: This could be skipped
 
