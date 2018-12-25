@@ -685,6 +685,10 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( !note || !this.get ( note.filePath ) ) note = undefined;
 
+    const notePrev = this.state.note;
+
+    if ( note === notePrev && !this.ctx.multiEditor.isEditing () ) return;
+
     await this.setState ({ note });
 
     await this.ctx.tag.setFromNote ( note );
