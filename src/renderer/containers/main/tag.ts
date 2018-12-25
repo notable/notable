@@ -75,10 +75,18 @@ class Tag extends Container<TagState, MainCTX> {
 
     if ( !_.isEmpty ( parent ) ) {
 
-      parent.tags[obj.name] = obj;
+      if ( tag === TAGS ) {
 
-      tags[TAGS].tags[parentPartRoot] = tags[parentPartRoot]; // It's import to update the TAGS tag too
-      tags[TAGS] = _.clone ( tags[TAGS] );
+        parent.tags[TAGS] = obj;
+
+      } else {
+
+        parent.tags[obj.name] = obj;
+
+        tags[TAGS].tags[parentPartRoot] = tags[parentPartRoot]; // It's import to update the TAGS tag too
+        tags[TAGS] = _.clone ( tags[TAGS] );
+
+      }
 
       await this.ctx.tags.set ( tags );
 
