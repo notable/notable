@@ -64,11 +64,17 @@ class Notes extends Container<NotesState, MainCTX> {
 
     const optimizeBatch = ( batch ) => {
       /* GET */
-      const queue = batch.get ();
+      let queueNext = batch.get ();
       /* SKIPPING UPDATES ON MULTIPLE ADDITIONS */
-      const lastAddIndex = _.findLastIndex ( queue, call => call[0] === add );
-      const queueNext = queue.map ( ( call, index ) => {
+      const lastAddIndex = _.findLastIndex ( queueNext, call => call[0] === add );
+      queueNext = queueNext.map ( ( call, index ) => {
         if ( call[0] === add && index < lastAddIndex ) call[1][1] = false;
+        return call;
+      });
+      /* SKIPPING UPDATES ON MULTIPLE DELETIONS */
+      const lastDeleteIndex = _.findLastIndex ( queueNext, call => call[0] === unlink );
+      queueNext = queueNext.map ( ( call, index ) => {
+        if ( call[0] === unlink && index < lastDeleteIndex ) call[1][1] = false;
         return call;
       });
       /* SET */
@@ -106,11 +112,11 @@ class Notes extends Container<NotesState, MainCTX> {
       await this.ctx.note.replace ( note, nextNote );
     };
 
-    const unlink = async ( filePath ) => {
+    const unlink = async ( filePath, _refresh?: boolean ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
       const note = this.ctx.note.get ( filePath );
       if ( !note ) return;
-      await this.ctx.note.delete ( note, true );
+      await this.ctx.note.delete ( note, true, _refresh );
     };
 
     const notesPath = Config.notes.path;

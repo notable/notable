@@ -151,7 +151,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  delete = async ( note: NoteObj | undefined = this.state.note, confirmed: boolean = false ) => {
+  delete = async ( note: NoteObj | undefined = this.state.note, confirmed: boolean = false, _refresh: boolean = true ) => {
 
     if ( !note ) return;
 
@@ -171,10 +171,13 @@ class Note extends Container<NoteState, MainCTX> {
     await this.ctx.notes.set ( notes );
 
     await this.ctx.tags.update ({ remove: [note] });
+
+    await Promise.all ( attachmentsUnique.map ( attachment => this.ctx.attachment.delete ( attachment, true ) ) );
+
+    if ( !_refresh ) return;
+
     await this.ctx.tag.update ();
     await this.ctx.search.update ( index );
-
-    return Promise.all ( attachmentsUnique.map ( attachment => this.ctx.attachment.delete ( attachment, true ) ) );
 
   }
 
