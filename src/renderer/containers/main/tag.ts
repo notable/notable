@@ -21,38 +21,6 @@ class Tag extends Container<TagState, MainCTX> {
 
   /* API */
 
-  add = async ( tag: TagObj ) => {
-
-    const tags = _.clone ( this.ctx.tags.get () ),
-          parentParts = tag.path.split ( SEPARATOR ).slice ( 0, -1 ),
-          parent = parentParts.reduce ( ( acc, tag ) => acc.tags && ( acc.tags[tag] = _.clone ( acc.tags[tag] ) ) || {}, {tags} ); // It's important to clone the parents too
-
-    if ( !_.isEmpty ( parent ) ) {
-
-      parent.tags[tag.name] = tag;
-
-      await this.ctx.tags.set ( tags );
-
-    }
-
-  }
-
-  delete = async ( tag: TagObj ) => {
-
-    const tags = _.clone ( this.ctx.tags.get () ),
-          parentParts = tag.path.split ( SEPARATOR ).slice ( 0, -1 ),
-          parent = parentParts.reduce ( ( acc, tag ) => acc.tags && ( acc.tags[tag] = _.clone ( acc.tags[tag] ) ) || {}, {tags} );
-
-    if ( !_.isEmpty ( parent ) ) {
-
-      delete parent.tags[tag.name];
-
-      await this.ctx.tags.set ( tags );
-
-    }
-
-  }
-
   get = ( tag: string = this.state.tag ): TagObj | undefined => {
 
     const tags = tag.split ( SEPARATOR ),
@@ -100,9 +68,23 @@ class Tag extends Container<TagState, MainCTX> {
 
     obj.collapsed = force;
 
-    await this.replace ( obj, obj );
+    const tags = _.clone ( this.ctx.tags.get () ),
+          parentParts = obj.path.split ( SEPARATOR ).slice ( 0, -1 ),
+          parentPartRoot = parentParts[0] || obj.path,
+          parent = parentParts.reduce ( ( acc, tag ) => acc.tags && ( acc.tags[tag] = _.clone ( acc.tags[tag] ) ) || {}, {tags} ); // It's important to clone the parents too
 
-    if ( this.state.tag.startsWith ( `${tag}/` ) ) { // The current tag is inside a collapsed one
+    if ( !_.isEmpty ( parent ) ) {
+
+      parent.tags[obj.name] = obj;
+
+      tags[TAGS].tags[parentPartRoot] = tags[parentPartRoot]; // It's import to update the TAGS tag too
+      tags[TAGS] = _.clone ( tags[TAGS] );
+
+      await this.ctx.tags.set ( tags );
+
+    }
+
+    if ( this.state.tag.startsWith ( `${tag}${Tags.SEPARATOR}` ) ) { // The current tag is inside a collapsed one
 
       await this.set ( tag );
 
@@ -163,16 +145,6 @@ class Tag extends Container<TagState, MainCTX> {
     if ( tags.length ) return this.set ( ALL );
 
     return this.set ( UNTAGGED );
-
-  }
-
-  replace = async ( tag: TagObj, nextTag: TagObj ) => {
-
-    const isSameTag = ( tag.path === nextTag.path );
-
-    if ( !isSameTag ) await this.delete ( tag );
-
-    await this.add ( tag );
 
   }
 
