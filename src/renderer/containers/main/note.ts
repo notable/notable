@@ -654,7 +654,9 @@ class Note extends Container<NoteState, MainCTX> {
 
   sanitizeTags ( tags: string[] ): string[] {
 
-    return tags.filter ( tag => !/(^\/|\/$)/.test ( tag ) );
+    return tags.map ( tag => _.trim ( tag, Tags.SEPARATOR ) )
+               .filter ( tag => !/\/\s*\//.test ( tag ) ) //TODO: Should use `Tags.SEPARATOR`
+               .filter ( _.identity );
 
   }
 
