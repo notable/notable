@@ -12,6 +12,12 @@ import File from '@renderer/utils/file';
 
 class Attachment extends Container<AttachmentState, MainCTX> {
 
+  /* VARIABLES */
+
+  autosuspend = {
+    methods: /^(?!_|middleware|(?:(?:get|is|has)(?![a-z0-9]))|read)/
+  };
+
   /* API */
 
   add = ( attachment: AttachmentObj ) => {

@@ -13,6 +13,12 @@ const {DEFAULT, ALL, FAVORITES, NOTEBOOKS, TAGS, TEMPLATES, UNTAGGED, TRASH} = T
 
 class Tag extends Container<TagState, MainCTX> {
 
+  /* VARIABLES */
+
+  autosuspend = {
+    methods: /^(?!_|middleware|(?:(?:get|is|has)(?![a-z0-9]))|scrollTo)/
+  };
+
   /* STATE */
 
   state = {
