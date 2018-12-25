@@ -53,6 +53,7 @@ class Notes extends Container<NotesState, MainCTX> {
       preflush: () => {
         this.ctx.suspend ();
         this.ctx.suspendMiddlewares ();
+        optimizeBatch ( batch );
       },
       postflush: () => {
         this.ctx.unsuspend ();
@@ -61,19 +62,30 @@ class Notes extends Container<NotesState, MainCTX> {
       wait: 100
     });
 
+    const optimizeBatch = ( batch ) => {
+      /* GET */
+      const queue = batch.get ();
+      /* SKIPPING UPDATES ON MULTIPLE ADDITIONS */
+      const lastAddIndex = _.findLastIndex ( queue, call => call[0] === add );
+      const queueNext = queue.map ( ( call, index ) => {
+        if ( call[0] === add && index < lastAddIndex ) call[1][1] = false;
+        return call;
+      });
+      /* SET */
+      batch.set ( queueNext );
     }
 
     function isFilePathSupported ( filePath ) {
       return Config.notes.re.test ( filePath );
     }
 
-    const add = async ( filePath ) => {
+    const add = async ( filePath, _refresh?: boolean ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
       const prevNote = this.ctx.note.get ( filePath );
       if ( prevNote ) return;
       const note = await this.ctx.note.read ( filePath );
       if ( !note ) return;
-      await this.ctx.note.add ( note );
+      await this.ctx.note.add ( note, _refresh );
     };
 
     const change = async ( filePath ) => {

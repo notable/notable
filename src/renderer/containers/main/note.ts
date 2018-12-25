@@ -90,7 +90,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  add = async ( note: NoteObj ) => {
+  add = async ( note: NoteObj, _refresh: boolean = true ) => {
 
     const notes = _.clone ( this.ctx.notes.get () );
 
@@ -99,6 +99,9 @@ class Note extends Container<NoteState, MainCTX> {
     await this.ctx.notes.set ( notes );
 
     await this.ctx.tags.update ({ add: [note] });
+
+    if ( !_refresh ) return;
+
     await this.ctx.tag.update ();
     await this.ctx.search.update ();
 
