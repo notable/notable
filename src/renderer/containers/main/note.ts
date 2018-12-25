@@ -533,7 +533,12 @@ class Note extends Container<NoteState, MainCTX> {
 
       nextNote.filePath = filePathNext;
 
-      await this.replace ( note, nextNote );
+      if ( didTitleChange ) {
+
+        await this.replace ( note, nextNote );
+
+      }
+
       await this.write ( nextNote );
 
     } else {
