@@ -61,12 +61,6 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
       wait: 100
     });
 
-    function batchify ( fn ) {
-      return function ( ...args ) {
-        batch.add ( fn, args );
-      }
-    }
-
     const isFilePathSupported = ( filePath ) => {
       return Config.attachments.re.test ( filePath );
     };
@@ -99,9 +93,9 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
     if ( !attachmentsPath ) return;
 
     this._listener = watcher ( attachmentsPath, {}, {
-      add: batchify ( add ),
-      rename: batchify ( rename ),
-      unlink: batchify ( unlink )
+      add: Utils.batchify ( batch, add ),
+      rename: Utils.batchify ( batch, rename ),
+      unlink: Utils.batchify ( batch, unlink )
     });
 
   }

@@ -61,10 +61,6 @@ class Notes extends Container<NotesState, MainCTX> {
       wait: 100
     });
 
-    function batchify ( fn ) {
-      return function ( ...args ) {
-        batch.add ( fn, args );
-      }
     }
 
     function isFilePathSupported ( filePath ) {
@@ -110,10 +106,10 @@ class Notes extends Container<NotesState, MainCTX> {
     if ( !notesPath ) return;
 
     this._listener = watcher ( notesPath, {}, {
-      add: batchify ( add ),
-      change: batchify ( change ),
-      rename: batchify ( rename ),
-      unlink: batchify ( unlink )
+      add: Utils.batchify ( batch, add ),
+      change: Utils.batchify ( batch, change ),
+      rename: Utils.batchify ( batch, rename ),
+      unlink: Utils.batchify ( batch, unlink )
     });
 
   }

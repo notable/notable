@@ -7,6 +7,14 @@ import * as os from 'os';
 
 const Utils = {
 
+  batchify ( batch, fn ) {
+
+    return function ( ...args ) {
+      batch.add ( fn, args );
+    };
+
+  },
+
   getFirstUnemptyLine ( str: string ): string | null {
 
     const match = str.match ( /^.*?\w.*$/m );
