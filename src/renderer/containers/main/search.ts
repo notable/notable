@@ -45,7 +45,7 @@ class Search extends Container<SearchState, MainCTX> {
     if ( query.startsWith ( prevQuery ) ) {
 
       const prevState = this._prevState,
-            state = this._prevState = _.omit ( this.ctx.state, ['search'] );
+            state = this._prevState = _.pick ( this.ctx.state, ['notes', 'tags', 'tag'] );
 
       if ( isShallowEqual ( prevState, state ) ) {
 
