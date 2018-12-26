@@ -19,7 +19,7 @@ type AttachmentsObj = {
 type NoteObj = {
   content: string,
   filePath: string,
-  hash: number,
+  checksum: number,
   plainContent: string,
   metadata: {
     attachments: string[],

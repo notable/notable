@@ -4,12 +4,12 @@
 import * as _ from 'lodash';
 import {shell} from 'electron';
 import Dialog from 'electron-dialog';
+import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
 import {Container} from 'overstated';
 import * as path from 'path';
 import Config from '@common/config';
 import Attachments from '@renderer/utils/attachments';
 import File from '@renderer/utils/file';
-import Hash from '@renderer/utils/hash';
 import Markdown from '@renderer/utils/markdown';
 import Metadata from '@renderer/utils/metadata';
 import Path from '@renderer/utils/path';
@@ -59,8 +59,8 @@ class Note extends Container<NoteState, MainCTX> {
           metadata = { title: name },
           plainContent = `# ${name}`,
           content = Metadata.set ( plainContent, metadata ),
-          hash = Hash.digest ( filePath ),
-          note = await this.sanitize ({ content, filePath, hash, plainContent, metadata });
+          checksum = CRC32.str ( filePath ),
+          note = await this.sanitize ({ content, filePath, checksum, plainContent, metadata });
 
     let noteAdded;
 
@@ -120,7 +120,7 @@ class Note extends Container<NoteState, MainCTX> {
           {filePath} = await Path.getAllowedPath ( notesPath, baseName );
 
     duplicateNote.filePath = filePath;
-    duplicateNote.hash = Hash.digest ( filePath );
+    duplicateNote.checksum = CRC32.str ( filePath );
     duplicateNote.metadata.title = this._inferTitleFromFilePath ( filePath );
 
     let noteAdded;
@@ -247,9 +247,9 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  getHash = ( note: NoteObj | undefined = this.state.note ): number => {
+  getChecksum = ( note: NoteObj | undefined = this.state.note ): number => {
 
-    return note ? note.hash : NaN;
+    return note ? note.checksum : NaN;
 
   }
 
@@ -507,10 +507,10 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( _.isUndefined ( content ) ) return;
 
-    const hash = Hash.digest ( filePath ),
+    const checksum = CRC32.str ( filePath ),
           metadata = Metadata.get ( content ),
           plainContent = Metadata.remove ( content ),
-          note = await this.sanitize ({ content, filePath, hash, plainContent, metadata });
+          note = await this.sanitize ({ content, filePath, checksum, plainContent, metadata });
 
     return note;
 
@@ -684,7 +684,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( !note ) return;
 
-    if ( !Utils.scrollTo ( `.note-button[data-hash="${note.hash}"]`, undefined, '.layout-content > div' ) ) {
+    if ( !Utils.scrollTo ( `.note-button[data-checksum="${note.checksum}"]`, undefined, '.layout-content > div' ) ) {
 
       const index = this.ctx.search.getNoteIndex ( note );
 

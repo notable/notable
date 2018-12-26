@@ -46,7 +46,7 @@ class EditorEditing extends React.Component<any, undefined> {
 export default connect ({
   container: Main,
   selector: ({ container }) => ({
-    id: container.note.getHash (),
+    id: container.note.getChecksum (),
     content: container.note.getPlainContent (),
     getCodeMirror: container.editor.getCodeMirror
   })
