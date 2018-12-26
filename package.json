@@ -8,7 +8,7 @@
     "clean:dist": "del dist",
     "clean:releases": "del releases",
     "clean": "npm-run-all -p clean:dist clean:releases",
-    "compile": "npm run svelto:prod && electron-webpack app --env.minify=false",
+    "compile": "npm run svelto:prod && npm run iconfont && npm run tutorial && npm run clean:deps && electron-webpack app --env.minify=false",
     "build:mac": "npm run compile && electron-builder --mac",
     "build:win": "npm run compile && electron-builder --win",
     "build:linux": "npm run compile && electron-builder --linux",
@@ -18,7 +18,7 @@
     "iconfont": "icon-font-buildr",
     "tutorial": "tar cf ./src/renderer/template//dist/tutorial.tar -C ./resources/tutorial .",
     "dev": "electron-webpack dev",
-    "prod": "npm run clean:deps && npm run prepare && npm run compile && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dir && open releases/mac/*.app",
+    "prod": "npm run compile && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dir && open releases/mac/*.app",
     "publish": "electron-builder --publish onTag"
   },
   "electronWebpack": {
