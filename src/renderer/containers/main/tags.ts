@@ -46,7 +46,8 @@ class Tags extends Container<TagsState, MainCTX> {
 
     } else {
 
-      const tagsNotebooks = this.ctx.note.getTags ( note, NOTEBOOKS ),
+      const tagsAll = this.ctx.note.getTags ( note ),
+            tagsNotebooks = this.ctx.note.getTags ( note, NOTEBOOKS ),
             isNotebook = !!tagsNotebooks.length,
             tagsTemplates = this.ctx.note.getTags ( note, TEMPLATES ),
             isTemplate = !!tagsTemplates.length;
@@ -63,15 +64,13 @@ class Tags extends Container<TagsState, MainCTX> {
 
       }
 
-      const noteTags = this.ctx.note.getTags ( note );
-
-      if ( !noteTags.length ) {
+      if ( !tagsAll.length ) {
 
         toggle ( tags, UNTAGGED );
 
       } else {
 
-        noteTags.forEach ( tag => {
+        tagsAll.forEach ( tag => {
 
           const isNotebookTag = isNotebook && tagsNotebooks.includes ( tag ),
                 isTemplateTag = isTemplate && tagsTemplates.includes ( tag );
@@ -114,7 +113,7 @@ class Tags extends Container<TagsState, MainCTX> {
 
               }
 
-              toggle ( tags, TAGS, !isSpecial );
+              toggle ( tags, TAGS );
 
             }
 
