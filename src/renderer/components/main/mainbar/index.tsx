@@ -4,8 +4,8 @@
 import * as React from 'react';
 import {connect} from 'overstated';
 import Main from '@renderer/containers/main';
-import PopoverNoteAttachments from '../popovers/popover_note_attachments';
-import PopoverTagsAttachments from '../popovers/popover_note_tags';
+import PopoverNoteAttachments from '@renderer/components/main/popovers/popover_note_attachments';
+import PopoverTagsAttachments from '@renderer/components/main/popovers/popover_note_tags';
 import Editor from './editor';
 import MultiEditor from './multi_editor';
 import Toolbar from './toolbar';

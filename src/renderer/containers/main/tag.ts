@@ -102,7 +102,7 @@ class Tag extends Container<TagState, MainCTX> {
 
       await this.set ( tag );
 
-    }
+    } //TODO: We should select `TAGS` if the current one is another non-special tag
 
   }
 

@@ -9,7 +9,7 @@ import * as os from 'os';
 import {Container, compose} from 'overstated';
 import * as path from 'path';
 import * as pify from 'pify';
-import Tutorial from '../main/tutorial';
+import Tutorial from '@renderer/containers/main/tutorial';
 import Config from '@common/config';
 import Settings from '@common/settings';
 
