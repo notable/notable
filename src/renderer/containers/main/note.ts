@@ -174,7 +174,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     await Promise.all ( attachmentsUnique.map ( attachment => this.ctx.attachment.delete ( attachment, true ) ) );
 
-    if ( !_refresh ) return;
+    if ( !_refresh || this.ctx.multiEditor.isSkippable () ) return;
 
     await this.ctx.tag.update ();
     await this.ctx.search.update ( index );
@@ -426,6 +426,9 @@ class Note extends Container<NoteState, MainCTX> {
     await this.write ( nextNote );
 
     await this.ctx.tags.update ({ add: [nextNote], remove: [note] });
+
+    if ( this.ctx.multiEditor.isSkippable () ) return;
+
     await this.ctx.tag.update ();
 
   }
@@ -737,7 +740,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     await this.ctx.tags.update ({ add: [nextNote], remove: [note] });
 
-    if ( !_refresh ) return;
+    if ( !_refresh || this.ctx.multiEditor.isSkippable () ) return;
 
     await this.ctx.tag.update ();
     await this.ctx.search.update ( index ); //OPTIMIZE: This could be skipped

@@ -84,7 +84,8 @@ type LoadingState = {
 };
 
 type MultiEditorState = {
-  notes: NoteObj[]
+  notes: NoteObj[],
+  skippable: boolean
 };
 
 type NoteState = {

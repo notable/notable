@@ -13,7 +13,8 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
   /* STATE */
 
   state = {
-    notes: [] as NoteObj[]
+    notes: [] as NoteObj[],
+    skippable: false // Some refreshing tasks are skippable since we are going to call the same function again
   };
 
   /* HELPERS */
@@ -30,9 +31,16 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
 
   async _callAll ( method: Function, args: any[] = [] ) {
 
+    await this.setSkippable ( true );
+
     const notes = this.getNotes ();
 
-    for ( let note of notes ) {
+    for ( let i = 0, l = notes.length; i < l; i++ ) {
+
+      const note = notes[i],
+            isLast = i === ( l - 1 );
+
+      if ( isLast ) await this.setSkippable ( false );
 
       await method.call ( undefined, note, ...args );
 
@@ -109,6 +117,18 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
     const notes = this.getNotes ();
 
     return notes.includes ( note );
+
+  }
+
+  isSkippable = (): boolean => {
+
+    return this.state.skippable;
+
+  }
+
+  setSkippable = ( skippable: boolean ) => {
+
+    return this.setState ({ skippable });
 
   }
 
