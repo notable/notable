@@ -1,0 +1,6741 @@
+
+/* ALIGNMENT */
+
+.align-top {
+  vertical-align: top !important;
+  align-self: flex-start !important;
+}
+
+.align-middle {
+  vertical-align: middle !important;
+  align-self: center !important;
+}
+
+.align-bottom {
+  vertical-align: bottom !important;
+  align-self: flex-end !important;
+}
+
+.align-baseline {
+  vertical-align: baseline !important;
+}
+
+
+/* BORDER */
+
+.b-a-0 {
+  border-width: 0 !important;
+}
+
+.b-t-0,
+.b-y-0 {
+  border-top-width: 0 !important;
+}
+
+.b-r-0,
+.b-x-0 {
+  border-right-width: 0 !important;
+}
+
+.b-b-0,
+.b-y-0 {
+  border-bottom-width: 0 !important;
+}
+
+.b-l-0,
+.b-x-0 {
+  border-left-width: 0 !important;
+}
+
+
+/* STYLE */
+
+.border-solid {
+  border-style: solid !important;
+}
+
+.border-dotted {
+  border-style: dotted !important;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}
+
+
+/* CLEARFIX */
+
+.clearfix {
+  @include clearfix ();
+}
+
+
+/* CURSOR */
+
+@each $value in $cursor-values {
+
+  .cursor-#{$value} {
+    cursor: #{$value} !important;
+  }
+
+}
+
+
+/* DISPLAY */
+
+.shown {
+  display: flex !important;
+}
+
+// Every element with a `hidden` attribute will be considered as hidden as well (SOURCE: PureCSS)
+
+.hidden,
+[hidden] {
+  display: none !important;
+}
+
+
+/* CONTENT */
+
+.content-start {
+  justify-content: flex-start !important;
+}
+
+.content-center {
+  justify-content: center !important;
+}
+
+.content-end {
+  justify-content: flex-end !important;
+}
+
+
+/* GROW */
+
+.grow {
+  flex-grow: 1 !important;
+}
+
+.no-grow {
+  flex-grow: 0 !important;
+}
+
+
+/* ITEMS */
+
+.items-start {
+  align-items: flex-start !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.items-end {
+  align-items: flex-end !important;
+}
+
+
+/* SHRINK */
+
+.shrink {
+  flex-shrink: 1 !important;
+}
+
+.no-shrink {
+  flex-shrink: 0 !important;
+}
+
+
+/* FLIP */
+
+.flip-x {
+  transform: rotateY(180deg) !important;
+}
+
+.flip-y {
+  transform: rotateX(180deg) !important;
+}
+
+.flip {
+  transform: rotate(180deg) !important;
+}
+
+
+/* FLOAT */
+
+.float-left {
+  float: left !important;
+}
+
+.float-right {
+  float: right !important;
+}
+
+
+/* MARGIN */
+
+.m-a-0 {
+  margin: 0 !important;
+}
+
+.m-t-0,
+.m-y-0 {
+  margin-top: 0 !important;
+}
+
+.m-r-0,
+.m-x-0 {
+  margin-right: 0 !important;
+}
+
+.m-b-0,
+.m-y-0 {
+  margin-bottom: 0 !important;
+}
+
+.m-l-0,
+.m-x-0 {
+  margin-left: 0 !important;
+}
+
+
+/* OVERFLOW */
+
+.overflow-visible {
+  overflow: visible !important;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.overflow-scroll {
+  overflow: scroll !important;
+}
+
+/* X */
+
+.overflow-x-visible { //TODO: Add demo
+  overflow-x: visible !important;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll !important;
+}
+
+/* Y */
+
+.overflow-y-visible { //TODO: Add demo
+  overflow-y: visible !important;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden !important;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll !important;
+}
+
+
+/* PADDING */
+
+.p-a-0 {
+  padding: 0 !important;
+}
+
+.p-t-0,
+.p-y-0 {
+  padding-top: 0 !important;
+}
+
+.p-r-0,
+.p-x-0 {
+  padding-right: 0 !important;
+}
+
+.p-b-0,
+.p-y-0 {
+  padding-bottom: 0 !important;
+}
+
+.p-l-0,
+.p-x-0 {
+  padding-left: 0 !important;
+}
+
+
+/* POSITION */
+
+.absolute {
+  position: absolute !important;
+}
+
+.fixed {
+  position: fixed !important;
+}
+
+.relative {
+  position: relative !important;
+}
+
+.static {
+  position: static !important;
+}
+
+
+/* ROTATION */
+
+.rotate-left {
+  transform: rotate(-90deg) !important;
+}
+
+.rotate-right {
+  transform: rotate(90deg) !important;
+}
+
+.rotating {
+  animation: rotate $rotating-animation-duration linear infinite !important;
+}
+
+
+//SOURCE: https://github.com/twbs/bootstrap/blob/v4-dev/scss/utilities/_screenreaders.scss
+
+/* SCREEN READER */
+
+.screen-reader-only {
+  @include screen-reader-only ();
+}
+
+.screen-reader-only-focusable {
+  @include screen-reader-only-focusable ();
+}
+
+
+/* ALIGNMENT */
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+
+/* OTHERS */
+
+.text-nowrap,
+.text-no-wrap {
+  white-space: nowrap !important;
+}
+
+.text-truncate {
+  @include text-truncate ();
+}
+
+.text-hide {
+  @include text-hide ();
+}
+
+
+/* TRANSFORMATION */
+
+.text-lowercase {
+  text-transform: lowercase !important;
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.text-capitalize {
+  text-transform: capitalize !important;
+}
+
+
+/* VISIBILITY */
+
+.visible {
+  visibility: visible !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+
+/* ANIMATIONS */
+
+.no-animations,
+.no-animations * {
+  transition: none !important;
+}
+
+
+/* SUPPORT */
+
+$browser-support-browsers:  ( 'chrome', 'firefox', 'edge', 'ie', 'opera', 'safari', 'uc' ) !default;
+$browser-support-devices: ( 'desktop', 'mobile', 'tablet' ) !default;
+$browser-support-oss: ( 'ios', 'android', 'blackberry', 'linux', 'mac', 'windows' ) !default;
+
+
+//TODO: Add a 'center-x-left', 'center-x-right', `center-y-top`, `center-y-bottom`
+//TODO: Modularize it (Possible in a clean way?)
+//FIXME: `.multiple.fluid.joined` is rendered differently in Safari (In the demo the container with `Right` inside doesn't grow enough)
+//FIXME: In the `toolbar` demo if we set their padding to 0 the margin shows up and the gutter between toolbars disappears
+
+/* MULTIPLE */
+
+%multiple {}
+
+.multiple {
+
+  @extend %multiple;
+  @include last-child-no-gutter ( 0, - $gutter );
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  /* GUTTER */
+
+  // In order to support inline elements that don't have a `margin-bottom` setted
+
+  > :not(.multiple) {
+    margin-bottom: $gutter;
+  }
+
+  /* GUTTER NORMAL */
+
+  &:not(.no-wrap):not(.vertical):not(.joined) {
+
+    @include margin-x ( - $gutter-half );
+
+    > :not(.multiple) {
+      @include margin-x ( $gutter-half );
+    }
+
+    > .multiple:not(.no-wrap):not(.vertical):not(.joined) {
+      @include margin-x ( 0 );
+    }
+
+    > .multiple.no-wrap,
+    > .multiple.vertical,
+    > .multiple.joined {
+      @include margin-x ( $gutter-half );
+    }
+
+  }
+
+  /* GUTTER NO-WRAP */
+
+  &.no-wrap:not(.vertical):not(.joined) {
+
+    > :not(.multiple) {
+
+      &:not(:first-child) {
+        margin-left: $gutter-half;
+      }
+
+      &:not(:last-child) {
+        margin-right: $gutter-half;
+      }
+
+    }
+
+    > .multiple:not(.no-wrap):not(.vertical):not(.joined) {
+
+      &:not(:first-child) {
+        margin-left: 0;
+      }
+
+      &:not(:last-child) {
+        margin-right: 0;
+      }
+
+    }
+
+    > .multiple.no-wrap,
+    > .multiple.vertical,
+    > .multiple.joined {
+
+      &:not(:first-child) {
+        margin-left: $gutter-half;
+      }
+
+      &:not(:last-child) {
+        margin-right: $gutter-half;
+      }
+
+    }
+
+  }
+
+  /* GUTTER VERTICAL */
+
+  &.vertical {
+
+    > .multiple:not(.no-wrap):not(.vertical):not(.joined) {
+
+      @include margin-x ( 0 );
+
+      > :not(.multiple) {
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+      }
+
+      > .multiple:not(.no-wrap):not(.vertical):not(.joined) {
+
+        &:first-child {
+          margin-left: - $gutter-half;
+        }
+
+        &:last-child {
+          margin-right: - $gutter-half;
+        }
+
+      }
+
+      > .multiple.no-wrap,
+      > .multiple.vertical,
+      > .multiple.joined {
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:not(:last-child) {
+          margin-right: $gutter-half;
+        }
+
+        &:not(:first-child) {
+          margin-left: $gutter-half;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+      }
+
+    }
+
+  }
+
+  /* VERTICAL */
+
+  &.vertical {
+    flex-direction: column;
+  }
+
+  /* CENTER */
+
+  &.center-x:not(.vertical),
+  &.center-y.vertical,
+  &.center {
+    justify-content: center;
+  }
+
+  &.center-y:not(.vertical),
+  &.center-x.vertical,
+  &.center {
+    align-items: center;
+  }
+
+  /* NO WRAP */
+
+  &.no-wrap {
+    flex-wrap: nowrap;
+  }
+
+  /* EQUAL */
+
+  &.equal {
+
+    &:not(.vertical) > * {
+      flex: 1 0 0%; // IE-10/11 misinterpreter a unitless 0 flex-basis
+    }
+
+    &.vertical > * {
+      width: 100%;
+    }
+
+  }
+
+  /* JOINED */
+
+  &.joined {
+
+    flex-wrap: nowrap;
+    align-items: stretch;
+
+    > .multiple {
+      @include margin-x ( 0 );
+    }
+
+    &:not(.vertical) {
+
+      > :not(:last-child),
+      > .multiple:not(:last-child) > :last-child,
+      > .multiple.joined.vertical:not(:last-child) > :not(.multiple),
+      > .multiple.joined.vertical:not(:last-child) > .multiple.joined > :not(.multiple) {
+        @include border-right-radius ( 0 );
+        margin-right: 0;
+        border-right-width: 0;
+      }
+
+      > :not(:first-child),
+      > .multiple:not(:first-child) > :first-child,
+      > .multiple.joined.vertical:not(:first-child) > :not(.multiple),
+      > .multiple.joined.vertical:not(:first-child) > .multiple.joined > :not(.multiple) {
+        @include border-left-radius ( 0 );
+        margin-left: 0;
+      }
+
+      &.no-separators {
+
+        > :not(:first-child),
+        > .multiple:not(:first-child) > :first-child,
+        > .multiple.joined.vertical:not(:first-child) > :not(.multiple) {
+          border-left-width: 0;
+        }
+
+        > .multiple:not(:last-child) > :last-child {
+          border-right-width: 0;
+        }
+
+        > .multiple.joined.vertical > :not(.multiple):not(:first-child) {
+          border-top-width: 0;
+        }
+
+      }
+
+      &.only-separators {
+
+        > :first-child,
+        > .multiple:first-child > :first-child,
+        > .multiple.joined.vertical:first-child > :not(.multiple) {
+          border-left-width: 0;
+        }
+
+        > :last-child,
+        > .multiple:last-child > :last-child,
+        > .multiple.joined.vertical:last-child > :not(.multiple) {
+          border-right-width: 0;
+        }
+
+        > .multiple.joined.vertical > :not(.multiple):first-child {
+          border-top-width: 0;
+        }
+
+        > .multiple.joined.vertical > :not(.multiple):last-child {
+          border-bottom-width: 0;
+        }
+
+      }
+
+    }
+
+    &.vertical {
+
+      > :not(:last-child),
+      > .multiple:not(:last-child) > :last-child,
+      > .multiple.joined:not(.vertical):not(:last-child) > :not(.multiple),
+      > .multiple.joined:not(.vertical):not(:last-child) > .multiple.joined > :not(.multiple) {
+        @include border-bottom-radius ( 0 );
+        margin-bottom: 0;
+        border-bottom-width: 0;
+      }
+
+      > :not(:first-child),
+      > .multiple:not(:first-child) > :first-child,
+      > .multiple.joined:not(.vertical):not(:first-child) > :not(.multiple),
+      > .multiple.joined:not(.vertical):not(:first-child) > .multiple.joined > :not(.multiple) {
+        @include border-top-radius ( 0 );
+        margin-top: 0;
+      }
+
+      &.no-separators {
+
+        > :not(:first-child),
+        > .multiple:not(:first-child) > :first-child,
+        > .multiple.joined:not(.vertical):not(:first-child) > :not(.multiple) {
+          border-top-width: 0;
+        }
+
+        > .multiple:not(:last-child) > :last-child {
+          border-bottom-width: 0;
+        }
+
+        > .multiple.joined:not(.vertical) > :not(.multiple):not(:first-child) {
+          border-left-width: 0;
+        }
+
+      }
+
+      &.only-separators {
+
+        > :first-child,
+        > .multiple:first-child > :first-child,
+        > .multiple.joined:not(.vertical):first-child > :not(.multiple) {
+          border-top-width: 0;
+        }
+
+        > :last-child,
+        > .multiple:last-child > :last-child,
+        > .multiple.joined:not(.vertical):last-child > :not(.multiple) {
+          border-bottom-width: 0;
+        }
+
+        > .multiple.joined:not(.vertical) > :not(.multiple):first-child {
+          border-left-width: 0;
+        }
+
+        > .multiple.joined:not(.vertical) > :not(.multiple):last-child {
+          border-right-width: 0;
+        }
+
+      }
+
+    }
+
+  }
+
+  /* STRETCHED */
+
+  &.stretched {
+
+    align-items: stretch;
+
+    > * {
+      flex-grow: 1;
+    }
+
+  }
+
+}
+
+/* INLINE CHILDREN FIX (IE10) */
+
+html.no-flexbox.flexbox-tweener {
+
+  /* MULTIPLE */
+
+  .multiple {
+
+    /* INLINE CHILDREN */
+
+    > a,
+    > button,
+    > span {
+      display: inline-block;
+    }
+
+  }
+
+}
+
+
+// @optional core/multiple/multiple.scss
+
+/* SCRIPT */
+
+script:last-child {
+
+  @include text-hide (); // This fixes a bug in iOS Safari where some space will be counted even while using `font-size: 0`
+  display: block;
+  margin-top: - $gutter;
+
+  %multiple > & {
+    margin-top: 0;
+  }
+
+}
+
+
+// @optional core/multiple/multiple.scss
+
+/* LAYOUT */
+
+.layout {
+
+  @include children-no-gutter ();
+  position: relative;
+  display: flex;
+  align-items: stretch;
+
+  /* HEADER / CONTENT / FOOTER */
+
+  &-header,
+  &-content,
+  &-footer {
+    border-radius: 0;
+    flex-shrink: 0; // Avoids padding collpasing
+  }
+
+  /* HEADER */
+
+  &-header {
+    background-color: $layout-header-bg-color;
+    border-color: $layout-header-border-color;
+    color: $layout-header-color;
+  }
+
+  /* CONTENT */
+
+  &-content {
+    padding: $layout-content-padding-y $layout-content-padding-x;
+    flex-grow: 1; // Needed for having the `.layout-footer` stick to the bottom/right
+  }
+
+  /* FOOTER */
+
+  &-footer {
+    background-color: $layout-footer-bg-color;
+    border-color: $layout-footer-border-color;
+    color: $layout-footer-color;
+  }
+
+}
+
+/* FIRST LAYOUT */
+
+// It'll almost certanly be the `body`, but just for the sake of writing it in a generic way we don't assume that
+
+.layout {
+
+  height: 100%; // Setting `min-height` won't work on IE 10/11
+
+  /* NOT FIRST */
+
+  .layout {
+    height: auto;
+  }
+
+  /* GUTTER */
+
+  .layout:not(:last-child),
+  %multiple > .layout:last-child {
+    margin-bottom: $gutter;
+  }
+
+}
+
+
+// @require ../layout.scss
+
+// Header and Footer are always "sticky"
+
+/* HORIZONTAL */
+
+.layout.horizontal {
+
+  flex-direction: row;
+  overflow: hidden;
+
+  /* CONTENT */
+
+  > .layout-content {
+    overflow: auto;
+    flex-shrink: 1;
+  }
+
+}
+
+
+// @require ../layout.scss
+
+/* VERTICAL */
+
+.layout.vertical {
+  flex-direction: column;
+  overflow: auto
+}
+
+
+// @optional ./horizontal.scss
+// @optional ./vertical.scss
+
+/* DEFAULT */
+
+.layout:not(.vertical):not(.horizontal) {
+  @extend .layout.vertical;
+}
+
+
+// @require ../layout.scss
+
+@media not print { // Disabled when printing
+
+  /* FIRST LAYOUT */
+
+  .layout.vertical {
+
+    /* HEADER */
+
+    > .layout-header.sticky {
+
+      @include position ( fixed, 0 0 false 0 );
+      z-index: $layout-sticky-header-z-index !important;
+
+      + .layout-content {
+        margin-top: $layout-sticky-header-height;
+      }
+
+    }
+
+    /* NOT FIRST */
+
+    .layout.vertical {
+
+      /* HEADER */
+
+      > .layout-header.sticky {
+
+        position: relative;
+        position: sticky; // Unfortunately not well supported at the moment (FF >= 32, Safari >= 6.1)
+        z-index: $layout-sticky-header-z-index - 1 !important;
+
+        + .layout-content {
+          margin-top: 0;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+/* PRINT */
+
+@media print {
+
+  /* GENERAL */
+
+  *,
+  :before,
+  :after {
+    background: #ffffff !important;
+    border-color: rgba( 0, 0, 0, .5 ) !important;
+    color: #000000 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  /* ABBR */
+
+  abbr[title]:after {
+    content: ' (' attr(title) ')' !important;
+  }
+
+  /* LINK */
+
+  p a,
+  address a {
+
+    text-decoration: underline !important;
+
+    &[href]:after {
+      content: ' (' attr(href) ')' !important;
+    }
+
+  }
+
+}
+
+
+// Inheriting border color, it is useful to get access to parent's border color
+
+/* BORDER COLOR */
+
+* {
+  border-color: inherit;
+}
+
+
+//SOURCE: The idea cames from here: http://www.paulirish.com/2012/box-sizing-border-box-ftw
+
+/* BORDER BOX */
+
+*,
+:before,
+:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+
+// IE 10 sets flex to `0 0 auto` by default, when it should actually be `0 1 auto`
+
+/* FLEXBOX */
+
+*,
+:before,
+:after {
+  flex-shrink: 1;
+}
+
+
+/* FULLSCREEN */
+
+:not(html):fullscreen {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+/* NO OUTLINE ON FOCUS */
+
+:focus {
+  outline: 0;
+}
+
+
+/* OPACITY */
+
+// Firefox sets an opacity lower than 1
+
+::placeholder {
+  opacity: 1;
+}
+
+
+/* SELECTION */
+
+::selection {
+  background-color: $selection-bg-color;
+  text-shadow: none;
+}
+
+
+/* NO SPACING */
+
+table {
+  border-spacing: 0;
+}
+
+
+//SOURCE: https://github.com/twbs/bootstrap/blob/v4-dev/scss/_reboot.scss
+
+// Mainly for avoiding the 300ms click delay on touch devices that support the `touch-action` CSS property
+
+/* TOUCH ACTION */
+
+a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea {
+  touch-action: manipulation;
+}
+
+/*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
+
+/**
+ * 1. Change the default font family in all browsers (opinionated).
+ * 2. Correct the line height in all browsers.
+ * 3. Prevent adjustments of font size after orientation changes in
+ *    IE on Windows Phone and in iOS.
+ */
+
+/* Document
+   ========================================================================== */
+
+html {
+  font-family: sans-serif; /* 1 */
+  line-height: 1.15; /* 2 */
+  -ms-text-size-adjust: 100%; /* 3 */
+  -webkit-text-size-adjust: 100%; /* 3 */
+}
+
+/* Sections
+   ========================================================================== */
+
+/**
+ * Remove the margin in all browsers (opinionated).
+ */
+
+body {
+  margin: 0;
+}
+
+/**
+ * Add the correct display in IE 9-.
+ */
+
+article,
+aside,
+footer,
+header,
+nav,
+section {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in IE.
+ */
+
+figcaption,
+figure,
+main { /* 1 */
+  display: block;
+}
+
+/**
+ * Add the correct margin in IE 8.
+ */
+
+figure {
+  margin: 1em 40px;
+}
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * 1. Remove the gray background on active links in IE 10.
+ * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+ */
+
+a {
+  background-color: transparent; /* 1 */
+  -webkit-text-decoration-skip: objects; /* 2 */
+}
+
+/**
+ * Remove the outline on focused links when they are also active or hovered
+ * in all browsers (opinionated).
+ */
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+/**
+ * 1. Remove the bottom border in Firefox 39-.
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
+ */
+
+b,
+strong {
+  font-weight: inherit;
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font style in Android 4.3-.
+ */
+
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Add the correct background and color in IE 9-.
+ */
+
+mark {
+  background-color: #ff0;
+  color: #000;
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 9-.
+ */
+
+audio,
+video {
+  display: inline-block;
+}
+
+/**
+ * Add the correct display in iOS 4-7.
+ */
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Remove the border on images inside links in IE 10-.
+ */
+
+img {
+  border-style: none;
+}
+
+/**
+ * Hide the overflow in IE.
+ */
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * 1. Change the font styles in all browsers (opinionated).
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: sans-serif; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+ *    controls in Android 4.
+ * 2. Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+html [type="button"], /* 1 */
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Change the border, margin, and padding in all browsers (opinionated).
+ */
+
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * 1. Add the correct display in IE 9-.
+ * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+progress {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+
+/**
+ * Remove the default vertical scrollbar in IE.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10-.
+ * 2. Remove the padding in IE 10-.
+ */
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
+ */
+
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+
+/*
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in Edge, IE, and Firefox.
+ */
+
+details, /* 1 */
+menu {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+summary {
+  display: list-item;
+}
+
+/* Scripting
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 9-.
+ */
+
+canvas {
+  display: inline-block;
+}
+
+/**
+ * Add the correct display in IE.
+ */
+
+template {
+  display: none;
+}
+
+/* Hidden
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 10-.
+ */
+
+[hidden] {
+  display: none;
+}
+
+
+// @optional ./vendor/normalize.scss
+
+/* BORDER / iOS SHADOW */
+
+input {
+  border: 0;
+  appearance: none !important;
+  font-family: $font-family-root;
+}
+
+/* NUMBER */
+
+[type="number"] {
+
+  -moz-appearance: textfield !important;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+
+}
+
+/* UPLOAD */
+
+[type="file"]::-webkit-file-upload-button {
+  display: none;
+}
+
+/* INVALID */
+
+::-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/* CLEAR ICON */
+
+::-ms-clear {
+  display: none;
+}
+
+
+// @optional ./vendor/normalize.scss
+
+/* BORDER / iOS SHADOW */
+
+textarea {
+  border: 0;
+  appearance: none;
+  font-family: $font-family-root;
+}
+
+
+// @optional ./vendor/normalize.scss
+// @optional ./border_color.scss
+// @optional ./box_sizing.scss
+// @optional ./flexbox.scss
+// @optional ./fullscreen.scss
+// @optional ./input.scss
+// @optional ./no_outline.scss
+// @optional ./placeholder.scss
+// @optional ./selection.scss
+// @optional ./table.scss
+// @optional ./textarea.scss
+// @optional ./touch_action.scss
+
+/* HTML */
+
+html {
+  height: 100%;
+  font-size: $font-size;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* BODY */
+
+body {
+  $datas: map-get( $colors, $body-color );
+  background-color: nth( $datas, 1 );
+  color: nth( $datas, 6 );
+  border-color: nth( $datas, 4 );
+  font-family: $font-family-root;
+  font-size: 1rem;
+  line-height: $line-height;
+  height: 100%;
+}
+
+
+/* WIDGET */
+
+%widget {
+  @include last-child-no-gutter ();
+  position: relative;
+  margin: 0 0 $gutter;
+}
+
+.widget {
+  @extend %widget;
+}
+
+
+/* Z-INDEX */
+
+.layout-priority-z-index {
+
+  user-select: none !important;
+  cursor: move !important;
+
+  %layout-priority-z-index-provider {
+    z-index: unset;
+  }
+
+}
+
+.priority-z-index {
+  z-index: $priority-z-index !important;
+}
+
+
+/* ACTIONABLE */
+
+%actionable {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.actionable {
+  @extend %actionable;
+}
+
+
+/* ANIMATIONS */
+
+@each $animation, $duration in $animations {
+
+  $class: animation-get-class( $animation );
+
+  .#{$class} {
+    transition-duration: $duration !important;
+  }
+
+}
+
+
+/* BORDER RADIUS */
+
+.sharp {
+  border-radius: $sharp-border-radius !important;
+}
+
+.rounded {
+  border-radius: $rounded-border-radius !important;
+}
+
+.circular {
+  border-radius: $circular-border-radius !important;
+}
+
+
+/* BORDERED */
+
+.bordered {
+  border-width: $border-width;
+  border-style: $border-style;
+}
+
+
+// @require ../bordered.scss
+
+/* COLORS */
+
+@each $name, $datas in $colors {
+
+  @if index( $bordered-colors, $name ) {
+
+    $class: color-get-class( $name );
+
+    $bg: nth( $datas, 1 );
+
+    .border-#{$class} {
+      border-color: $bg !important;
+    }
+
+  }
+
+}
+
+
+/* COLORS */
+
+@each $name, $datas in $colors {
+
+  $class: color-get-class( $name );
+
+  $bg: nth( $datas, 1 );
+  $bg-hover: nth( $datas, 2 );
+  $bg-active: nth( $datas, 3 );
+  $border: nth( $datas, 4 );
+  $text: nth( $datas, 6 );
+
+  %color-#{$name}-base {
+    background-color: $bg;
+    border-color: $border;
+    color: $text;
+  }
+
+  %color-#{$name}-hover {
+    background-color: $bg-hover;
+  }
+
+  %color-#{$name}-active {
+    background-color: $bg-active;
+  }
+
+  %color-#{$name} {
+
+    @extend %color-#{$name}-base;
+
+    &.hover {
+      @extend %color-#{$name}-hover;
+    }
+
+    &.active {
+      @extend %color-#{$name}-active;
+    }
+
+  }
+
+  .#{$class} {
+    @extend %color-#{$name};
+  }
+
+}
+
+
+// @require ../actionable.scss
+// @require decorators/colors/colors.scss
+
+/* COLORS */
+
+@each $name, $datas in $colors {
+
+  @if index( $actionable-colors, $name ) and $name != 'inherit' and $name != 'transparent' {
+
+    %color-#{$name}%actionable:not(.disabled) {
+
+      &:not(.active):hover {
+        @if $svelto-development { // For performance reasons
+          @include color-inline ( $name, 'hover' );
+        } @else {
+          @extend %color-#{$name}-hover;
+        }
+      }
+
+      &:not(.ripple):active {
+        @if $svelto-development { // For performance reasons
+          @include color-inline ( $name, 'active' );
+        } @else {
+          @extend %color-#{$name}-active;
+        }
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../colors.scss
+
+/* INVERTED */
+
+@each $name, $datas in $colors {
+
+  @if index( $inverted-colors, $name ) and $name != 'inherit' and $name != 'transparent' {
+
+    $bg: nth( $datas, 1 );
+    $bg-hover: nth( $datas, 2 );
+    $bg-active: nth( $datas, 3 );
+    $border: nth( $datas, 4 );
+    $text: nth( $datas, 6 );
+
+    %color-#{$name}-inverted {
+      background-color: $text;
+      border-color: $bg;
+      color: $bg;
+    }
+
+    %color-#{$name}-inverted-hover {
+      background-color: $bg-hover;
+      border-color: $bg;
+      color: $text;
+    }
+
+    %color-#{$name}-inverted-active {
+      background-color: $bg-active;
+      border-color: $bg;
+      color: $text;
+    }
+
+    %color-#{$name}.inverted {
+
+      @extend %color-#{$name}-inverted;
+
+      &.hover {
+        @extend %color-#{$name}-inverted-hover;
+      }
+
+      &.active {
+        @extend %color-#{$name}-inverted-active;
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../colors.scss
+// @require decorators/colors/inverted/inverted.scss
+
+/* INVERTED */
+
+@each $name, $datas in $colors {
+
+  @if index( $actionable-inverted-colors, $name ) and $name != 'inherit' and $name != 'transparent' {
+
+    %color-#{$name}%actionable.inverted:not(.disabled) {
+
+      &:not(.active):hover {
+        @extend %color-#{$name}-inverted-hover;
+      }
+
+      &:not(.ripple):active {
+        @extend %color-#{$name}-inverted-active;
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../colors.scss
+
+/* TEXT */
+
+@each $name, $datas in $colors {
+
+  @if index( $text-colors, $name ) {
+
+    $class: color-get-class( $name );
+
+    $bg: nth( $datas, 1 );
+
+    .text-#{$class} {
+      color: $bg !important;
+    }
+
+  }
+
+}
+
+
+/* DISABLED */
+
+//FIXME: Are we sure this is the best/cleanest way to implement it?
+// In order to always animate the opacity transition
+
+* {
+  transition: opacity $disabled-animation-duration;
+}
+
+.disabled,
+[disabled] {
+
+  pointer-events: none !important;
+  opacity: $disabled-opacity !important;
+
+  &,
+  &:before,
+  &:after,
+  *,
+  :before,
+  :after {
+    cursor: default !important;
+    animation-play-state: paused !important;
+  }
+
+}
+
+
+/* LEFT */
+
+.floated.left {
+  float: left;
+  margin: 0 $floated-gutter $floated-gutter 0;
+}
+
+
+/* RIGHT */
+
+.floated.right {
+  float: right;
+  margin: 0 0 $floated-gutter $floated-gutter;
+}
+
+
+// @optional ./left.scss
+// @optional ./right.scss
+
+/* DEFAULT */
+
+.floated:not(.right) {
+  @extend .floated.left;
+}
+
+
+// @optional core/multiple/multiple.scss
+
+/* FLUID */
+
+.fluid {
+
+  /* NOT MULTIPLE */
+
+  &:not(.multiple) {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 auto;
+  }
+
+  /* MULTIPLE */
+
+  &.multiple {
+
+    flex-grow: 1;
+
+    &:not(.vertical) > * {
+      flex: 1 1 auto;
+    }
+
+    &.vertical > * {
+      width: 100%;
+      max-width: 100%;
+    }
+
+  }
+
+}
+
+
+// @optional core/multiple/multiple.scss
+
+// This generates `breakpoint-1/12` classes that are used for lining up the content in a grid
+
+//FIXME: `.multiple`-related code is too ugly, and it generates too much CSS. Isn't any other way to implement it?
+//TODO: Add a mixin for it, like we did with the colors ($grid-inline ( $columns ))
+
+/* GRID */
+
+@each $breakpoint, $value in $breakpoints {
+
+  $class: breakpoint-get-class( $breakpoint );
+  $columns: map-get( $grid-breakpoints-columns, $breakpoint );
+
+  @if $columns {
+
+    @include media-breakpoint-up ( $breakpoint ) {
+
+      @each $column in $columns {
+
+        $percentage: ( 100% / $grid-columns ) * $column;
+
+        .#{$class}-#{$column} {
+          width: $percentage;
+        }
+
+        %grid-#{$breakpoint}-#{$column}-no-gutter {
+          width: calc(#{$percentage} - #{$gutter});
+        }
+
+        .multiple:not(.no-wrap):not(.vertical):not(.joined) > .#{$class}-#{$column} {
+
+          &:not(.multiple),
+          &.multiple.no-wrap,
+          &.multiple.vertical,
+          &.multiple.joined {
+            @extend %grid-#{$breakpoint}-#{$column}-no-gutter;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+/* HIDDEN-*UP/DOWN/ONLY */
+
+@each $breakpoint, $value in $breakpoints {
+
+  $class: breakpoint-get-class( $breakpoint );
+
+  /* UP */
+
+  @include media-breakpoint-up ( $breakpoint ) {
+
+    .hidden-#{$class}-up {
+      display: none !important;
+    }
+
+  }
+
+  /* DOWN */
+
+  @include media-breakpoint-down ( $breakpoint ) {
+
+    .hidden-#{$class}-down {
+      display: none !important;
+    }
+
+  }
+
+  /* ONLY */
+
+  @include media-breakpoint-only ( $breakpoint ) {
+
+    .hidden-#{$class}-only {
+      display: none !important;
+    }
+
+  }
+
+}
+
+
+/* BROWSERS */
+
+@each $browser in $browser-support-browsers {
+
+  /* HIDDEN */
+
+  html:not(.no-#{$browser}) .hidden-#{$browser} {
+    display: none !important;
+  }
+
+  /* ONLY */
+
+  html:not(.#{$browser}) .only-#{$browser} {
+    display: none !important;
+  }
+
+}
+
+
+/* DEVICES */
+
+@each $device in $browser-support-devices {
+
+  /* HIDDEN */
+
+  html:not(.no-#{$device}) .hidden-#{$device} {
+    display: none !important;
+  }
+
+  /* ONLY */
+
+  html:not(.#{$device}) .only-#{$device} {
+    display: none !important;
+  }
+
+}
+
+
+/* MODERNIZR */
+
+@each $feature in $hidden-modernizr-features {
+
+  /* HIDDEN */
+
+  html:not(.no-#{$feature}) .hidden-#{$feature} {
+    display: none !important;
+  }
+
+  /* ONLY */
+
+  html:not(.#{$feature}) .only-#{$feature} {
+    display: none !important;
+  }
+
+}
+
+
+/* OSS */
+
+@each $os in $browser-support-oss {
+
+  /* HIDDEN */
+
+  html:not(.no-#{$os}) .hidden-#{$os} {
+    display: none !important;
+  }
+
+  /* ONLY */
+
+  html:not(.#{$os}) .only-#{$os} {
+    display: none !important;
+  }
+
+}
+
+
+/* OTHERS */
+
+.hidden-empty:empty {
+  display: none !important;
+}
+
+
+// @optional core/multiple/multiple.scss
+
+//TODO: Maybe rename it, limited is not very explicative of its purpose (restricting the width of an element to the setted limit)
+
+/* LIMITED */
+
+@include media-width-up ( $limited-width ) {
+
+  .limited {
+
+    /* BASIC */
+
+    &:not(.multiple),
+    &.multiple.no-wrap,
+    &.multiple.vertical,
+    &.multiple.joined {
+      max-width: $limited-width;
+    }
+
+    /* ADVANCED */
+
+    &.multiple:not(.no-wrap):not(.vertical):not(.joined) {
+      max-width: calc(#{$limited-width} + #{$gutter});
+    }
+
+  }
+
+}
+
+
+// @optional core/multiple/multiple.scss
+// @optional decorators/limited/limited.scss
+
+/* CENTERED */
+
+.centered {
+
+  /* NOT MULTIPLE */
+
+  &:not(.multiple) {
+    @include margin-x ( auto );
+  }
+
+  /* MULTIPLE */
+
+  // If it's not `limited` there's no way it will be centered since as a `display: flex` it will take all the available space
+  //TODO: Add support for advanced `multiple`
+
+  @include media-width-up ( $limited-width ) {
+
+    &.multiple.limited.no-wrap,
+    &.multiple.limited.vertical,
+    &.multiple.limited.joined {
+      @include margin-x ( auto );
+    }
+
+  }
+
+}
+
+
+/* ORDER */
+
+@each $breakpoint, $value in $breakpoints {
+
+  $class: breakpoint-get-class( $breakpoint );
+
+  @include media-breakpoint-up ( $breakpoint ) {
+
+    .#{$class}-first {
+      order: -1 !important;
+    }
+
+    .#{$class}-last {
+      order: 1000000 !important;
+    }
+  }
+
+}
+
+
+/* POINTING */
+
+%pointing-tip {
+
+  @include color ( $pointing-tip-color, $pointing-tip-color-force, $pointing-tip-color-basic );
+  @include dimension ( $pointing-tip-size );
+  transform: rotate(45deg);
+  position: absolute;
+  content: '';
+  z-index: 1;
+  box-sizing: content-box;
+  border: inherit;
+
+  /* BORDERED */
+
+  &.bordered {
+    border-width: $border-width;
+  }
+
+}
+
+%pointing:after {
+  @extend %pointing-tip;
+}
+
+
+// @require ../pointing.scss
+
+/* HORIZONTAL */
+
+%pointing-horizontal {
+
+  @extend %pointing;
+
+  /* TIP */
+
+  &:after {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+}
+
+
+// @require ./horizontal.scss
+
+/* LEFT */
+
+%pointing-left-base {
+
+  @extend %pointing-horizontal;
+
+  /* TIP */
+
+  &:after {
+    left: - $pointing-tip-size-half;
+    clip-path: url(#{$pointing-path-images}pointing-clips.svg#{$revision}#clip-left); // The polygon is not supported on Firefox
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+  }
+
+  /* BORDERED */
+
+  &.bordered:after {
+    margin-left: - $border-width;
+  }
+
+}
+
+%pointing-left-spaced {
+  margin-left: $pointing-tip-diagonal-half;
+}
+
+%pointing-left {
+  @extend %pointing-left-base;
+  @extend %pointing-left-spaced;
+}
+
+/* CLIP-PATH SUPPORTED */
+
+html.clip-path-polygon,
+html.clip-path-url {
+
+  .pointing-left {
+    @extend %pointing-left;
+  }
+
+}
+
+
+// @require ./horizontal.scss
+
+/* RIGHT */
+
+%pointing-right-base {
+
+  @extend %pointing-horizontal;
+
+  /* TIP */
+
+  &:after {
+    right: - $pointing-tip-size-half;
+    clip-path: url(#{$pointing-path-images}pointing-clips.svg#{$revision}#clip-right); // The polygon is not supported on Firefox
+    clip-path: polygon(0 0, 100% 100%, 100% 0);
+  }
+
+  /* BORDERED */
+
+  &.bordered:after {
+    margin-right: - $border-width;
+  }
+
+}
+
+%pointing-right-spaced {
+  margin-right: $pointing-tip-diagonal-half;
+}
+
+%pointing-right {
+  @extend %pointing-right-base;
+  @extend %pointing-right-spaced;
+}
+
+/* CLIP-PATH SUPPORTED */
+
+html.clip-path-polygon,
+html.clip-path-url {
+
+  .pointing-right {
+    @extend %pointing-right;
+  }
+
+}
+
+
+// @require ../pointing.scss
+
+/* VERTICAL */
+
+%pointing-vertical {
+
+  @extend %pointing;
+
+  /* TIP */
+
+  &:after {
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+}
+
+
+// @require ./vertical.scss
+
+/* BOTTOM */
+
+%pointing-bottom-base {
+
+  @extend %pointing-vertical;
+
+  /* TIP */
+
+  &:after {
+    bottom: - $pointing-tip-size-half;
+    clip-path: url(#{$pointing-path-images}pointing-clips.svg#{$revision}#clip-bottom); // The polygon is not supported on Firefox
+    clip-path: polygon(0 100%, 100% 100%, 100% 0);
+  }
+
+  /* BORDERED */
+
+  &.bordered:after {
+    margin-bottom: - $border-width;
+  }
+
+}
+
+%pointing-bottom-spaced {
+
+  margin-bottom: calc(#{$gutter} + #{$pointing-tip-diagonal-half});
+
+  %multiple > & {
+    margin-bottom: $gutter;
+  }
+
+}
+
+%pointing-bottom {
+  @extend %pointing-bottom-base;
+  @extend %pointing-bottom-spaced;
+}
+
+/* CLIP-PATH SUPPORTED */
+
+html.clip-path-polygon,
+html.clip-path-url {
+
+  .pointing-bottom {
+    @extend %pointing-bottom;
+  }
+
+}
+
+
+// @optional core/multiple/multiple.scss
+// @require ./vertical.scss
+
+/* TOP */
+
+%pointing-top-base {
+
+  @extend %pointing-vertical;
+
+  /* TIP */
+
+  &:after {
+    top: - $pointing-tip-size-half;
+    clip-path: url(#{$pointing-path-images}pointing-clips.svg#{$revision}#clip-top); // The polygon is not supported on Firefox
+    clip-path: polygon(100% 0, 0 0, 0 100%);
+  }
+
+  /* BORDERED */
+
+  &.bordered:after {
+    margin-top: - $border-width;
+  }
+
+}
+
+%pointing-top-spaced {
+
+  margin-top: $pointing-tip-diagonal-half;
+
+  %multiple > & {
+    margin-top: 0; //FIXME: We cannot know that before it was 0
+  }
+
+}
+
+%pointing-top {
+  @extend %pointing-top-base;
+  @extend %pointing-top-spaced;
+}
+
+/* CLIP-PATH SUPPORTED */
+
+html.clip-path-polygon,
+html.clip-path-url {
+
+  .pointing-top {
+    @extend %pointing-top;
+  }
+
+}
+
+
+// @optional ./top.scss
+// @optional ./right.scss
+// @optional ./bottom.scss
+// @optional ./left.scss
+
+/* DEFAULT */
+
+.pointing:not(.pointing-right):not(.pointing-bottom):not(.pointing-left) {
+  @extend .pointing-top;
+}
+
+
+//FIXME: `padding-bottom` gets collapsed in non-WebKit browsers (check the demo)
+
+/* SCROLLABLE */
+
+.scrollable-x,
+.scrollable {
+  overflow-x: auto !important;
+}
+
+.scrollable-y,
+.scrollable {
+  overflow-y: auto !important;
+}
+
+
+/* SIZES */
+
+@each $size, $font-size in $sizes {
+
+  $class: size-get-class( $size );
+
+  %size-#{$size}-base {
+    @include size-inline ( $size );
+  }
+
+  %size-#{$size} {
+    @extend %size-#{$size}-base;
+  }
+
+  .#{$class} {
+    @extend %size-#{$size};
+  }
+
+}
+
+
+/* SPACED */
+
+.spaced {
+  margin-bottom: 0;
+}
+
+
+// @require ../spaced.scss
+
+/* LEFT */
+
+.spaced.left {
+  margin-left: $spaced-gutter;
+}
+
+
+// @require ../spaced.scss
+
+/* RIGHT */
+
+.spaced.right {
+  margin-right: $spaced-gutter;
+}
+
+
+// @optional ./left.scss
+// @optional ./right.scss
+
+/* DEFAULT */
+
+.spaced:not(.left):not(.right) {
+  @extend .spaced.left;
+  @extend .spaced.right;
+}
+
+
+/* TARGET */
+
+%target {
+  animation: target $target-animation-duration ease-in-out;
+  animation-iteration-count: $target-animation-iteration-count;
+}
+
+%targetable:target {
+  @extend %target;
+}
+
+.target {
+  @extend %target;
+}
+
+
+/* Z-DEPTHS */
+
+@each $depth, $shadow in $z-depths {
+
+  $class: z-depth-get-class( $depth );
+
+  %z-depth-#{$depth}-base {
+    @include z-depth-inline ( $depth );
+  }
+
+  %z-depth-#{$depth} {
+    @extend %z-depth-#{$depth}-base;
+  }
+
+  .#{$class} {
+    @extend %z-depth-#{$depth};
+  }
+
+}
+
+
+/* BADGE */
+
+.badge {
+
+  @include color ( $badge-color, $badge-color-force, $badge-color-basic );
+  @include size ( $badge-size, $badge-size-force, $badge-size-basic );
+  @include z-depth ( $badge-z-depth, $badge-z-depth-force, $badge-z-depth-basic );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1em;
+  z-index: $badge-z-index !important;
+  font-weight: $badge-font-weight;
+  border-radius: $badge-border-radius;
+  padding: $badge-padding-y $badge-padding-x;
+  min-width: $badge-min-width;
+  min-height: $badge-min-height;
+  margin: 0 !important;
+  transition: transform $animation-fast;
+
+  /* BORDERED */
+
+  &.bordered {
+    min-width: calc(#{$badge-min-width} + #{$border-width * 2});
+    min-height: calc(#{$badge-min-height} + #{$border-width * 2});
+  }
+
+  /* DISABLED */
+
+  &.disabled {
+    transform: scale(0);
+  }
+
+}
+
+
+// @require ../badge.scss
+
+/* BOTTOM LEFT */
+
+.badge.bottom-left {
+  @include absolute ( false false $badge-offset $badge-offset );
+}
+
+
+// @require ../badge.scss
+
+/* BOTTOM RIGHT */
+
+.badge.bottom-right {
+  @include absolute ( false $badge-offset $badge-offset false );
+}
+
+
+// @require ../badge.scss
+
+/* TOP LEFT */
+
+.badge.top-left {
+  @include absolute ( $badge-offset false false $badge-offset );
+}
+
+
+// @require ../badge.scss
+
+/* TOP RIGHT */
+
+.badge.top-right {
+  @include absolute ( $badge-offset $badge-offset false false );
+}
+
+
+// @optional ./top_right.scss
+// @optional ./bottom_right.scss
+// @optional ./bottom_left.scss
+// @optional ./top_left.scss
+
+/* DEFAULT */
+
+.badge:not(.top-left):not(.bottom-left):not(.bottom-right) {
+  @extend .badge.top-right;
+}
+
+
+// @require core/widget/widget.scss
+
+/* CENTERER */
+
+%centerer {
+  @extend %widget;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centerer {
+  @extend %centerer;
+}
+
+
+// @require core/widget/widget.scss
+// @require core/z_index/z_index.scss
+// @require decorators/target/target.scss
+
+// If we set is as `display: flex` then the padding-bottom will collpase when used as `overlay`
+
+/* CONTAINER */
+
+%container {
+  @extend %widget;
+  @extend %layout-priority-z-index-provider;
+  border-radius: $container-border-radius;
+  padding: $container-padding-y $container-padding-x;
+  z-index: 0; // In order to better support actionable icons etc.
+}
+
+.container {
+  @extend %container;
+  @extend %targetable;
+  @include color ( $container-color, $container-color-force, $container-color-basic );
+}
+
+
+// @optional core/multiple/multiple.scss
+// @require decorators/target/target.scss
+// @require widgets/container/container.scss
+
+//TODO: Maybe use slimmer `.card-header` and `.card-footer`
+
+/* CARD */
+
+.card {
+
+  @extend %widget;
+  @extend %targetable;
+  @include children-no-gutter ();
+  @include color ( $card-color, $card-color-force, $card-color-basic );
+  display: flex;
+  border-radius: $card-border-radius;
+
+  /* HEADER / BLOCK / FOOTER */
+
+  &-header,
+  &-block,
+  &-footer {
+
+    &:not(.multiple) {
+      @extend %container;
+      @include color ( $card-section-color, $card-section-color-force, $card-section-color-basic );
+      border-radius: 0;
+    }
+
+    &.multiple > * {
+      border-radius: 0;
+      margin-bottom: 0 !important;
+    }
+
+  }
+
+  /* HEADER / FOOTER */
+
+  &-header,
+  &-footer {
+    flex-shrink: 0; // So that when there's an overflow just `.card-block` scrolls
+  }
+
+  /* BLOCK */
+
+  &-block {
+    flex: 1 1 auto; // IE-10/11 sets flex-shrink to 0
+    overflow: auto;
+  }
+
+  /* BORDER RADIUS */
+
+  > *,
+  > .table {
+    border-radius: 0;
+  }
+
+}
+
+
+// @require ../card.scss
+
+/* BORDERED */
+
+.card.bordered {
+
+  /* INSET BORDERED */
+
+  > .bordered {
+
+    margin-left: - $border-width;
+    margin-right: - $border-width;
+
+    /* FIRST / LAST */
+
+    &:first-child:not(.overlay):not(.ripple-circle) {
+      margin-top: - $border-width;
+    }
+
+    &:last-child {
+      margin-bottom: - $border-width !important;
+    }
+
+  }
+
+  > :first-child.overlay + .bordered,
+  > :first-child.ripple-circle + .bordered {
+    margin-top: - $border-width;
+  }
+
+}
+
+
+// @require ../card.scss
+
+/* HEADER / BLOCK / FOOTER */
+
+.card-header,
+.card-block,
+.card-footer {
+
+  &.compact:not(.multiple),
+  .card.compact > &:not(.multiple) {
+    padding: $card-compact-padding-y $card-compact-padding-x;
+  }
+
+}
+
+
+// @require ../card.scss
+
+/* HORIZONTAL */
+
+.card.horizontal {
+
+  flex-direction: row;
+
+  /* BORDER RADIUS INHERITANCE */
+
+  > :first-child:not(.overlay):not(.ripple-circle),
+  > :first-child.overlay + *,
+  > :first-child.ripple-circle + * {
+    @include border-left-radius ( inherit );
+  }
+
+  > .multiple:first-child {
+
+    > :first-child {
+      border-top-left-radius: inherit;
+      border-bottom-left-radius: inherit;
+    }
+
+  }
+
+  > :last-child {
+    @include border-right-radius ( inherit );
+  }
+
+  > .multiple:last-child {
+
+    > :last-child {
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
+
+  }
+
+  /* NEXT CHILDREN BORDERED */
+
+  > .bordered + .bordered {
+
+    &:not(.card-footer) {
+      border-left-width: 0;
+    }
+
+    &.card-footer {
+      margin-left: - $border-width;
+    }
+
+  }
+
+}
+
+
+// @require ../card.scss
+
+/* VERTICAL */
+
+.card.vertical {
+
+  flex-direction: column;
+
+  /* BORDER RADIUS INHERITANCE */
+
+  > :first-child:not(.overlay):not(.ripple-circle),
+  > :first-child.overlay + *,
+  > :first-child.ripple-circle + * {
+    @include border-top-radius ( inherit );
+  }
+
+  > .multiple:first-child {
+
+    > :first-child {
+      border-top-left-radius: inherit;
+    }
+
+    > :last-child {
+      border-top-right-radius: inherit;
+    }
+
+  }
+
+  > :last-child {
+    @include border-bottom-radius ( inherit );
+  }
+
+  > .multiple:last-child {
+
+    > :first-child {
+      border-bottom-left-radius: inherit;
+    }
+
+    > :last-child {
+      border-bottom-right-radius: inherit;
+    }
+
+  }
+
+  /* NEXT CHILDREN BORDERED */
+
+  > .bordered + .bordered {
+
+    &:not(.card-footer) {
+      border-top-width: 0;
+    }
+
+    &.card-footer {
+      margin-top: - $border-width;
+    }
+
+  }
+
+}
+
+
+// @optional ./horizontal.scss
+// @optional ./vertical.scss
+
+/* DEFAULT */
+
+.card:not(.vertical):not(.horizontal) {
+  @extend .card.vertical;
+}
+
+
+// @require ../card.scss
+
+//FIXME: Doesn't work properly inside a nested layout (shouldn't influence the parent layouts)
+
+/* FULLSCREEN */
+
+.card:not(.modal):not(.popover):not(.panel) {
+
+  &.fullscreen,
+  &.fullscreen-request {
+    @include fill-fixed ();
+    border-width: 0;
+    border-radius: 0;
+    margin: 0;
+    max-width: none;
+    max-height: none;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: $card-fullscreen-z-index !important;
+  }
+
+}
+
+
+// @require ../container.scss
+
+/* COMPACT */
+
+.container.compact {
+  padding: $container-compact-padding-y $container-compact-padding-x;
+}
+
+
+// @require widgets/container/container.scss
+
+/* DATEPICKER */
+
+.datepicker {
+
+  @extend %container;
+  @include center-margin ();
+  max-width: $datepicker-max-width;
+
+  /* INPUT */
+
+  input {
+    display: none !important;
+  }
+
+  /* NAVIGATION */
+
+  &-navigation {
+
+    @include children-no-gutter ();
+    display: flex;
+    align-items: center;
+
+    /* LABEL / PREVIOUS / NEXT */
+
+    > .label,
+    .previous,
+    .next {
+      width: $datepicker-day-width;
+      flex-grow: 0;
+    }
+
+    /* TITLE */
+
+    .datepicker-title {
+      @include margin-x ( $gutter );
+      text-align: center;
+      flex-grow: 1;
+    }
+
+  }
+
+  /* DAY NAMES */
+
+  &-days-names {
+
+    display: flex;
+    height: $datepicker-day-height;
+    align-items: center;
+
+    /* DAY NAME */
+
+    > * {
+      font-weight: $datepicker-day-name-font-weight;
+      width: $datepicker-day-width;
+      text-align: center;
+    }
+
+  }
+
+  /* DAYS */
+
+  &-days {
+
+    display: flex;
+    flex-wrap: wrap;
+
+    /* DAY */
+
+    > * {
+
+      line-height: $datepicker-day-height;
+      position: relative;
+      z-index: 1;
+      width: $datepicker-day-width;
+      height: $datepicker-day-height;
+      text-align: center;
+
+      /* BEFORE */
+
+      &:before {
+        @include center-absolute ( $datepicker-day-circle-size, $datepicker-day-circle-size );
+        z-index: -1;
+        width: $datepicker-day-circle-size;
+        height: $datepicker-day-circle-size;
+        content: '';
+        border-radius: 50%;
+        background-color: transparent;
+      }
+
+      /* TODAY */
+
+      &.datepicker-day-today {
+
+        color: $datepicker-day-today-color;
+
+        /* BEFORE */
+
+        &:before {
+          background-color: $datepicker-day-today-circle-color;
+        }
+
+      }
+
+      /* SELECTED */
+
+      &.datepicker-day-selected {
+
+        color: $datepicker-day-selected-color;
+        transition: color $datepicker-animation-duration;
+
+        /* BEFORE */
+
+        &:not(.previous):not(.next):not(.datepicker-day-clamped):before {
+          @include z-depth ( $datepicker-day-selected-z-depth, $datepicker-day-selected-z-depth-force, $datepicker-day-selected-z-depth-basic );
+        }
+
+        &:before {
+          background-color: $datepicker-day-selected-circle-color;
+          transition: none; // Safari fix
+          transition-property: box-shadow, background-color;
+          transition-duration: $datepicker-animation-duration;
+        }
+
+      }
+
+    }
+
+    /* PREVIOUS / NEXT */
+
+    .previous,
+    .next {
+      opacity: $datepicker-day-prev-next-opacity;
+    }
+
+    /* CLAMPED */
+
+    .datepicker-day-clamped {
+      opacity: $datepicker-day-clamped-opacity;
+    }
+
+    /* SELECTABLE */
+
+    :not(.previous):not(.next):not(.datepicker-day-clamped) {
+      cursor: pointer;
+    }
+
+  }
+
+  /* ENABLED */
+
+  &:not(.disabled) {
+
+    /* DAY */
+
+    .datepicker-days > :not(.previous):not(.next):not(.datepicker-day-clamped) {
+
+      /* HOVER */
+
+      &:not(.datepicker-day-selected):hover {
+
+        color: $datepicker-day-hover-color;
+
+        /* BEFORE */
+
+        &:before {
+          background-color: $datepicker-day-hover-circle-color;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../datepicker.scss
+
+/* INSET */
+
+.datepicker.inset {
+  padding: 0;
+}
+
+
+// @require ../datepicker.scss
+
+/* INVALID */
+
+.datepicker.invalid {
+  border-color: $color-error !important;
+}
+
+
+// @require ../datepicker.scss
+
+/* VALID */
+
+.datepicker.valid {
+  border-color: $color-success !important;
+}
+
+
+// @require core/widget/widget.scss
+
+/* BLOCK */
+
+.divider.block {
+
+  @extend %widget;
+  text-align: center;
+
+  /* CONTENT */
+
+  > .divider-content {
+    @include color ( $divider-block-color, $divider-block-color-force, $divider-block-color-basic );
+    display: inline-block;
+    padding: $divider-block-y-padding $divider-block-x-padding;
+    border-radius: $divider-block-border-radius;
+  }
+
+}
+
+
+// @require core/reset/reset.scss
+
+/* HR */
+
+%hr-base {
+  display: flex;
+  z-index: $hr-z-index !important;
+  background-color: $hr-bg-color;
+  margin-top: 0;
+}
+
+%hr {
+  @extend %hr-base;
+}
+
+hr {
+  @extend %hr;
+  border: 0;
+}
+
+
+// @require ../hr.scss
+
+/* HORIZONTAL */
+
+%hr-horizontal-base {
+  @extend %hr-base;
+  height: $hr-size;
+  width: 100%;
+}
+
+%hr-horizontal {
+  @extend %hr-horizontal-base;
+  @include last-child-no-gutter ( $gutter-half );
+  margin-bottom: $gutter;
+}
+
+hr.horizontal {
+  @extend %hr-horizontal;
+}
+
+
+// @require ../hr.scss
+// @require core/widget/widget.scss
+
+/* VERTICAL */
+
+%hr-vertical-base {
+  @extend %hr-base;
+  width: $hr-size;
+}
+
+%hr-vertical {
+  @extend %hr-vertical-base;
+  @extend %widget;
+  @include margin-x ( $gutter-half );
+}
+
+hr.vertical {
+  @extend %hr-vertical;
+}
+
+
+// @optional ./horizontal.scss
+// @optional ./vertical.scss
+
+/* DEFAULT */
+
+hr:not(.vertical) {
+  @extend hr.horizontal;
+}
+
+
+// @require ../../hr/directions/horizontal.scss
+// @require core/widget/widget.scss
+
+//FIXME: If we put an infobar inside a divider it doesn't get displayed well in Edge / IE-10/11
+//FIXME: It doesn't work in IE10
+
+/* HORIZONTAL */
+
+.divider.linear.horizontal {
+
+  /* EMPTY */
+
+  &:empty {
+    @extend %hr-horizontal;
+  }
+
+  /* NOT EMPTY */
+
+  &:not(:empty) {
+
+    @extend %widget;
+    display: flex;
+
+    &:before,
+    &:after {
+      @extend %hr-horizontal-base;
+      content: '';
+      flex: 1 1 0%; // IE-10/11 sets flex-shrink to 0 // IE-10/11 misinterpreter a unitless 0 flex-basis
+      min-width: $gutter;
+      align-self: center;
+    }
+
+    &:before {
+      margin-right: $gutter;
+    }
+
+    &:after {
+      margin-left: $gutter;
+    }
+
+  }
+
+}
+
+/* INFOBAR PARTIAL FIX (IE-10/11) */
+
+// It is "partial" because it will break if we add `.infobar-bottom`, but using it without it, expecially when inside a divider, is a much more common case
+
+html.flexbox-tweener {
+
+  .divider.linear.horizontal {
+
+    /* INFOBAR */
+
+    > .infobar {
+
+      flex-wrap: nowrap;
+
+      > .infobar-center {
+        flex-basis: auto;
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../../hr/directions/horizontal.scss
+// @require core/widget/widget.scss
+
+/* VERTICAL */
+
+.divider.linear.vertical {
+
+  @extend %widget;
+  display: flex;
+
+  /* EMPTY */
+
+  &:empty {
+    @extend %hr-vertical;
+    align-self: stretch;
+    flex: 0 1 auto; // IE-10/11 sets flex-shrink to 0
+  }
+
+  /* NOT EMPTY */
+
+  &:not(:empty) {
+
+    flex-direction: column;
+    flex: 0 1 auto; // IE-10/11 sets flex-shrink to 0
+    align-self: stretch;
+
+    &:before,
+    &:after {
+      @extend %hr-vertical-base;
+      @include margin-x ( $gutter-half );
+      content: '';
+      align-self: center;
+      min-height: $gutter;
+      flex: 1 1 auto;
+    }
+
+    &:before {
+      margin-bottom: $gutter-half;
+    }
+
+    &:after {
+      margin-top: $gutter-half;
+    }
+
+  }
+
+}
+
+
+// @optional ./horizontal.scss
+// @optional ./vertical.scss
+
+/* DEFAULT */
+
+.divider.linear:not(.vertical) {
+  @extend .divider.linear.horizontal;
+}
+
+
+// @require core/widget/widget.scss
+
+/* TEXT */
+
+.divider.text {
+  @extend %widget;
+  @include size ( $divider-text-size, $divider-text-size-force, $divider-text-size-basic );
+  font-weight: $divider-text-font-weight;
+  margin: 0 $gutter-half $gutter-half;
+  opacity: $divider-text-opacity;
+}
+
+
+// @optional ../block/block.scss
+// @optional ../linear/directions/default.scss
+// @optional ../text/text.scss
+
+/* DEFAULT */
+
+.divider:not(.block):not(.text) {
+  @extend .divider.linear;
+}
+
+
+/* REVERTING */
+
+.draggable-reverting {
+  z-index: $priority-z-index !important;
+  transition: transform $draggable-reverting-animation-duration !important;
+}
+
+
+// @require core/widget/widget.scss
+
+//FIXME: There's an extra pixel at the bottom of the demo video
+//FIXME: If we add a border-radius it won't be used after we press play on the video
+
+/* EMBED */
+
+.embed {
+
+  @extend %widget;
+  display: block;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+
+  /* IFRAME / EMBED / VIDEO / OBJECT */
+
+  > * {
+    @include fill ();
+    @include fill-absolute ();
+    border: 0;
+  }
+
+}
+
+
+// @require ../embed.scss
+
+/* RATIOS */
+
+@each $ratio in $embed-ratios {
+
+  $width: nth($ratio, 1);
+  $height: nth($ratio, 2);
+
+  .embed.ratio-#{$width}-#{$height} {
+    padding-bottom: ( $height * 100 / $width ) * 1%;
+  }
+
+}
+
+
+// @require core/reset/reset.scss
+
+/* BUTTON */
+
+button {
+  border: 0;
+  padding: 0;
+}
+
+
+// @require core/reset/reset.scss
+// @require widgets/container/container.scss
+
+/* FIELDSET */
+
+fieldset {
+  @extend %container;
+  background-color: $fieldset-bg-color;
+  border-color: $fieldset-border-color;
+}
+
+
+// @require core/widget/widget.scss
+
+/* DEFAULT */
+
+form {
+  @extend %widget;
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+
+/* LABEL */
+
+label {
+  @extend %widget;
+  display: block;
+}
+
+
+// @require core/reset/reset.scss
+
+/* LEGEND */
+
+legend {
+  padding: 0 $gutter-half;
+}
+
+
+/* INVALID */
+
+.form-validate-message.invalid {
+  color: $color-error !important;
+}
+
+
+/* VALID */
+
+.form-validate-message.valid {
+  color: $color-success !important;
+}
+
+
+/* OUTPUT */
+
+.form-validate-output:empty {
+  display: none;
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+
+/* HEADER */
+
+%header {
+  @extend %widget;
+  padding: $header-padding-y $header-padding-x;
+}
+
+header {
+  @extend %header;
+}
+
+
+// @require core/reset/reset.scss
+// @require widgets/header/header.scss
+
+/* FOOTER */
+
+footer {
+  @extend %header;
+}
+
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(#{$icon-path-fonts}IconFont.woff2#{$revision}) format('woff2');
+}
+
+
+// @require core/widget/widget.scss
+
+/* ICON */
+
+%icon-base {
+  display: inline-block;
+  vertical-align: middle;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1em * $icon-scale-factor;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  overflow: hidden; // So the text won't exceed the icon box even when the font is not loaded
+  flex: 0 0 auto !important; // We don't want it to grow or shrink in any case
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+%icon {
+  @extend %icon-base;
+}
+
+%icon-sizes-scaled {
+
+  @each $size, $font-size in $sizes {
+
+    $class: size-get-class( $size );
+
+    &.#{$class} {
+      font-size: $font-size * $icon-scale-factor;
+    }
+
+  }
+
+}
+
+i.icon {
+  @extend %widget;
+  @extend %icon;
+  @extend %icon-sizes-scaled;
+}
+
+
+// @require ../icon.scss
+
+//FIXME: Once clicked it makes the header behave weirdly (ios safari)
+
+/* ACTIONABLE */
+
+%icon-actionable {
+
+  /* ENABLED */
+
+  &:not(.disabled) {
+
+    /* HOVER / ACTIVE */
+
+    &.hover,
+    &:hover,
+    &.active,
+    &:active {
+
+      overflow: visible;
+
+      &:before {
+        @include center-transform ();
+        @include dimension ( $icon-actionable-before-size );
+        position: absolute;
+        z-index: -1;
+        content: '';
+        background-color: $icon-actionable-before-bg-color;
+        border-radius: $icon-actionable-before-border-radius;
+      }
+
+    }
+
+    /* HOVER */
+
+    &:not(.active) {
+
+      &.hover:before,
+      &:hover:before {
+        opacity: $icon-actionable-before-hover-opacity;
+      }
+
+    }
+
+    /* ACTIVE */
+
+    &:not(.ripple) {
+
+      &.active:before,
+      &:active:before {
+        opacity: $icon-actionable-before-active-opacity;
+      }
+
+    }
+
+  }
+
+}
+
+i.icon.actionable {
+  @extend %icon-actionable;
+}
+
+
+// @require core/widget/widget.scss
+// @require widgets/icon/icon.scss
+
+/* ICONS */
+
+%icons-base {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto !important; // We don't want it to grow or shrink in any case
+  width: $icon-scale-factor * 1em;
+  height: $icon-scale-factor * 1em;
+}
+
+%icons {
+  @extend %icons-base;
+}
+
+%icons-icon {
+  @include fill-absolute ();
+  margin-bottom: 0;
+}
+
+.icons {
+
+  @extend %widget;
+  @extend %icons;
+
+  /* ICON */
+
+  > %icon {
+    @extend %icons-icon;
+  }
+
+}
+
+
+// @require widgets/icon/icon.scss
+// @require ../icons.scss
+
+.icons.actionable {
+  @extend %icon-actionable;
+}
+
+
+// @require ../icons.scss
+
+/* CORNER */
+
+.icons > %icon.corner {
+  font-size: $icon-corner-font-size;
+}
+
+
+// @require ../corner.scss
+
+/* BOTTOM LEFT */
+
+.icons > %icon.corner.bottom-left {
+  @include absolute ( auto auto 0 0 );
+}
+
+
+// @require ../corner.scss
+
+/* BOTTOM RIGHT */
+
+.icons > %icon.corner.bottom-right {
+  @include absolute ( auto 0 0 auto );
+}
+
+
+// @require ../corner.scss
+
+/* TOP LEFT */
+
+.icons > %icon.corner.top-left {
+  @include absolute ( 0 auto auto 0 );
+}
+
+
+// @require ../corner.scss
+
+/* TOP RIGHT */
+
+.icons > %icon.corner.top-right {
+  @include absolute ( 0 0 auto auto );
+}
+
+
+// @optional ./top_right.scss
+// @optional ./bottom_right.scss
+// @optional ./bottom_left.scss
+// @optional ./top_left.scss
+
+/* DEFAULT */
+
+.icons > %icon.corner:not(.top-left):not(.bottom-right):not(.bottom-left) {
+  @extend %icon.corner.top-right;
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+
+//FIXME: `.multiple.no-wrap > img * 3` doesn't work
+
+/* IMAGE */
+
+img {
+
+  @extend %widget;
+  @include color ( $image-color, $image-color-force, $image-color-basic );
+  display: block;
+  max-width: 100%;
+  height: auto;
+  min-height: 1px; // It fixes a bug in IE11 where the images are stretched vertically
+
+  /* INLINE */
+
+  address &,
+  p &,
+  span & {
+    display: inline-block;
+  }
+
+}
+
+
+// @require ../image.scss
+
+/* SIZES */
+
+@each $size, $font-size in $sizes {
+
+  $class: size-get-class( $size );
+
+  img.#{$class} {
+    width: unit-strip( $font-size * $image-sizes-scaling-factor ) * 1rem;
+  }
+
+}
+
+
+// @require widgets/container/container.scss
+
+/* INFOBAR */
+
+.infobar {
+
+  @extend %container;
+  @extend %targetable;
+  @include children-no-gutter ();
+  @include color ( $infobar-color, $infobar-color-force, $infobar-color-basic );
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  /* SECTIONS GUTTER */
+
+  > :not(:first-child):not(.infobar-title):not(.infobar-subtitle):not(.infobar-bottom) {
+    margin-left: $gutter;
+  }
+
+  /* LEFT / RIGHT */
+
+  &-left,
+  &-right {
+    flex-shrink: 0;
+  }
+
+  /* CENTER */
+
+  &-center {
+    flex: 1 1 0%; // IE-10/11 sets flex-shrink to 0 // IE-10/11 misinterpreter a unitless 0 flex-basis
+  }
+
+  /* BOTTOM */
+
+  //FIXME: Cannot be used for not 100% or fixed width elements, or the .infobar will be bigger than needed (for instance take a look at `toast`)
+
+  &-bottom {
+    width: 100%;
+    margin-top: $gutter;
+  }
+
+  /* TITLE / SUBTITLE */
+
+  &-title,
+  &-subtitle {
+    margin-bottom: 0 !important;
+  }
+
+  /* TITLE */
+
+  &-title {
+    @include size ( $infobar-title-size, $infobar-title-size-force, $infobar-title-size-basic );
+  }
+
+}
+
+
+// @require ../infobar.scss
+
+/* INSET */
+
+.infobar.inset {
+  padding: 0;
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+// @require decorators/target/target.scss
+
+/* INPUT */
+
+%input {
+  @extend %widget;
+  @extend %targetable;
+  @include color ( $input-color, $input-color-force, $input-color-basic );
+  display: flex;
+  flex-shrink: 1;
+  min-width: 0;
+  border-radius: $input-border-radius;
+  line-height: $line-height;
+  padding: $input-padding-y $input-padding-x;
+}
+
+input {
+  @extend %input;
+}
+
+
+// @require ../input.scss
+
+/* COMPACT */
+
+%input.compact {
+  padding: $input-compact-padding-y $input-compact-padding-x;
+}
+
+
+// @require ../input.scss
+
+/* FILE */
+
+input[type="file"] {
+  display: none !important;
+}
+
+
+// @require ../input.scss
+
+/* INVALID */
+
+%input.invalid {
+  border-color: $color-error !important;
+}
+
+
+// @require ../input.scss
+
+/* PLACEHOLDER */
+
+::placeholder {
+  color: rgba( nth( map-get( $colors, $input-color ), 6 ), $input-placeholder-opacity );
+}
+
+
+// @require ../placeholder.scss
+// @require decorators/colors/colors.scss
+
+//TODO: Add support for inverted colors
+
+/* COLORS */
+
+@each $name, $datas in $colors {
+
+  @if index( $input-placeholder-colors, $name ) and  $name != 'inherit' and $name != 'transparent' {
+
+    $class: color-get-class( $name );
+
+    $text: nth( $datas, 6 );
+
+    %color-#{$class}::placeholder {
+      color: rgba( $text, $input-placeholder-opacity );
+    }
+
+  }
+
+}
+
+
+// @require ../input.scss
+
+/* VALID */
+
+%input.valid {
+  border-color: $color-success !important;
+}
+
+
+// @require core/widget/widget.scss
+// @require decorators/target/target.scss
+// @optional widgets/icon/icon.scss
+// @optional widgets/icons/icons.scss
+
+//TODO: Add a way to force labels icons to have the same height as labels with just text
+//TODO: Add support for img inside it (It should probably behave like Angular Material's chip)
+
+/* LABEL */
+
+.label {
+
+  @extend %widget;
+  @extend %targetable;
+  @include children-no-gutter ();
+  @include color ( $label-color, $label-color-force, $label-color-basic );
+  @include text-no-wrap ();
+  font-weight: $label-font-weight;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1 * $icon-scale-factor;
+  border-radius: $label-border-radius;
+  padding: $label-padding-y $label-padding-x;
+  min-width: $line-height-em + ( $label-padding-x * 2 ); // In order to always maintain a reasonable aspect ratio
+
+  /* HORIZONTAL GUTTER */
+
+  > :not(.overlay):not(.ripple-circle):not(input):not(select) {
+
+    /* HORIZONTAL GUTTER */
+
+    + * {
+      margin-left: $label-inner-gutter;
+    }
+
+    + %icon {
+      margin-left: $label-inner-gutter / $icon-scale-factor;
+    }
+
+  }
+
+  /* ALIGNMENT */
+
+  > %icon,
+  > %icons,
+  > :not(.overlay):not(.ripple-circle):first-child:not(:last-child),
+  > :not(.overlay):not(.ripple-circle):first-child:not(:last-child) ~ *,
+  > .overlay + :not(:last-child),
+  > .ripple-circle + :not(:last-child) {
+    vertical-align: middle;
+  }
+
+}
+
+
+// @require decorators/actionable/actionable.scss
+// @require widgets/label/label.scss
+
+/* BUTTON */
+
+.button {
+
+  @extend %actionable;
+  @extend .label;
+  @include color ( $button-color, $button-color-force, $button-color-basic );
+
+  /* CURSOR */
+
+  > * {
+    @extend %actionable;
+  }
+
+}
+
+
+// @require ../label.scss
+
+/* COMPACT */
+
+.label.compact {
+
+  padding: $label-compact-padding-y $label-compact-padding-x;
+  min-width: $line-height-em + ( $label-compact-padding-x * 2 ); // In order to always maintain a reasonable aspect ratio
+
+  /* CHILDREN */
+
+  > :not(.overlay):not(.ripple-circle):not(input):not(select) {
+
+    /* HORIZONTAL GUTTER */
+
+    + * {
+      margin-left: $label-compact-inner-gutter;
+    }
+
+    + %icon,
+    + %icons {
+      margin-left: $label-compact-inner-gutter / $icon-scale-factor;
+    }
+
+  }
+
+}
+
+
+// @require ../label.scss
+
+/* CORNER */
+
+.label.corner {
+
+  @include dimension ( $label-corner-size );
+  z-index: $label-corner-z-index !important;
+  margin: 0 !important;
+  border-width: 0 !important;
+  background-color: transparent !important;
+  border-radius: 0;
+  display: block;
+  overflow: hidden;
+
+  /* BEFORE */
+
+  &:before {
+    content: '';
+    position: absolute;
+    border-color: inherit;
+  }
+
+}
+
+
+// @require ../corner.scss
+
+/* BOTTOM LEFT */
+
+.label.corner.bottom-left {
+
+  @include absolute ( false false 0 0 );
+  border-bottom-left-radius: inherit;
+
+  /* BEFORE */
+
+  &:before {
+    @include absolute ( false false 0 0 );
+    @include triangle ( $label-corner-size, bottom-left );
+  }
+
+  /* CHILDREN */
+
+  > * {
+    @include absolute ( false false 35% 35% );
+    transform: translate(-63%, 63%);
+  }
+
+  /* BORDERED */
+
+  .bordered > & {
+    @include absolute ( false false ( - $border-width ) ( - $border-width ) );
+  }
+
+}
+
+
+// @require ../corner.scss
+
+/* BOTTOM RIGHT */
+
+.label.corner.bottom-right {
+
+  @include absolute ( false 0 0 false );
+  border-bottom-right-radius: inherit;
+
+  /* BEFORE */
+
+  &:before {
+    @include absolute ( false 0 0 false );
+    @include triangle ( $label-corner-size, bottom-right );
+  }
+
+  /* CHILDREN */
+
+  > * {
+    @include absolute ( false 35% 35% false );
+    transform: translate(63%, 63%);
+  }
+
+  /* BORDERED */
+
+  .bordered > & {
+    @include absolute ( false ( - $border-width ) ( - $border-width ) false );
+  }
+
+}
+
+
+// @require ../corner.scss
+
+/* TOP LEFT */
+
+.label.corner.top-left {
+
+  @include absolute ( 0 false false 0 );
+  border-top-left-radius: inherit;
+
+  /* BEFORE */
+
+  &:before {
+    @include absolute ( 0 false false 0 );
+    @include triangle ( $label-corner-size, top-left );
+  }
+
+  /* CHILDREN */
+
+  > * {
+    @include absolute ( 35% false false 35% );
+    transform: translate(-63%, -63%);
+  }
+
+  /* BORDERED */
+
+  .bordered > & {
+    @include absolute ( ( - $border-width ) false false ( - $border-width ) );
+  }
+
+}
+
+
+// @require ../corner.scss
+
+/* TOP RIGHT */
+
+.label.corner.top-right {
+
+  @include absolute ( 0 0 false false );
+  border-top-right-radius: inherit;
+
+  /* BEFORE */
+
+  &:before {
+    @include absolute ( 0 0 false false );
+    @include triangle ( $label-corner-size, top-right );
+  }
+
+  /* CHILDREN */
+
+  > * {
+    @include absolute ( 35% 35% false false );
+    transform: translate(63%, -63%);
+  }
+
+  /* BORDERED */
+
+  .bordered > & {
+    @include absolute ( ( - $border-width ) ( - $border-width ) false false );
+  }
+
+}
+
+
+// @optional ./top_left.scss
+// @optional ./top_right.scss
+// @optional ./bottom_right.scss
+// @optional ./bottom_left.scss
+
+/* TOP LEFT */
+
+.label.corner:not(.top-left):not(.bottom-right):not(.bottom-left) {
+  @extend .label.corner.top-right;
+}
+
+
+// @require ../label.scss
+
+//TODO: Make it a component of its own (Sure?)
+//TODO: Add it while scrolling to bottom, show him when scrolling to top
+//TODO: Add sub floating actions
+
+/* FLOATING */
+
+.label.floating {
+  @include z-depth ( $label-floating-z-depth, $label-floating-z-depth-force, $label-floating-z-depth-basic );
+  position: fixed;
+  z-index: $label-floating-z-index !important;
+  right: $label-floating-offset;
+  bottom: $label-floating-offset;
+  margin-bottom: 0;
+  padding: $label-floating-padding-y $label-floating-padding-x;
+  min-height: $line-height-em + ( $label-floating-padding-y * 2 );
+  min-width: $line-height-em + ( $label-floating-padding-x * 2 );
+}
+
+
+// @require ../floating.scss
+
+/* COMPACT */
+
+.label.floating.compact {
+  padding: $label-floating-compact-padding-y $label-floating-compact-padding-x;
+  min-height: $line-height-em + ( $label-floating-compact-padding-y * 2 );
+  min-width: $line-height-em + ( $label-floating-compact-padding-x * 2 );
+}
+
+
+// @require ../label.scss
+
+/* INVALID */
+
+.label.invalid {
+
+  border-color: $color-error !important;
+
+  /* ICON / ICONS */
+
+  > %icon,
+  > %icons {
+    color: $color-error !important;
+  }
+
+}
+
+
+// @require ../label.scss
+
+//TODO: Write it better
+//TODO: Modularize it
+//TODO: Add corners support
+//FIXME: Ribbon.right cause an overflowing bug in IE and Edge
+
+/* RIBBON */
+
+.label.ribbon {
+
+  @include z-depth ( $label-ribbon-z-depth, $label-ribbon-z-depth-force, $label-ribbon-z-depth-basic );
+
+  /* BEFORE / AFTER */
+
+  &.ribbon-left:before,
+  &.ribbon-right:after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    border: ( $label-ribbon-fold-size / 2 ) solid transparent;
+    border-top-color: inherit;
+    bottom: - $label-ribbon-fold-size;
+  }
+
+  /* LEFT */
+
+  &.ribbon-left {
+
+    @include border-left-radius ( 0 );
+    left: calc( (#{$gutter} + #{$label-ribbon-fold-size}) * -1 );
+    padding-left: calc(#{$label-padding-x} + #{$gutter});
+
+    &:before {
+      left: 0;
+      border-right-color: inherit;
+    }
+
+  }
+
+  /* LEFT & RIGHT */
+
+  &.ribbon-left.ribbon-right {
+    width: calc(100% + #{($gutter * 2)} + #{($label-ribbon-fold-size * 2)});
+  }
+
+  /* RIGHT */
+
+  &.ribbon-right {
+
+    @include border-right-radius ( 0 );
+    padding-right: calc(#{$label-padding-x} + #{$gutter});
+
+    &:after {
+      right: 0;
+      border-left-color: inherit;
+    }
+
+  }
+
+  /* ONLY RIGHT */
+
+  //FIXME: It is a bit off
+
+  &.ribbon-right:not(.ribbon-left) {
+    left: calc(100% + #{$gutter} + #{$label-ribbon-fold-size});
+    transform: translateX(-100%);
+  }
+
+  /* BORDERED */
+
+  &.bordered {
+
+    /* BEFORE / AFTER */
+
+    &.ribbon-left:before,
+    &.ribbon-right:after {
+      bottom: calc( (#{$border-width} + #{$label-ribbon-fold-size}) * -1 );
+    }
+
+    /* BEFORE */
+
+    &.ribbon-left:before {
+      left: - $border-width;
+    }
+
+    /* AFTER */
+
+    &.ribbon-right:after {
+      right: - $border-width;
+    }
+
+  }
+
+}
+
+
+// @require ../label.scss
+
+/* VALID */
+
+.label.valid {
+
+  border-color: $color-success !important;
+
+  /* ICON / ICONS */
+
+  > %icon,
+  > %icons {
+    color: $color-success !important;
+  }
+
+}
+
+
+// @require core/layout/layout.scss
+
+/* LAYOUT RESIZABLE */
+
+.layout.resizable {
+
+  & > .sash {
+    z-index: $layout-resizable-sash-z-index;
+  }
+
+}
+
+
+// @require ../layout_resizable.scss
+
+/* HORIZONTAL */
+
+.layout.horizontal.resizable {
+
+  &.sash-dragging {
+    cursor: col-resize !important;
+  }
+
+  & > .sash {
+    @include absolute ( 0 auto 0 auto );
+    cursor: col-resize;
+    width: $layout-resizable-sash-size;
+    margin-left: - $layout-resizable-sash-size / 2;
+    transform: translateX( - $layout-resizable-sash-size / 2 ); // Starting hidden
+  }
+
+}
+
+
+// @require ../layout_resizable.scss
+
+/* VERTICAL */
+
+.layout.vertical.resizable {
+
+  &.sash-dragging {
+    cursor: row-resize !important;
+  }
+
+  & > .sash {
+    @include absolute ( auto 0 auto 0 );
+    cursor: row-resize;
+    height: $layout-resizable-sash-size;
+    margin-top: - $layout-resizable-sash-size / 2;
+    transform: translateY( - $layout-resizable-sash-size / 2 ); // Starting hidden
+  }
+
+}
+
+
+// @optional ./horizontal.scss
+// @optional ./vertical.scss
+
+/* DEFAULT */
+
+.layout.resizable:not(.vertical):not(.horizontal) {
+  @extend .layout.resizable.horizontal;
+}
+
+
+// @require core/multiple/multiple.scss
+
+/* PAGER */
+
+.pager {
+
+  @extend %multiple;
+  @include last-child-no-gutter ( 0, - $gutter );
+  display: flex;
+  position: relative;
+
+  /* NEXT */
+
+  > :nth-child(2),
+  > .next {
+    margin-left: auto;
+  }
+
+}
+
+
+// @require widgets/centerer/centerer.scss
+
+/* PLACEHOLDER */
+
+.placeholder {
+
+  @extend %centerer;
+  @include color ( $placeholder-color, $placeholder-color-force, $placeholder-color-basic );
+  text-align: center;
+
+  &:not(:empty) {
+    padding: $placeholder-padding-x $placeholder-padding-y;
+  }
+
+}
+
+
+/* CLOSED */
+
+.popover:not(.show) {
+  display: none;
+}
+
+.popover:not(.open) {
+  opacity: 0;
+  margin-top: $popover-closed-offset !important;
+}
+
+
+//TODO: Test a multi-level popover menu
+
+/* POPOVER */
+
+.popover {
+
+  @include fixed ( 0 false false 0 );
+  @include z-depth ( $popover-z-depth, $popover-z-depth-force, $popover-z-depth-basic );
+  z-index: $popover-z-index !important;
+  overflow: visible;
+  max-width: $popover-max-width;
+  margin: 0;
+  transition: none; // Safari fix
+  transition-property: opacity, margin-top;
+  transition-duration: $popover-animation-duration;
+
+  /* CARD */
+
+  &.card {
+    max-height: $popover-max-height;
+  }
+
+}
+
+/* VERTICAL SHRINKING FIX (IE-10/11) */
+
+html.flexbox-tweener {
+
+  .popover.card {
+
+    max-height: none;
+
+    > .card-block {
+      max-height: $popover-max-height * .8;
+    }
+
+  }
+
+}
+
+
+// @require ../popover.scss
+
+//FIXME: Doesn't work properly inside a nested layout (shouldn't influence the parent layouts)
+
+/* FULLSCREEN */
+
+.popover.fullscreen,
+.popover.fullscreen-request {
+  border-width: 0;
+  border-radius: 0;
+  max-width: none;
+  width: 100%;
+  max-height: none;
+  height: 100%;
+}
+
+/* VERTICAL SHRINKING FIX (IE-10/11) */
+
+html.flexbox-tweener {
+
+  .popover.fullscreen,
+  .popover.fullscreen-request {
+
+    /* CARD */
+
+    &.card > .card-block {
+      max-height: none;
+    }
+
+  }
+
+}
+
+
+// @require ../popover.scss
+
+/* MOVING */
+
+.popover.moving {
+
+  transition: transform $popover-animation-duration;
+
+  /* TIP */
+
+  &:after {
+    transition: none; // Safari fix
+    transition-property: left, top; //TODO: Animate `transform` instead (this might be tricky, since `transform` is used by `pointing` for centering the pointer)
+    transition-duration: $popover-animation-duration;
+  }
+
+}
+
+
+// @require ../popover.scss
+
+/* NO TIP */
+
+.popover.no-tip:after {
+  display: none;
+}
+
+
+// @require ../popover.scss
+// @require ../no_tip/no_tip.scss
+
+/* AFFIXED */
+
+.popover.affixed {
+  @extend .popover.no-tip;
+}
+
+
+// @require ../affixed.scss
+
+/* BOTTOM */
+
+.popover.affixed.position-bottom {
+  @include border-top-radius ( 0 );
+  margin-top: - $border-width;
+}
+
+
+// @require ../affixed.scss
+
+/* LEFT */
+
+.popover.affixed.position-left {
+  margin-right: - $border-width;
+}
+
+
+// @require ../affixed.scss
+
+/* RIGHT */
+
+.popover.affixed.position-right {
+  margin-left: - $border-width;
+}
+
+
+// @require ../affixed.scss
+
+/* TOP */
+
+.popover.affixed.position-top {
+  @include border-bottom-radius ( 0 );
+  margin-bottom: - $border-width;
+}
+
+
+/* RIPPLE */
+
+.ripple {
+
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transform: translateZ(0); // For some reason it fixes the bug of ripples exceeding the border-radius, overflow: hidden, combo
+
+  /* CIRCLE */
+
+  &-circle {
+
+    position: absolute;
+    pointer-events: none;
+    margin: 0 !important;
+    z-index: $ripple-circle-z-index !important;
+
+    &:before {
+      @include absolute ( ( - 50% ) false false ( - 50% ) );
+      @include dimension ( 100% );
+      content: '';
+      border-radius: 50%;
+      background-color: $ripple-bg-color;
+      opacity: 0;
+      animation: ripple $ripple-animation-duration;
+      animation-timing-function: $ripple-animation-timing-function;
+    }
+
+  }
+
+}
+
+
+// @require ../ripple.scss
+
+/* COLORS */
+
+@each $name, $datas in $colors {
+
+  @if index( $ripple-colors, $name ) and $name != 'inherit' and $name != 'transparent' {
+
+    $class: color-get-class( $name );
+
+    $bg: nth( $datas, 1 );
+
+    .ripple-#{$class} > .ripple-circle:before {
+      background-color: $bg;
+    }
+
+  }
+
+}
+
+
+// @require core/widget/widget.scss
+
+//TODO: Add support for vertical sections
+
+/* SECTIONS */
+
+.sections {
+
+  @extend %widget;
+  @include children-no-gutter ();
+  display: flex;
+  flex-wrap: nowrap;
+
+  /* SECTION CENTER */
+
+  // Centering the center segment, if the left one xor the right one is missing
+  // An obvious `left + center + right` or `right + center + left` (RTL languages) order is assumed
+
+  > .section-center:not(:only-child) {
+
+    &:first-child,
+    &:last-child,
+    &.forced {
+      @include center-absolute-transform ();
+    }
+
+  }
+
+  /* CENTER */
+
+  //TODO: Maybe join them with `multiple`'s and make a decorator for them
+
+  &.center-x,
+  &.center {
+    justify-content: center;
+  }
+
+  &.center-y,
+  &.center {
+    align-items: center;
+  }
+
+}
+
+/* SEGMENTS */
+
+.section-left,
+.section-center,
+.section-right {
+  @extend %widget;
+  display: flex;
+  flex: 1 1 auto;  // IE-10/11 sets flex-shrink to 0
+}
+
+/* LEFT */
+
+.section-left {
+  justify-content: flex-start;
+}
+
+/* CENTER */
+
+.section-center {
+  justify-content: center;
+}
+
+/* RIGHT */
+
+.section-right {
+  justify-content: flex-end;
+}
+
+
+/* SELECT */
+
+select {
+  @include color ( $select-color, $select-color-force, $select-color-basic );
+  font-family: $font-family-sans-serif;
+}
+
+/* OPTION */
+
+option {
+  padding: $select-padding-y $select-padding-x;
+}
+
+/* OPTGROUP */
+
+optgroup {
+
+  font-style: normal;
+
+  /* LABEL */
+
+  &::before {
+    padding: $select-padding-y $select-padding-x;
+  }
+
+  /* OPTION */
+
+  option {
+    padding: $select-padding-y $select-padding-x $select-padding-y ( $select-padding-x * 3 );
+  }
+
+}
+
+
+// @optional ./native.scss
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+// @require widgets/icon/icon.scss
+
+//TODO: Add support for non-affixed select's popover
+
+/* SELECT */
+
+.select {
+
+  @extend %widget;
+  cursor: pointer;
+  position: relative;
+
+  /* LABEL */
+
+  &.label {
+    text-align: left;
+  }
+
+  /* SELECT */
+
+  select {
+
+    @include fill ();
+    @include fill-absolute ();
+    appearance: none;
+    cursor: pointer;
+    margin: 0 !important;
+    opacity: 0;
+    border: 0;
+    border-radius: inherit;
+    z-index: $select-z-index !important;
+
+    /* BORDERED */
+
+    //FIXME: Not stretching properly, at maximum it reached 100% width and height
+
+    // .bordered > & {
+    //   @include absolute ( - $border-width );
+    // }
+
+    /* LABEL */
+
+    + label {
+
+      padding-right: ( 1em * $icon-scale-factor ) + $select-inner-gutter;
+      min-height: 1em * $icon-scale-factor;
+      min-width: 1em * $icon-scale-factor;
+      flex-grow: 1;
+      cursor: pointer;
+
+      /* EMPTY */
+
+      &:empty {
+        padding-right: 0;
+      }
+
+      /* AFTER */
+
+      &:after {
+        @extend %icon-base;
+        position: absolute;
+        right: 0;
+        top: 0; //Ensuring it won't wrap
+        content: $select-icon-closed;
+      }
+
+      /* CUSTOM AFTER */
+
+      &[data-icon]:after {
+        content: attr(data-icon);
+      }
+
+      &[data-icon-closed]:after {
+        content: attr(data-icon-closed);
+      }
+
+    }
+
+  }
+
+  /* OPEN */
+
+  &.open {
+
+    /* LABEL */
+
+    select + label {
+
+      /* AFTER */
+
+      &:after {
+        content: $select-icon-open;
+      }
+
+      /* CUSTOM AFTER */
+
+      &[data-icon]:after {
+        content: attr(data-icon);
+      }
+
+      &[data-icon-open]:after {
+        content: attr(data-icon-open);
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../select.scss
+
+/* BOTTOM */
+
+.select.popover-anchor-bottom {
+  @include border-bottom-radius ( 0 );
+}
+
+
+// @require ../select.scss
+
+/* LEFT */
+
+.select.popover-anchor-left {
+  @include border-left-radius ( 0 );
+}
+
+
+// @require ../select.scss
+
+/* RIGHT */
+
+.select.popover-anchor-right {
+  @include border-right-radius ( 0 );
+}
+
+
+// @require ../select.scss
+
+/* TOP */
+
+.select.popover-anchor-top {
+  @include border-top-radius ( 0 );
+}
+
+
+// @require ../select.scss
+
+/* INVALID */
+
+.select.invalid > label,
+select.invalid + label,
+select + label.invalid {
+
+  /* AFTER */
+
+  &:after {
+    color: $color-error !important;
+  }
+
+}
+
+
+// @optional widgets/card/card.scss
+// @require ../select.scss
+
+/* POPOVER */
+
+.select-popover {
+
+  @include z-depth ( $select-popover-z-depth, $select-popover-z-depth-force, $select-popover-z-depth-basic );
+
+  /* CARD BLOCK */
+
+  .card-block {
+    padding: $gutter-half 0;
+  }
+
+  /* BUTTON */
+
+  .button {
+    display: block;
+    border-radius: 0;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  /* DIVIDER */
+
+  .divider {
+    margin-top: $gutter-half;
+  }
+
+}
+
+
+// @require ../select.scss
+
+/* VALID */
+
+.select.valid > label,
+select.valid + label,
+select + label.valid {
+
+  /* AFTER */
+
+  &:after {
+    color: $color-success !important;
+  }
+
+}
+
+
+// @require core/widget/widget.scss
+
+/* SHAPE */
+
+%shape {
+
+  @extend %widget;
+  flex: 0 0 auto !important; // We don't want it to grow or shrink in any case
+
+  /* INLINE */
+
+  address &,
+  p &,
+  span & {
+    display: inline-block;
+  }
+
+}
+
+
+// @require ../shape.scss
+
+/* CIRCLE */
+
+.circle {
+  @extend %shape;
+  @include circle ( $circle-size );
+  @include color ( $circle-color, $circle-color-force, $circle-color-basic );
+}
+
+
+// @require ../../shape.scss
+
+/* SAMPLE */
+
+.square-sample {
+
+  @extend %shape;
+  @include square ( $square-sample-size );
+  @include color ( $square-sample-color, $square-sample-color-force, $square-sample-color-basic );
+  min-width: $square-sample-size;
+  min-height: $square-sample-size;
+  border-width: $square-border-width;
+  border-style: $square-border-style;
+  padding: $gutter-half;
+
+  /* PARAGRAPH */
+
+  > p {
+    @include size ( $square-sample-p-size, $square-smaple-p-size-force, $square-smaple-p-size-basic );
+  }
+
+}
+
+
+// @require ../shape.scss
+
+/* SQUARE */
+
+.square {
+  @extend %shape;
+  @include square ( $square-size );
+  @include color ( $circle-color, $circle-color-force, $circle-color-basic );
+}
+
+
+// @require ../shape.scss
+
+/* TRIANGLE */
+
+.triangle {
+  @extend %shape;
+  border-color: $triangle-color;
+}
+
+
+// @require ../triangle.scss
+
+/* BOTTOM */
+
+.triangle.bottom {
+  @include triangle ( $triangle-size, bottom );
+}
+
+
+// @require ../triangle.scss
+
+/* BOTTOM LEFT */
+
+.triangle.bottom-left {
+  @include triangle ( $triangle-size, bottom-left );
+}
+
+
+// @require ../triangle.scss
+
+/* BOTTOM RIGHT */
+
+.triangle.bottom-right {
+  @include triangle ( $triangle-size, bottom-right );
+}
+
+
+// @require ../triangle.scss
+
+/* LEFT */
+
+.triangle.left {
+  @include triangle ( $triangle-size, left );
+}
+
+
+// @require ../triangle.scss
+
+/* RIGHT */
+
+.triangle.right {
+  @include triangle ( $triangle-size, right );
+}
+
+
+// @require ../triangle.scss
+
+/* TOP */
+
+.triangle.top {
+  @include triangle ( $triangle-size, top );
+}
+
+
+// @require ../triangle.scss
+
+/* TOP LEFT */
+
+.triangle.top-left {
+  @include triangle ( $triangle-size, top-left );
+}
+
+
+// @require ../triangle.scss
+
+/* TOP RIGHT */
+
+.triangle.top-right {
+  @include triangle ( $triangle-size, top-right );
+}
+
+
+ // @optional ./top.scss
+ // @optional ./top_left.scss
+ // @optional ./top_right.scss
+ // @optional ./right.scss
+ // @optional ./bottom.scss
+ // @optional ./bottom_left.scss
+ // @optional ./bottom_right.scss
+ // @optional ./left.scss
+
+/* DEFAULT */
+
+.triangle:not(.right):not(.bottom):not(.left):not(.top-left):not(.top-right):not(.bottom-right):not(.bottom-left) {
+  @extend .triangle.top;
+}
+
+
+// @require core/widget/widget.scss
+
+/* SPACER */
+
+.spacer {
+  @extend %widget;
+  flex: 1 1 auto !important; // IE-10/11 sets flex-shrink to 0
+  margin: 0 !important;
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+
+//FIXME: Firefox and Edge are not animating stroke-dashoffset, IE is not even animatin stroke-dasharray
+//TODO: Add support for icon at the center of the spinner, sometimes might be useful
+
+/* SPINNER */
+
+svg.spinner {
+
+  @extend %widget;
+  @include dimension ( $spinner-size );
+  display: block;
+  background-color: transparent !important;
+  animation: rotate $spinner-animation-rotate-duration linear infinite;
+
+  /* CIRCLE */
+
+  circle {
+    fill: none;
+    stroke-width: $spinner-stroke-width;
+    stroke: $spinner-stroke-color;
+    stroke-linecap: round;
+    stroke-dasharray: 0%, 240%; // Since IE-10/11 won't animate this we are setting the initial value, so that it will degrade to a rotating dot
+    animation: spinner-dash $spinner-stroke-animation-dash-duration ease-in-out infinite;
+  }
+
+  /* ONLY CHILD */
+
+  &:only-child,
+  .overlay + &:last-child,
+  .ripple-cirlce + &:last-child {
+    margin: auto;
+  }
+
+}
+
+
+// @require ../spinner.scss
+
+/* COLORS */
+
+@each $name, $datas in $colors {
+
+  @if index( $spinner-colors, $name ) and $name != 'inherit' and $name != 'transparent' {
+
+    $class: color-get-class( $name );
+
+    $bg: nth( $datas, 1 );
+
+    svg.spinner.#{$class} circle {
+      stroke: $bg;
+    }
+
+  }
+
+}
+
+
+// @require ../spinner.scss
+
+/* LABEL */
+
+.spinner-label {
+  @extend %widget;
+  @include color ( $spinner-label-color, $spinner-label-color-force, $spinner-label-color-basic );
+  @include z-depth ( $spinner-label-z-depth, $spinner-label-z-depth-force, $spinner-label-z-depth-basic );
+  display: flex;
+  border-radius: $spinner-label-border-radius;
+  padding: $spinner-label-padding-y $spinner-label-padding-x;
+}
+
+
+// @require ../label.scss
+
+/* COLORS */
+
+@each $name, $datas in $colors {
+
+  @if index( $spinner-label-colors, $name ) and $name != 'inherit' and $name != 'transparent' {
+
+    $class: color-get-class( $name );
+
+    $accent: nth( $datas, 5 );
+
+    %color-#{$name}.spinner-label circle {
+      stroke: $accent;
+    }
+
+  }
+
+}
+
+
+// @require ../spinner.scss
+
+/* MULTICOLOR */
+
+.spinner.multicolor {
+
+  /* CIRCLE */
+
+  circle {
+    animation: spinner-dash $spinner-stroke-animation-dash-duration ease-in-out infinite,
+               spinner-multicolor ( $spinner-stroke-animation-dash-duration * 4 ) ease-in-out infinite;
+  }
+
+}
+
+
+// @require core/reset/reset.scss
+// @require widgets/icon/icon.scss
+
+/* SORTABLE HEADER */
+
+table.sortable th[data-sort],
+table th.sortable { // In order to better support datatables
+
+  position: relative;
+  cursor: pointer;
+  padding-right: $table-sortable-th-padding-right;
+
+  /* TEXT CENTER */
+
+  &.text-center {
+    padding-left: $table-sortable-th-padding-right; // In order to have the text perfectly aligned
+  }
+
+  /* HOVER */
+
+  &:hover {
+    background-color: $table-sortable-th-hover-bg-color;
+  }
+
+  /* ACTIVE */
+
+  &:active {
+    background-color: $table-sortable-th-active-bg-color;
+  }
+
+  /* BEFORE / AFTER */
+
+  &:before,
+  &:after {
+    @extend %icon-base;
+    @include absolute ( 0 $table-sortable-th-icon-right 0 false );
+    margin: auto;
+    opacity: 0;
+  }
+
+  /* BEFORE */
+
+  &:before {
+    content: $sortable-desc-icon;
+    top: $soratable-table-th-icon-gutter;
+  }
+
+  /* AFTER */
+
+  &:after {
+    content: $sortable-asc-icon;
+    bottom: $soratable-table-th-icon-gutter;
+  }
+
+  /* INACTIVE OPACITY */
+
+  &:hover:before,
+  &:hover:after,
+  &.sort-desc:after,
+  &.sort-asc:before {
+    opacity: $table-sortable-th-icon-opacity;
+  }
+
+  /* ACTIVE OPACITY */
+
+  &.sort-desc:before,
+  &.sort-asc:after {
+    opacity: $table-sortable-th-icon-active-opacity;
+  }
+
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+
+//TODO: Add horizontally scrollable tables support
+//TODO: Add .reflow (see bootstrap v4)
+// We are using the `table` class so that if someone need a plain basic table he/she can
+
+/* TABLE */
+
+.table {
+
+  @extend %widget;
+  @include color ( $table-color, $table-color-force, $table-color-basic );
+  width: 100%;
+  border-collapse: separate;
+  border-radius: $table-border-radius;
+
+  /* ROWS */
+
+  tr {
+
+    /* CELLS */
+
+    > * {
+      padding: $table-cell-padding-y $table-cell-padding-x;
+      text-align: left;
+    }
+
+    /* THEAD CELLS */
+
+    > th {
+      vertical-align: middle;
+    }
+
+    /* TBODY CELLS */
+
+    > td {
+      vertical-align: top;
+    }
+
+  }
+
+  /* ROW EMPTY */ //TODO: Maybe move it to its own module
+
+  .table-row-empty:not(:only-child) {
+    display: none;
+  }
+
+  /* THEAD */
+
+  thead {
+
+    @include border-top-radius ( inherit );
+    background-color: $table-header-bg-color;
+
+    tr:first-child {
+
+      @include border-top-radius ( inherit );
+
+      th {
+
+        &:first-child {
+          border-top-left-radius: inherit;
+        }
+
+        &:last-child {
+          border-top-right-radius: inherit;
+        }
+
+      }
+
+    }
+
+  }
+
+  /* TBODY */
+
+  tbody {
+
+    border-radius: inherit;
+
+    tr {
+
+      &.table-row-empty td {
+        height: $table-row-empty-height;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      &:first-child,
+      &.table-row-empty + tr {
+
+        @include border-top-radius ( inherit );
+
+        td {
+
+          &:first-child {
+            border-top-left-radius: inherit;
+          }
+
+          &:last-child {
+            border-top-right-radius: inherit;
+          }
+
+        }
+
+      }
+
+      &:last-child {
+
+        @include border-bottom-radius ( inherit );
+
+        td {
+
+          &:first-child {
+            border-bottom-left-radius: inherit;
+          }
+
+          &:last-child {
+            border-bottom-right-radius: inherit;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  thead ~ tbody tr:first-child td,
+  thead ~ tbody .table-row-empty + tr td {
+
+    &:first-child {
+      border-top-left-radius: 0;
+    }
+
+    &:last-child {
+      border-top-right-radius: 0;
+    }
+
+  }
+
+  tfoot ~ tbody tr:last-child td {
+
+    &:first-child {
+      border-bottom-left-radius: 0;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: 0;
+    }
+
+  }
+
+  /* TFOOT */
+
+  tfoot {
+
+    @include border-bottom-radius ( inherit );
+    background-color: $table-footer-bg-color;
+
+    tr:last-child {
+
+      @include border-bottom-radius ( inherit );
+
+      td {
+
+        &:first-child {
+          border-bottom-left-radius: inherit;
+        }
+
+        &:last-child {
+          border-bottom-right-radius: inherit;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../table.scss
+
+/* COLLAPSED */
+
+.table.collapsed {
+  width: auto;
+}
+
+
+// @require ../table.scss
+
+/* COMPACT */
+
+.table.compact tr > * {
+  padding: $table-compact-cell-padding-y $table-compact-cell-padding-x;
+}
+
+
+// @require ../table.scss
+
+/* EQUAL */
+
+.table.equal {
+
+  table-layout: fixed;
+
+  /* CELLS */
+
+  tr > * {
+    width: 100%;
+  }
+
+}
+
+
+// @require ../table.scss
+
+/* HOVERABLE */
+
+.table:not(.disabled).hoverable tbody tr:not(.table-row-empty):hover {
+  background-color: $table-hoverable-row-even-hover-bg-color;
+}
+
+
+// @require ../hoverable.scss
+
+/* STRIPED */
+
+.table:not(.disabled).hoverable.striped tbody tr {
+
+  &:first-child.table-row-empty ~ tr {
+
+    &:nth-child(even):hover {
+      background-color: $table-hoverable-row-even-hover-bg-color;
+    }
+
+    &:nth-child(odd):hover {
+      background-color: $table-hoverable-row-odd-hover-bg-color;
+    }
+
+  }
+
+  &:first-child:not(.table-row-empty) {
+
+    &:hover {
+      background-color: $table-hoverable-row-even-hover-bg-color;
+    }
+
+    ~ tr {
+
+      &:nth-child(odd):hover {
+        background-color: $table-hoverable-row-even-hover-bg-color;
+      }
+
+      &:nth-child(even):hover {
+        background-color: $table-hoverable-row-odd-hover-bg-color;
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../table.scss
+
+// We are separating the border property since the color may be `inherit`
+
+/* SEPARATED */
+
+.table.separated {
+
+  /* RESETTING */
+
+  thead th,
+  tbody td,
+  tfoot td {
+    border-width: 0;
+    border-style: $table-separated-border-style;
+    border-color: $table-separated-border-color;
+  }
+
+  /* THEAD */
+
+  thead th {
+    border-bottom-width: $table-separated-border-width;
+  }
+
+  /* TBODY */
+
+  tbody tr:not(:last-child) td {
+    border-bottom-width: $table-separated-border-width;
+  }
+
+  /* TFOOT */
+
+  tfoot td {
+    border-top-width: $table-separated-border-width;
+  }
+
+}
+
+
+// @require ../separated/separated.scss
+
+//FIXME: Improve support for advanced tables (rows spawning multiple rows or columns)
+
+/* CELLED */
+
+.table.celled {
+
+  @extend .table.separated;
+
+  /* CELLS */
+
+  thead th,
+  tbody td,
+  tfoot td {
+
+    border-left-width: $table-celled-border-width;
+
+    &:last-child {
+      border-right-width: $table-celled-border-width;
+    }
+
+  }
+
+  /* ROWS */
+
+  tbody tr {
+
+    &:first-child td,
+    &.table-row-empty + tr td {
+      border-top-width: $table-celled-border-width;
+    }
+
+    &:last-child td {
+      border-bottom-width: $table-celled-border-width;
+    }
+
+  }
+
+  /* THEAD */
+
+  thead {
+
+    th {
+      border-top-width: $table-celled-border-width;
+    }
+
+    ~ tbody tr:first-child td,
+    ~ tbody tr.table-row-empty + tr td {
+      border-top-width: 0;
+    }
+
+  }
+
+  /* TFOOT */
+
+  tfoot {
+
+    td {
+      border-bottom-width: $table-celled-border-width;
+    }
+
+    ~ tbody tr:last-child td {
+      border-bottom-width: 0;
+    }
+
+  }
+
+}
+
+
+// @require ../table.scss
+
+/* STRIPED */
+
+.table.striped tbody tr {
+
+  &:first-child.table-row-empty ~ tr {
+
+    &:nth-child(even) {
+      background-color: $table-striped-row-even-bg-color;
+    }
+
+    &:nth-child(odd) {
+      background-color: $table-striped-row-odd-bg-color;
+    }
+
+  }
+
+  &:first-child:not(.table-row-empty) {
+
+    background-color: $table-striped-row-even-bg-color;
+
+    ~ tr {
+
+      &:nth-child(odd) {
+        background-color: $table-striped-row-even-bg-color;
+      }
+
+      &:nth-child(even) {
+        background-color: $table-striped-row-odd-bg-color;
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../equal/equal.scss
+
+/* TRUNCATED */
+
+.table.truncated {
+
+  @extend .table.equal;
+
+  tr > * {
+    @include text-truncate ();
+  }
+
+}
+
+
+// @require core/multiple/multiple.scss
+// @require widgets/container/container.scss
+
+/* TAGBOX */
+
+.tagbox {
+
+  @extend %container;
+  @include color ( $tagbox-color, $tagbox-color-force, $tagbox-color-basic );
+
+  /* TAGS */
+
+  &-tags {
+
+    @extend %multiple;
+    @include last-child-no-gutter ( 0, - $gutter );
+    @include margin-x ( - $gutter-half );
+    display: flex;
+    flex-wrap: wrap;
+
+    /* CHILDREN */
+
+    > .tagbox-tag,
+    > .tagbox-partial {
+      @include margin-x ( $gutter-half );
+      white-space: nowrap;
+      z-index: 0; // Needed by `i.icon.actionable`
+    }
+
+  }
+
+  /* PARTIAL */
+
+  input.tagbox-partial {
+    @include color ( 'inherit', true, true );
+    margin-bottom: $gutter;
+    min-width: $tagbox-partial-min-width;
+  }
+
+}
+
+
+/* CLOSER */
+
+[class$="-closer"],
+[class*="-closer "] {
+
+  /* ENABLED */
+
+  &:not(.disabled) {
+    cursor: pointer;
+  }
+
+}
+
+
+/* OPENER */
+
+[class$="-opener"],
+[class*="-opener "] {
+
+  /* ENABLED */
+
+  &:not(.disabled) {
+    cursor: pointer;
+  }
+
+}
+
+
+/* TOGGLER */
+
+[class$="-toggler"],
+[class*="-toggler "] {
+
+  /* ENABLED */
+
+  &:not(.disabled) {
+    cursor: pointer;
+  }
+
+}
+
+
+// @require core/reset/reset.scss
+// @require widgets/input/input.scss
+
+/* TEXTAREA */
+
+textarea {
+  @extend %input;
+  resize: vertical;
+}
+
+
+// @require ../textarea.scss
+
+/* UNRESIZABLE */
+
+textarea.unresizable {
+  resize: none;
+}
+
+
+// @require ../unresizable/unresizable.scss
+
+/* AUTOGROW */
+
+textarea.autogrow {
+  @extend textarea.unresizable;
+}
+
+
+// @require ../unresizable/unresizable.scss
+
+/* DISABLED */
+
+textarea[disabled],
+textarea.disabled,
+.disabled textarea {
+  @extend textarea.unresizable;
+}
+
+
+/* OPACIFY */
+
+@each $name, $datas in $colors {
+
+  @if index( $toast-colors, $name ) and $name != 'inherit' and $name != 'transparent' {
+
+    $bg: nth( $datas, 1 );
+    $bg-hover: nth( $datas, 2 );
+    $bg-active: nth( $datas, 3 );
+
+    $bg-opacified: rgba( $bg, $toast-bg-opacity );
+    $bg-opacified-hover: rgba( $bg-hover, $toast-bg-opacity );
+    $bg-opacified-active: rgba( $bg-active, $toast-bg-opacity );
+
+    @if opacity( $bg ) != opacity( $bg-opacified ) {
+
+      .toast%color-#{$name} {
+        background-color: $bg-opacified;
+      }
+
+    }
+
+    @if opacity( $bg-hover ) != opacity( $bg-opacified-hover ) {
+
+      .toast%color-#{$name}.hover,
+      .toast%color-#{$name}%actionable:not(.active):hover {
+        background-color: $bg-opacified-hover;
+      }
+
+    }
+
+    @if opacity( $bg-active ) != opacity( $bg-opacified-active ) {
+
+      .toast%color-#{$name}.active,
+      .toast%color-#{$name}%actionable:not(.ripple):active {
+        background-color: $bg-opacified-active;
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require widgets/infobar/infobar.scss
+
+//TODO: Push up `FAB` if needed
+//TODO: Make toast scrollables, maybe, so that in no case they will fill up the entire screen
+//TODO: Maybe switch to an equally good but faster to compute animation
+
+/* TOAST */
+
+.toast {
+
+  @include children-no-gutter ();
+  @include z-depth ( $toast-z-depth, $toast-z-depth-force, $toast-z-depth-basic );
+  display: block;
+  border-radius: $toast-border-radius;
+  pointer-events: auto;
+  transition: none; // Safari fix
+  transition-property: border-radius, border-width, opacity, filter, box-shadow, font-size, padding, margin;
+  transition-duration: $toast-animation-duration;
+  transform: translateZ(0);
+
+  /* IMG */
+
+  &-img {
+    width: $toast-img-size;
+    border-radius: if( $toast-img-rounded, $circular-border-radius, $toast-border-radius );
+  }
+
+  /* BUTTONS */
+
+  &-buttons {
+    @include padding-x ( $gutter );
+  }
+
+  /* INFOBAR */
+
+  > .infobar {
+    transition: padding $toast-animation-duration;
+  }
+
+}
+
+/* HORIZONTAL GROW FIX (IE-10/11)*/
+
+html.flexbox-tweener {
+
+  .toast {
+
+    > .infobar {
+
+      flex-wrap: nowrap;
+
+      .infobar-center {
+        flex-basis: auto;
+      }
+
+    }
+
+  }
+
+}
+
+
+// @require ../toast.scss
+
+/* CLOSED */
+
+.toast:not(.open) {
+
+  border-width: 0 !important;
+  opacity: 0;
+  font-size: 0;
+  padding: 0;
+  margin: 0;
+
+  /* INFOBAR */
+
+  > .infobar {
+    padding: 0;
+  }
+
+}
+
+
+// @require ../toast.scss
+
+/* QUEUE */
+
+.toast-queue {
+
+  display: flex;
+
+  /* LEFT */
+
+  &.left {
+
+    align-items: flex-start;
+
+    &:not(:empty) {
+      margin-left: $gutter;
+    }
+
+  }
+
+  /* CENTER */
+
+  &.center {
+
+    @include margin-x ( $gutter );
+    align-items: center;
+
+    &:empty {
+      @include margin-x ( $gutter-half );
+    }
+
+  }
+
+  /* RIGHT */
+
+  &.right {
+
+    align-items: flex-end;
+
+    &:not(:empty) {
+      margin-right: $gutter;
+    }
+
+  }
+
+  /* EXPANDED */
+
+  &.expanded {
+    @include toast-queue-expand ();
+  }
+
+}
+
+/* COLUMNS SHRINKING FIX (IE-10/11)*/
+
+html.flexbox-tweener {
+
+  /* QUEUE */
+
+  .toast-queue:not(.expanded):not(:empty) {
+
+    flex: 1 1 0%;
+
+    /* TOAST */
+
+    .toast {
+      max-width: 100%;
+    }
+
+  }
+
+}
+
+
+// @require ../toast.scss
+// @require ../queue/queue.scss
+
+/* QUEUES */
+
+.toast-queues {
+
+  @include fixed ( false 0 false 0 );
+  z-index: $toast-queues-z-index !important;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  pointer-events: none;
+
+  /* TOP */
+
+  &.top {
+
+    top: 0;
+
+    /* STICKY HEADER */
+
+    .layout.vertical > .layout-header.sticky ~ & {
+      top: $layout-sticky-header-height;
+    }
+
+    /* ROW */
+
+    .toast-queues-row {
+      align-items: flex-start;
+    }
+
+    /* QUEUE */
+
+    .toast-queue {
+
+      flex-direction: column;
+
+      /* TOAST */
+
+      .toast {
+        margin-top: $gutter;
+      }
+
+      /* EXPANDED */
+
+      &.expanded .toast {
+        border-top-width: 0;
+        border-bottom-width: $border-width;
+        border-bottom-style: solid;
+      }
+
+    }
+
+  }
+
+  /* BOTTOM */
+
+  &.bottom {
+
+    bottom: 0;
+
+    /* ROW */
+
+    .toast-queues-row {
+      align-items: flex-end;
+    }
+
+    /* QUEUE */
+
+    .toast-queue {
+
+      flex-direction: column-reverse;
+
+      /* TOAST */
+
+      .toast {
+        margin-bottom: $gutter;
+      }
+
+      /* EXPANDED */
+
+      &.expanded .toast {
+        border-bottom-width: 0;
+        border-top-width: $border-width;
+        border-top-style: solid;
+      }
+
+    }
+
+  }
+
+  /* ROW */
+
+  &-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+}
+
+
+// @require ../toast.scss
+// @require ../queue/queue.scss
+// @require ../queues/queues.scss
+
+//TODO: Attach the shadow to `.toast-queues`, but only if there are some noties
+
+/* AUTOEXPAND */
+
+@include media-width-down ( $toast-autoexpand-width ) {
+
+  /* QUEUES */
+
+  .toast-queues {
+
+    /* TOP */
+
+    &.top {
+
+      /* ROW */
+
+      .toast-queues-row {
+        flex-direction: column;
+      }
+
+      /* TOAST */
+
+      .toast {
+        border-top-width: 0;
+        border-bottom-width: $border-width;
+        border-bottom-style: solid;
+      }
+
+    }
+
+    /* BOTTOM */
+
+    &.bottom {
+
+      /* ROW */
+
+      .toast-queues-row {
+        flex-direction: column-reverse;
+      }
+
+      /* TOAST */
+
+      .toast {
+        border-bottom-width: 0;
+        border-top-width: $border-width;
+        border-top-style: solid;
+      }
+
+    }
+
+  }
+
+  /* QUEUE */
+
+  .toast-queue {
+    @include toast-queue-expand ();
+  }
+
+}
+
+
+// @optional core/multiple/multiple.scss
+// @require core/widget/widget.scss
+// @require core/z_index/z_index.scss
+
+/* TOOLBAR */
+
+.toolbar {
+
+  @extend %widget;
+  @extend %layout-priority-z-index-provider;
+  padding: $toolbar-padding-y $toolbar-padding-x;
+  z-index: 0; // In order to better support actionable icons etc.
+
+  /* MULTIPLE */
+
+  > %multiple:only-child {
+    flex-wrap: nowrap;
+  }
+
+}
+
+
+// @require ../toolbar.scss
+
+/* VERTICAL */
+
+.toolbar.vertical {
+  display: inline-flex;
+  padding: $toolbar-vertical-padding-y $toolbar-vertical-padding-x;
+}
+
+
+// @require core/reset/reset.scss
+
+//FIXME: There's a double border on Firefox Mobile
+//TODO: Add a more advanced abbr, that triggers a tooltip, maybe even a pure CSS one
+// We are separating the border property since the color may be `inherit`
+
+/* ABBR */
+
+abbr[title] {
+  cursor: help;
+  text-decoration: none;
+  border-width: 0 0 $abbr-border-width;
+  border-style: $abbr-border-style;
+  border-color: $abbr-border-color;
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+
+/* ADDRESS */
+
+address {
+  @extend %widget;
+  @include children-no-gutter ();
+  font-style: $address-font-style;
+}
+
+
+// @require core/reset/reset.scss
+
+/* BLOCKQUOTE */
+
+blockquote {
+
+  @extend %widget;
+  @include color ( $blockquote-color, $blockquote-color-force, $blockquote-color-basic );
+  padding: $blockquote-padding-y $blockquote-padding-x $blockquote-padding-y ( $blockquote-padding-x + $blockquote-line-width );
+  border-radius: $blockquote-line-width;
+
+  /* LINE */
+
+  &:before {
+    @include absolute ( 0 false 0 0 );
+    width: $blockquote-line-width;
+    content: '';
+    border-radius: $blockquote-line-border-radius;
+    background-color: $blockquote-line-bg-color;
+  }
+
+  /* FOOTER */
+
+  > footer {
+
+    @extend %widget;
+    @include size ( $blockquote-footer-size, $blockquote-footer-size-force, $blockquote-footer-size-basic );
+    padding: $blockquote-footer-padding-y $blockquote-footer-padding-x;
+    opacity: $blockquote-footer-opacity;
+
+    &:before {
+      content: $blockquote-footer-prefix;
+    }
+
+  }
+
+}
+
+
+// @require core/reset/reset.scss
+
+/* CODE */
+
+code {
+
+  font-family: $code-font-family;
+  background-color: $code-bg-color;
+  padding: $code-padding-y $code-padding-x;
+  border-radius: $code-border-radius;
+
+  /* INSIDE PRE */
+
+  pre > & {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+// @require decorators/sizes/sizes.scss
+
+/* HEADINGS */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+  @extend %widget;
+  font-family: $heading-font-family;
+  font-weight: $heading-fond-weight;
+
+  /* SMALL */
+
+  > small {
+    opacity: $heading-small-opacity;
+  }
+
+}
+
+h1 {
+  @include size ( $h1-size, $heading-size-force, $heading-size-basic );
+}
+
+h2 {
+  @include size ( $h2-size, $heading-size-force, $heading-size-basic );
+}
+
+h3 {
+  @include size ( $h3-size, $heading-size-force, $heading-size-basic );
+}
+
+h4 {
+  @include size ( $h4-size, $heading-size-force, $heading-size-basic );
+}
+
+h5 {
+  @include size ( $h5-size, $heading-size-force, $heading-size-basic );
+}
+
+h6 {
+  @include size ( $h6-size, $heading-size-force, $heading-size-basic );
+}
+
+
+// @require core/reset/reset.scss
+// @require decorators/actionable/actionable.scss
+
+//TODO: Make it more visually appealing
+//TODO: Add support for automatic color selection
+
+/* LINK */
+
+a {
+
+  @include actionable-inline ();
+  @include text-wrap ();
+  color: inherit;
+  text-decoration: none;
+
+  /* STYLE */
+
+  // Elsewhere this might be an unwanted style
+
+  p &,
+  li &,
+  address & {
+
+    @include color-link ( $link-color, $link-color-force, $link-color-basic );
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+  }
+
+}
+
+
+// @require ../link.scss
+
+/* COLORS */
+
+@each $name, $datas in $colors {
+
+  @if ( index( $link-colors, $name ) and $name != 'transparent' ) {
+
+    $class: color-link-get-class( $name );
+
+    $bg: nth( $datas, 1 );
+    $bg-hover: nth( $datas, 2 );
+    $bg-active: nth( $datas, 3 );
+
+    %color-#{$name}-link-base {
+
+      color: $bg;
+
+      &:hover {
+        color: $bg-hover;
+      }
+
+      &:active {
+        color: $bg-active;
+      }
+
+    }
+
+    %color-#{$name}-link {
+      @extend %color-#{$name}-link-base;
+    }
+
+    .#{$class} {
+      @extend %color-#{$name}-link;
+    }
+
+  }
+
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+
+//TODO: Add support for horizontal lists
+
+/* LISTS */
+
+ul,
+ol,
+dl {
+  @extend %widget;
+  padding-left: $list-padding-left;
+}
+
+dd {
+  margin: 0;
+  padding-left: $list-padding-left;
+}
+
+/* NESTED OL */
+
+ol ol {
+  list-style-type: upper-roman;
+}
+
+
+// @require ../lists.scss
+
+/* NO BULLET */
+
+ul.no-bullet {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+
+// @require core/reset/reset.scss
+
+/* MARK */
+
+mark {
+  background-color: $mark-bg-color;
+  padding: $mark-padding-y $mark-padding-x;
+  border-radius: $mark-border-radius;
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+
+/* PARAGRAPH */
+
+p {
+  @extend %widget;
+  @include children-no-gutter ();
+  @include text-wrap ();
+  max-width: 100%; // This fixes a bug in IE10 where it may not wrap and contain the entire text all in one line
+  word-wrap: break-word;
+}
+
+
+// @require core/reset/reset.scss
+// @require core/widget/widget.scss
+// @require decorators/target/target.scss
+
+/* PRE */
+
+pre {
+  @extend %widget;
+  @extend %targetable;
+  display: flex;
+  padding: $pre-padding-y $pre-padding-x;
+}
+
+
+// @require core/reset/reset.scss
+
+/* SAMP */
+
+samp {
+  font-family: $samp-font-family;
+}
+
+
+// @require core/reset/reset.scss
+
+/* SMALL */
+
+small {
+  font-size: $small-font-size;
+}
+
+
+// @require core/reset/reset.scss
+
+/* SPAN */
+
+span {
+  @include children-no-gutter ();
+}

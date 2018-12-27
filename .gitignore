@@ -37,3 +37,4 @@ node_modules
 package-lock.json
 dist
 releases
+!src/renderer/template/dist
