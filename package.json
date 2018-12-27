@@ -150,6 +150,7 @@
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
     "overstated": "^1.1.2",
+    "pacco": "^2.1.0",
     "pify": "^4.0.1",
     "primer-markdown": "^3.7.11",
     "react": "^16.7.0",
