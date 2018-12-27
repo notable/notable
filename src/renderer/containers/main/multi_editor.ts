@@ -50,6 +50,29 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
 
   /* API */
 
+  toggleNoteRange = ( note: NoteObj ) => {
+
+    const selectedNotes = this.getNotes(),
+          notes = this.ctx.search.getNotes(),
+          anchorNoteIndex = notes.indexOf(selectedNotes[selectedNotes.length - 1]),
+          markerNoteIndex = notes.indexOf(note);
+
+    let startIndex, endIndex;
+
+    if (anchorNoteIndex > markerNoteIndex) {
+
+      startIndex = markerNoteIndex, endIndex = anchorNoteIndex;
+
+    } else {
+
+      startIndex = anchorNoteIndex, endIndex = markerNoteIndex;
+
+    }
+
+    return this.setNotes ( notes.slice(startIndex, endIndex + 1) );
+
+  }
+
   toggleNote = ( note: NoteObj, force?: boolean ) => {
 
     const notes = this.getNotes (),
