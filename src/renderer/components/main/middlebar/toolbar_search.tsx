@@ -18,10 +18,14 @@ class Search extends React.Component<any, undefined> {
 
   }, 50 );
 
+  onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  }
+
   render () {
 
     return (
-      <form className="multiple joined no-separators grow">
+      <form className="multiple joined no-separators grow" onSubmit={this.onSubmit}>
         <input ref={this.ref} autoFocus type="search" className="bordered grow small" placeholder="Search notes..." defaultValue={this.props.query} onChange={this.onChange} />
         <div className="label bordered xsmall" title="Search">
           <i className="icon">magnify</i>
