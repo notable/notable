@@ -7,7 +7,7 @@ tags: [Basics, Notebooks/Tutorial]
 
 ## Syntax
 
-Notes are written in [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown), so you can write emojis (`:joy:` -> :joy:), ~~striketrhough~~ text etc. in a familiar fashion.
+Notes are written in [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown), so you can write emojis (`:joy:` -> :joy:), ~~strikethrough~~ text etc. in a familiar fashion.
 
 This also means that your notes aren't locked into any proprietary format.
 
