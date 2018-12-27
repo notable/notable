@@ -14,7 +14,7 @@ These special links can also be right-clicked so that you can perform some actio
 
 ## Attachments
 
-Attachments can be rendered inline, linked to, and linked to via a button. The `@attachmet` token is used for this.
+Attachments can be rendered inline, linked to, and linked to via a button. The `@attachment` token is used for this.
 
 ##### Syntax
 
