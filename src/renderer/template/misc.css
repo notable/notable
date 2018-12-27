@@ -80,14 +80,14 @@
 }
 
 #middlebar {
-  background-color: #181818;
+  background-color: #212124;
   flex: 2 2 193px;
   min-width: 193px;
   max-width: 450px;
 }
 
 #middlebar .layout-header {
-  background: #181818;
+  background: #212124;
   border-color: #d8d8d8;
 }
 
@@ -118,7 +118,7 @@
 
 #middlebar .header .sort-by,
 #middlebar .header .sort-type {
-  background-color: #181818;
+  background-color: #212124;
   padding: 5px 10px;
   margin-bottom: 0 !important;
 }
@@ -155,12 +155,12 @@
 }
 
 #middlebar .note-button.button:hover {
-  background-color: #222529;
+  background-color: #2f3440;
 }
 
 #middlebar .note-button.label.active,
 #middlebar .note-button.button:active {
-  background-color: #292f42;
+  background-color: #323951;
 }
 
 #middlebar .note-button .title {
