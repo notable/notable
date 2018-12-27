@@ -4836,7 +4836,7 @@ input.valid, textarea.valid {
 }
 
 .button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent).active, .button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent):active {
-  background-color: #eeeeee;
+  background-color: #323951;
 }
 
 /* COMPACT */
