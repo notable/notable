@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import 'highlight.js/styles/github';
+import 'highlight.js/styles/atom-one-dark';
 import * as _ from 'lodash';
 import * as path from 'path';
 import * as pify from 'pify';
