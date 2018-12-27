@@ -80,14 +80,14 @@
 }
 
 #middlebar {
-  background-color: #fdfdfd;
+  background-color: #181818;
   flex: 2 2 193px;
   min-width: 193px;
   max-width: 450px;
 }
 
 #middlebar .layout-header {
-  background: #f4f4f4;
+  background: #343434;
   border-color: #d8d8d8;
 }
 
@@ -184,14 +184,14 @@
 }
 
 #mainbar {
-  background-color: #f4f4f4;
+  background-color: #343434;
   border-left: 1px solid #d8d8d8;
   flex: 4 4 327px;
   min-width: 327px;
 }
 
 #mainbar .layout-header {
-  background: #f4f4f4;
+  background: #343434;
   border-color: #d8d8d8;
 }
 
@@ -203,7 +203,7 @@
 
 #mainbar .editor {
   padding: 20px;
-  background-color: #fdfdfd;
+  background-color: #181818;
 }
 
 #mainbar .editor input {
@@ -311,7 +311,7 @@
 }
 
 .editor.preview {
-  background-color: #fdfdfd;
+  background-color: #181818;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif !important;
   font-size: 16px !important;
   line-height: 1.5 !important;
@@ -386,7 +386,7 @@ kbd {
 
 #cwd .layout-header,
 #error-boundary .layout-header {
-  background-color: #f4f4f4;
+  background-color: #343434;
   border-bottom: 1px solid #d8d8d8 !important;
 }
 
@@ -403,6 +403,17 @@ kbd {
   background-color: #f8f8f8;
   border-top: 1px solid #e2e2e2 !important;
 }
+
+
+
+
+
+/* ------------------------ GENERATED -------------------------------- */
+
+
+
+
+
 
 button {
   color: #b5b5b5 !important;
