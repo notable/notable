@@ -33,7 +33,7 @@
 
 #sidebar .tag {
   justify-content: left;
-  color: #fdfdfd;
+  color: #fdfdfd;  /* SIDEBAR TEXT COLOR */
   background-color: transparent;
 }
 
@@ -87,7 +87,7 @@
 }
 
 #middlebar .layout-header {
-  background: #343434;
+  background: #181818;
   border-color: #d8d8d8;
 }
 
@@ -96,6 +96,7 @@
 }
 
 #middlebar .layout-header input {
+  background: #202020;
   width: 0;
 }
 
@@ -184,14 +185,14 @@
 }
 
 #mainbar {
-  background-color: #343434;
+  background-color: #181818;
   border-left: 1px solid #d8d8d8;
   flex: 4 4 327px;
   min-width: 327px;
 }
 
 #mainbar .layout-header {
-  background: #343434;
+  background: #181818;
   border-color: #d8d8d8;
 }
 
@@ -386,7 +387,7 @@ kbd {
 
 #cwd .layout-header,
 #error-boundary .layout-header {
-  background-color: #343434;
+  background-color: #181818;
   border-bottom: 1px solid #d8d8d8 !important;
 }
 
@@ -409,7 +410,7 @@ kbd {
 
 
 /* ------------------------ GENERATED -------------------------------- */
-
+/*#region githubdark*/
 
 
 
@@ -5665,3 +5666,4 @@ iframe#graphiql, .graphiql-ide, .graphiql-container .topBar,
   color: #099 !important;
 }
 /* Literal.Number.Integer.Long */
+/*#endregion*/
