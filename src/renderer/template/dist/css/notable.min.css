@@ -1862,7 +1862,7 @@ html {
 body {
   background-color: #181818;
   color: #fdfdfd;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.375;
@@ -2120,7 +2120,7 @@ dl:last-child, p:last-child, pre:last-child {
 
 .white {
   background-color: #181818;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 
@@ -2148,7 +2148,7 @@ dl:last-child, p:last-child, pre:last-child {
 
 .base {
   background-color: #181818;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 
@@ -3800,7 +3800,7 @@ h2 {
 
 .container:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
   background-color: #181818;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 
@@ -3824,7 +3824,7 @@ h2 {
 
 .card:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
   background-color: #181818;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 
@@ -4653,7 +4653,7 @@ img.xxxxlarge {
 
 .infobar:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
   background-color: #181818;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 
@@ -4695,7 +4695,7 @@ input, textarea {
 
 input:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent), textarea:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
   background-color: #181818;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 
@@ -4790,7 +4790,7 @@ input.valid, textarea.valid {
 
 .label:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent), .button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
   background-color: #212124;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 
@@ -4827,7 +4827,7 @@ input.valid, textarea.valid {
 
 .button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
   background-color: #212124;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 
@@ -5434,7 +5434,7 @@ select {
 
 select:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
   background-color: #181818;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 
@@ -6241,7 +6241,7 @@ table th.sortable.sort-asc:after {
 
 .tagbox:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
   background-color: #181818;
-  border-color: #d4d4d4;
+  /* border-color: #d4d4d4; */
   color: #fdfdfd;
 }
 

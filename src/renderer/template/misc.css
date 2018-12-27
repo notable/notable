@@ -135,6 +135,10 @@
   transition: transform .15s;
 }
 
+div.button:not(.active).bordered > i.icon {
+  color: #bebebe;
+}
+
 #middlebar .layout-content.react-window-list {
   padding: 0 !important;
 }
