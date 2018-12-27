@@ -105,7 +105,7 @@
   height: 27px;
   flex-grow: 0;
   border-bottom: 1px solid #e2e2e2 !important;
-  color: rgba(31, 31, 31, 0.65);
+  /* color: rgba(31, 31, 31, 0.65); */
   padding: 0;
   text-align: center;
   overflow: hidden;
@@ -118,7 +118,7 @@
 
 #middlebar .header .sort-by,
 #middlebar .header .sort-type {
-  background-color: #f8f8f8;
+  background-color: #181818;
   padding: 5px 10px;
   margin-bottom: 0 !important;
 }
@@ -155,12 +155,12 @@
 }
 
 #middlebar .note-button.button:hover {
-  background-color: #f3f3f3;
+  background-color: #222529;
 }
 
 #middlebar .note-button.label.active,
 #middlebar .note-button.button:active {
-  background-color: #eeeeee;
+  background-color: #292f42;
 }
 
 #middlebar .note-button .title {
@@ -1605,7 +1605,7 @@ details-menu .select-menu-item[aria-selected=true] .select-menu-item-text .octic
 .link-no-style, .link-no-style:hover,
 .mergeability-details .js-details-container .status-meta,
 :root .repohead h1 .commit-build-statuses .octicon {
-  color: inherit !important;
+  /* color: inherit !important; */  /*BUG?*/
 }
 /* end auto-generated rules */
 body {
