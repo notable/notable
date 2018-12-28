@@ -91,7 +91,7 @@
   border-color: #d8d8d8;
 }
 
-#middlebar .layout-header form > * {
+#middlebar .layout-header .search > * {
   margin-bottom: 0 !important;
 }
 
