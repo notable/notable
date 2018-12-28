@@ -9,7 +9,7 @@
 }
 
 #sidebar {
-  background-color: #333E45;
+  background-color: #181818;
   flex: 1 1 165px;
   min-width: 165px;
   max-width: 350px;
@@ -33,7 +33,7 @@
 
 #sidebar .tag {
   justify-content: left;
-  color: #fdfdfd;  /* SIDEBAR TEXT COLOR */
+  color: #dcdcdc;
   background-color: transparent;
 }
 
@@ -47,7 +47,7 @@
 
 #sidebar .tag.label.active,
 #sidebar .tag.button:active {
-  background-color: rgba( 0, 0, 0, .2 );
+  background-color: rgba( 255, 255, 255, .15 );
 }
 
 #sidebar .tag .name {
@@ -186,6 +186,10 @@ div.button:not(.active).bordered > i.icon {
   background-color: rgba( 0, 0, 0, .1 );
   border-radius: 4em;
   font-size: .6em;
+}
+
+#middlebar > #middlebar-toolbar.layout-header {
+  background: #181818;
 }
 
 #mainbar {
@@ -333,6 +337,7 @@ div.button:not(.active).bordered > i.icon {
   flex-grow: 1;
   padding: 0 20px !important;
   color: #1f1f1f !important;
+  background: #141414 !important;
 }
 
 .CodeMirror,
@@ -351,13 +356,6 @@ div.button:not(.active).bordered > i.icon {
 .cm-strong,
 strong {
   font-weight: 600 !important;
-}
-
-.editor.preview p code,
-.editor.preview li code,
-.editor.preview table code {
-  background-color: rgba( 27, 31, 35, .05 ) !important;
-  padding: .2em .4em !important;
 }
 
 .editor.preview input[type="checkbox"] {
