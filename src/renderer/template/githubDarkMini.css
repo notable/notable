@@ -1,0 +1,86 @@
+/*! Github Dark v1.20.93 (2018-12-22) */
+/*! Repository: https://github.com/StylishThemes/GitHub-Dark    */
+/*! Userstyle:  http://userstyles.org/styles/37035              */
+/*! License:    https://creativecommons.org/licenses/by-sa/4.0/ */
+
+.markdown-body pre {
+  background: #141414 !important;
+  border: 1px solid rgba(255, 255, 255, .1) !important;
+}
+
+.markdown-body pre code, .markdown-body pre tt, .markdown-body img {
+  background: none !important;
+}
+
+.markdown-body pre code, .markdown-body pre tt {
+  padding: .2em 0 !important;
+  border: none !important;
+}
+
+.markdown-body {
+  color: #bababa;
+}
+
+.markdown-body h2, .markdown-body strong {
+  color: #dcdcdc !important;
+}
+
+.markdown-body code {
+  border-color: #343434 !important;
+  background: #222 !important;
+  border: 1px solid rgba(255, 255, 255, .1) !important;
+}
+
+.markdown-body blockquote, .markdown-body h6, .markdown-body del {
+  color: #8e8e8e !important;
+}
+
+.markdown-body code, .markdown-body tt {
+  padding: 0 .3em !important;
+  display: inline-block !important;
+  max-width: 100% !important;
+}
+
+.CodeMirror-focused .CodeMirror-selected {
+  background: #67769660 !important
+}
+
+.markdown-body h1, .markdown-body h2 {
+  border-bottom: 1px solid #343434 !important;
+}
+
+.markdown-body kbd {
+  color: #afafaf !important;
+  border-color: #383838 !important;
+  box-shadow: inset 0 -2px 0 #343434 !important;
+  background-color: transparent !important;
+}
+
+kbd {
+  border: 1px solid #d1d5da;
+}
+
+/* scroll bar */
+@supports (scrollbar-color: rgba(140, 140, 140, .5) transparent) and (scrollbar-width: thin) {
+  * {
+    scrollbar-color: rgba(140, 140, 140, .5) transparent !important;
+    scrollbar-width: thin !important;
+  }
+}
+@supports (not (scrollbar-color: rgba(140, 140, 140, .5) transparent)) and (not (scrollbar-width: thin)) {
+  ::-webkit-scrollbar {
+    max-width: 5px !important;
+    max-height: 5px !important;
+    background: #1d1d1d !important;
+  }
+  ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+    background: transparent !important;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(140, 140, 140, .5) !important;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(79, 140, 201, .8) !important;
+    background: rgba(/*[[base-color-rgb]]*/, .8) !important;
+  }
+}
