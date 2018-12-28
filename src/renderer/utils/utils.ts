@@ -17,7 +17,7 @@ const Utils = {
 
   getFirstUnemptyLine ( str: string ): string | null {
 
-    const match = str.match ( /^.*?\w.*$/m );
+    const match = str.match ( /^.*?[\wа-яА-Я].*$/m );
 
     return match && match[0];
 
