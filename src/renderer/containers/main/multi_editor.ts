@@ -69,9 +69,11 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
 
     }
 
-    let notesNext = [...selectedNotes, ...notes.slice(startIndex, endIndex + 1)];
-    
-    return this.setNotes ( _.uniq(notesNext) ); 
+    let selectedNotesRange = notes.slice(startIndex, endIndex + 1)
+
+    let invertedSelection = _.intersection(selectedNotesRange, selectedNotes)
+
+    return this.setNotes ( _.difference( _.union( selectedNotesRange, selectedNotes ), invertedSelection ) ); 
   }
 
   toggleNote = ( note: NoteObj, force?: boolean ) => {
