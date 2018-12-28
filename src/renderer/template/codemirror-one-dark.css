@@ -1,0 +1,92 @@
+/*
+    Name:       one-dark 1.1.1
+    Author:     Török Ádám (http://github.com/Aerobird98)
+    Original Atom One Dark Theme (https://github.com/atom/one-dark-ui & https://github.com/atom/one-dark-syntax)
+*/
+
+/* basic */
+
+/* FIXME: still uses github-light theme as a base */
+
+.cm-s-github-light {
+  /* font-family: "Fira Code", Menlo, Consolas, 'DejaVu Sans Mono', monospace !important; */
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+  font-weight: 350;
+  font-size: 12px;
+  color: #abb2bf;
+  /* background-color: #282c34; */
+}
+.cm-s-github-light .CodeMirror-selected {background-color: #3e4451;}
+.cm-s-github-light .CodeMirror-gutter,
+.cm-s-github-light .CodeMirror-gutters {
+  border: none;
+  /* background-color: #282c34; */
+}
+.cm-s-github-light .CodeMirror-linenumber,
+.cm-s-github-light .CodeMirror-linenumbers {
+  color: #5c6370 !important;
+  background-color: transparent;
+}
+.cm-s-github-light .CodeMirror-lines {
+  color: #abb2bf !important;
+  background-color: transparent;
+}
+.cm-s-github-light .CodeMirror-cursor {border-left: 2px solid #56b6c2 !important;}
+/* addon: edit/machingbrackets.js & addon: edit/matchtags.js */
+.cm-s-github-light .CodeMirror-matchingbracket,
+.cm-s-github-light .CodeMirror-matchingtag {
+  border-bottom: 2px solid #56b6c2;
+  color: #abb2bf !important;
+  background-color: transparent;
+}
+.cm-s-github-light .CodeMirror-nonmatchingbracket {
+  border-bottom: 2px solid #e06c75;
+  color: #abb2bf !important;
+  background-color: transparent;
+}
+/* addon: fold/foldgutter.js */
+.cm-s-github-light .CodeMirror-foldmarker,
+.cm-s-github-light .CodeMirror-foldgutter,
+.cm-s-github-light .CodeMirror-foldgutter-open,
+.cm-s-github-light .CodeMirror-foldgutter-folded {
+  border: none;
+  text-shadow: none;
+  color: #5c6370 !important;
+  background-color: transparent;
+}
+/* addon: selection/active-line.js */
+.cm-s-github-light .CodeMirror-activeline-background {background-color: rgba(153, 187, 255, 0.04);}
+/* basic syntax */
+.cm-s-github-light .cm-header {color: #e06c75;}
+.cm-s-github-light .cm-quote {color: #5c6370;font-style: italic;}
+.cm-s-github-light .cm-negative {color: #e06c75;}
+.cm-s-github-light .cm-positive {color: #e06c75;}
+.cm-s-github-light .cm-strong {color: #d19a66;font-weight: bold;}
+.cm-s-github-light .cm-header .cm-strong {color: #d19a66;font-weight: bold;}
+.cm-s-github-light .cm-em {color: #c678dd;font-style: italic;}
+.cm-s-github-light .cm-header .cm-em {color: #c678dd;font-style: italic;}
+.cm-s-github-light .cm-tag {color: #e06c75;}
+.cm-s-github-light .cm-attribute {color: #d19a66;}
+.cm-s-github-light .cm-link {color: #98c379;border-bottom: solid 1px #98c379;}
+.cm-s-github-light .cm-builtin {color: #e06c75;}
+.cm-s-github-light .cm-keyword {color: #c678dd;}
+.cm-s-github-light .cm-def {color: #e5c07b;} /* original:  #d19a66; */
+.cm-s-github-light .cm-atom {color: #d19a66;}
+.cm-s-github-light .cm-number {color: #d19a66;}
+.cm-s-github-light .cm-property {color: #56b6c2;} /* original: #abb2bf */
+.cm-s-github-light .cm-qualifier {color: #d19a66;}
+.cm-s-github-light .cm-variable {color: #e06c75;}
+.cm-s-github-light .cm-string {color: #98c379;}
+.cm-s-github-light .cm-punctuation {color: #abb2bf;}
+.cm-s-github-light .cm-operator {color: #56b6c2;} /* original: #abb2bf */
+.cm-s-github-light .cm-meta {color: #abb2bf;}
+.cm-s-github-light .cm-bracket {color: #abb2bf;}
+.cm-s-github-light .cm-comment {color: #5c6370;font-style: italic;}
+.cm-s-github-light .cm-error {color: #e06c75;}
+/* css syntax corrections */
+.cm-s-github-light .cm-m-css.cm-variable {color: #828997;}
+.cm-s-github-light .cm-m-css.cm-property  {color: #abb2bf;}
+.cm-s-github-light .cm-m-css.cm-atom  {color: #56b6c2;}
+.cm-s-github-light .cm-m-css.cm-builtin {color: #56b6c2;}
+/* lua syntax corrections */
+.cm-s-github-light .cm-m-lua.cm-variable {color: #56b6c2;}
