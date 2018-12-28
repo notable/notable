@@ -48,10 +48,6 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
 
   }
 
-  _deduplicate ( arr: any[] = [] ) {
-    Array.from( new Set( arr ) )
-  }
-
   /* API */
 
   toggleNoteRange = ( note: NoteObj ) => {
@@ -75,7 +71,7 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
 
     let notesNext = [...selectedNotes, ...notes.slice(startIndex, endIndex + 1)];
     
-    return this.setNotes ( this._deduplicate(notesNext) ); 
+    return this.setNotes ( _.uniq(notesNext) ); 
   }
 
   toggleNote = ( note: NoteObj, force?: boolean ) => {
