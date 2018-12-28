@@ -188,6 +188,10 @@ div.button:not(.active).bordered > i.icon {
   font-size: .6em;
 }
 
+#middlebar > #middlebar-toolbar.layout-header {
+  background: #181818;
+}
+
 #mainbar {
   background-color: #181818;
   /* border-left: 1px solid #494949; */
