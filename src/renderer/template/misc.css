@@ -9,7 +9,7 @@
 }
 
 #sidebar {
-  background-color: #333E45;
+  background-color: #181818;
   flex: 1 1 165px;
   min-width: 165px;
   max-width: 350px;
@@ -33,7 +33,7 @@
 
 #sidebar .tag {
   justify-content: left;
-  color: #fdfdfd;  /* SIDEBAR TEXT COLOR */
+  color: #dcdcdc;
   background-color: transparent;
 }
 
@@ -47,7 +47,7 @@
 
 #sidebar .tag.label.active,
 #sidebar .tag.button:active {
-  background-color: rgba( 0, 0, 0, .2 );
+  background-color: rgba( 255, 255, 255, .15 );
 }
 
 #sidebar .tag .name {
