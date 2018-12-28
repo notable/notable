@@ -1,7 +1,7 @@
 # Notable ([DOWNLOAD](https://github.com/fabiospampinato/notable/releases))
 
 <p align="center">
-  <img src="resources/demo/main.png" alt="Notable" width="500">
+  <img src="resources/demo/main_dark.png" alt="Notable" width="500">
 </p>
 
 The markdown-based note-taking app that doesn't suck.
