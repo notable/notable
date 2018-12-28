@@ -337,6 +337,7 @@ div.button:not(.active).bordered > i.icon {
   flex-grow: 1;
   padding: 0 20px !important;
   color: #1f1f1f !important;
+  background: #141414 !important;
 }
 
 .CodeMirror,
