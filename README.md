@@ -4,7 +4,7 @@
   <img src="resources/demo/main.png" alt="Notable" width="500">
 </p>
 
-The markdown-based note-taking app that doesn't suck.
+<p align="center">&ldquo;<i>The markdown-based note-taking app that doesn't suck.</i>&rdquo;</p>
 
 I couldn't find a note-taking app that ticked all the boxes I'm interested in: notes are written and rendered in GitHub-flavored Markdown, no WYSIWYG, no proprietary formats, I can run a search & replace across all notes, notes support attachments, the app isn't bloated, the app has a pretty interface, tags are indefinitely nestable and can import Evernote notes (because that's what I was using before).
 
@@ -30,7 +30,7 @@ So I built my own.
 
 - **Indefinitely nestable tags**: Pretty much all the other note-taking apps differentiate between notebooks, tags and templates. IMHO this unnecessarily complicates things. In Notable you can have root tags (`foo`), indefinitely nestable tags (`foo/bar`, `foo/.../qux`) and it still supports notebooks and templates, they are just special tags with a different icon (`Notebooks/foo`, `Templates/foo/bar`).
 
-Upon first instantiation some tutorial notes will be added to the app, check out those for more in-depth details.
+Upon first instantiation, some tutorial notes will be added to the app, check them out for more in-depth details about the app and how to use it.
 
 ## Comparison
 
@@ -78,7 +78,7 @@ Upon first instantiation some tutorial notes will be added to the app, check out
 +-----------------------------+---------------------------------+----------------------------------------------+--------------------------------------+---------------------------------------+--------------------------------------------------+----------------------------------------+-----------------------------------------+
 ```
 
-Part of this comparison is personal opinion: you may disagree on the UI front, things I consider bloat can be consider features by somebody else etc. but hopefully this comparison did a good job at illustrating the main differences.
+Part of this comparison is personal opinion: you may disagree on the UI front, things I consider bloat may be considered features by somebody else etc. but hopefully this comparison did a good job at illustrating the main differences.
 
 ## Demo
 
@@ -92,12 +92,13 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 
 ## Contributing
 
-If you have an idea, or found an problem, please open an [issue](https://github.com/fabiospampinato/notable/issues) about it.
+If you have an idea, or you have found a problem, please open an [issue](https://github.com/fabiospampinato/notable/issues) about it.
 
 If you want to make a pull request, or fork the app, you should:
 
 ```bash
 git clone https://github.com/fabiospampinato/notable.git
+cd notable
 npm install
 npm run svelto:dev
 npm run iconfont
