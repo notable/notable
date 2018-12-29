@@ -70,7 +70,7 @@ class Tag extends Container<TagState, MainCTX> {
 
     const obj = _.clone ( this.get ( tag ) );
 
-    if ( !obj ) return;
+    if ( !obj || _.isEmpty ( obj.tags ) ) return;
 
     obj.collapsed = force;
 
