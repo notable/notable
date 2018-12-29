@@ -121,7 +121,6 @@ class Window {
 
     options = _.merge ( dimensions, {
       frame: !is.macOS (),
-      autoHideMenuBar: !is.macOS (),
       backgroundColor: '#fdfdfd',
       icon: path.join ( __static, 'images', `icon.${is.windows () ? 'ico' : 'png'}` ),
       show: false,
