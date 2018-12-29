@@ -144,8 +144,14 @@ const Markdown = {
         type: 'language',
         regex: '```mermaid([^`]*)```',
         replace ( match, $1 ) {
-          const svg = mermaid.render ( `mermaid-${CRC32.str ( $1 )}`, $1 );
-          return `<div class="mermaid">${svg}</div>`;
+          const id = `mermaid-${CRC32.str ( $1 )}`;
+          try {
+            const svg = mermaid.render ( id, $1 );
+            return `<div class="mermaid">${svg}</div>`;
+          } catch ( e ) {
+            $(`#${id}`).remove ();
+            return `<p class="text-red">[mermaid error: ${e.message}]</p>`;
+          }
         }
       }];
 
