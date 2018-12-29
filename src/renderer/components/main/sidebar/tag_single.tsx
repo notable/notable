@@ -21,9 +21,7 @@ const Tag = ({ icon, iconCollapsed, tag, name = tag, counter, isActive, isCollap
     <div className={`tag ${isActive ? 'label active' : 'button'} small fluid compact circular`} title={name} data-tag={tag} data-has-children={hasChildren} data-collapsed={isCollapsed} onClick={onClick} onDoubleClick={onDoubleClick}>
       <i className="icon">{icon}</i>
       <span className="name">{name}</span>
-      {!counter ? null : (
-        <span className="counter">{counter}</span>
-      )}
+      <span className="counter">{counter}</span>
     </div>
   );
 
