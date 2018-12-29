@@ -40,7 +40,7 @@ const options: any = { //TSC
     [`${ALMD}-Ctrl-Up`]: 'swapLineUp',
     [`${ALMD}-Ctrl-Down`]: 'swapLineDown',
     'Alt-LeftClick': Utils.addSelection,
-    'Alt-Z': Utils.toggleWrapping,
+    'Alt-Q': Utils.toggleWrapping,
     [`${CTMD}-Enter`]: Todo.toggleBox,
     'Alt-D': Todo.toggleDone,
     [`${CTMD}-M`]: false,
