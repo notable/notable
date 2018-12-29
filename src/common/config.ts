@@ -24,8 +24,8 @@ const Config = {
       const cwd = Config.cwd;
       return cwd ? path.join ( cwd, 'notes' ) : undefined;
     },
-    globs: ['**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext}'],
-    re: /\.(?:md|mkd|mdwn|mdown|markdown|markdn|mdtxt|mdtext)$/,
+    globs: ['**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,txt}'],
+    re: /\.(?:md|mkd|mdwn|mdown|markdown|markdn|mdtxt|mdtext|txt)$/,
     token: '@note' // Usable in urls
   },
   tags: {
