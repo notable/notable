@@ -55,7 +55,9 @@ class Note extends Container<NoteState, MainCTX> {
     if ( !notesPath ) return;
 
     const {filePath, fileName} = await Path.getAllowedPath ( notesPath, 'Untitled.md' ),
-          {name} = path.parse ( fileName ),
+          searchQuery = this.ctx.search.getQuery (),
+          searchNotes = this.ctx.search.getNotes (),
+          name = searchQuery && !searchNotes.length ? searchQuery : path.parse ( fileName ).name,
           metadata = { title: name },
           plainContent = `# ${name}`,
           content = Metadata.set ( plainContent, metadata ),
