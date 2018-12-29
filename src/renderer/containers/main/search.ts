@@ -26,9 +26,12 @@ class Search extends Container<SearchState, MainCTX> {
 
   _isNoteMatch = ( note: NoteObj, query: string, tokensRe: RegExp[] ): boolean => {
 
+    const content = this.ctx.note.getContent ( note ),
+          title = this.ctx.note.getTitle ( note );
+
     return (
-      tokensRe.every ( tokenRe => tokenRe.test ( this.ctx.note.getContent ( note ) ) ) ||
-      Svelto.Fuzzy.match ( this.ctx.note.getTitle ( note ), query, false )
+      tokensRe.every ( tokenRe => tokenRe.test ( content ) ) ||
+      Svelto.Fuzzy.match ( title, query, false )
     );
 
   }
