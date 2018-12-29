@@ -16,6 +16,7 @@
     "svelto:dev": "svelto build --env development",
     "svelto:prod": "svelto build",
     "iconfont": "icon-font-buildr",
+    "comparison": "wkhtmltoimage --quiet --quality 30 --encoding 'UTF-8' --zoom 2 ./resources/comparison/table.html ./resources/comparison/table.png",
     "tutorial": "tar cf ./src/renderer/template//dist/tutorial.tar -C ./resources/tutorial .",
     "dev": "electron-webpack dev",
     "prod": "npm run compile && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dir && open releases/mac/*.app",
