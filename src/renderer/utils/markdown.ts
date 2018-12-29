@@ -4,6 +4,8 @@
 import 'highlight.js/styles/github';
 import 'katex/dist/katex.min.css';
 import * as _ from 'lodash';
+import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
+import * as mermaid from 'mermaid';
 import * as path from 'path';
 import * as pify from 'pify';
 import * as remark from 'remark';
@@ -132,6 +134,21 @@ const Markdown = {
 
       return showdownKatex ( Config.katex );
 
+    },
+
+    mermaid () {
+
+      mermaid.initialize ( Config.mermaid );
+
+      return [{
+        type: 'language',
+        regex: '```mermaid([^`]*)```',
+        replace ( match, $1 ) {
+          const svg = mermaid.render ( `mermaid-${CRC32.str ( $1 )}`, $1 );
+          return `<div class="mermaid">${svg}</div>`;
+        }
+      }];
+
     }
 
   },
@@ -140,11 +157,11 @@ const Markdown = {
 
     if ( Markdown.converter ) return Markdown.converter;
 
-    const {encodeSpecialLinks, attachment, note, tag, katex} = Markdown.extensions;
+    const {encodeSpecialLinks, attachment, note, tag, katex, mermaid} = Markdown.extensions;
 
     const converter = new showdown.Converter ({
       metadata: true,
-      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag (), katex ()]
+      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag (), katex (), mermaid ()]
     });
 
     converter.setFlavor ( 'github' );

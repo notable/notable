@@ -50,7 +50,8 @@ const Config = {
       { left: '~', right: '~', display: false, asciimath: true },
       { left: '&&', right: '&&', display: true, asciimath: true }
     ]
-  }
+  },
+  mermaid: {}
 };
 
 /* EXPORT */

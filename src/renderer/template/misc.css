@@ -403,3 +403,7 @@ kbd {
   background-color: #f8f8f8;
   border-top: 1px solid #e2e2e2 !important;
 }
+
+.mermaid {
+  text-align: center;
+}
