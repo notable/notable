@@ -4,6 +4,7 @@
 import * as _ from 'lodash';
 import * as isShallowEqual from 'shallowequal';
 import {Container} from 'overstated';
+import Config from '@common/config';
 
 /* SEARCH */
 
@@ -23,17 +24,20 @@ class Search extends Container<SearchState, MainCTX> {
 
   /* HELPERS */
 
-  _isNoteMatch = ( note: NoteObj, query: string ): boolean => {
+  _isNoteMatch = ( note: NoteObj, query: string, tokensRe: RegExp[] ): boolean => {
 
     return (
-      Svelto.Fuzzy.match ( this.ctx.note.getTitle ( note ), query, false ) ||
-      this.ctx.note.getPlainContent ( note ).toLowerCase().indexOf(query.toLowerCase()) > -1
-    )
+      tokensRe.every ( tokenRe => tokenRe.test ( this.ctx.note.getContent ( note ) ) ) ||
+      Svelto.Fuzzy.match ( this.ctx.note.getTitle ( note ), query, false )
+    );
+
   }
 
   _filterNotesByQuery = ( notes: NoteObj[], query: string ): NoteObj[] => {
 
-    return notes.filter ( note => this._isNoteMatch ( note, query ) );
+    const tokensRe = _.escapeRegExp ( query ).split ( Config.search.tokenizer ).map ( token => new RegExp ( token, 'i' ) );
+
+    return notes.filter ( note => this._isNoteMatch ( note, query, tokensRe ) );
 
   }
 

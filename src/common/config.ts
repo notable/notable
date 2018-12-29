@@ -31,6 +31,9 @@ const Config = {
   tags: {
     token: '@tag' // Usable in urls
   },
+  search: {
+    tokenizer: /\s+/g
+  },
   sorting: {
     by: Settings.get ( 'sorting.by' ),
     type: Settings.get ( 'sorting.type' )
