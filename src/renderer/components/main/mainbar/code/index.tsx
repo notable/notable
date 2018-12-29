@@ -13,12 +13,13 @@ import Utils from './utils';
 const CTMD = is.macOS () ? 'Cmd' : 'Ctrl', // `Cmd` on macOS, `Ctrl` otherwise
       ALMD = is.macOS () ? 'Cmd' : 'Alt'; // `Cmd` on macOS, `Alt` otherwise
 
-const options: any = { //TSC
+export const options: any = { //TSC
   autofocus: true,
   electricChars: false,
   indentUnit: 2,
   indentWithTabs: false,
   lineNumbers: false,
+  lineSeparator: '\n',
   lineWrapping: true,
   mode: 'gfm',
   gitHubSpice: false,
@@ -44,8 +45,10 @@ const options: any = { //TSC
     'Alt-D': Todo.toggleDone,
     [`${CTMD}-M`]: false,
     [`${CTMD}-H`]: false,
-    [`${CTMD}-LeftClick`]: false
-  }
+    [`${CTMD}-LeftClick`]: false,
+    'Enter': Utils.onEnterPressed
+  }, 
+  enterAutoListIntent: true
 };
 
 /* CODE */
