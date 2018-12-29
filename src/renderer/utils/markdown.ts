@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import 'highlight.js/styles/github';
+import 'katex/dist/katex.min.css';
 import * as _ from 'lodash';
 import * as path from 'path';
 import * as pify from 'pify';
@@ -9,6 +10,7 @@ import * as remark from 'remark';
 import * as strip from 'strip-markdown';
 import * as showdown from 'showdown';
 import * as showdownHighlight from 'showdown-highlight';
+import * as showdownKatex from 'showdown-katex-studdown';
 import * as showdownTargetBlack from 'showdown-target-blank';
 import Config from '@common/config';
 
@@ -124,6 +126,12 @@ const Markdown = {
         }
       ];
 
+    },
+
+    katex () {
+
+      return showdownKatex ( Config.katex );
+
     }
 
   },
@@ -132,11 +140,11 @@ const Markdown = {
 
     if ( Markdown.converter ) return Markdown.converter;
 
-    const {encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
+    const {encodeSpecialLinks, attachment, note, tag, katex} = Markdown.extensions;
 
     const converter = new showdown.Converter ({
       metadata: true,
-      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag ()]
+      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag (), katex ()]
     });
 
     converter.setFlavor ( 'github' );

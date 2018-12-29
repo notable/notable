@@ -38,12 +38,21 @@ const Config = {
   flags: {
     TUTORIAL: true, // Write the tutorial notes upon first instantiation
     OPTIMISTIC_RENDERING: true // Assume writes are successful in order to render changes faster
+  },
+  katex: {
+    throwOnError: true,
+    displayMode: false,
+    errorColor: '#1500ff',
+    delimilters: [
+      { left: '¨D¨D', right: '¨D¨D', display: true }, // showdown converts `$$` to `¨D¨D`
+      { left: '\\(', right: '\\)', display: false },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '~', right: '~', display: false, asciimath: true },
+      { left: '&&', right: '&&', display: true, asciimath: true }
+    ]
   }
 };
 
 /* EXPORT */
 
 export default Config;
-
-
-
