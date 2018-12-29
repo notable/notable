@@ -16,23 +16,25 @@ type AttachmentsObj = {
   [fileName: string]: AttachmentObj
 };
 
+type NoteMetadataObj = {
+  attachments: string[],
+  created?: number,
+  dateCreated: Date,
+  dateModified: Date,
+  deleted: boolean,
+  favorited: boolean,
+  pinned: boolean,
+  stat: import ( 'fs' ).Stats,
+  tags: string[],
+  title: string
+};
+
 type NoteObj = {
   content: string,
   filePath: string,
   checksum: number,
   plainContent: string,
-  metadata: {
-    attachments: string[],
-    created?: number,
-    dateCreated: Date,
-    dateModified: Date,
-    deleted: boolean,
-    favorited: boolean,
-    pinned: boolean,
-    stat: import ( 'fs' ).Stats,
-    tags: string[],
-    title: string
-  }
+  metadata: NoteMetadataObj
 };
 
 type NotesObj = {
