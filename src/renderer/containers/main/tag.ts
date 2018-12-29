@@ -142,10 +142,10 @@ class Tag extends Container<TagState, MainCTX> {
     /* VALIDATING CURRENT */
 
     if ( tag === ALL ) return;
-    if ( tag === FAVORITES && this.ctx.note.isFavorited () ) return;
+    if ( tag === FAVORITES && this.ctx.note.isFavorited ( note ) ) return;
     if ( tag === TAGS && tags.length ) return;
-    if ( tag === UNTAGGED && !tags.length ) return;
-    if ( tag === TRASH && this.ctx.note.isDeleted () ) return;
+    if ( tag === UNTAGGED && note && !tags.length ) return;
+    if ( tag === TRASH && this.ctx.note.isDeleted ( note ) ) return;
     if ( this.ctx.note.getTags ( note, tag ).length ) return;
 
     /* SETTING NEXT */
