@@ -27,7 +27,7 @@ class Search extends Container<SearchState, MainCTX> {
 
     return (
       Svelto.Fuzzy.match ( this.ctx.note.getTitle ( note ), query, false ) ||
-      this.ctx.note.getPlainContent ( note ).indexOf(query) > -1
+      this.ctx.note.getPlainContent ( note ).toLowerCase().indexOf(query.toLowerCase()) > -1
     )
   }
 
