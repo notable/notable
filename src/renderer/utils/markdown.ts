@@ -132,7 +132,15 @@ const Markdown = {
 
     katex () {
 
-      return showdownKatex ( Config.katex );
+      try {
+
+        return showdownKatex ( Config.katex );
+
+      } catch ( e ) {
+
+        return `<p class="text-red">[KaTeX error: ${e.message}]</p>`;
+
+      }
 
     },
 

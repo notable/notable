@@ -42,7 +42,7 @@ const Config = {
   katex: {
     throwOnError: true,
     displayMode: false,
-    errorColor: '#1500ff',
+    errorColor: '#f44336',
     delimilters: [
       { left: '¨D¨D', right: '¨D¨D', display: true }, // showdown converts `$$` to `¨D¨D`
       { left: '\\(', right: '\\)', display: false },
