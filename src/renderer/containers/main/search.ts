@@ -26,12 +26,11 @@ class Search extends Container<SearchState, MainCTX> {
 
   _isNoteMatch = ( note: NoteObj, query: string, tokensRe: RegExp[] ): boolean => {
 
-    const content = this.ctx.note.getContent ( note ),
-          title = this.ctx.note.getTitle ( note );
+    const content = this.ctx.note.getContent ( note );
 
     return (
       tokensRe.every ( tokenRe => tokenRe.test ( content ) ) ||
-      Svelto.Fuzzy.match ( title, query, false )
+      Svelto.Fuzzy.match ( this.ctx.note.getTitle ( note ), query, false )
     );
 
   }
@@ -71,7 +70,7 @@ class Search extends Container<SearchState, MainCTX> {
     /* UNOPTIMIZED SEARCH */
 
     const notesByTag = this.ctx.tag.getNotes ( tag ),
-          notesByQuery = this._filterNotesByQuery ( notesByTag, query ),
+          notesByQuery = !query ? notesByTag : this._filterNotesByQuery ( notesByTag, query ),
           notesSorted = this.ctx.sorting.sort ( notesByQuery ),
           notesUnique = _.uniq ( notesSorted ) as NoteObj[]; // If a note is in 2 sub-tags and we select a parent tag of both we will get duplicates
 
