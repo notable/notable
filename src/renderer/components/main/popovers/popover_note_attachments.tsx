@@ -32,6 +32,7 @@ const PopoverNoteAttachments = ({ addAttachments, attachments, isEditing, toggle
 export default connect ({
   container: Main,
   selector: ({ container }) => ({
+    note: container.note.get (),
     isEditing: container.attachments.isEditing (),
     toggleEditing: container.attachments.toggleEditing,
     attachments: container.note.getAttachments (),
