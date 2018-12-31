@@ -57,6 +57,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.on ( 'tag-previous', this.__tagPrevious );
     ipc.on ( 'trash-empty', this.__trashEmpty );
     ipc.on ( 'tutorial-dialog', this.__tutorialDialog );
+    ipc.on ( 'export', this.__export );
 
   }
 
@@ -89,7 +90,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.removeListener ( 'tag-previous', this.__tagPrevious );
     ipc.removeListener ( 'trash-empty', this.__trashEmpty );
     ipc.removeListener ( 'tutorial-dialog', this.__tutorialDialog );
-
+    ipc.removeListener ( 'export', this.__export );
   }
 
   /* HANDLERS */
@@ -254,6 +255,10 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
 
     this.main.tutorial.dialog ();
 
+  }
+
+  __export = () => {
+    this.cwd.export(this.main.note);
   }
 
 }

@@ -46,6 +46,14 @@ class Main extends Route {
             type: 'separator'
           },
           {
+            label: 'Export...',
+            enabled: flags && !flags.isMultiEditorEditing,
+            click: () => this.win.webContents.send ( 'export' )
+          },
+          {
+            type: 'separator'
+          },
+          {
             label: 'Open Data Directory',
             click: () => this.win.webContents.send ( 'cwd-open-in-app' )
           },
