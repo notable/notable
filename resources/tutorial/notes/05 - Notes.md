@@ -13,6 +13,24 @@ This also means that your notes aren't locked into any proprietary format.
 
 Notes can have some metadata: if they are favorited or not, which tags they have, which attachments they have, etc. These metadata are written as Markdown front matter. This is taken care of for you.
 
+## Syntax Plugins
+
+Some syntax plugins for providing you [KaTeX](https://katex.org) and [mermaid](https://github.com/knsv/mermaid) support are built-in, check out this note's source.
+
+#### KaTeX
+
+$$e^{iπ} + 1 = 0$$
+
+#### mermaid
+
+```mermaid
+graph LR
+  Install --> Tutorial[Read the tutorial]
+  Tutorial --> Star
+  Tutorial --> Share
+  Tutorial -.-> mermaid[Realize how cool mermaid is]
+```
+
 ## Attachments
 
 Notes can have attachments, because sooner or later you'll want to save a file in a note, be it a boarding pass for your next trip or something else.
