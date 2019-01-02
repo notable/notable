@@ -4,7 +4,6 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {connect} from 'overstated';
 
 /* TAGBOXY */
 
@@ -49,8 +48,4 @@ class Tagbox extends React.PureComponent<any, any> {
 
 /* EXPORT */
 
-export default connect ({
-  shouldComponentUpdate ( props, nextProps ) {
-    return !_.isEqual ( props.tags, nextProps.tags );
-  }
-})( Tagbox );
+export default Tagbox;

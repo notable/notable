@@ -91,7 +91,7 @@
   border-color: #d8d8d8;
 }
 
-#middlebar .layout-header form > * {
+#middlebar .layout-header .search > * {
   margin-bottom: 0 !important;
 }
 
@@ -402,4 +402,8 @@ kbd {
 #error-boundary .layout-footer {
   background-color: #f8f8f8;
   border-top: 1px solid #e2e2e2 !important;
+}
+
+.mermaid {
+  text-align: center;
 }

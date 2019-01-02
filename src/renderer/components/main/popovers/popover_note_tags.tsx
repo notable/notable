@@ -34,6 +34,7 @@ const PopoverNoteTags = ({ tags, isEditing, toggleEditing, replaceTags }) => (
 export default connect ({
   container: Main,
   selector: ({ container }) => ({
+    note: container.note.get (),
     tags: container.note.getTags (),
     isEditing: container.tags.isEditing (),
     toggleEditing: container.tags.toggleEditing,

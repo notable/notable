@@ -13,8 +13,10 @@ import File from '@renderer/utils/file';
 import Markdown from '@renderer/utils/markdown';
 import Metadata from '@renderer/utils/metadata';
 import Path from '@renderer/utils/path';
-import Tags from '@renderer/utils/tags';
+import Tags, {TagSpecials} from '@renderer/utils/tags';
 import Utils from '@renderer/utils/utils';
+
+const {ALL, FAVORITES, TAGS, UNTAGGED, TRASH} = TagSpecials;
 
 /* NOTE */
 
@@ -55,9 +57,31 @@ class Note extends Container<NoteState, MainCTX> {
     if ( !notesPath ) return;
 
     const {filePath, fileName} = await Path.getAllowedPath ( notesPath, 'Untitled.md' ),
-          {name} = path.parse ( fileName ),
-          metadata = { title: name },
-          plainContent = `# ${name}`,
+          searchQuery = this.ctx.search.getQuery (),
+          searchNotes = this.ctx.search.getNotes (),
+          name = searchQuery && !searchNotes.length ? searchQuery : path.parse ( fileName ).name,
+          tag = this.ctx.tag.get (),
+          metadata: Partial<NoteMetadataObj> = { title: name };
+
+    if ( tag && tag.path !== ALL && tag.path !== TAGS && tag.path !== UNTAGGED ) { // Trying to put the new note in the current tag
+
+      if ( tag.path === TRASH ) {
+
+        metadata.deleted = true;
+
+      } else if ( tag.path === FAVORITES ) {
+
+        metadata.favorited = true;
+
+      } else {
+
+        metadata.tags = [tag.path];
+
+      }
+
+    }
+
+    const plainContent = `# ${name}`,
           content = Metadata.set ( plainContent, metadata ),
           checksum = CRC32.str ( filePath ),
           note = await this.sanitize ({ content, filePath, checksum, plainContent, metadata });

@@ -10,9 +10,9 @@ import EditorPreview from './editor_preview';
 
 /* EDITOR */
 
-const Editor = ({ hasNote, isEditing }) => {
+const Editor = ({ hasNote, isEditing, isLoading }) => {
 
-  if ( !hasNote ) return <EditorEmpty />;
+  if ( isLoading || !hasNote ) return <EditorEmpty />;
 
   if ( isEditing ) return <EditorEditing />;
 
@@ -26,6 +26,7 @@ export default connect ({
   container: Main,
   selector: ({ container }) => ({
     hasNote: !!container.note.get (),
-    isEditing: container.editor.isEditing ()
+    isEditing: container.editor.isEditing (),
+    isLoading: container.loading.get ()
   })
 })( Editor );

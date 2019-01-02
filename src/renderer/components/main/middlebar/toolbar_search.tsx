@@ -21,12 +21,12 @@ class Search extends React.Component<any, undefined> {
   render () {
 
     return (
-      <form className="multiple joined no-separators grow">
+      <div className="multiple joined no-separators grow search">
         <input ref={this.ref} autoFocus type="search" className="bordered grow small" placeholder="Search notes..." defaultValue={this.props.query} onChange={this.onChange} />
         <div className="label bordered xsmall" title="Search">
           <i className="icon">magnify</i>
         </div>
-      </form>
+      </div>
     );
 
   }

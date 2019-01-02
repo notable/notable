@@ -59,10 +59,10 @@ class Content extends React.Component<any, { height: number }> {
 
   render () {
 
-    const {notes} = this.props,
+    const {isLoading, notes} = this.props,
           {height} = this.state;
 
-    if ( !height ) return null;
+    if ( isLoading || !height ) return null;
 
     return (
       <VariableSizeList ref={this.listRef} overscanCount={3} className="layout-content react-window-list" height={height} width="auto" itemCount={notes.length} estimatedItemSize={38} itemSize={index => !index ? 48 : ( index === ( notes.length - 1 ) ? 43 : 38 )} itemKey={index => notes[index].filePath}>
@@ -81,6 +81,7 @@ class Content extends React.Component<any, { height: number }> {
 export default connect ({
   container: Main,
   selector: ({ container }) => ({
+    isLoading: container.loading.get (),
     notes: container.search.getNotes ()
   })
 })( Content );
