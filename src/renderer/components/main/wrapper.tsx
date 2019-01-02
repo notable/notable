@@ -5,6 +5,7 @@ import * as React from 'react';
 import {connect} from 'overstated';
 import MainContainer from '@renderer/containers/main';
 import Utils from '@renderer/utils/utils';
+import Config from '@common/config';
 
 /* WRAPPER */
 
@@ -51,7 +52,7 @@ class Wrapper extends React.Component<any, any> {
   render () {
 
     return (
-      <div id="main" className="app-wrapper layout horizontal resizable">{this.props.children}</div>
+      <div id="main" className={'app-wrapper layout horizontal resizable ' + Config.theme + '-theme'}>{this.props.children}</div>
     );
 
   }

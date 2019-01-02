@@ -3,6 +3,7 @@
 
 import '@static/css/notable.min.css';
 import '@static/javascript/notable.min.js';
+
 import './template/misc.css';
 
 import * as React from 'react';

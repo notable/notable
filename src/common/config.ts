@@ -28,6 +28,7 @@ const Config = {
     re: /\.(?:md|mkd|mdwn|mdown|markdown|markdn|mdtxt|mdtext|txt)$/,
     token: '@note' // Usable in urls
   },
+  theme: Settings.get ( 'codemirror.options.theme' ),
   tags: {
     token: '@tag' // Usable in urls
   },
