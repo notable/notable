@@ -1,0 +1,88 @@
+/*! Github Dark v1.20.93 (2018-12-22) */
+/*! Repository: https://github.com/StylishThemes/GitHub-Dark    */
+/*! Userstyle:  http://userstyles.org/styles/37035              */
+/*! License:    https://creativecommons.org/licenses/by-sa/4.0/ */
+
+.dark-theme {
+  .markdown-body {
+    pre {
+      background: #141414 !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      code, tt {
+        background: none !important;
+      }
+    }
+    img {
+      background: none !important;
+    }
+    pre {
+      code, tt {
+        padding: .2em 0 !important;
+        border: none !important;
+      }
+    }
+  
+    h2, strong {
+      color: #dcdcdc !important;
+    }
+    code {
+      border-color: #343434 !important;
+      background: #222 !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    blockquote, h6, del {
+      color: #8e8e8e !important;
+    }
+    code, tt {
+      padding: 0 .3em !important;
+      display: inline-block !important;
+      max-width: 100% !important;
+    }
+  }
+  
+  .CodeMirror-focused .CodeMirror-selected {
+    background-color: #67769660;
+  }
+  
+  .markdown-body {
+    color: #bababa;
+    h1, h2 {
+      border-bottom: 1px solid #343434 !important;
+    }
+    kbd {
+      color: #afafaf !important;
+      border-color: #383838 !important;
+      box-shadow: inset 0 -2px 0 #343434 !important;
+      background-color: transparent !important;
+    }
+  }
+  
+  kbd {
+    border: 1px solid #d1d5da;
+  }
+  
+  /* scroll bar */
+  @supports (scrollbar-color: rgba(140, 140, 140, 0.5) transparent) and (scrollbar-width: thin) {
+    * {
+      scrollbar-color: rgba(140, 140, 140, 0.5) transparent !important;
+      scrollbar-width: thin !important;
+    }
+  }
+
+  @supports (not (scrollbar-color: rgba(140, 140, 140, 0.5) transparent)) and (not (scrollbar-width: thin)) {
+    ::-webkit-scrollbar {
+      max-width: 5px !important;
+      max-height: 5px !important;
+      background: #1d1d1d !important;
+    }
+    ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+      background: transparent !important;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(140, 140, 140, 0.5) !important;
+      &:hover {
+        background: rgba(79, 140, 201, 0.8) !important;
+      }
+    }
+  }
+}
