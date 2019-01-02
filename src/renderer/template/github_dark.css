@@ -56,6 +56,24 @@
   background-color: transparent !important;
 }
 
+.markdown-body table tr:nth-child(2n) {
+  background: #181818 !important;
+}
+
+.markdown-body table tr {
+  background: #141414 !important;
+}
+
+pre, h1, h2, h3, .header, table, table tr, table td, table th,
+blockquote {
+  border-color: #343434 !important;
+}
+
+table {
+  border-collapse: collapse;
+  border: none;
+}
+
 kbd {
   border: 1px solid #d1d5da;
 }
