@@ -6,6 +6,7 @@ import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import CWD from '@renderer/containers/cwd';
 import Main from '@renderer/containers/main';
+import Settings from '@common/settings';
 
 /* IPC */
 
@@ -31,6 +32,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   componentDidMount () {
 
     ipc.on ( 'cwd-change', this.__cwdChange );
+    ipc.on ( 'theme-change', this.__themeChange );
     ipc.on ( 'cwd-open-in-app', this.__cwdOpenInApp );
     ipc.on ( 'import', this.__import );
     ipc.on ( 'window-focus-toggle', this.__windowFocusToggle );
@@ -98,6 +100,10 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
 
     this.cwd.select ();
 
+  }
+  __themeChange = (event, menuItem) => {
+    Settings.set ( 'theme', menuItem.checked ? 'dark' : 'light' );
+    ipc.send ( 'theme-changed' );
   }
 
   __cwdOpenInApp = () => {

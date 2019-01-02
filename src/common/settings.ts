@@ -13,10 +13,10 @@ const Settings = new Store ({
     cwd: undefined,
     codemirror: {
       options: {
-        lineWrapping: true,
-        theme: 'dark'
+        lineWrapping: true
       }
     },
+    theme: 'light',
     sorting: {
       by: 'title',
       type: 'ascending'

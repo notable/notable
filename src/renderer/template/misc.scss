@@ -1,11 +1,9 @@
 /* TODO: Integrate into Svelto */
 /* TODO: Use Svelto's variables */
-
-#app, .app-wrapper {
-  width: 100%;
-  height: 100%;
-}
+@import "misc.common";
 
 @import "misc.dark";
 @import "github.dark";
+@import "codemirror.dark";
+
 @import "misc.light";

@@ -154,6 +154,9 @@ $color-border-darken-amount: $color-active-darken-amount * 4 !default;
 $color-white: #fdfdfd;
 $color-white-text: #1f1f1f;
 
+$color-dark: #181818;
+$color-dark-text: #dcdcdc;
+
 $color-base: #fdfdfd;
 $color-base-text: #1f1f1f;
 
@@ -352,6 +355,14 @@ $color-white-border: darken( $color-white-bg, $color-border-darken-amount ) !def
 $color-white-accent: $color-secondary !default;
 $color-white-text: #3f3f3f !default; // Contrast ratio: 10.5
 
+/* DARK Theme */
+$color-dark-bg: $color-dark !default;
+$color-dark-bg-hover: darken( $color-dark-bg, $color-hover-lighten-amount ) !default;
+$color-dark-bg-active: darken( $color-dark-bg, $color-active-darken-amount * 1.5 ) !default;
+$color-dark-border: darken( $color-dark-bg, $color-border-darken-amount ) !default;
+$color-dark-accent: $color-secondary !default;
+$color-dark-text: #3f3f3f !default; // Contrast ratio: 10.5
+
 /* YELLOW */
 
 $color-yellow-bg: $color-yellow !default;
@@ -444,11 +455,42 @@ $colors: (
 
   'base': ( $color-base-bg, $color-base-bg-hover, $color-base-bg-active, $color-base-border, $color-base-accent, $color-base-text ),
   'inherit': ( $color-inherit-bg, $color-inherit-bg-hover, $color-inherit-bg-active, $color-inherit-border, $color-inherit-accent, $color-inherit-text ),
+  'transparent': ( $color-transparent-bg, $color-transparent-bg-hover, $color-transparent-bg-active, $color-transparent-border, $color-transparent-accent, $color-transparent-text ),
+  'dark': ( $color-dark-bg, $color-dark-bg-hover, $color-dark-bg-active, $color-dark-border, $color-dark-accent, $color-dark-text )
+) !default;
+
+$colorsDark: (
+  'primary': ( $color-primary-bg, $color-primary-bg-hover, $color-primary-bg-active, $color-primary-border, $color-primary-accent, $color-primary-text ),
+  'secondary': ( $color-secondary-bg, $color-secondary-bg-hover, $color-secondary-bg-active, $color-secondary-border, $color-secondary-accent, $color-secondary-text ),
+  'tertiary': ( $color-tertiary-bg, $color-tertiary-bg-hover, $color-tertiary-bg-active, $color-tertiary-border, $color-tertiary-accent, $color-tertiary-text ),
+  'quaternary': ( $color-quaternary-bg, $color-quaternary-bg-hover, $color-quaternary-bg-active, $color-quaternary-border, $color-quaternary-accent, $color-quaternary-text ),
+
+  'black': ( $color-black-bg, $color-black-bg-hover, $color-black-bg-active, $color-black-border, $color-black-accent, $color-black-text ),
+  'blue': ( $color-blue-bg, $color-blue-bg-hover, $color-blue-bg-active, $color-blue-border, $color-blue-accent, $color-blue-text ),
+  'brown': ( $color-brown-bg, $color-brown-bg-hover, $color-brown-bg-active, $color-brown-border, $color-brown-accent, $color-brown-text ),
+  'gray': ( $color-gray-bg, $color-gray-bg-hover, $color-gray-bg-active, $color-gray-border, $color-gray-accent, $color-gray-text ),
+  'green': ( $color-green-bg, $color-green-bg-hover, $color-green-bg-active, $color-green-border, $color-green-accent, $color-green-text ),
+  'olive': ( $color-olive-bg, $color-olive-bg-hover, $color-olive-bg-active, $color-olive-border, $color-olive-accent, $color-olive-text ),
+  'orange': ( $color-orange-bg, $color-orange-bg-hover, $color-orange-bg-active, $color-orange-border, $color-orange-accent, $color-orange-text ),
+  'pink': ( $color-pink-bg, $color-pink-bg-hover, $color-pink-bg-active, $color-pink-border, $color-pink-accent, $color-pink-text ),
+  'purple': ( $color-purple-bg, $color-purple-bg-hover, $color-purple-bg-active, $color-purple-border, $color-purple-accent, $color-purple-text ),
+  'red': ( $color-red-bg, $color-red-bg-hover, $color-red-bg-active, $color-red-border, $color-red-accent, $color-red-text ),
+  'teal': ( $color-teal-bg, $color-teal-bg-hover, $color-teal-bg-active, $color-teal-border, $color-teal-accent, $color-teal-text ),
+  'violet': ( $color-violet-bg, $color-violet-bg-hover, $color-violet-bg-active, $color-violet-border, $color-violet-accent, $color-violet-text ),
+  'white': ( $color-dark-bg, $color-dark-bg-hover, $color-dark-bg-active, $color-dark-border, $color-dark-accent, $color-dark-text ),
+  'yellow': ( $color-yellow-bg, $color-yellow-bg-hover, $color-yellow-bg-active, $color-yellow-border, $color-yellow-accent, $color-yellow-text ),
+
+  'error': ( $color-error-bg, $color-error-bg-hover, $color-error-bg-active, $color-error-border, $color-error-accent, $color-error-text ),
+  'success': ( $color-success-bg, $color-success-bg-hover, $color-success-bg-active, $color-success-border, $color-success-accent, $color-success-text ),
+  'warning': ( $color-warning-bg, $color-warning-bg-hover, $color-warning-bg-active, $color-warning-border, $color-warning-accent, $color-warning-text ),
+
+  'base': ( $color-base-bg, $color-base-bg-hover, $color-base-bg-active, $color-base-border, $color-base-accent, $color-base-text ),
+  'inherit': ( $color-inherit-bg, $color-inherit-bg-hover, $color-inherit-bg-active, $color-inherit-border, $color-inherit-accent, $color-inherit-text ),
   'transparent': ( $color-transparent-bg, $color-transparent-bg-hover, $color-transparent-bg-active, $color-transparent-border, $color-transparent-accent, $color-transparent-text )
 ) !default;
 
-
 $colors: map-remove( $colors, 'tertiary', 'quaternary', 'blue', 'brown', 'olive', 'orange', 'pink', 'purple', 'teal', 'violet', 'error', 'success', 'warning' );
+$colorsDark: map-remove( $colors, 'tertiary', 'quaternary', 'blue', 'brown', 'olive', 'orange', 'pink', 'purple', 'teal', 'violet', 'error', 'success', 'warning' );
 
 
 //SOURCE: https://github.com/thoughtbot/bourbon/blob/master/core/bourbon/addons/_timing-functions.scss
@@ -562,7 +604,7 @@ $layout-footer-color: $layout-header-color !default;
 /* SVELTO */
 
 $svelto-version: '1.0.0' !default;
-$svelto-environment: 'development' !default;
+$svelto-environment: 'production' !default;
 $svelto-development: $svelto-environment == 'development' !default;
 
 
@@ -1130,6 +1172,12 @@ $container-color: 'white' !default;
 $container-color-force: false !default;
 $container-color-basic: true !default;
 
+/* CONTAINER DARK */
+
+$container-dark-color: 'dark' !default;
+$container-dark-color-force: false !default;
+$container-dark-color-basic: true !default;
+
 $container-border-radius: $rounded-border-radius !default;
 
 $container-padding-x: $gutter !default;
@@ -1156,6 +1204,11 @@ $card-color: $container-color !default;
 $card-color-force: $container-color-force !default;
 $card-color-basic: $container-color-basic !default;
 
+/* CARD DARK */
+$card-dark-color: $container-dark-color !default;
+$card-dark-color-force: $container-dark-color-force !default;
+$card-dark-color-basic: $container-dark-color-basic !default;
+
 $card-border-radius: $container-border-radius !default;
 
 /* SECTION */
@@ -1163,6 +1216,9 @@ $card-border-radius: $container-border-radius !default;
 $card-section-color: 'inherit' !default;
 $card-section-color-force: false !default;
 $card-section-color-basic: true !default;
+
+/* SECTION DARK */
+$card-section-dark-color: $container-dark-color !default;
 
 
 // @require core/animations/variables.scss
@@ -2660,6 +2716,11 @@ $label-color: 'white' !default;
 $label-color-force: false !default;
 $label-color-basic: true !default;
 
+/* LABEL DARK */
+$label-dark-color: 'dark' !default;
+$label-dark-color-force: false !default;
+$label-dark-color-basic: true !default;
+
 $label-font-weight: 500 !default;
 
 $label-border-radius: $container-border-radius !default;
@@ -2678,6 +2739,10 @@ $button-color: $label-color !default;
 $button-color-force: false !default;
 $button-color-basic: false !default;
 
+/* BUTTON DARK */
+$button-dark-color: $label-dark-color !default;
+$button-dark-color-force: $label-dark-color-force !default;
+$button-dark-color-basic: $label-dark-color-basic !default;
 
 // @require core/animations/variables.scss
 // @require core/colors/variables.scss
@@ -2708,6 +2773,11 @@ $checkbox-icon-animation-duration: $animation-fast !default;
 $input-color: $label-color !default;
 $input-color-force: false !default;
 $input-color-basic: true !default;
+
+/* INPUT DARK */
+$input-dark-color: $label-dark-color !default;
+$input-dark-color-force: false !default;
+$input-dark-color-basic: true !default;
 
 $input-border-radius: $label-border-radius !default;
 
@@ -3515,6 +3585,12 @@ $table-compact-cell-padding-y: $table-compact-cell-padding-x !default;
 $tagbox-color: $container-color !default;
 $tagbox-color-force: false !default;
 $tagbox-color-basic: true !default;
+
+/* TAGBOX DARK */
+
+$tagbox-dark-color: $container-dark-color !default;
+$tagbox-dark-color-force: false !default;
+$tagbox-dark-color-basic: true !default;
 
 /* PARTIAL */
 

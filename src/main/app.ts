@@ -11,6 +11,7 @@ import Environment from '@common/environment';
 import CWD from './windows/cwd';
 import Main from './windows/main';
 import Window from './windows/window';
+import Settings from '@common/settings';
 
 /* APP */
 
@@ -71,6 +72,7 @@ class App {
     this.___activate ();
     this.___ready ();
     this.___cwdChanged ();
+    this.___themeChanged ();
 
   }
 
@@ -140,20 +142,31 @@ class App {
 
   }
 
+  /* Theme CHANGED */
+
+  ___themeChanged () {
+
+    ipc.on ( 'theme-changed', this.__themeChanged.bind ( this ) );
+
+  }
+
+  __themeChanged () {
+
+    if ( this.win ) this.win.win.close ();
+
+    this.load ();
+
+  }
+
   /* API */
 
   load () {
 
     const cwd = Config.cwd;
-
     if ( cwd && fs.existsSync ( cwd ) ) {
-
-      this.win = new Main ();
-
+      this.win = new Main ('main', Settings.get('theme'));
     } else {
-
       this.win = new CWD ();
-
     }
 
   }

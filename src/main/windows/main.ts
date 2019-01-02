@@ -14,11 +14,10 @@ import Route from './route';
 class Main extends Route {
 
   /* CONSTRUCTOR */
-
-  constructor ( name = 'main', options = { minWidth: 685, minHeight: 425 }, stateOptions = { defaultWidth: 850, defaultHeight: 525 } ) {
-
+  theme: string;
+  constructor ( name = 'main', theme='light', options = { minWidth: 685, minHeight: 425 }, stateOptions = { defaultWidth: 850, defaultHeight: 525 } ) {
     super ( name, options, stateOptions );
-
+    this.theme = theme;
   }
 
   /* SPECIAL */
@@ -52,6 +51,13 @@ class Main extends Route {
           {
             label: 'Change Data Directory...',
             click: () => this.win.webContents.send ( 'cwd-change' )
+          },
+          {
+            label: 'Dark Mode',
+            accelerator: 'CommandOrControl+Shift+D',
+            click: (menuItem) => this.win.webContents.send ( 'theme-change', menuItem ),
+            type: 'checkbox',
+            checked: this.theme === 'dark'
           },
           {
             type: 'separator',

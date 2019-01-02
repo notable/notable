@@ -16,6 +16,12 @@ import * as showdownKatex from 'showdown-katex-studdown';
 import * as showdownTargetBlack from 'showdown-target-blank';
 import Config from '@common/config';
 
+if (Config.theme === 'dark') {
+  require('highlight.js/styles/atom-one-dark');
+} else {
+  require('highlight.js/styles/github');
+}
+
 /* MARKDOWN */
 
 const Markdown = {

@@ -49,7 +49,7 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 <img src="resources/demo/multi_editor.png" alt="Editor" width="750">
 
 ## Contributing
-
+Nodejs 8
 If you have an idea, or you have found a problem, please open an [issue](https://github.com/fabiospampinato/notable/issues) about it.
 
 If you want to make a pull request, or fork the app, you should:
@@ -64,6 +64,10 @@ npm run tutorial
 npm run dev
 ```
 
+### Manually comply core css
+```
+sass src/renderer/template/misc.scss > src/renderer/template/misc.css
+```
 ## Related
 
 - **[enex-dump](https://github.com/fabiospampinato/enex-dump)**: Dump the content of Evernote's `.enex` files, preserving attachements, some metadata and optionally converting notes to Markdown.

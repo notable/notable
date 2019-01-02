@@ -1,0 +1,162 @@
+/*! Github Dark v1.20.93 (2018-12-22) */
+/*! Repository: https://github.com/StylishThemes/GitHub-Dark    */
+/*! Userstyle:  http://userstyles.org/styles/37035              */
+/*! License:    https://creativecommons.org/licenses/by-sa/4.0/ */
+
+.dark-theme {
+  /*
+    Name:       one-dark 1.1.1
+    Author:     Török Ádám (http://github.com/Aerobird98)
+    Original Atom One Dark Theme (https://github.com/atom/one-dark-ui & https://github.com/atom/one-dark-syntax)
+*/
+
+/* basic */
+
+/* FIXME: still uses github-light theme as a base */
+
+.cm-s-github-light {
+  /* font-family: "Fira Code", Menlo, Consolas, 'DejaVu Sans Mono', monospace !important; */
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+  font-weight: 350;
+  font-size: 12px;
+  color: #abb2bf;
+  /* background-color: #282c34; */
+  .CodeMirror-selected {
+    background-color: #3e4451;
+  }
+  .CodeMirror-gutter, .CodeMirror-gutters {
+    border: none;
+    /* background-color: #282c34; */
+  }
+  .CodeMirror-linenumber, .CodeMirror-linenumbers {
+    color: #5c6370 !important;
+    background-color: transparent;
+  }
+  .CodeMirror-lines {
+    color: #abb2bf !important;
+    background-color: transparent;
+  }
+  .CodeMirror-cursor {
+    border-left: 2px solid #56b6c2 !important;
+  }
+  .CodeMirror-matchingbracket, .CodeMirror-matchingtag {
+    border-bottom: 2px solid #56b6c2;
+    color: #abb2bf !important;
+    background-color: transparent;
+  }
+  .CodeMirror-nonmatchingbracket {
+    border-bottom: 2px solid #e06c75;
+    color: #abb2bf !important;
+    background-color: transparent;
+  }
+  .CodeMirror-foldmarker, .CodeMirror-foldgutter, .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded {
+    border: none;
+    text-shadow: none;
+    color: #5c6370 !important;
+    background-color: transparent;
+  }
+  .CodeMirror-activeline-background {
+    background-color: rgba(153, 187, 255, 0.04);
+  }
+  .cm-header {
+    color: #e06c75;
+  }
+  .cm-quote {
+    color: #5c6370;
+    font-style: italic;
+  }
+  .cm-negative, .cm-positive {
+    color: #e06c75;
+  }
+  .cm-strong, .cm-header .cm-strong {
+    color: #d19a66;
+    font-weight: bold;
+  }
+  .cm-em, .cm-header .cm-em {
+    color: #c678dd;
+    font-style: italic;
+  }
+  .cm-tag {
+    color: #e06c75;
+  }
+  .cm-attribute {
+    color: #d19a66;
+  }
+  .cm-link {
+    color: #98c379;
+    border-bottom: solid 1px #98c379;
+  }
+  .cm-builtin {
+    color: #e06c75;
+  }
+  .cm-keyword {
+    color: #c678dd;
+  }
+  .cm-def {
+    color: #e5c07b;
+  }
+  .cm-atom, .cm-number {
+    color: #d19a66;
+  }
+  .cm-property {
+    color: #56b6c2;
+  }
+  .cm-qualifier {
+    color: #d19a66;
+  }
+  .cm-variable {
+    color: #e06c75;
+  }
+  .cm-string {
+    color: #98c379;
+  }
+  .cm-punctuation {
+    color: #abb2bf;
+  }
+  .cm-operator {
+    color: #56b6c2;
+  }
+  .cm-meta, .cm-bracket {
+    color: #abb2bf;
+  }
+  .cm-comment {
+    color: #5c6370;
+    font-style: italic;
+  }
+  .cm-error {
+    color: #e06c75;
+  }
+  .cm-m-css {
+    &.cm-variable {
+      color: #828997;
+    }
+    &.cm-property {
+      color: #abb2bf;
+    }
+    &.cm-atom, &.cm-builtin {
+      color: #56b6c2;
+    }
+  }
+  .cm-m-lua.cm-variable {
+    color: #56b6c2;
+  }
+}
+
+/* addon: edit/machingbrackets.js & addon: edit/matchtags.js */
+
+/* addon: fold/foldgutter.js */
+
+/* addon: selection/active-line.js */
+
+/* basic syntax */
+
+/* original:  #d19a66; */
+
+/* original: #abb2bf */
+
+/* original: #abb2bf */
+
+/* css syntax corrections */
+
+/* lua syntax corrections */
+}
