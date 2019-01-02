@@ -49,6 +49,10 @@
   border-bottom: 1px solid #343434 !important;
 }
 
+.markdown-body hr {
+  background: #343434 !important;
+}
+
 .markdown-body kbd {
   color: #afafaf !important;
   border-color: #383838 !important;
