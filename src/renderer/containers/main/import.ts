@@ -95,6 +95,7 @@ class Import extends Container<ImportState, MainCTX> {
         case '.markdn':
         case '.mdtxt':
         case '.mdtext':
+        case '.txt':
           await this._importMarkdown ( filePath, importTag );
           break;
 
@@ -121,9 +122,9 @@ class Import extends Container<ImportState, MainCTX> {
       title: 'Import Notes',
       buttonLabel: 'Import',
       filters: [
-        { name: 'All Supported Formats', extensions: ['enex', 'md', 'mkd', 'mdwn', 'mdown', 'markdown', 'markdn', 'mdtxt', 'mdtext'] },
+        { name: 'All Supported Formats', extensions: ['enex', 'md', 'mkd', 'mdwn', 'mdown', 'markdown', 'markdn', 'mdtxt', 'mdtext', 'txt'] },
         { name: 'Evernote', extensions: ['enex'] },
-        { name: 'Markdown', extensions: ['md', 'mkd', 'mdwn', 'mdown', 'markdown', 'markdn', 'mdtxt', 'mdtext'] }
+        { name: 'Markdown', extensions: ['md', 'mkd', 'mdwn', 'mdown', 'markdown', 'markdn', 'mdtxt', 'mdtext', 'txt'] }
       ],
       properties: ['openFile', 'multiSelections']
     });

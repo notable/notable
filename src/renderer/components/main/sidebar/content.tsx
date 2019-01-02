@@ -15,17 +15,19 @@ import TagUntagged from './tag_untagged';
 
 /* CONTENT */
 
-const Content = () => (
+const Content = ({ isLoading }) => (
   <div className="layout-content">
-    <div className="multiple vertical fluid">
-      <TagAll />
-      <TagFavorites />
-      <TagNotebooks />
-      <TagTags />
-      <TagTemplates />
-      <TagUntagged />
-      <TagTrash />
-    </div>
+    {isLoading ? null : (
+      <div className="multiple vertical fluid">
+        <TagAll />
+        <TagFavorites />
+        <TagNotebooks />
+        <TagTags />
+        <TagTemplates />
+        <TagUntagged />
+        <TagTrash />
+      </div>
+    )}
   </div>
 );
 
@@ -33,5 +35,8 @@ const Content = () => (
 
 export default connect ({
   container: Main,
-  shouldComponentUpdate: 'container.tags.state'
+  shouldComponentUpdate: ['container.tags.state', 'container.loading.state'],
+  selector: ({ container }) => ({
+    isLoading: container.loading.get ()
+  })
 })( Content );

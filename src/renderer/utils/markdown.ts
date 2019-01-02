@@ -2,13 +2,17 @@
 /* IMPORT */
 
 import 'highlight.js/styles/atom-one-dark';
+import 'katex/dist/katex.min.css';
 import * as _ from 'lodash';
+import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
+import * as mermaid from 'mermaid';
 import * as path from 'path';
 import * as pify from 'pify';
 import * as remark from 'remark';
 import * as strip from 'strip-markdown';
 import * as showdown from 'showdown';
 import * as showdownHighlight from 'showdown-highlight';
+import * as showdownKatex from 'showdown-katex-studdown';
 import * as showdownTargetBlack from 'showdown-target-blank';
 import Config from '@common/config';
 
@@ -124,6 +128,41 @@ const Markdown = {
         }
       ];
 
+    },
+
+    katex () {
+
+      try {
+
+        return showdownKatex ( Config.katex );
+
+      } catch ( e ) {
+
+        return `<p class="text-red">[KaTeX error: ${e.message}]</p>`;
+
+      }
+
+    },
+
+    mermaid () {
+
+      mermaid.initialize ( Config.mermaid );
+
+      return [{
+        type: 'language',
+        regex: '```mermaid([^`]*)```',
+        replace ( match, $1 ) {
+          const id = `mermaid-${CRC32.str ( $1 )}`;
+          try {
+            const svg = mermaid.render ( id, $1 );
+            return `<div class="mermaid">${svg}</div>`;
+          } catch ( e ) {
+            $(`#${id}`).remove ();
+            return `<p class="text-red">[mermaid error: ${e.message}]</p>`;
+          }
+        }
+      }];
+
     }
 
   },
@@ -132,11 +171,11 @@ const Markdown = {
 
     if ( Markdown.converter ) return Markdown.converter;
 
-    const {encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
+    const {encodeSpecialLinks, attachment, note, tag, katex, mermaid} = Markdown.extensions;
 
     const converter = new showdown.Converter ({
       metadata: true,
-      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag ()]
+      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag (), katex (), mermaid ()]
     });
 
     converter.setFlavor ( 'github' );

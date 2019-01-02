@@ -19,7 +19,6 @@ const options: any = { //TSC
   indentUnit: 2,
   indentWithTabs: false,
   lineNumbers: false,
-  lineSeparator: '\n',
   lineWrapping: true,
   mode: 'gfm',
   gitHubSpice: false,

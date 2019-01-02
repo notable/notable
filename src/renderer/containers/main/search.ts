@@ -4,6 +4,7 @@
 import * as _ from 'lodash';
 import * as isShallowEqual from 'shallowequal';
 import {Container} from 'overstated';
+import Config from '@common/config';
 
 /* SEARCH */
 
@@ -23,31 +24,42 @@ class Search extends Container<SearchState, MainCTX> {
 
   /* HELPERS */
 
-  _isNoteMatch = ( note: NoteObj, query: string ): boolean => {
+  _isNoteMatch = ( note: NoteObj, query: string, tokensRe: RegExp[] ): boolean => {
 
-    return Svelto.Fuzzy.match ( this.ctx.note.getTitle ( note ), query, false );
+    const content = this.ctx.note.getContent ( note );
+
+    return (
+      tokensRe.every ( tokenRe => tokenRe.test ( content ) ) ||
+      Svelto.Fuzzy.match ( this.ctx.note.getTitle ( note ), query, false )
+    );
 
   }
 
   _filterNotesByQuery = ( notes: NoteObj[], query: string ): NoteObj[] => {
 
-    return notes.filter ( note => this._isNoteMatch ( note, query ) );
+    const tokensRe = _.escapeRegExp ( query ).split ( Config.search.tokenizer ).map ( token => new RegExp ( token, 'i' ) );
+
+    return notes.filter ( note => this._isNoteMatch ( note, query, tokensRe ) );
 
   }
 
   _searchBy = ( tag: string, query: string ): NoteObj[] => {
 
-    /* OPTIMIZED SUB SEARCH */ // Filtering only the previously filtered notes
+    /* OPTIMIZED SEARCH */ // Filtering/Ordering only the previously filtered notes
 
-    const prevQuery = this._prevQuery;
+    const prevQuery = this._prevQuery,
+          prevState = this._prevState;
+
     this._prevQuery = query;
+    const state = this._prevState = _.pick ( this.ctx.state, ['notes', 'sorting', 'tags', 'tag'] );
 
-    if ( query.startsWith ( prevQuery ) ) {
+    if ( prevState ) {
 
-      const prevState = this._prevState,
-            state = this._prevState = _.pick ( this.ctx.state, ['notes', 'tags', 'tag'] );
+      if ( query === prevQuery && prevState.notes === state.notes && prevState.tags === state.tags && prevState.tag === state.tag ) { // Simple reordering
 
-      if ( isShallowEqual ( prevState, state ) ) {
+        return this.ctx.sorting.sort ( this.state.notes );
+
+      } else if ( query.startsWith ( prevQuery ) && isShallowEqual ( prevState, state ) ) { // Sub-search
 
         return this._filterNotesByQuery ( this.state.notes, query );
 
@@ -58,7 +70,7 @@ class Search extends Container<SearchState, MainCTX> {
     /* UNOPTIMIZED SEARCH */
 
     const notesByTag = this.ctx.tag.getNotes ( tag ),
-          notesByQuery = this._filterNotesByQuery ( notesByTag, query ),
+          notesByQuery = !query ? notesByTag : this._filterNotesByQuery ( notesByTag, query ),
           notesSorted = this.ctx.sorting.sort ( notesByQuery ),
           notesUnique = _.uniq ( notesSorted ) as NoteObj[]; // If a note is in 2 sub-tags and we select a parent tag of both we will get duplicates
 

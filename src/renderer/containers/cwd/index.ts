@@ -9,9 +9,10 @@ import * as os from 'os';
 import {Container, compose} from 'overstated';
 import * as path from 'path';
 import * as pify from 'pify';
-import Tutorial from '@renderer/containers/main/tutorial';
 import Config from '@common/config';
 import Settings from '@common/settings';
+import Tutorial from '@renderer/containers/main/tutorial';
+import File from '@renderer/utils/file';
 
 /* CWD */
 
@@ -37,7 +38,10 @@ class CWD extends Container<CWDState, CWDCTX> {
 
       Settings.set ( 'cwd', folderPath );
 
-      if ( !hadTutorial && Config.flags.TUTORIAL ) {
+      const notesPath = Config.notes.path,
+            hadNotes = ( notesPath && await File.exists ( notesPath ) );
+
+      if ( !hadTutorial && !hadNotes && Config.flags.TUTORIAL ) {
 
         await this.ctx.tutorial.import ();
 

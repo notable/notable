@@ -1,6 +1,5 @@
 ---
 title: 06 - Tags
-pinned: false
 tags: [Basics, Notebooks/Tutorial]
 ---
 
@@ -10,7 +9,7 @@ Notes can have multiple tags, which are useful for better categorization.
 
 ## Syntax
 
-- **Root**: Root tags don't contain any forward slash (`/`), and they will be rendered right below the special `Tags` section in the sidebar.
+- **Root**: Root tags don't contain any forward slash (`/`). If there are any notebooks or templates defined they will be rendered inside the special `Tags` section in the sidebar, otherwise the `Tags` parent section will be omitted.
 
 - **Nested**: Tags can also be nested, _indefinitely_, just write them like a path, separating the levels with a forward slash: `foo/bar/baz`.
 
@@ -20,11 +19,11 @@ Notes can have multiple tags, which are useful for better categorization.
 
 - **Templates**: Notable also supports Templates, to create one just add the `Templates` tag to a note. Of course nesting is supported here too, i.e. `Templates/Work`.
 
-Feel free to use these features, if you don't need them their icons won't be displayed sidebar.
+Feel free to use these features, if you don't need them their icons won't be displayed in the sidebar.
 
 ## Collapse/Expand
 
-Tags with children can be collapsed/expanded, just right-click on them and select the option.
+Tags with children can be collapsed/expanded, just right-click them and select the option or double-click them.
 
 ## Editing
 
