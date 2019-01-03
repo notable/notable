@@ -183,7 +183,7 @@
   font-size: .6em;
 }
 
-#middlebar > .layout-content {
+.react-window-list {
   will-change: auto !important;
 }
 
