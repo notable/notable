@@ -54,8 +54,7 @@ class Main extends Route {
             click: () => this.win.webContents.send ( 'cwd-change' )
           },
           {
-            type: 'separator',
-            visible: is.macOS ()
+            type: 'separator'
           },
           {
             role: 'services',
