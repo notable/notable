@@ -183,6 +183,10 @@
   font-size: .6em;
 }
 
+#middlebar > .layout-content {
+  will-change: auto !important;
+}
+
 #mainbar {
   background-color: #f4f4f4;
   border-left: 1px solid #d8d8d8;
