@@ -36,6 +36,7 @@
 - Tags/Attachments popovers: ensuring they get refreshed when the note changes
 - Ensuring Svelto works on Windows
 - Ensuring there’s always a separator before the `Notable -> Quit` menu entry
+- Ensuring checkboxes are always displayed
 
 ### Version 1.0.1
 - Simplified import tag

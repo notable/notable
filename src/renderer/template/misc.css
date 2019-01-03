@@ -215,6 +215,11 @@
   margin-left: 0 !important;
 }
 
+#mainbar .editor input[type="checkbox"] {
+  appearance: checkbox !important;
+  -webkit-appearance: checkbox !important;
+}
+
 #mainbar .editor pre {
   display: block !important;
 }
