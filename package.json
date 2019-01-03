@@ -12,7 +12,7 @@
     "build:mac": "npm run compile && electron-builder --mac",
     "build:win": "npm run compile && electron-builder --win",
     "build:linux": "npm run compile && electron-builder --linux",
-    "build:all": "npm run compile && electron-builder -mwl",
+    "build:all": "npm run clean:releases && npm run compile && electron-builder -mwl",
     "svelto:dev": "svelto build --env development",
     "svelto:prod": "svelto build",
     "iconfont": "icon-font-buildr",
