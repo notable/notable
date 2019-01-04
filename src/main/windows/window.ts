@@ -75,6 +75,7 @@ class Window {
 
     this.___readyToShow ();
     this.___closed ();
+    this.___focused ();
 
   }
 
@@ -104,6 +105,20 @@ class Window {
   __closed () {
 
     delete this.win;
+
+  }
+
+  /* FOCUSED */
+
+  ___focused () {
+
+    this.win.on ( 'focus', this.__focused.bind ( this ) );
+
+  }
+
+  __focused () {
+
+    this.initMenu ();
 
   }
 
