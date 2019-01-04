@@ -19,7 +19,11 @@ Some syntax plugins for providing you [KaTeX](https://katex.org) and [mermaid](h
 
 #### KaTeX
 
-$$e^{iπ} + 1 = 0$$
+$$ e^{iπ} + 1 = 0 $$
+
+\\[ x^2 + y^2 = 1 \\]
+
+Inline expressions: \\( e = mc^2 \\), are supported too.
 
 #### mermaid
 
