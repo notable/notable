@@ -27,60 +27,87 @@ const Utils = {
   onEnterPressed (cm) {
 
     if (!options.enterAutoListIntent) {
-      cm.execCommand("newlineAndIndent");
+      Utils.newLineAndIndent(cm);
       return;
     }
 
-    const unorderedPattern : RegExp = ( options.indentWithTabs ) ? /(\t+)?- / : /(\s+)?- /,
-          orderedPattern : RegExp   = ( options.indentWithTabs ) ? /(\t+)?\d+. / : /(\s+)?\d+. /,
+    const unorderedListItemPattern : RegExp = ( options.indentWithTabs ) ? /^\t*[-\+\*] / : /^\s*[-\+\*] /,
+          orderedListItemPattern : RegExp   = ( options.indentWithTabs ) ? /^\t*\d+. / : /^\s*\d+. /,
+          todoListItemPattern : RegExp      = ( options.indentWithTabs ) ? /^\t*- \[[\sxX]\] / : /^\s*- \[[\sxX]\] /,
           lineNr : number           = cm.getCursor().line,
           line   : string           = cm.getLine(lineNr);
 
-    if (line.match(unorderedPattern)) {
-      
-      // Unordered list
-      const matches = unorderedPattern.exec( line );
-      if (matches === null)
-        return;
-      
-      Utils.handleListEnter(cm, line, lineNr, matches[0], "- ");
-
-    } else if (line.match(orderedPattern)) {
-      
-      // Ordered list
-      const matches = orderedPattern.exec( line );
+    if (line.match(todoListItemPattern)) {
+      const matches = todoListItemPattern.exec( line );
       if (matches === null)
         return;
 
-      let previous : string       = matches[0],
-          previousNumber : number = +( previous.replace( /(^\d+)(.+$)/i,'$1' ) ),
-          next : string           = ( previousNumber + 1 ) + ". ";
-      
-      Utils.handleListEnter( cm, line, lineNr, matches[0], next );
-    
+      Utils.handleListEnter(cm, line, lineNr, matches[0], "- [ ] ");
+
+    } else if (line.match(unorderedListItemPattern)) {
+
+      const matches = unorderedListItemPattern.exec( line );
+      if (matches === null)
+        return;
+
+      Utils.handleListEnter(cm, line, lineNr, matches[0], matches[0]);
+
+    } else if (line.match(orderedListItemPattern)) {
+
+      const matches = orderedListItemPattern.exec( line );
+      if (matches === null)
+        return;
+
+      let previousNumber : number = +( matches[0].replace( /(^\d+)(.+$)/i,'$1' ) ),
+      nextListItemMarker : string     = ( previousNumber + 1 ) + ". ";
+
+      Utils.handleListEnter( cm, line, lineNr, matches[0], nextListItemMarker );
+
     } else {
-      
+
       // Not in a list, so no need to do anything here
-      cm.execCommand( "newlineAndIndent" );
-    
+      Utils.newLineAndIndent(cm);
+
     }
-    
   },
 
-  handleListEnter(cm, line : string, lineNr : number, start : string, next : string) {
-    
-    if ( line.trim() === start.trim() ) {
+  /**
+   * Smart handling of Enter presses in a list.
+   * Behaviour is as follows:
+   * When Enter is pressed:
+   * - If the list item is not empty, add a new list item
+   * - If the list item is empty - decrease its indent
+   * - If the list item is empty and not indented - terminate the list
+   */
+  handleListEnter(cm, line : string, lineNr : number, currentListItemMarker : string, nextListItemMarker : string) {
 
-      cm.execCommand( "indentLess" );
-      Utils.replace( cm, lineNr, "", 0, line.length );
-    
-    } else if ( line.startsWith(start) ) {
-    
-      cm.execCommand( "newlineAndIndent" );
-      Utils.replace( cm, lineNr + 1, next, line.length );
-    
+    if ( line.trim() === currentListItemMarker.trim() ) { // list item is empty
+      if (line.startsWith(currentListItemMarker.trim())) { // list item is not indented
+        Utils.discardLineContent(cm, lineNr);
+      } else {
+        Utils.indentLess(cm);
+      }
+    } else { // list item has content
+      Utils.newLineAndIndent(cm);
+      Utils.append(cm, lineNr + 1, nextListItemMarker);
     }
 
+  },
+
+  newLineAndIndent(cm) {
+    cm.execCommand( "newlineAndIndent" );
+  },
+
+  indentLess(cm) {
+    cm.execCommand( "indentLess" );
+  },
+
+  append(cm, lineNr : number, stringToAppend : string) {
+    Utils.replace( cm, lineNr, stringToAppend, cm.getLine(lineNr).length );
+  },
+
+  discardLineContent(cm, lineNr) {
+    Utils.replace( cm, lineNr, "", 0, cm.getLine(lineNr).length );
   },
 
   addSelection ( cm, pos ) {
