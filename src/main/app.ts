@@ -33,23 +33,7 @@ class App {
 
   init () {
 
-    this.initAbout ();
     this.initContextMenu ();
-
-  }
-
-  initAbout () {
-
-    if ( !is.macOS () ) return;
-
-    const {productName, version, license, author} = pkg;
-
-    app.setAboutPanelOptions ({
-      applicationName: productName,
-      applicationVersion: version,
-      copyright: `${license} © ${author.name}`,
-      version: ''
-    });
 
   }
 

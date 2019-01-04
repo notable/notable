@@ -416,3 +416,19 @@ kbd {
 .mermaid {
   text-align: center;
 }
+
+#about {
+  background-color: #ececec;
+}
+
+#about > *:not(:last-child) {
+  margin-bottom: 5px !important;
+}
+
+#about .title {
+  font-weight: bold;
+}
+
+#about .desc {
+  font-size: .5946142301em;
+}
