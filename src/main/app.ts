@@ -5,7 +5,6 @@ import {app, ipcMain as ipc} from 'electron';
 import {autoUpdater} from 'electron-updater';
 import * as is from 'electron-is';
 import * as fs from 'fs';
-import pkg from '@root/package.json';
 import Config from '@common/config';
 import Environment from '@common/environment';
 import CWD from './windows/cwd';
