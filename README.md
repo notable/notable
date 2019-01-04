@@ -55,6 +55,7 @@ If you have an idea, or you have found a problem, please open an [issue](https:/
 If you want to make a pull request, or fork the app, you should:
 
 ```bash
+# make sure you npm version is at least 5.2.0
 git clone https://github.com/fabiospampinato/notable.git
 cd notable
 npm install
