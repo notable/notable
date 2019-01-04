@@ -3,9 +3,10 @@
 
 import * as _ from 'lodash';
 import * as path from 'path';
-import {app, BrowserWindow} from 'electron';
+import {BrowserWindow} from 'electron';
 import * as is from 'electron-is';
 import * as windowStateKeeper from 'electron-window-state';
+import pkg from '@root/package.json';
 import Environment from '@common/environment';
 
 /* WINDOW */
@@ -124,7 +125,7 @@ class Window {
       backgroundColor: '#fdfdfd',
       icon: path.join ( __static, 'images', `icon.${is.windows () ? 'ico' : 'png'}` ),
       show: false,
-      title: app.getName (),
+      title: pkg.productName,
       titleBarStyle: 'hiddenInset',
       webPreferences: {
         webSecurity: false

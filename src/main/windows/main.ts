@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {app, ipcMain as ipc, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {ipcMain as ipc, Menu, MenuItemConstructorOptions, shell} from 'electron';
 import * as is from 'electron-is';
 import pkg from '@root/package.json';
 import Environment from '@common/environment';
@@ -29,7 +29,7 @@ class Main extends Route {
 
     const template: MenuItemConstructorOptions[] = UMenu.filterTemplate ([
       {
-        label: app.getName (),
+        label: pkg.productName,
         submenu: [
           {
             role: 'about',
