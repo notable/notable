@@ -334,6 +334,10 @@ class Main extends Route {
           },
           { type: 'separator' },
           {
+            label: 'View Changelog',
+            click: () => shell.openExternal ( `${pkg.homepage}/blob/master/CHANGELOG.md` )
+          },
+          {
             label: 'View License',
             click: () => shell.openExternal ( `${pkg.homepage}/blob/master/LICENSE` )
           }
