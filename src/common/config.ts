@@ -47,10 +47,7 @@ const Config = {
     displayMode: false,
     errorColor: '#f44336',
     delimiters: [
-      { left: '¨D¨D', right: '¨D¨D', display: true }, // showdown converts `$$` to `¨D¨D`
-      { left: '\\(', right: '\\)', display: false },
-      { left: '\\[', right: '\\]', display: true },
-      { left: '~', right: '~', display: false, asciimath: true },
+      { left: '$', right: '$', display: false },
       { left: '&&', right: '&&', display: true, asciimath: true }
     ]
   },
