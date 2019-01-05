@@ -93,7 +93,8 @@ class CWD extends Container<CWDState, CWDCTX> {
     const folderPaths = remote.dialog.showOpenDialog ({
       title: 'Select Data Directory',
       buttonLabel: 'Select',
-      properties: ['openDirectory', 'createDirectory', 'showHiddenFiles']
+      properties: ['openDirectory', 'createDirectory', 'showHiddenFiles'],
+      defaultPath: path.resolve(Config.cwd, '..')
     });
 
     if ( !folderPaths || !folderPaths.length ) return;
