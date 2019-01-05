@@ -162,13 +162,6 @@ class Main extends Route {
             click: () => this.win.webContents.send ( 'note-move-to-trash' )
           },
           {
-            label: 'Move to Trash',
-            accelerator: 'CommandOrControl+Alt+Backspace',
-            enabled: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isMultiEditorEditing,
-            visible: flags && flags.hasNote && !flags.isNoteDeleted && flags.isEditorEditing,
-            click: () => this.win.webContents.send ( 'note-move-to-trash' )
-          },
-          {
             label: 'Restore',
             accelerator: 'CommandOrControl+Shift+Backspace',
             enabled: flags && flags.hasNote && flags.isNoteDeleted && !flags.isMultiEditorEditing,
@@ -177,6 +170,7 @@ class Main extends Route {
           },
           {
             label: 'Permanently Delete',
+            accelerator: 'CommandOrControl+Alt+Backspace',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote,
             click: () => this.win.webContents.send ( 'note-permanently-delete' )
