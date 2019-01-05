@@ -263,10 +263,6 @@
   min-width: 7.5em !important;
 }
 
-#mainbar-statusbar .textual {
-  color: rgba(31, 31, 31, 0.65);
-}
-
 .layout .layout-header {
   -webkit-app-region: drag;
   height: 38px;
