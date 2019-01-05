@@ -65,17 +65,6 @@ class Position extends React.PureComponent<any, any> {
   }
 }
 
-// const Position = ({ isEditing, getCodeMirror }) => {
-//   if (!isEditing) {
-//     return <div className="label" title="Line, Column">Ln 0, Col 0</div>;
-//   }
-
-//   const cm = getCodeMirror(),
-//     cursor = cm.getCursor();
-
-//   return <div className="label" title="Line, Column">{`Ln ${cursor.line}, Col ${cursor.ch}`}</div>;
-// };
-
 /* EXPORT */
 
 export default connect ({
