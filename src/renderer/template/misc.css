@@ -192,6 +192,7 @@
   border-left: 1px solid #d8d8d8;
   flex: 4 4 327px;
   min-width: 327px;
+  overflow: hidden;
 }
 
 #mainbar .layout-header {
@@ -260,6 +261,10 @@
 #mainbar .multi-editor .tagbox-partial {
   margin: 0 5px 10px !important;
   min-width: 7.5em !important;
+}
+
+#mainbar-statusbar .textual {
+  color: rgba(31, 31, 31, 0.65);
 }
 
 .layout .layout-header {

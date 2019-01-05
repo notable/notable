@@ -123,6 +123,7 @@ type TutorialState = {};
 
 type WindowState = {
   focus: boolean,
+  statusbar: boolean,
   fullscreen: boolean
 };
 

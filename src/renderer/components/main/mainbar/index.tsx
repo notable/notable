@@ -9,6 +9,7 @@ import PopoverTagsAttachments from '@renderer/components/main/popovers/popover_n
 import Editor from './editor';
 import MultiEditor from './multi_editor';
 import Toolbar from './toolbar';
+import StatusBar from './statusbar';
 
 /* MAINBAR */
 
@@ -22,6 +23,7 @@ const Mainbar = ({ isMultiEditing }) => (
         <PopoverTagsAttachments />
         <Toolbar />
         <Editor />
+        <StatusBar />
       </>
     )}
   </div>

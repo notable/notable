@@ -34,6 +34,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.on ( 'cwd-open-in-app', this.__cwdOpenInApp );
     ipc.on ( 'import', this.__import );
     ipc.on ( 'window-focus-toggle', this.__windowFocusToggle );
+    ipc.on ( 'window-statusbar-toggle', this.__windowStatusbarToggle );
     ipc.on ( 'window-fullscreen-set', this.__windowFullscreenSet );
     ipc.on ( 'multi-editor-select-all', this.__multiEditorSelectAll );
     ipc.on ( 'multi-editor-select-invert', this.__multiEditorSelectInvert );
@@ -66,6 +67,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.removeListener ( 'cwd-open-in-app', this.__cwdOpenInApp );
     ipc.removeListener ( 'import', this.__import );
     ipc.removeListener ( 'window-focus-toggle', this.__windowFocusToggle );
+    ipc.removeListener ( 'window-statusbar-toggle', this.__windowStatusbarToggle );
     ipc.removeListener ( 'window-fullscreen-set', this.__windowFullscreenSet );
     ipc.removeListener ( 'multi-editor-select-all', this.__multiEditorSelectAll );
     ipc.removeListener ( 'multi-editor-select-invert', this.__multiEditorSelectInvert );
@@ -115,6 +117,12 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   __windowFocusToggle = () => {
 
     this.main.window.toggleFocus ();
+
+  }
+
+  __windowStatusbarToggle = () => {
+
+    this.main.window.toggleStatusbar ();
 
   }
 

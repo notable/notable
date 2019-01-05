@@ -262,6 +262,11 @@ class Main extends Route {
             accelerator: 'CommandOrControl+Alt+F',
             click: () => this.win.webContents.send ( 'window-focus-toggle' )
           },
+          {
+            label: 'Toggle Statusbar',
+            accelerator: 'CommandOrControl+Alt+.',
+            click: () => this.win.webContents.send ( 'window-statusbar-toggle' )
+          },
           { role: 'togglefullscreen' }
         ]
       },
