@@ -7,7 +7,7 @@
     "clean:deps": "del 'node_modules/**/{README,LICENSE,license,.travis.yml,tsconfig.json,*.{md,MD,map,png,svg,ts}}' '!node_modules/**/*.d.ts'",
     "clean:dist": "del dist",
     "clean:releases": "del releases",
-    "clean": "npm-run-all -p clean:dist clean:releases",
+    "clean": "npm run clean:dist && npm run clean:releases",
     "compile": "npm run svelto:prod && npm run iconfont && npm run tutorial && npm run clean:deps && electron-webpack app --env.minify=false",
     "build:mac": "npm run compile && electron-builder --mac",
     "build:win": "npm run compile && electron-builder --win",
