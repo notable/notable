@@ -19,7 +19,7 @@ class Position extends React.PureComponent<any, any> {
 
     if (isEditing) {
       const cm = getCodeMirror(),
-        cursor = cm.getCursor();
+            cursor = cm.getCursor();
 
       cm.on('cursorActivity', this.onCursorActivity.bind(this));
 
@@ -29,11 +29,11 @@ class Position extends React.PureComponent<any, any> {
 
   componentDidUpdate () {
     const { connectedTo } = this.state,
-      { isEditing, getCodeMirror } = this.props;
+          { isEditing, getCodeMirror } = this.props;
 
     if (!connectedTo && isEditing) {
       const cm = getCodeMirror(),
-        cursor = cm.getCursor();
+            cursor = cm.getCursor();
 
       cm.on('cursorActivity', this.onCursorActivity.bind(this));
 
@@ -45,12 +45,6 @@ class Position extends React.PureComponent<any, any> {
     }
   }
 
-  render () {
-    const { line, ch } = this.state;
-
-    return <div className="label" title="Line, Column">{`Ln ${line}, Col ${ch}`}</div>;
-  }
-
   onCursorActivity () {
     const { isEditing, getCodeMirror } = this.props;
 
@@ -59,9 +53,15 @@ class Position extends React.PureComponent<any, any> {
     }
 
     const cm = getCodeMirror(),
-      cursor = cm.getCursor();
+          cursor = cm.getCursor();
 
       this.setState({ line: cursor.line, ch: cursor.ch })
+  }
+
+  render () {
+    const { line, ch } = this.state;
+
+    return <div className="label" title="Line, Column">{`Ln ${line}, Col ${ch}`}</div>;
   }
 }
 
