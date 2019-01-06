@@ -11,6 +11,7 @@ class Editor extends Container<EditorState, MainCTX> {
   /* STATE */
 
   state = {
+    statusbar: false,
     editing: false
   };
 
@@ -133,6 +134,18 @@ class Editor extends Container<EditorState, MainCTX> {
   }
 
   /* API */
+
+  isStatusbar = (): boolean => {
+
+    return this.state.statusbar;
+
+  }
+
+  toggleStatusbar = ( statusbar: boolean = !this.state.statusbar ) => {
+
+    return this.setState ({ statusbar });
+
+  }
 
   isEditing = (): boolean => {
 

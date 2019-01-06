@@ -122,7 +122,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
 
   __windowStatusbarToggle = () => {
 
-    this.main.window.toggleStatusbar ();
+    this.main.editor.toggleStatusbar ();
 
   }
 

@@ -14,7 +14,7 @@ const Statusbar = ({ isStatusbar }) => {
     return null;
   }
 
-  return <div id="mainbar-statusbar" className="layout-header centerer">
+  return <div id="mainbar-statusbar" className="layout-footer centerer">
     <div className="multiple grow">
       <div className="spacer"></div>
       <Position />
@@ -28,6 +28,6 @@ const Statusbar = ({ isStatusbar }) => {
 export default connect ({
   container: Main,
   selector: ({ container }) => ({
-    isStatusbar: container.window.isStatusbar ()
+    isStatusbar: container.editor.isStatusbar ()
   })
 })( Statusbar );

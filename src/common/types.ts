@@ -65,6 +65,7 @@ type AttachmentsState = {
 };
 
 type EditorState = {
+  statusbar: boolean,
   editing: boolean
 };
 
@@ -123,7 +124,6 @@ type TutorialState = {};
 
 type WindowState = {
   focus: boolean,
-  statusbar: boolean,
   fullscreen: boolean
 };
 

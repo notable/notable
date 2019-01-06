@@ -192,10 +192,10 @@
   border-left: 1px solid #d8d8d8;
   flex: 4 4 327px;
   min-width: 327px;
-  overflow: hidden;
 }
 
-#mainbar .layout-header {
+#mainbar .layout-header,
+#mainbar .layout-footer {
   background: #f4f4f4;
   border-color: #d8d8d8;
 }
@@ -263,7 +263,8 @@
   min-width: 7.5em !important;
 }
 
-.layout .layout-header {
+.layout .layout-header,
+.layout .layout-footer {
   -webkit-app-region: drag;
   height: 38px;
   padding: 0 10px;
@@ -284,7 +285,8 @@
 
 .layout-header .label,
 .layout-header .button,
-.layout-header .title {
+.layout-header .title,
+.layout-footer .label {
   padding: 2px 7px !important;
   flex-grow: 0;
 }
@@ -292,6 +294,15 @@
 .layout-header .title {
   color: #505050;
   font-size: 13px;
+}
+
+.layout .layout-footer {
+  border-top: 1px solid transparent;
+  border-bottom: none;
+}
+
+.layout .layout-footer.centerer {
+  overflow: hidden;
 }
 
 .layout-content {
