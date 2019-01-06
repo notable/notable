@@ -6708,19 +6708,19 @@ address a:hover {
 p a,
 li a,
 address a, .link-primary {
-  color: #1565c0;
+  color: #4f8cc9;
 }
 
 p a:hover,
 li a:hover,
 address a:hover, .link-primary:hover {
-  color: #176fd2;
+  color: #4f8cc9;
 }
 
 p a:active,
 li a:active,
 address a:active, .link-primary:active {
-  color: #135bae;
+  color: #4f8cc9;
 }
 
 .link-secondary {
