@@ -263,12 +263,17 @@
   min-width: 7.5em !important;
 }
 
-.layout .layout-header,
-.layout .layout-footer {
+.layout .layout-header {
   -webkit-app-region: drag;
   height: 38px;
   padding: 0 10px;
   border-bottom: 1px solid transparent;
+}
+
+.layout .layout-footer {
+  height: 38px;
+  padding: 0 10px;
+  border-top: 1px solid transparent;
 }
 
 .layout-header > :not(.multiple):not(.title) {
@@ -294,11 +299,6 @@
 .layout-header .title {
   color: #505050;
   font-size: 13px;
-}
-
-.layout .layout-footer {
-  border-top: 1px solid transparent;
-  border-bottom: none;
 }
 
 .layout .layout-footer.centerer {
