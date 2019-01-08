@@ -74,3 +74,12 @@ npm run dev
 ## License
 
 MIT © Fabio Spampinato
+
+### Code Visualization:
+
+Here is a cool visualization of the code evolution
+
+ [![Watch the video](https://img.youtube.com/vi/DFSUNxeMUgw/0.jpg)](https://www.youtube.com/watch?v=DFSUNxeMUgw)
+
+ [https://www.youtube.com/watch?v=DFSUNxeMUgw](https://www.youtube.com/watch?v=DFSUNxeMUgw)
+
