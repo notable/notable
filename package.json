@@ -92,7 +92,7 @@
         "rpm",
         "snap"
       ],
-      "icon": "resources/icon/icon.png",
+      "icon": "resources/icon",
       "category": "Utility"
     },
     "snap": {
