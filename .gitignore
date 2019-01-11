@@ -21,7 +21,7 @@
 .project
 .settings
 .tmproj
-.vs-code
+.vscode
 *.esproj
 *.sublime-project
 *.sublime-workspace
