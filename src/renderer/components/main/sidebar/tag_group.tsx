@@ -3,13 +3,12 @@
 
 import * as _ from 'lodash';
 import * as React from 'react';
-import {pure} from 'recompose';
 import Tags from '@renderer/utils/tags';
 import TagSingle from './tag_single';
 
 /* TAG GROUP */
 
-const TagGroup = pure ( function TagGroup ({ tag, ...props }) {
+const TagGroup: React.FC<any> = React.memo ( function TagGroup ({ tag, ...props }) {
 
   if ( !tag.notes.length ) return null;
 
