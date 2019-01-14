@@ -168,7 +168,7 @@
     "shallowequal": "^1.1.0",
     "showdown": "^1.9.0",
     "showdown-highlight": "^2.1.3",
-    "showdown-katex-studdown": "^0.4.0",
+    "showdown-katex-studdown": "git://github.com/lianghongzhuo/showdown-katex-studdown.git",
     "showdown-target-blank": "^1.0.2",
     "strip-markdown": "^3.0.3"
   },
