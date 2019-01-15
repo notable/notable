@@ -1,0 +1,17 @@
+{
+  "tag": {
+    "enabled": false
+  },
+  "release": {
+    "github": {
+      "enabled": true,
+      "files": [
+        "releases/*",
+        "!releases/builder-effective-config.yaml"
+      ]
+    }
+  },
+  "scripts": {
+    "prerelease": "npm run build:all"
+  }
+}
