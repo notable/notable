@@ -46,6 +46,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.on ( 'note-move-to-trash', this.__noteMoveToTrash );
     ipc.on ( 'note-new', this.__noteNew );
     ipc.on ( 'note-duplicate', this.__noteDuplicate );
+    ipc.on ( 'note-duplicate-template', this.__noteDuplicateTemplate );
     ipc.on ( 'note-open-in-app', this.__noteOpenInApp );
     ipc.on ( 'note-permanently-delete', this.__notePermanentlyDelete );
     ipc.on ( 'note-pin-toggle', this.__notePinToggle );
@@ -78,6 +79,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.removeListener ( 'note-move-to-trash', this.__noteMoveToTrash );
     ipc.removeListener ( 'note-new', this.__noteNew );
     ipc.removeListener ( 'note-duplicate', this.__noteDuplicate );
+    ipc.removeListener ( 'note-duplicate-template', this.__noteDuplicateTemplate );
     ipc.removeListener ( 'note-open-in-app', this.__noteOpenInApp );
     ipc.removeListener ( 'note-permanently-delete', this.__notePermanentlyDelete );
     ipc.removeListener ( 'note-pin-toggle', this.__notePinToggle );
@@ -182,6 +184,12 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   __noteDuplicate = () => {
 
     this.main.note.duplicate ();
+
+  }
+
+  __noteDuplicateTemplate = () => {
+
+    this.main.note.duplicate ( undefined, true );
 
   }
 

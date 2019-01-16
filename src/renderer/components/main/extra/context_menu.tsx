@@ -8,6 +8,7 @@ import * as is from 'electron-is';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
+import {TagSpecials} from '@renderer/utils/tags';
 
 /* CONTEXT MENU */
 
@@ -92,6 +93,10 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
   initNoteMenu () {
 
     this._makeMenu ( '.note-button, .editor .note', [
+      {
+        label: 'New from Template',
+        click: () => this.props.container.note.duplicate ( this.note, true )
+      },
       {
         label: 'Duplicate',
         click: () => this.props.container.note.duplicate ( this.note )
@@ -197,12 +202,14 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
     this.note = this.props.container.note.get ( filePath );
 
     const isFavorited = this.props.container.note.isFavorited ( this.note ),
-          isDeleted = this.props.container.note.isDeleted ( this.note )
+          isDeleted = this.props.container.note.isDeleted ( this.note ),
+          isTemplate = !!this.props.container.note.getTags ( this.note, TagSpecials.TEMPLATES ).length;
 
-    items[5].visible = !isFavorited;
-    items[6].visible = !!isFavorited;
-    items[8].visible = !isDeleted;
-    items[9].visible = !!isDeleted;
+    items[0].visible = !!isTemplate;
+    items[6].visible = !isFavorited;
+    items[7].visible = !!isFavorited;
+    items[9].visible = !isDeleted;
+    items[10].visible = !!isDeleted;
 
   }
 

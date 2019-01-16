@@ -16,7 +16,7 @@ import Path from '@renderer/utils/path';
 import Tags, {TagSpecials} from '@renderer/utils/tags';
 import Utils from '@renderer/utils/utils';
 
-const {ALL, FAVORITES, TAGS, UNTAGGED, TRASH} = TagSpecials;
+const {ALL, FAVORITES, TAGS, TEMPLATES, UNTAGGED, TRASH} = TagSpecials;
 
 /* NOTE */
 
@@ -131,7 +131,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  duplicate = async ( note: NoteObj | undefined = this.state.note ) => {
+  duplicate = async ( note: NoteObj | undefined = this.state.note, resetTemplate: boolean = false ) => {
 
     if ( !note ) return;
 
@@ -146,6 +146,17 @@ class Note extends Container<NoteState, MainCTX> {
     duplicateNote.filePath = filePath;
     duplicateNote.checksum = CRC32.str ( filePath );
     duplicateNote.metadata.title = this._inferTitleFromFilePath ( filePath );
+
+    if ( resetTemplate ) {
+
+      duplicateNote.metadata.favorited = false;
+      duplicateNote.metadata.pinned = false;
+
+      const tagsTemplates = this.getTags ( duplicateNote, TEMPLATES );
+
+      duplicateNote.metadata.tags = _.without ( duplicateNote.metadata.tags, ...tagsTemplates );
+
+    }
 
     let noteAdded;
 

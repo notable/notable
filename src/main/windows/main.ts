@@ -101,6 +101,13 @@ class Main extends Route {
             click: () => this.win.webContents.send ( 'note-new' )
           },
           {
+            label: 'New from Template',
+            accelerator: 'CommandOrControl+Alt+Shift+N',
+            enabled: flags && flags.hasNote && flags.isNoteTemplate && !flags.isMultiEditorEditing,
+            visible: flags && flags.hasNote && flags.isNoteTemplate,
+            click: () => this.win.webContents.send ( 'note-duplicate-template' )
+          },
+          {
             label: 'Duplicate',
             accelerator: 'CommandOrControl+Shift+N',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,

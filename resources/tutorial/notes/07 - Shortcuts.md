@@ -11,6 +11,7 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 ## Note
 
 - <kbd>Cmd+N</kbd> - New.
+- <kbd>Cmd+Alt+Shift+N</kbd> - New from Template.
 - <kbd>Cmd+Shift+N</kbd> - Duplicate.
 - <kbd>Cmd+O</kbd> - Open in default app.
 - <kbd>Cmd+Alt+R</kbd> - Reveal in Finder/Folder.
