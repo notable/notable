@@ -14,6 +14,10 @@ import Route from './route';
 
 class Main extends Route {
 
+  /* VARIABLES */
+
+  _prevFlags: StateFlags | false = false;
+
   /* CONSTRUCTOR */
 
   constructor ( name = 'main', options = { minWidth: 685, minHeight: 425 }, stateOptions = { defaultWidth: 850, defaultHeight: 525 } ) {
@@ -26,7 +30,9 @@ class Main extends Route {
 
   initLocalShortcuts () {}
 
-  initMenu ( flags: StateFlags | false = false ) {
+  initMenu ( flags: StateFlags | false = this._prevFlags ) {
+
+    this._prevFlags = flags; // Storing them because they are needed also when focusing to the window
 
     const template: MenuItemConstructorOptions[] = UMenu.filterTemplate ([
       {
