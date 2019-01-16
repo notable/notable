@@ -179,6 +179,12 @@ type IMain = MainCTX & { ctx: MainCTX };
 type CWDState = {};
 
 type CWDCTX = {
+  get ();
+  set ();
+  select ();
+  selectDefault ();
+  openInApp ();
+  dialog ();
   tutorial: import ( '@renderer/containers/main/tutorial' ).default
 };
 
@@ -194,5 +200,6 @@ type StateFlags = {
   isNoteDeleted: boolean,
   isNoteFavorited: boolean,
   isNotePinned: boolean,
-  isTagsEditing: boolean
+  isTagsEditing: boolean,
+  isNoteTemplate: boolean
 };

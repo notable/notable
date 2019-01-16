@@ -13,7 +13,8 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
 
   /* VARIABLES */
 
-  main; cwd;
+  main = {} as IMain;
+  cwd = {} as ICWD;
 
   /* CONSTRUCTOR */
 
@@ -21,8 +22,8 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
 
     super ( props );
 
-    this.main = props.containers[0] as IMain;
-    this.cwd = props.containers[1] as ICWD;
+    this.main = props.containers[0];
+    this.cwd = props.containers[1];
 
   }
 
