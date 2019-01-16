@@ -28,6 +28,8 @@ class CWD extends Container<CWDState, CWDCTX> {
 
   set = async ( folderPath: string ) => {
 
+    if ( Config.cwd === folderPath ) return Dialog.alert ( 'This is already the current data directory' );
+
     try {
 
       const hadTutorial = !!Settings.get ( 'tutorial' );
