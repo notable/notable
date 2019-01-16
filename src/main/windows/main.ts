@@ -341,6 +341,10 @@ class Main extends Route {
           {
             label: 'View License',
             click: () => shell.openExternal ( `${pkg.homepage}/blob/master/LICENSE` )
+          },
+          { type: 'separator' },
+          {
+            role: 'toggledevtools'
           }
         ]
       }
