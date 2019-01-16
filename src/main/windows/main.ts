@@ -247,10 +247,6 @@ class Main extends Route {
             visible: Environment.isDevelopment
           },
           {
-            role: 'toggledevtools',
-            visible: Environment.isDevelopment
-          },
-          {
             type: 'separator',
             visible: Environment.isDevelopment
           },
