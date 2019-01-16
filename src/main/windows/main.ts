@@ -322,7 +322,7 @@ class Main extends Route {
           {
             type: 'checkbox',
             label: 'Float on Top',
-            checked: this.win.isAlwaysOnTop (),
+            checked: !!this.win && this.win.isAlwaysOnTop (),
             click: () => this.win.setAlwaysOnTop ( !this.win.isAlwaysOnTop () )
           },
           {
