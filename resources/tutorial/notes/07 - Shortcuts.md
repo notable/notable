@@ -25,6 +25,7 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 - <kbd>Cmd+Backspace</kbd> - Move to trash, when previewing.
 - <kbd>Cmd+Alt+Backspace</kbd> - Move to trash, when editing.
 - <kbd>Cmd+Shift+Backspace</kbd> - Restore from trash.
+- <kbd>Cmd+Alt+Shift+Backspace</kbd> - Permanently Delete.
 
 ## Editor
 

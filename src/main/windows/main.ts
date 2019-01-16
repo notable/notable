@@ -177,6 +177,7 @@ class Main extends Route {
           },
           {
             label: 'Permanently Delete',
+            accelerator: 'CommandOrControl+Alt+Shift+Backspace',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote,
             click: () => this.win.webContents.send ( 'note-permanently-delete' )
