@@ -308,6 +308,13 @@ class Main extends Route {
             accelerator: 'Control+Tab',
             click: () => this.win.webContents.send ( 'search-next' )
           },
+          { type: 'separator' },
+          {
+            type: 'checkbox',
+            label: 'Float on Top',
+            checked: this.win.isAlwaysOnTop (),
+            click: () => this.win.setAlwaysOnTop ( !this.win.isAlwaysOnTop () )
+          },
           {
             type: 'separator',
             visible: is.macOS ()
