@@ -161,7 +161,6 @@
     "react-dom": "^16.7.0",
     "react-router-static": "^1.0.0",
     "react-window": "^1.4.0",
-    "recompose": "^0.30.0",
     "remark": "^10.0.1",
     "sha1": "^1.1.1",
     "shallowequal": "^1.1.0",
