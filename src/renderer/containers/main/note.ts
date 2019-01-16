@@ -319,12 +319,21 @@ class Note extends Container<NoteState, MainCTX> {
 
     for ( let srcPath of filePaths ) {
 
-      const attachment = this.ctx.attachment.read ( srcPath ),
-            {filePath: dstPath, fileName} = await Path.getAllowedPath ( attachmentsPath, attachment.fileName );
+      let attachment = this.ctx.attachment.get ( srcPath );
 
-      File.copy ( srcPath, dstPath );
+      if ( !attachment ) { // Not an existing attachment
 
-      nextNote.metadata.attachments.push ( fileName );
+        attachment = this.ctx.attachment.read ( srcPath );
+
+        const {filePath: dstPath, fileName} = await Path.getAllowedPath ( attachmentsPath, attachment.fileName );
+
+        attachment.fileName = fileName;
+
+        File.copy ( srcPath, dstPath );
+
+      }
+
+      nextNote.metadata.attachments.push ( attachment.fileName );
 
       nextNote.metadata.attachments = Attachments.sort ( nextNote.metadata.attachments );
 
