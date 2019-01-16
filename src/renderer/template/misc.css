@@ -218,6 +218,8 @@
 #mainbar .editor input[type="checkbox"] {
   appearance: checkbox !important;
   -webkit-appearance: checkbox !important;
+  width: auto !important;
+  opacity: 1 !important;
 }
 
 #mainbar .editor pre {
@@ -362,10 +364,6 @@ strong {
 .editor.preview table code {
   background-color: rgba( 27, 31, 35, .05 ) !important;
   padding: .2em .4em !important;
-}
-
-.editor.preview input[type="checkbox"] {
-  width: auto !important;
 }
 
 .editor.preview .task-list-item {
