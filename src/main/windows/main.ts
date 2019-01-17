@@ -50,6 +50,24 @@ class Main extends Route {
             click: () => this.win.webContents.send ( 'import' )
           },
           {
+            label: 'Export',
+            enabled: flags && ( flags.hasNote || flags.isMultiEditorEditing ),
+            submenu: [
+              {
+                label: 'HTML',
+                click: () => this.win.webContents.send ( 'export-html' )
+              },
+              // {
+              //   label: 'Markdown',
+              //   click: () => this.win.webContents.send ( 'export-markdown' )
+              // },
+              // {
+              //   label: 'PDF',
+              //   click: () => this.win.webContents.send ( 'export-pdf' )
+              // }
+            ]
+          },
+          {
             type: 'separator'
           },
           {

@@ -439,3 +439,7 @@ kbd {
 #about .desc {
   font-size: .5946142301em;
 }
+
+body.markdown-body {
+  padding: 20px;
+}

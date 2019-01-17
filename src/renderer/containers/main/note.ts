@@ -634,7 +634,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  write = async ( note: NoteObj ) => {
+  write = async ( note: NoteObj ) => { // Remember to update the export methods when modifying the written metadata
 
     const metadata = _.clone ( note.metadata );
 
