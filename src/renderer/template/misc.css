@@ -420,6 +420,10 @@ kbd {
   text-align: center;
 }
 
+.mermaid text[font-size="14"] {
+  font-size: 14px !important;
+}
+
 #about {
   background-color: #ececec;
 }

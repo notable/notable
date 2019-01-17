@@ -51,7 +51,12 @@ const Config = {
       { left: '&&', right: '&&', display: true, asciimath: true }
     ]
   },
-  mermaid: {}
+  mermaid: { //URL: https://github.com/knsv/mermaid/blob/7d3578b31aeea3bc9bbc618dcda57d82574eaffb/src/mermaidAPI.js#L51
+    gantt: {
+      barHeight: 25,
+      fontSize: 14
+    }
+  }
 };
 
 /* EXPORT */
