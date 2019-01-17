@@ -32,7 +32,7 @@ const Markdown = {
       return [
         { // Adding metadata
           type: 'language',
-          regex: /([*+-][ \t]+\[(?:x|X| )?\])/gm,
+          regex: /([*+-][ \t]+\[(?:x|X| )?\])(?!\[|\()/gm,
           replace ( match, $1, index ) {
             return `${$1}7381125${index - 2}7381125`; //TODO: The matched string it appears to be wrapped into `\n\n` and `\n\n`, so the index is offsetted by 2, why? Is this because of showdown?
           }

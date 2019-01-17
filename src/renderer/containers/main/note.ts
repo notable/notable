@@ -541,7 +541,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( !note ) return;
 
-    const checkboxRe = /^([*+-])([ \t]+\[)((?:x|X| )?)(\])/m,
+    const checkboxRe = /^([*+-])([ \t]+\[)((?:x|X| )?)(\])(?!\[|\()/m,
           checkedRe = /^(x|X)$/,
           plainContent = this.getPlainContent ( note ),
           snippet = plainContent.slice ( index, index + 20 ),
