@@ -14,6 +14,14 @@ class Editor extends Container<EditorState, MainCTX> {
     editing: false
   };
 
+  /* HELPERS */
+
+  _getDocHeight ( cm ): number {
+
+    return cm.cursorCoords ( { line: Infinity, ch: Infinity }, 'local' ).top;
+
+  }
+
   /* VIEW STATE */
 
   editingState = {
@@ -30,6 +38,7 @@ class Editor extends Container<EditorState, MainCTX> {
       return {
         filePath: note.filePath,
         scrollTop: $('.CodeMirror-scroll')[0].scrollTop,
+        docHeight: this._getDocHeight ( cm ),
         selections: cm.listSelections ()
       };
 
@@ -45,7 +54,7 @@ class Editor extends Container<EditorState, MainCTX> {
 
       const cm = this.getCodeMirror ();
 
-      if ( !cm ) return;
+      if ( !cm || state.docHeight !== this._getDocHeight ( cm ) ) return;
 
       cm.setSelections ( state.selections );
 
