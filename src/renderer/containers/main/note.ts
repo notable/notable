@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import {shell} from 'electron';
 import Dialog from 'electron-dialog';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
+import * as fs from 'fs';
 import {Container} from 'overstated';
 import * as path from 'path';
 import Config from '@common/config';
@@ -677,13 +678,17 @@ class Note extends Container<NoteState, MainCTX> {
 
   sanitize = async ( note: Pick<NoteObj, Exclude<keyof NoteObj, 'metadata'>> & { metadata: Partial<NoteObj['metadata']> } ): Promise<NoteObj> => {
 
-    if ( !note.metadata.title ) {
+    if ( note.metadata.title && _.isNumber ( note.metadata.title ) ) {
+
+      note.metadata.title = String ( note.metadata.title );
+
+    } else if ( !note.metadata.title || !_.isString ( note.metadata.title ) ) {
 
       note.metadata.title = this._inferTitleFromFilePath ( note.filePath );
 
     }
 
-    if ( !note.metadata.stat ) {
+    if ( !note.metadata.stat || !( note.metadata.stat instanceof fs.Stats ) ) {
 
       const stats = await File.stat ( note.filePath );
 
@@ -695,13 +700,15 @@ class Note extends Container<NoteState, MainCTX> {
 
     }
 
-    if ( !note.metadata.dateCreated ) {
+    if ( !note.metadata.dateCreated || !_.isDate ( note.metadata.dateCreated ) ) {
 
       note.metadata.dateCreated = note.metadata.created ? new Date ( note.metadata.created ) : ( note.metadata.stat ? new Date ( note.metadata.stat.ctimeMs ): new Date () );
 
+      if ( _.isNaN ( note.metadata.dateCreated.getTime () ) ) note.metadata.dateCreated = new Date ();
+
     }
 
-    if ( !note.metadata.dateModified ) {
+    if ( !note.metadata.dateModified || !_.isDate ( note.metadata.dateModified ) ) {
 
       note.metadata.dateModified = note.metadata.stat ? new Date ( note.metadata.stat.mtimeMs ) : new Date ();
 
@@ -713,7 +720,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     } else {
 
-      note.metadata.attachments = Attachments.sort ( note.metadata.attachments );
+      note.metadata.attachments = Attachments.sort ( this.sanitizeAttachments ( note.metadata.attachments ) );
 
     }
 
@@ -735,9 +742,17 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  sanitizeTags ( tags: string[] ): string[] {
+  sanitizeAttachments = ( attachments: string [] ): string[] => {
 
-    return tags.map ( tag => _.trim ( tag, Tags.SEPARATOR ) )
+    return attachments.filter ( _.isString )
+                      .filter ( _.identity );
+
+  }
+
+  sanitizeTags = ( tags: string[] ): string[] => {
+
+    return tags.filter ( _.isString )
+               .map ( tag => _.trim ( tag, Tags.SEPARATOR ) )
                .filter ( tag => !/\/\s*\//.test ( tag ) ) //TODO: Should use `Tags.SEPARATOR`
                .filter ( _.identity );
 
