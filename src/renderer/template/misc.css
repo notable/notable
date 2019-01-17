@@ -311,7 +311,7 @@
 
 #sidebar,
 #middlebar,
-#mainbar-toolbar,
+#mainbar > *:not(.editor),
 .popover,
 .title {
   user-select: none !important;
