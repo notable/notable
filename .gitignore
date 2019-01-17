@@ -37,3 +37,4 @@ bower_components
 node_modules
 dist
 releases
+!src/renderer/template/dist
