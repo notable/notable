@@ -3,6 +3,7 @@
 
 import 'highlight.js/styles/github';
 import 'katex/dist/katex.min.css';
+
 import * as _ from 'lodash';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
 import * as mermaid from 'mermaid';
@@ -23,6 +24,34 @@ const Markdown = {
   converter: undefined,
 
   extensions: {
+
+    checkbox () {
+
+      // We are wrapping the metadata (the match index, which is a number) in numbers so that the syntax highlighter won't probably mess with it and it's unlikely that somebody will ever write the same thing
+
+      return [
+        { // Adding metadata
+          type: 'language',
+          regex: /([*+-][ \t]+\[(?:x|X| )?\])/gm,
+          replace ( match, $1, index ) {
+            return `${$1}7381125${index - 2}7381125`; //TODO: The matched string it appears to be wrapped into `\n\n` and `\n\n`, so the index is offsetted by 2, why? Is this because of showdown?
+          }
+        },
+        { // Transforming metadata into attributes
+          type: 'output',
+          regex: /<input type="checkbox"(?: disabled)?([^>]*)>7381125(\d+?)7381125/gm,
+          replace ( match, $1, $2 ) {
+            return `<input type="checkbox"${$1} data-index="${$2}">`
+          }
+        },
+        { // Cleaning up leftover metadata
+          type: 'output',
+          regex: /7381125(\d+?)7381125/gm,
+          replace: () => ''
+        }
+      ];
+
+    },
 
     encodeSpecialLinks () { // Or they won't be parsed as images/links whatever
 
@@ -171,11 +200,11 @@ const Markdown = {
 
     if ( Markdown.converter ) return Markdown.converter;
 
-    const {encodeSpecialLinks, attachment, note, tag, katex, mermaid} = Markdown.extensions;
+    const {checkbox, encodeSpecialLinks, attachment, note, tag, katex, mermaid} = Markdown.extensions;
 
     const converter = new showdown.Converter ({
       metadata: true,
-      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag (), katex (), mermaid ()]
+      extensions: [showdownHighlight, showdownTargetBlack, checkbox (), encodeSpecialLinks (), attachment (), note (), tag (), katex (), mermaid ()]
     });
 
     converter.setFlavor ( 'github' );

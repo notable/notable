@@ -1,6 +1,7 @@
 
 /* IMPORT */
 
+import * as _ from 'lodash';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
@@ -15,6 +16,7 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
 
     $.$document.on ( 'click', '.editor.preview a.note', this.__noteClick );
     $.$document.on ( 'click', '.editor.preview a.tag', this.__tagClick );
+    $.$document.on ( 'click', '.editor.preview input[type="checkbox"]', this.__checkboxClick );
 
   }
 
@@ -22,6 +24,7 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
 
     $.$document.off ( 'click', this.__noteClick );
     $.$document.off ( 'click', this.__tagClick );
+    $.$document.off ( 'click', this.__checkboxClick );
 
   }
 
@@ -45,6 +48,18 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
     this.props.container.tag.set ( tag );
 
     return false;
+
+  }
+
+  __checkboxClick = ( event ) => {
+
+    const $input = $(event.currentTarget),
+          checked = $input.prop ( 'checked' ),
+          index = $input.data ( 'index' );
+
+    if ( !_.isNumber ( index ) ) return;
+
+    this.props.container.note.toggleCheckboxAtIndex ( undefined, index, checked );
 
   }
 

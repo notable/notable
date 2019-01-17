@@ -71,7 +71,7 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareResetEditor ( prev: MainState ) {
 
-    if ( !( !prev.editor.editing && !this.state.editor.editing && prev.note.note !== this.state.note.note ) ) return;
+    if ( !( !prev.editor.editing && !this.state.editor.editing && !this.ctx.note.is ( prev.note.note, this.state.note.note, true ) ) ) return;
 
     return this.ctx.editor.previewingState.reset ();
 

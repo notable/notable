@@ -246,9 +246,9 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  is = ( note1?: NoteObj, note2?: NoteObj ): boolean => {
+  is = ( note1?: NoteObj, note2?: NoteObj, loose: boolean = false ): boolean => {
 
-    return note1 === note2 || ( !!note1 && !!note2 && note1.filePath === note2.filePath && note1.content === note2.content );
+    return note1 === note2 || ( !!note1 && !!note2 && note1.filePath === note2.filePath && ( loose || note1.content === note2.content ) );
 
   }
 
@@ -534,6 +534,25 @@ class Note extends Container<NoteState, MainCTX> {
     nextNote.metadata.pinned = force;
 
     return this.write ( nextNote );
+
+  }
+
+  toggleCheckboxAtIndex ( note: NoteObj | undefined = this.state.note, index: number, force?: boolean ) {
+
+    if ( !note ) return;
+
+    const checkboxRe = /^([*+-])([ \t]+\[)((?:x|X| )?)(\])/m,
+          checkedRe = /^(x|X)$/,
+          plainContent = this.getPlainContent ( note ),
+          snippet = plainContent.slice ( index, index + 20 ),
+          snippetNext = snippet.replace ( checkboxRe, ( match, $1, $2, $3, $4 ) => {
+            force = _.isBoolean ( force ) ? force : !checkedRe.test ( $3 );
+            const checkmark = force ? 'x' : ' ';
+            return `${$1}${$2}${checkmark}${$4}`;
+          }),
+          plainContentNext = `${plainContent.slice ( 0, index )}${snippetNext}${plainContent.slice ( index + snippetNext.length, Infinity )}`;
+
+    return this.save ( note, plainContentNext );
 
   }
 
