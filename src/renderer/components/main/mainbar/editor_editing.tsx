@@ -35,7 +35,9 @@ class EditorEditing extends React.Component<any, undefined> {
 
   render () {
 
-    return <Code className="layout-content editor editing" value={this.props.content} />;
+    const {content, saveState, restoreState} = this.props;
+
+    return <Code className="layout-content editor editing" value={content} onBlur={saveState} onFocus={restoreState} />;
 
   }
 
@@ -48,6 +50,8 @@ export default connect ({
   selector: ({ container }) => ({
     id: container.note.getChecksum (),
     content: container.note.getPlainContent (),
-    getCodeMirror: container.editor.getCodeMirror
+    getCodeMirror: container.editor.getCodeMirror,
+    saveState: container.editor.editingState.save,
+    restoreState: container.editor.editingState.restore
   })
 })( EditorEditing );

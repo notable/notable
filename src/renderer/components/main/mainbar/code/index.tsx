@@ -50,11 +50,11 @@ const options: any = { //TSC
 
 /* CODE */
 
-const Code = ({ className, value }) => {
+const Code = ({ className, value, onBlur, onFocus }) => {
 
   Utils.initOptions ( options );
 
-  return <CodeMirror className={className} value={value} options={options} />
+  return <CodeMirror className={className} value={value} options={options} onBlur={onBlur} onFocus={onFocus} />
 
 };
 
