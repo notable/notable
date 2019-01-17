@@ -218,6 +218,7 @@
 #mainbar .editor input[type="checkbox"] {
   appearance: checkbox !important;
   -webkit-appearance: checkbox !important;
+  margin: 0 0.35em 0.25em 0 !important;
   width: auto !important;
   opacity: 1 !important;
 }
@@ -368,6 +369,10 @@ strong {
 
 .editor.preview .task-list-item {
   margin-left: -1.6em;
+}
+
+.editor.preview .task-list-item > p {
+  margin: 0;
 }
 
 .editor.preview a:not(.button) > i.icon {
