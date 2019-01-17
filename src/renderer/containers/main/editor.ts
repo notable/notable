@@ -166,6 +166,16 @@ class Editor extends Container<EditorState, MainCTX> {
 
   }
 
+  update = () => {
+
+    const cm = this.getCodeMirror ();
+
+    if ( !cm ) return;
+
+    cm.refresh ();
+
+  }
+
 }
 
 /* EXPORT */
