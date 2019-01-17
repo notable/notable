@@ -1,0 +1,76 @@
+
+/* ROTATION */
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* KEYFRAMES */
+
+@keyframes target {
+  50% {
+    @include z-depth-inline ( 1 );
+    background-color: $target-bg-color;
+  }
+}
+
+
+/* RIPPLE */
+
+@keyframes ripple {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  30% {
+    opacity: .2;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+
+// @require _/rotation/keyframes.scss
+
+/* KEYFRAMES */
+
+@keyframes spinner-dash {
+  0% {
+    stroke-dasharray: 0%, 240%;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 181%, 240%;
+    stroke-dashoffset: - 60%;
+  }
+  100% {
+    stroke-dasharray: 181%, 240%;
+    stroke-dashoffset: - 240%;
+  }
+}
+
+
+/* KEYFRAMES */
+
+@keyframes spinner-multicolor {
+  0%, 24% {
+    stroke: $spinner-multicolor-color-first;
+  }
+  25%, 49% {
+    stroke: $spinner-multicolor-color-second;
+  }
+  50%, 74% {
+    stroke: $spinner-multicolor-color-third;
+  }
+  75%, 99% {
+    stroke: $spinner-multicolor-color-fourth;
+  }
+}

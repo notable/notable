@@ -1,0 +1,3761 @@
+
+/* CURSOR */
+
+$cursor-values: (
+  'auto',
+  'default',
+  'none',
+  'context-menu',
+  'help',
+  'pointer',
+  'progress',
+  'wait',
+  'move',
+  'not-allowed',
+  'zoom-in',
+  'zoom-out',
+  'grab',
+  'grabbing'
+) !default;
+
+
+/* CONSTANTS */
+
+$E: 2.71828182845904523536028747135266249 !default;
+$PI: 3.14159265358979323846264338327950288 !default;
+$PHI: 1.61803398874989484820458683436563811 !default; // Golden ratio
+$SQRT2: 1.41421356237309504880168872420969807 !default;
+$SQRT3: 1.73205080756887729352744634150587236 !default;
+$SQRT5: 2.23606797749978969640917366873127623 !default;
+$TAU: 6.28318530717958647692528676655900576 !default;
+
+
+/* ROTATION */
+
+$rotating-animation-duration: .9s !default;
+
+
+/* ANIMATIONS */
+
+$animation-xslow: .9s !default;
+$animation-slow: .5s !default;
+$animation-normal: .35s !default;
+$animation-fast: .15s !default;
+$animation-xfast: .075s !default;
+
+/* ANIMATIONS */
+
+$animations: (
+  'xslow': $animation-xslow,
+  'slow': $animation-slow,
+  'normal': $animation-normal,
+  'fast': $animation-fast,
+  'xfast': $animation-xfast
+) !default;
+
+
+/* BREAKPOINTS */
+
+// We are using `px` instead of `rem` because if we use `rem` we have a buggy behaviour is Safari. In an old version of the `panel` demo page there was a strange animation at the beginning, caused by a faulty auto-attacch-panel media query (no longer CSS-only), caused probably by the browser changing viewport's width value for apparently no good reason
+// Also Javascript doens't really understand other units
+// `rem` or any other meaningful unit is supported as well
+
+$breakpoint-xsmall: 0 !default;
+$breakpoint-small: 512px !default;
+$breakpoint-medium: 768px !default;
+$breakpoint-large: 1024px !default;
+$breakpoint-xlarge: 1216px !default;
+
+/* BREAKPOINTS */
+
+$breakpoints: (
+  'xsmall': $breakpoint-xsmall,
+  'small': $breakpoint-small,
+  'medium': $breakpoint-medium,
+  'large': $breakpoint-large,
+  'xlarge': $breakpoint-xlarge
+) !default;
+
+@include assert-ascending( $breakpoints, '`$breakpoints` values must be defined in ascending order' );
+
+/* EPSILON */
+
+$breakpoint-epsilon: .1 + ( map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) * 0 ) !default; // A value of `.01` for some reasons breaks the iPad Air (iOS 9.2)
+
+
+//SOURCE: http://davidtheclark.github.io/scut/characters.html
+
+/* SPACES */
+
+$char-space: '\0020' !default; // Space
+$char-nbsp: '\00a0' !default; // Non-breaking space
+
+/* QUOTATION MARKS */
+
+$char-quot: '\0022' !default; // Quotation mark
+$char-lsquo: '\2018' !default; // Left single curly quote
+$char-rsquo: '\2019' !default; // Right single curly quote
+$char-ldquo: '\201C' !default; // Left double curly quote
+$char-rdquo: '\201D' !default; // Right double curly quote
+$char-lsaquo: '\2039' !default; // Left single angle quote (guillemet)
+$char-rsaquo: '\203A' !default; // Right single angle quote (guillemet)
+$char-laquo: '\00ab' !default; // Left double angle quote (guillemet)
+$char-raquo: '\00bb' !default; // Right double angle quote (guillemet)
+
+/* OTHER PUNCTUATION */
+
+$char-mdash: '\2014' !default; // Em dash (mutton)
+$char-ndash: '\2013' !default; // En dash (nut)
+$char-hyphen: '\2010' !default; // Hyphen
+$char-amp: '\0026' !default; // Ampersand
+$char-para: '\00b6' !default; // Paragraph symbol (pilcrow)
+$char-middot: '\00b7' !default; // Middot (interpunct, interpoint)
+$char-bull: '\2022' !default; // Bullet
+$char-whibull: '\25E6' !default; // White bullet
+$char-hellip: '\2026' !default; // Horizontal ellipsis
+$char-vellip: '\22EE' !default; // Vertical ellipsis
+$char-midhellip: '\22EF' !default; // Midline horizontal ellipsis
+
+/* VARIOUS SYMBOLS */
+
+$char-gt: '\003e' !default; // Greater than
+$char-lt: '\003c' !default; // Less than
+$char-times: '\00D7' !default; // Times
+$char-bigtimes: '\2715' !default; // Big times
+$char-checkmark: '\2713' !default; // Checkmark
+$char-sect: '\00a7' !default; // Section sign (double S, hurricane, sectional symbol, the legal doughnut, signum sectionis)
+$char-oslash: '\00f8' !default; // O-slash (slashed o)
+
+/* SHAPES */
+
+$char-utri: '\25b2' !default; // Up-pointing triangle
+$char-dtri: '\25bc' !default; // Down-pointing triangle
+$char-ltri: '\25c0' !default; // Left-pointing triangle
+$char-rtri: '\25b6' !default; // Right-pointing triangle
+$char-ustri: '\25b4' !default; // Up-pointing small triangle
+$char-dstri: '\25be' !default; // Down-pointing small triangle
+$char-lstri: '\25c2' !default; // Left-pointing small triangle
+$char-rstri: '\25b8' !default; // Right-pointing small triangle
+$char-diamond: '\25c6' !default; // Diamond
+$char-fisheye: '\25c9' !default; // Fisheye
+$char-bullseye: '\25ce' !default; // Bullseye
+$char-circle: '\25cf' !default; // Circle
+$char-whitecircle: '\25cb' !default; // White circle
+$char-square: '\25a0' !default; // Square
+$char-whitesquare: '\25a1' !default; // White square
+$char-ssquare: '\25aa' !default; // Small square
+$char-swhitesquare: '\25ab' !default; // Small white square
+
+
+$color-hover-lighten-amount: 4 !default;
+$color-active-darken-amount: $color-hover-lighten-amount !default;
+$color-border-darken-amount: $color-active-darken-amount * 4 !default;
+
+$color-white: #fdfdfd;
+$color-white-text: #1f1f1f;
+
+$color-base: #fdfdfd;
+$color-base-text: #1f1f1f;
+
+$color-black: #1f1f1f;
+
+
+//SOURCE: http://zavoloklom.github.io/material-design-color-palette/colors.html
+//URL: Constrast ratio calculator: http://leaverou.github.io/contrast-ratio
+
+/* MODIFIERS */
+
+$color-hover-lighten-amount: 4 !default;
+$color-active-darken-amount: $color-hover-lighten-amount !default;
+$color-border-darken-amount: $color-active-darken-amount * 4 !default;
+
+/* COLORS */
+
+$color-primary: #1565c0 !default; // Blue-800
+$color-secondary: #ef6c00 !default; // Orange-800
+$color-tertiary: #6a1b9a !default; // Purple-800
+$color-quaternary: #2e7d32 !default; // Green-800
+
+$color-black: #212121 !default; // Gray-900
+$color-blue: #2196f3 !default; // Blue-500
+$color-brown: #795548 !default; // Brown-500
+$color-gray: #e0e0e0 !default; // Gray-300
+$color-green: #4caf50 !default; // Green-500
+$color-olive: #cddc39 !default; // Lime-500
+$color-orange: #ff9800 !default; // Orange-500
+$color-pink: #e91e63 !default; // Pink-500
+$color-purple: #9c27b0 !default; // Purple-500
+$color-red: #f44336 !default; // Red-500
+$color-teal: #009688 !default; // Teal-500
+$color-violet: #673ab7 !default; // Deep-Purple-500
+$color-white: #ffffff !default;
+$color-yellow: #fabf40 !default; // Yellow-700
+
+$color-error: $color-red !default;
+$color-success: $color-green !default;
+$color-warning: $color-yellow !default;
+
+$color-base: #eceff1 !default; // Blue-Gray-50
+$color-inherit: inherit !default;
+$color-transparent: transparent !default;
+
+/* PRIMARY */
+
+$color-primary-bg: $color-primary !default;
+$color-primary-bg-hover: lighten( $color-primary-bg, $color-hover-lighten-amount ) !default;
+$color-primary-bg-active: darken( $color-primary-bg, $color-active-darken-amount ) !default;
+$color-primary-border: darken( $color-primary-bg, $color-border-darken-amount ) !default;
+$color-primary-accent: $color-secondary !default;
+$color-primary-text: #ffffff !default; // Contrast ratio: 5.7
+
+/* SECONDARY */
+
+$color-secondary-bg: $color-secondary !default;
+$color-secondary-bg-hover: lighten( $color-secondary-bg, $color-hover-lighten-amount ) !default;
+$color-secondary-bg-active: darken( $color-secondary-bg, $color-active-darken-amount ) !default;
+$color-secondary-border: darken( $color-secondary-bg, $color-border-darken-amount ) !default;
+$color-secondary-accent: $color-primary !default;
+$color-secondary-text: #ffffff !default; // Contrast ratio: 3.1
+
+/* TERTIARY */
+
+$color-tertiary-bg: $color-tertiary !default;
+$color-tertiary-bg-hover: lighten( $color-tertiary-bg, $color-hover-lighten-amount ) !default;
+$color-tertiary-bg-active: darken( $color-tertiary-bg, $color-active-darken-amount ) !default;
+$color-tertiary-border: darken( $color-tertiary-bg, $color-border-darken-amount ) !default;
+$color-tertiary-accent: $color-quaternary !default;
+$color-tertiary-text: #ffffff !default; // Contrast ratio: 9.4
+
+/* QUATERNARY */
+
+$color-quaternary-bg: $color-quaternary !default;
+$color-quaternary-bg-hover: lighten( $color-quaternary-bg, $color-hover-lighten-amount ) !default;
+$color-quaternary-bg-active: darken( $color-quaternary-bg, $color-active-darken-amount ) !default;
+$color-quaternary-border: darken( $color-quaternary-bg, $color-border-darken-amount ) !default;
+$color-quaternary-accent: $color-tertiary !default;
+$color-quaternary-text: #ffffff !default; // Contrast ratio: 5.1
+
+/* BLACK */
+
+$color-black-bg: $color-black !default;
+$color-black-bg-hover: lighten( $color-black-bg, $color-hover-lighten-amount ) !default;
+$color-black-bg-active: darken( $color-black-bg, $color-active-darken-amount ) !default;
+$color-black-border: darken( $color-black-bg, $color-border-darken-amount ) !default;
+$color-black-accent: $color-white !default;
+$color-black-text: #ffffff !default; // Contrast ratio: 16.1
+
+/* BLUE */
+
+$color-blue-bg: $color-blue !default;
+$color-blue-bg-hover: lighten( $color-blue-bg, $color-hover-lighten-amount ) !default;
+$color-blue-bg-active: darken( $color-blue-bg, $color-active-darken-amount ) !default;
+$color-blue-border: darken( $color-blue-bg, $color-border-darken-amount ) !default;
+$color-blue-accent: $color-red !default;
+$color-blue-text: #ffffff !default; // Contrast ratio: 3.1
+
+/* BROWN */
+
+$color-brown-bg: $color-brown !default;
+$color-brown-bg-hover: lighten( $color-brown-bg, $color-hover-lighten-amount ) !default;
+$color-brown-bg-active: darken( $color-brown-bg, $color-active-darken-amount ) !default;
+$color-brown-border: darken( $color-brown-bg, $color-border-darken-amount ) !default;
+$color-brown-accent: $color-orange !default;
+$color-brown-text: #ffffff !default; // Contrast ratio: 6.6
+
+/* GRAY */
+
+$color-gray-bg: $color-gray !default;
+$color-gray-bg-hover: lighten( $color-gray-bg, $color-hover-lighten-amount ) !default;
+$color-gray-bg-active: darken( $color-gray-bg, $color-active-darken-amount ) !default;
+$color-gray-border: darken( $color-gray-bg, $color-border-darken-amount ) !default;
+$color-gray-accent: $color-black !default;
+$color-gray-text: #3f3f3f !default; // Contrast ratio: 8
+
+/* GREEN */
+
+$color-green-bg: $color-green !default;
+$color-green-bg-hover: lighten( $color-green-bg, $color-hover-lighten-amount ) !default;
+$color-green-bg-active: darken( $color-green-bg, $color-active-darken-amount ) !default;
+$color-green-border: darken( $color-green-bg, $color-border-darken-amount ) !default;
+$color-green-accent: $color-yellow !default;
+$color-green-text: #ffffff !default; // Contrast ratio: 2.8
+
+/* OLIVE */
+
+$color-olive-bg: $color-olive !default;
+$color-olive-bg-hover: lighten( $color-olive-bg, $color-hover-lighten-amount ) !default;
+$color-olive-bg-active: darken( $color-olive-bg, $color-active-darken-amount ) !default;
+$color-olive-border: darken( $color-olive-bg, $color-border-darken-amount ) !default;
+$color-olive-accent: $color-orange !default;
+$color-olive-text: #ffffff !default; // Contrast ratio: 1.7
+
+/* ORANGE */
+
+$color-orange-bg: $color-orange !default;
+$color-orange-bg-hover: lighten( $color-orange-bg, $color-hover-lighten-amount ) !default;
+$color-orange-bg-active: darken( $color-orange-bg, $color-active-darken-amount ) !default;
+$color-orange-border: darken( $color-orange-bg, $color-border-darken-amount ) !default;
+$color-orange-accent: $color-brown !default;
+$color-orange-text: #ffffff !default; // Contrast ratio 2.2
+
+/* PINK */
+
+$color-pink-bg: $color-pink !default;
+$color-pink-bg-hover: lighten( $color-pink-bg, $color-hover-lighten-amount ) !default;
+$color-pink-bg-active: darken( $color-pink-bg, $color-active-darken-amount ) !default;
+$color-pink-border: darken( $color-pink-bg, $color-border-darken-amount ) !default;
+$color-pink-accent: $color-blue !default;
+$color-pink-text: #ffffff !default; // Contrast ratio: 4.3
+
+/* PURPLE */
+
+$color-purple-bg: $color-purple !default;
+$color-purple-bg-hover: lighten( $color-purple-bg, $color-hover-lighten-amount ) !default;
+$color-purple-bg-active: darken( $color-purple-bg, $color-active-darken-amount ) !default;
+$color-purple-border: darken( $color-purple-bg, $color-border-darken-amount ) !default;
+$color-purple-accent: $color-yellow !default;
+$color-purple-text: #ffffff !default; // Contrast ratio: 6.3
+
+/* RED */
+
+$color-red-bg: $color-red !default;
+$color-red-bg-hover: lighten( $color-red-bg, $color-hover-lighten-amount ) !default;
+$color-red-bg-active: darken( $color-red-bg, $color-active-darken-amount ) !default;
+$color-red-border: darken( $color-red-bg, $color-border-darken-amount ) !default;
+$color-red-accent: $color-yellow !default;
+$color-red-text: #ffffff !default; // Contrast ratio: 3.7
+
+/* TEAL */
+
+$color-teal-bg: $color-teal !default;
+$color-teal-bg-hover: lighten( $color-teal-bg, $color-hover-lighten-amount ) !default;
+$color-teal-bg-active: darken( $color-teal-bg, $color-active-darken-amount ) !default;
+$color-teal-border: darken( $color-teal-bg, $color-border-darken-amount ) !default;
+$color-teal-accent: $color-red !default;
+$color-teal-text: #ffffff !default; // Contrast ratio: 3.7
+
+/* VIOLET */
+
+$color-violet-bg: $color-violet !default;
+$color-violet-bg-hover: lighten( $color-violet-bg, $color-hover-lighten-amount ) !default;
+$color-violet-bg-active: darken( $color-violet-bg, $color-active-darken-amount ) !default;
+$color-violet-border: darken( $color-violet-bg, $color-border-darken-amount ) !default;
+$color-violet-accent: $color-orange !default;
+$color-violet-text: #ffffff !default; // Contrast ratio: 7.1
+
+/* WHITE */
+
+$color-white-bg: $color-white !default;
+$color-white-bg-hover: darken( $color-white-bg, $color-hover-lighten-amount ) !default;
+$color-white-bg-active: darken( $color-white-bg, $color-active-darken-amount * 1.5 ) !default;
+$color-white-border: darken( $color-white-bg, $color-border-darken-amount ) !default;
+$color-white-accent: $color-secondary !default;
+$color-white-text: #3f3f3f !default; // Contrast ratio: 10.5
+
+/* YELLOW */
+
+$color-yellow-bg: $color-yellow !default;
+$color-yellow-bg-hover: lighten( $color-yellow-bg, $color-hover-lighten-amount ) !default;
+$color-yellow-bg-active: darken( $color-yellow-bg, $color-active-darken-amount ) !default;
+$color-yellow-border: darken( $color-yellow-bg, $color-border-darken-amount ) !default;
+$color-yellow-accent: $color-red !default;
+$color-yellow-text: #ffffff !default; // Contrast ratio 1.7
+
+/* ERROR */
+
+$color-error-bg: $color-error !default;
+$color-error-bg-hover: lighten( $color-error-bg, $color-hover-lighten-amount ) !default;
+$color-error-bg-active: darken( $color-error-bg, $color-active-darken-amount ) !default;
+$color-error-border: darken( $color-error-bg, $color-border-darken-amount ) !default;
+$color-error-accent: $color-yellow !default;
+$color-error-text: #ffffff !default; // Contrast ratio: 3.7
+
+/* SUCCESS */
+
+$color-success-bg: $color-success !default;
+$color-success-bg-hover: lighten( $color-success-bg, $color-hover-lighten-amount ) !default;
+$color-success-bg-active: darken( $color-success-bg, $color-active-darken-amount ) !default;
+$color-success-border: darken( $color-success-bg, $color-border-darken-amount ) !default;
+$color-success-accent: $color-yellow !default;
+$color-success-text: #ffffff !default; // Contrast ratio: 2.8
+
+/* WARNING */
+
+$color-warning-bg: $color-warning !default;
+$color-warning-bg-hover: lighten( $color-warning-bg, $color-hover-lighten-amount ) !default;
+$color-warning-bg-active: darken( $color-warning-bg, $color-active-darken-amount ) !default;
+$color-warning-border: darken( $color-warning-bg, $color-border-darken-amount ) !default;
+$color-warning-accent: $color-red !default;
+$color-warning-text: #ffffff !default; // Contrast ratio 1.7
+
+/* BASE */
+
+$color-base-bg: $color-base !default;
+$color-base-bg-hover: lighten( $color-base-bg, $color-hover-lighten-amount ) !default;
+$color-base-bg-active: darken( $color-base-bg, $color-active-darken-amount ) !default;
+$color-base-border: darken( $color-base-bg, $color-border-darken-amount ) !default;
+$color-base-accent: $color-secondary !default;
+$color-base-text: #3f3f3f !default; // Contrast ratio: 9.1
+
+/* INHERIT */
+
+$color-inherit-bg: $color-inherit !default;
+$color-inherit-bg-hover: $color-inherit !default;
+$color-inherit-bg-active: $color-inherit !default;
+$color-inherit-border: $color-inherit !default;
+$color-inherit-accent: $color-inherit !default;
+$color-inherit-text: $color-inherit !default;
+
+/* TRANSPARENT */
+
+$color-transparent-bg: $color-transparent !default;
+$color-transparent-bg-hover: $color-transparent !default;
+$color-transparent-bg-active: $color-transparent !default;
+$color-transparent-border: $color-transparent !default;
+$color-transparent-accent: $color-transparent !default;
+$color-transparent-text: $color-inherit !default;
+
+/* COLORS */
+
+$colors: (
+  'primary': ( $color-primary-bg, $color-primary-bg-hover, $color-primary-bg-active, $color-primary-border, $color-primary-accent, $color-primary-text ),
+  'secondary': ( $color-secondary-bg, $color-secondary-bg-hover, $color-secondary-bg-active, $color-secondary-border, $color-secondary-accent, $color-secondary-text ),
+  'tertiary': ( $color-tertiary-bg, $color-tertiary-bg-hover, $color-tertiary-bg-active, $color-tertiary-border, $color-tertiary-accent, $color-tertiary-text ),
+  'quaternary': ( $color-quaternary-bg, $color-quaternary-bg-hover, $color-quaternary-bg-active, $color-quaternary-border, $color-quaternary-accent, $color-quaternary-text ),
+
+  'black': ( $color-black-bg, $color-black-bg-hover, $color-black-bg-active, $color-black-border, $color-black-accent, $color-black-text ),
+  'blue': ( $color-blue-bg, $color-blue-bg-hover, $color-blue-bg-active, $color-blue-border, $color-blue-accent, $color-blue-text ),
+  'brown': ( $color-brown-bg, $color-brown-bg-hover, $color-brown-bg-active, $color-brown-border, $color-brown-accent, $color-brown-text ),
+  'gray': ( $color-gray-bg, $color-gray-bg-hover, $color-gray-bg-active, $color-gray-border, $color-gray-accent, $color-gray-text ),
+  'green': ( $color-green-bg, $color-green-bg-hover, $color-green-bg-active, $color-green-border, $color-green-accent, $color-green-text ),
+  'olive': ( $color-olive-bg, $color-olive-bg-hover, $color-olive-bg-active, $color-olive-border, $color-olive-accent, $color-olive-text ),
+  'orange': ( $color-orange-bg, $color-orange-bg-hover, $color-orange-bg-active, $color-orange-border, $color-orange-accent, $color-orange-text ),
+  'pink': ( $color-pink-bg, $color-pink-bg-hover, $color-pink-bg-active, $color-pink-border, $color-pink-accent, $color-pink-text ),
+  'purple': ( $color-purple-bg, $color-purple-bg-hover, $color-purple-bg-active, $color-purple-border, $color-purple-accent, $color-purple-text ),
+  'red': ( $color-red-bg, $color-red-bg-hover, $color-red-bg-active, $color-red-border, $color-red-accent, $color-red-text ),
+  'teal': ( $color-teal-bg, $color-teal-bg-hover, $color-teal-bg-active, $color-teal-border, $color-teal-accent, $color-teal-text ),
+  'violet': ( $color-violet-bg, $color-violet-bg-hover, $color-violet-bg-active, $color-violet-border, $color-violet-accent, $color-violet-text ),
+  'white': ( $color-white-bg, $color-white-bg-hover, $color-white-bg-active, $color-white-border, $color-white-accent, $color-white-text ),
+  'yellow': ( $color-yellow-bg, $color-yellow-bg-hover, $color-yellow-bg-active, $color-yellow-border, $color-yellow-accent, $color-yellow-text ),
+
+  'error': ( $color-error-bg, $color-error-bg-hover, $color-error-bg-active, $color-error-border, $color-error-accent, $color-error-text ),
+  'success': ( $color-success-bg, $color-success-bg-hover, $color-success-bg-active, $color-success-border, $color-success-accent, $color-success-text ),
+  'warning': ( $color-warning-bg, $color-warning-bg-hover, $color-warning-bg-active, $color-warning-border, $color-warning-accent, $color-warning-text ),
+
+  'base': ( $color-base-bg, $color-base-bg-hover, $color-base-bg-active, $color-base-border, $color-base-accent, $color-base-text ),
+  'inherit': ( $color-inherit-bg, $color-inherit-bg-hover, $color-inherit-bg-active, $color-inherit-border, $color-inherit-accent, $color-inherit-text ),
+  'transparent': ( $color-transparent-bg, $color-transparent-bg-hover, $color-transparent-bg-active, $color-transparent-border, $color-transparent-accent, $color-transparent-text )
+) !default;
+
+
+$colors: map-remove( $colors, 'tertiary', 'quaternary', 'blue', 'brown', 'olive', 'orange', 'pink', 'purple', 'teal', 'violet', 'error', 'success', 'warning' );
+
+
+//SOURCE: https://github.com/thoughtbot/bourbon/blob/master/core/bourbon/addons/_timing-functions.scss
+
+/* EASINGS */
+
+$ease-in-quad:      cubic-bezier( 0.550,  0.085, 0.680, 0.530 ) !default;
+$ease-in-cubic:     cubic-bezier( 0.550,  0.055, 0.675, 0.190 ) !default;
+$ease-in-quart:     cubic-bezier( 0.895,  0.030, 0.685, 0.220 ) !default;
+$ease-in-quint:     cubic-bezier( 0.755,  0.050, 0.855, 0.060 ) !default;
+$ease-in-sine:      cubic-bezier( 0.470,  0.000, 0.745, 0.715 ) !default;
+$ease-in-expo:      cubic-bezier( 0.950,  0.050, 0.795, 0.035 ) !default;
+$ease-in-circ:      cubic-bezier( 0.600,  0.040, 0.980, 0.335 ) !default;
+$ease-in-back:      cubic-bezier( 0.600, -0.280, 0.735, 0.045 ) !default;
+
+$ease-out-quad:     cubic-bezier( 0.250,  0.460, 0.450, 0.940 ) !default;
+$ease-out-cubic:    cubic-bezier( 0.215,  0.610, 0.355, 1.000 ) !default;
+$ease-out-quart:    cubic-bezier( 0.165,  0.840, 0.440, 1.000 ) !default;
+$ease-out-quint:    cubic-bezier( 0.230,  1.000, 0.320, 1.000 ) !default;
+$ease-out-sine:     cubic-bezier( 0.390,  0.575, 0.565, 1.000 ) !default;
+$ease-out-expo:     cubic-bezier( 0.190,  1.000, 0.220, 1.000 ) !default;
+$ease-out-circ:     cubic-bezier( 0.075,  0.820, 0.165, 1.000 ) !default;
+$ease-out-back:     cubic-bezier( 0.175,  0.885, 0.320, 1.275 ) !default;
+
+$ease-in-out-quad:  cubic-bezier( 0.455,  0.030, 0.515, 0.955 ) !default;
+$ease-in-out-cubic: cubic-bezier( 0.645,  0.045, 0.355, 1.000 ) !default;
+$ease-in-out-quart: cubic-bezier( 0.770,  0.000, 0.175, 1.000 ) !default;
+$ease-in-out-quint: cubic-bezier( 0.860,  0.000, 0.070, 1.000 ) !default;
+$ease-in-out-sine:  cubic-bezier( 0.445,  0.050, 0.550, 0.950 ) !default;
+$ease-in-out-expo:  cubic-bezier( 1.000,  0.000, 0.000, 1.000 ) !default;
+$ease-in-out-circ:  cubic-bezier( 0.785,  0.135, 0.150, 0.860 ) !default;
+$ease-in-out-back:  cubic-bezier( 0.680, -0.550, 0.265, 1.550 ) !default;
+
+
+/* COLUMNS */
+
+$grid-columns: 12 !default;
+
+
+/* GUTTER */
+
+$gutter: .625rem !default;
+$gutter-half: $gutter / 2;
+
+
+/* STICKY */
+
+$layout-sticky-header-height: 56px !default; //FIXME: Shouldn't exist, or should be calculated automatically // Unfortunately `position: sticky` is almost totally unsupported atm
+$layout-sticky-header-z-index: 1100 !default;
+
+
+/* MODERNIZR */
+
+$modernizr-tests: (
+  'clip-path-polygon',
+  'clip-path-url',
+  'flexbox-legacy',
+  'flexbox-tweener',
+  'flexbox',
+  'localstorage',
+  'position-sticky',
+  'overlay-scrollbars'
+) !default;
+
+
+$path-static: '~@static/';
+
+
+/* PATHS */
+
+$path-root: '/' !default;
+$path-static: $path-root + 'static/' !default;
+$path-json: $path-static + 'json/' !default;
+$path-fonts: $path-static + 'fonts/' !default;
+$path-images: $path-static + 'images/' !default;
+
+
+// @require core/colors/variables.scss
+
+/* SELECTION */
+
+$selection-bg-color: rgba( $color-primary, .2 ) !default;
+
+/* BODY */
+
+$body-color: 'base' !default;
+
+
+// @require core/colors/variables.scss
+// @require core/gutter/variables.scss
+// @require core/reset/variables.scss
+
+/* HEADER */
+
+$layout-header-bg-color: darken( nth( map-get( $colors, $body-color ), 1 ), 70 ) !default;
+$layout-header-border-color: darken( $layout-header-bg-color, $color-border-darken-amount ) !default;
+$layout-header-color: $color-black-text !default; // The bg color is quite a bit darkened
+
+/* CONTENT */
+
+$layout-content-padding-x: $gutter !default;
+$layout-content-padding-y: $layout-content-padding-x !default;
+
+/* FOOTER */
+
+$layout-footer-bg-color: $layout-header-bg-color !default;
+$layout-footer-border-color: $layout-header-border-color !default;
+$layout-footer-color: $layout-header-color !default;
+
+
+/* SVELTO */
+
+$svelto-version: '1.0.0' !default;
+$svelto-environment: 'development' !default;
+$svelto-development: $svelto-environment == 'development' !default;
+
+
+// @require core/svelto/variables.scss
+
+/* REVISION */
+
+// Appended to urls, in order to load the new version instead of the cached one
+
+$revision: '?v=' + $svelto-version !default;
+
+
+/* FONT FAMILY */
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif !default;
+$font-family-serif: Georgia, 'Times New Roman', Times, serif !default;
+$font-family-monospace: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !default;
+$font-family-root: $font-family-sans-serif !default;
+
+/* FONT SIZE */
+
+$font-size: 16px !default;
+
+/* LINE HEIGHT */
+
+$line-height: 22 / 16 !default;
+$line-height-em: $line-height * 1em;
+
+
+// @require core/typography/variables.scss
+
+/* ICON */
+
+$icon-size: 24px !default; // This is the closest size at which icons look the best at the default font size
+$icon-scale-factor: $icon-size / $font-size !default; // This is the scale factor at which the icons are at their best dimensions at the default font size
+
+
+// @require core/icon/variables.scss
+
+/* ICON SIZES */
+
+// The wanted icon size for what will be the actual size setted
+// The values are scaled with a factor of `1.1892`
+// Some roundings occurred for the `RECOMMENDED` sizes
+// The factor has been chosen in order to minimize rounding errors
+// The `RECOMMENDED` sizes are those where the icons look better
+
+$size-xxxxsmall-icon: 10.09105885246312px !default;
+$size-xxxsmall-icon: 12.000287187349144px !default;
+$size-xxsmall-icon: 14.270741523195602px !default;
+$size-xsmall-icon: 18px !default; // RECOMMENDED
+$size-small-icon: 20.181634712411704px !default;
+$size-medium-icon: 24px !default; // RECOMMENDED
+$size-large-icon: 28.5408px !default;
+$size-xlarge-icon: 36px !default; // RECOMMENDED
+$size-xxlarge-icon: 40.36230346291201px !default;
+$size-xxxlarge-icon: 48px !default; // RECOMMENDED
+$size-xxxxlarge-icon: 57.08023393991053px !default;
+
+/* SIZES */
+
+// The `RECOMMENDED` sizes are those where the icons look better
+
+$size-xxxxsmall: size-from-icon-size( $size-xxxxsmall-icon ) !default;
+$size-xxxsmall: size-from-icon-size( $size-xxxsmall-icon ) !default;
+$size-xxsmall: size-from-icon-size( $size-xxsmall-icon ) !default;
+$size-xsmall: size-from-icon-size( $size-xsmall-icon ) !default; // RECOMMENDED
+$size-small: size-from-icon-size( $size-small-icon ) !default;
+$size-medium: size-from-icon-size( $size-medium-icon ) !default; // RECOMMENDED
+$size-large: size-from-icon-size( $size-large-icon ) !default;
+$size-xlarge: size-from-icon-size( $size-xlarge-icon ) !default; // RECOMMENDED
+$size-xxlarge: size-from-icon-size( $size-xxlarge-icon ) !default;
+$size-xxxlarge: size-from-icon-size( $size-xxxlarge-icon ) !default; // RECOMMENDED
+$size-xxxxlarge: size-from-icon-size( $size-xxxxlarge-icon ) !default;
+
+/* SIZES */
+
+$sizes: (
+  'xxxxsmall': $size-xxxxsmall,
+  'xxxsmall': $size-xxxsmall,
+  'xxsmall': $size-xxsmall,
+  'xsmall': $size-xsmall,
+  'small': $size-small,
+  'medium': $size-medium,
+  'large': $size-large,
+  'xlarge': $size-xlarge,
+  'xxlarge': $size-xxlarge,
+  'xxxlarge': $size-xxxlarge,
+  'xxxxlarge': $size-xxxxlarge
+) !default;
+
+@include assert-ascending( $sizes, '`$sizes` values must be defined in ascending order' );
+
+
+// @require core/animations/variables.scss
+
+/* ANIMATION */
+
+$widget-animation-duration: $animation-normal !default;
+
+
+/* Z-DEPTHS */
+
+$z-depth-0: none !default;
+$z-depth-1: 0 1px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .2) !default;
+$z-depth-2: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .2) !default;
+$z-depth-3: 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12), 0 3px 3px -2px rgba(0, 0, 0, .4) !default;
+$z-depth-4: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .4) !default;
+$z-depth-5: 0 5px 8px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 2px 5px -1px rgba(0, 0, 0, .4) !default;
+$z-depth-6: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .4) !default;
+$z-depth-7: 0 7px 10px 1px rgba(0, 0, 0, .14), 0 2px 16px 2px rgba(0, 0, 0, .12), 0 4px 5px -3px rgba(0, 0, 0, .4) !default;
+$z-depth-8: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .4) !default;
+$z-depth-9: 0 9px 12px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 6px -3px rgba(0, 0, 0, .4) !default;
+$z-depth-10: 0 10px 13px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 6px 6px -3px rgba(0, 0, 0, .4) !default;
+$z-depth-11: 0 11px 14px 1px rgba(0, 0, 0, .14), 0 4px 14px 3px rgba(0, 0, 0, .12), 0 6px 7px -4px rgba(0, 0, 0, .4) !default;
+$z-depth-12: 0 12px 16px 1px rgba(0, 0, 0, .14), 0 4px 14px 3px rgba(0, 0, 0, .12), 0 6px 8px -4px rgba(0, 0, 0, .4) !default;
+$z-depth-13: 0 13px 18px 1px rgba(0, 0, 0, .14), 0 4px 18px 3px rgba(0, 0, 0, .12), 0 7px 8px -4px rgba(0, 0, 0, .4) !default;
+$z-depth-14: 0 14px 20px 1px rgba(0, 0, 0, .14), 0 5px 22px 4px rgba(0, 0, 0, .12), 0 7px 8px -4px rgba(0, 0, 0, .4) !default;
+$z-depth-15: 0 15px 22px 1px rgba(0, 0, 0, .14), 0 5px 26px 4px rgba(0, 0, 0, .12), 0 7px 9px -5px rgba(0, 0, 0, .4) !default;
+$z-depth-16: 0 16px 24px 2px rgba(0, 0, 0, .14), 0 5px 30px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .4) !default;
+$z-depth-17: 0 17px 26px 3px rgba(0, 0, 0, .14), 0 5px 32px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .4) !default;
+$z-depth-18: 0 18px 28px 3px rgba(0, 0, 0, .14), 0 6px 34px 6px rgba(0, 0, 0, .12), 0 8px 11px -5px rgba(0, 0, 0, .4) !default;
+$z-depth-19: 0 19px 30px 3px rgba(0, 0, 0, .14), 0 6px 36px 6px rgba(0, 0, 0, .12), 0 9px 11px -6px rgba(0, 0, 0, .4) !default;
+$z-depth-20: 0 20px 32px 3px rgba(0, 0, 0, .14), 0 6px 38px 7px rgba(0, 0, 0, .12), 0 9px 12px -6px rgba(0, 0, 0, .4) !default;
+$z-depth-21: 0 21px 34px 4px rgba(0, 0, 0, .14), 0 7px 40px 7px rgba(0, 0, 0, .12), 0 9px 12px -6px rgba(0, 0, 0, .4) !default;
+$z-depth-22: 0 22px 36px 4px rgba(0, 0, 0, .14), 0 7px 42px 8px rgba(0, 0, 0, .12), 0 10px 13px -6px rgba(0, 0, 0, .4) !default;
+$z-depth-23: 0 23px 38px 4px rgba(0, 0, 0, .14), 0 7px 44px 8px rgba(0, 0, 0, .12), 0 10px 13px -7px rgba(0, 0, 0, .4) !default;
+$z-depth-24: 0 24px 40px 4px rgba(0, 0, 0, .14), 0 8px 46px 9px rgba(0, 0, 0, .12), 0 10px 10px -8px rgba(0, 0, 0, .4) !default;
+
+/* Z-DEPTHS */
+
+$z-depths: (
+  0: $z-depth-0,
+  1: $z-depth-1,
+  2: $z-depth-2,
+  3: $z-depth-3,
+  4: $z-depth-4,
+  5: $z-depth-5,
+  6: $z-depth-6,
+  7: $z-depth-7,
+  8: $z-depth-8,
+  9: $z-depth-9,
+  10: $z-depth-10,
+  11: $z-depth-11,
+  12: $z-depth-12,
+  13: $z-depth-13,
+  14: $z-depth-14,
+  15: $z-depth-15,
+  16: $z-depth-16,
+  17: $z-depth-17,
+  18: $z-depth-18,
+  19: $z-depth-19,
+  20: $z-depth-20,
+  21: $z-depth-21,
+  22: $z-depth-22,
+  23: $z-depth-23,
+  24: $z-depth-24
+) !default;
+
+
+/* Z-INDEX */
+
+$priority-z-index: 1000000 !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$actionable-inverted-colors: map-keys( $colors ) !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$actionable-colors: map-keys( $colors ) !default;
+
+
+// @require core/animations/variables.scss
+
+/* ON HOVER */
+
+$attached-on-hover-animation-duration: $animation-fast !default;
+
+
+/* ATTACHED */
+
+$attached-z-index: 300 !default;
+
+
+$rounded-border-radius: .375em;
+
+
+/* BORDER RADIUS */
+
+$sharp-border-radius: 0 !default;
+$rounded-border-radius: .25em !default;
+$circular-border-radius: 1000000px !default; // If we use `50%` we may get an oval when instead we'd probably want a rectangle with round edges
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$bordered-colors: map-keys( $colors ) !default;
+
+
+/* BORDERED */
+
+$border-width: 1px !default;
+$border-style: solid !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$inverted-colors: map-keys( $colors ) !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$text-colors: map-keys( $colors ) !default;
+
+
+// @require core/animations/variables.scss
+
+/* DISABLED */
+
+$disabled-opacity: .5 !default;
+
+/* ANIMATION */
+
+$disabled-animation-duration: $animation-fast !default;
+
+
+// @require core/paths/variables.scss
+// @require decorators/disabled/variables.scss
+
+/* BLURRED */
+
+$blurred-blur-radius: 3px !default;
+
+/* PATHS */
+
+$blurred-path-images: $path-images !default;
+
+/* ANIMATION */
+
+$blurred-animation-duration: $disabled-animation-duration !default;
+
+
+/* FLOATED */
+
+$floated-gutter: $gutter !default;
+
+
+// @require core/breakpoints/variables.scss
+// @require core/grid/variables.scss
+
+/* GRID */
+
+$grid-breakpoints-columns: false !default;
+
+@if not $grid-breakpoints-columns { // Using this convoluted way of doing this so that we may set only some specific columns for each breakpoint, outputting less code
+
+  $columns: ();
+
+  @for $column from 1 through $grid-columns {
+
+    $columns: append( $columns, $column );
+
+  }
+
+  $grid-breakpoints-columns: ();
+
+  @each $breakpoint, $value in $breakpoints {
+
+    $grid-breakpoints-columns: map-set( $grid-breakpoints-columns, $breakpoint, $columns );
+
+  }
+
+}
+
+
+// @require core/modernizr/variables.scss
+
+/* MODERNIZR */
+
+$hidden-modernizr-features: $modernizr-tests !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$highlighted-colors: map-keys( $colors ) !default;
+$highlighted-colors-directions: ( 'top', 'right', 'bottom', 'left' ) !default;
+
+
+// @require core/breakpoints/variables.scss
+
+/* LIMITED */
+
+$limited-width: map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) * 1.05 !default;
+
+
+// @require core/animations/variables.scss
+
+/* OBSCURED */
+
+$obscured-bg-color: rgba( black, .5 ) !default;
+
+/* ANIMATION */
+
+$obscured-animation-duration: $animation-fast;
+
+
+// @require _/math/constants/variables.scss
+// @require core/paths/variables.scss
+
+/* TIP */
+
+$pointing-tip-size: .625em !default;
+$pointing-tip-size-half: $pointing-tip-size / 2;
+
+$pointing-tip-diagonal: $pointing-tip-size * $SQRT2;
+$pointing-tip-diagonal-half: $pointing-tip-diagonal / 2;
+
+$pointing-tip-color: 'inherit' !default;
+$pointing-tip-color-force: true !default;
+$pointing-tip-color-basic: true !default;
+
+/* PATHS */
+
+$pointing-path-images: $path-images !default;
+
+
+// @require core/animations/variables.scss
+
+/* RAISABLE */
+
+$raisable-raise-depths: 2 !default; // Distance between the normal and raised depth
+
+/* ANIMATION */
+
+$raisable-animation-duration: $animation-normal !default;
+
+
+/* SPACED */
+
+$spaced-gutter: $gutter-half !default;
+
+
+// @require core/colors/variables.scss
+
+/* TARGET */
+
+$target-bg-color: lighten( $color-yellow, 25% ) !default;
+
+/* ANIMATION */
+
+$target-animation-iteration-count: 1 !default;
+$target-animation-duration: $animation-xslow !default;
+
+
+// @require core/modernizr/variables.scss
+
+/* EMOJI */
+
+$modernizr-tests: append( $modernizr-tests, 'emoji' );
+
+
+// @require core/animations/variables.scss
+
+/* ANIMATION */
+
+$slide-animation-duration: $animation-fast !default;
+
+
+// @require core/animations/variables.scss
+// @require decorators/border_radius/variables.scss
+
+/* AVATAR */
+
+$avatar-size: 3em !default;
+$avatar-border-radius: $circular-border-radius !default;
+$avatar-img-hover-opacity: 0.8 !default;
+
+/* ANIMATION */
+
+$avatar-animation-duration: $animation-normal !default;
+
+
+// @require core/colors/variables.scss
+
+/* BACKGROUND GENERATOR */
+
+$background-generator-bg-color: $color-black !default;
+
+
+// @require core/animations/variables.scss
+// @require decorators/border_radius/variables.scss
+
+/* BADGE */
+
+$badge-color: 'secondary' !default;
+$badge-color-force: false !default;
+$badge-color-basic: false !default;
+
+$badge-size: 'xxsmall' !default;
+$badge-size-force: false !default;
+$badge-size-basic: true !default;
+
+$badge-z-depth: 2 !default;
+$badge-z-depth-force: false !default;
+$badge-z-depth-basic: true !default;
+
+$badge-z-index: 600 !default;
+
+$badge-font-weight: 600 !default;
+
+$badge-border-radius: $circular-border-radius !default;
+
+$badge-padding-x: .5em !default;
+$badge-padding-y: $badge-padding-x !default;
+
+$badge-min-width: 1em + ( $badge-padding-x * 2 ) !default;
+$badge-min-height: 1em + ( $badge-padding-y * 2 ) !default;
+
+$badge-offset: - ( $badge-min-width * .35 ) !default;
+
+/* ANIMATION */
+
+$badge-animation-duration: $animation-fast !default;
+
+
+/* BOILERPLATE */
+
+// Boilerplate' variables
+
+
+/* BREADCRUMB */
+
+$breadcrumb-inner-gutter: .5em !default;
+
+/* AFTER CURRENT */
+
+$breadcrumb-after-current-opacity: .5 !default;
+$breadcrumb-after-current-hover-opacity: .75 !default;
+
+
+/* FULLSCREEN */
+
+$card-fullscreen-z-index: 2000 !default;
+
+
+// @require core/animations/variables.scss
+
+/* FADE */
+
+$carousel-fade-animation-duration: $animation-normal !default;
+
+
+// @require core/animations/variables.scss
+
+/* SLIDE */
+
+$carousel-slide-animation-duration: $animation-normal !default;
+
+
+// @require core/animations/variables.scss
+// @require core/colors/variables.scss
+// @require decorators/border_radius/variables.scss
+
+/* CAROUSEL */
+
+$carousel-height: 12.5em !default;
+
+/* ITEMS */
+
+$carousel-items-bg-color: $color-black !default;
+
+/* INDICATORS */
+
+$carousel-indicators-z-index: 700 !default;
+
+/* INDICATOR */
+
+$carousel-indicator-bg-color: transparent !default;
+$carousel-indicator-current-bg-color: $color-white !default;
+
+$carousel-indicator-width: .625em !default;
+$carousel-indicator-height: $carousel-indicator-width !default;
+
+$carousel-indicator-border-width: 2px !default;
+$carousel-indicator-border-style: solid !default;
+$carousel-indicator-border-color: $carousel-indicator-current-bg-color !default;
+
+$carousel-indicator-border-radius: $circular-border-radius !default;
+
+$carousel-indicator-opacity: .25 !default;
+$carousel-hover-indicator-opacity: .5 !default;
+$carousel-indicator-hover-opacity: 1 !default;
+
+/* ANIMATION */
+
+$carousel-indicator-animation-duration: $animation-normal !default;
+
+
+// @require core/colors/variables.scss
+// @require decorators/border_radius/variables.scss
+
+/* WRAPPER */
+
+$colorpicker-wrp-border-width: 1px !default;
+$colorpicker-wrp-border-style: solid !default;
+$colorpicker-wrp-border-color: $color-black !default;
+
+/* WRAPPER SB */
+
+$colorpicker-sb-wrp-size: 11em !default;
+
+/* WRAPPER HUE */
+
+$colorpicker-hue-wrp-width: 1.5em !default;
+$colorpicker-hue-wrp-height: $colorpicker-sb-wrp-size !default;
+
+/* HANDLER */
+
+$colorpicker-handler-z-depth: 2 !default;
+
+$colorpicker-handler-shadow: 0 0 0 1px rgba( 0, 0, 0, .2 ) !default;
+
+$colorpicker-handler-border-width: 2px !default;
+$colorpicker-handler-border-style: solid !default;
+$colorpicker-handler-border-color: $color-white !default;
+
+$colorpicker-handler-bg-color: $colorpicker-handler-border-color !default;
+
+/* HANDLER SB */
+
+$colorpicker-handler-sb-width: 1em !default;
+$colorpicker-handler-sb-height: $colorpicker-handler-sb-width !default;
+
+$colorpicker-handler-sb-border-radius: $circular-border-radius !default;
+
+/* HANDLER HUE */
+
+$colorpicker-handler-hue-width: 100% !default;
+$colorpicker-handler-hue-height: .5em !default;
+
+$colorpicker-handler-hue-border-radius: .125em !default;
+
+
+// @require core/gutter/variables.scss
+// @require decorators/border_radius/variables.scss
+
+/* CONTAINER */
+
+$container-color: 'white' !default;
+$container-color-force: false !default;
+$container-color-basic: true !default;
+
+$container-border-radius: $rounded-border-radius !default;
+
+$container-padding-x: $gutter !default;
+$container-padding-y: $container-padding-x !default;
+
+
+
+// @require core/colors/variables.scss
+// @require decorators/bordered/variables.scss
+// @require widgets/container/variables.scss
+
+/* HIGHLIGHTED */
+
+$highlight-width: $border-width * 2 !default;
+$highlight-bordered-width: $border-width !default;
+$highlight-color: nth( map-get( $colors, $container-color ), 5 ) !default;
+
+
+// @require widgets/container/variables.scss
+
+/* CARD */
+
+$card-color: $container-color !default;
+$card-color-force: $container-color-force !default;
+$card-color-basic: $container-color-basic !default;
+
+$card-border-radius: $container-border-radius !default;
+
+/* SECTION */
+
+$card-section-color: 'inherit' !default;
+$card-section-color-force: false !default;
+$card-section-color-basic: true !default;
+
+
+// @require core/animations/variables.scss
+// @require widgets/avatar/variables.scss
+// @require widgets/container/variables.scss
+
+/* LEVELS */
+
+//TODO: Decrease level offset when there's no img
+
+$chat-message-level-1-offset: 0 !default;
+$chat-message-level-2-offset: 4.5em !default;
+$chat-message-level-3-offset: $chat-message-level-2-offset * 2 !default;
+
+/* IMAGE */
+
+$chat-message-img-size: 3em !default;
+$chat-message-img-rounded: true !default;
+
+$chat-message-img-border-radius: $container-border-radius !default;
+
+$chat-message-img-border-width: 1px !default;
+$chat-message-img-border-style: solid !default;
+$chat-message-img-border-color: inherit !default;
+
+$chat-message-img-hover-opacity: $avatar-img-hover-opacity !default;
+
+/* ANIMATION */
+
+$chat-message-animation-duration: $animation-fast !default;
+
+
+// @require widgets/container/variables.scss
+
+/* CHAT */
+
+$chat-color: $container-color !default;
+$chat-color-force: false !default;
+$chat-color-basic: true !default;
+
+
+// @require ../variables.scss
+
+/* COMPACT */
+
+$container-compact-padding-x: $container-padding-x !default;
+$container-compact-padding-y: $container-compact-padding-x / 2 !default;
+
+
+// @require widgets/container/compact/variables.scss
+
+/* COMPACT */
+
+$card-compact-padding-x: $container-compact-padding-x !default;
+$card-compact-padding-y: $container-compact-padding-y !default;
+
+
+// @require core/animations/variables.scss
+// @require core/colors/variables.scss
+
+/* DATEPICKER */
+
+$datepicker-max-width: 32em !default;
+
+/* DAY */
+
+$datepicker-day-width: 100% / 7 !default;
+$datepicker-day-height: 3em !default;
+
+/* DAY NAME */
+
+$datepicker-day-name-font-weight: bold !default;
+
+/* DAY CIRCLE */
+
+$datepicker-day-circle-size: 2.5em !default;
+
+/* DAY HOVER */
+
+$datepicker-day-hover-color: $color-secondary-text !default;
+$datepicker-day-hover-circle-color: transparentize( $color-secondary, .25 ) !default;
+
+/* DAY TODAY */
+
+$datepicker-day-today-color: $color-secondary !default;
+$datepicker-day-today-circle-color: transparent !default;
+
+/* DAY SELECTED */
+
+$datepicker-day-selected-z-depth: 2 !default;
+$datepicker-day-selected-z-depth-force: true !default;
+$datepicker-day-selected-z-depth-basic: true !default;
+
+$datepicker-day-selected-color: $color-secondary-text !default;
+$datepicker-day-selected-circle-color: $color-secondary !default;
+
+/* DAY PREV/NEXT */
+
+$datepicker-day-prev-next-opacity: .25 !default;
+
+/* DAY CLAMPED */
+
+$datepicker-day-clamped-opacity: $datepicker-day-prev-next-opacity !default;
+
+/* ANIMATION */
+
+$datepicker-animation-duration: $animation-fast !default;
+
+
+// @require decorators/border_radius/variables.scss
+
+/* BLOCK */
+
+$divider-block-color: 'red' !default;
+$divider-block-color-force: false !default;
+$divider-block-color-basic: true !default;
+
+$divider-block-x-padding: .625em !default;
+$divider-block-y-padding: $divider-block-x-padding / 2 !default;
+
+$divider-block-border-radius: $circular-border-radius !default;
+
+
+/* HR */
+
+$hr-z-index: 1 !default;
+
+$hr-size: 1px !default;
+
+$hr-bg-color: rgba( 0, 0, 0, .1 ) !default;
+
+
+/* TEXT */
+
+$divider-text-size: 'medium' !default;
+$divider-text-size-force: false !default;
+$divider-text-size-basic: true !default;
+
+$divider-text-font-weight: bold !default;
+
+$divider-text-opacity: .75 !default;
+
+
+// @require core/animations/variables.scss
+
+/* REVERTING */
+
+$draggable-reverting-animation-duration: $animation-fast !default;
+
+
+/* FULLSCREEN */
+
+$editor-fullscreen-z-index: 1400 !default;
+
+
+/* RATIOS */
+
+$embed-ratios: ( 21 9 ), ( 16 9 ), ( 4 3 ), ( 1 1 ) !default;
+
+
+// @require core/colors/variables.scss
+// @require core/sizes/variables.scss
+
+/* EMOJI PICKER */
+
+$emojipicker-containers-height: 180px !default;
+
+/* EMPTY EMOJIS */
+
+$emojipicker-emojis-empty-opacity: .5 !default;
+
+/* PREVIEW */
+
+$emojipicker-preview-emoji-size: 38px !default;
+$emojipicker-preview-short-names-size: 'xsmall' !default;
+
+/* TONE */
+
+$emojipicker-tone-size: $size-large !default;
+$emojipicker-tone-1-bg-color: #ffc93a !default;
+$emojipicker-tone-2-bg-color: #fadcbc !default;
+$emojipicker-tone-3-bg-color: #e0bb95 !default;
+$emojipicker-tone-4-bg-color: #bf8f68 !default;
+$emojipicker-tone-5-bg-color: #9b643d !default;
+$emojipicker-tone-6-bg-color: #594539 !default;
+
+/* TONES */
+
+$emojipicker-tones-spacing: calc( ( #{$emojipicker-preview-emoji-size} - #{$emojipicker-tone-size} ) / 2 ) !default;
+
+/* TONE DOT */
+
+$emojipicker-tone-dot-z-depth: 1 !default;
+$emojipicker-tone-dot-size: 5px !default;
+$emojipicker-tone-dot-bg-color: $color-white !default;
+
+
+// @require ../variables.scss
+// @require widgets/card/fullscreen/variables.scss
+
+/* POPOVER */
+
+$emojipicker-popover-width: 318px !default;
+$emojipicker-popover-containers-height: 248px !default;
+$emojipicker-popover-z-index: $card-fullscreen-z-index + 1 !default;
+
+/* PREVIEW */
+
+$emojipicker-popover-preview-emoji-size: $emojipicker-preview-emoji-size !default;
+
+/* TONE */
+
+$emojipicker-popover-tone-size: $emojipicker-tone-size !default;
+
+/* TONES */
+
+$emojipicker-popover-tones-spacing: calc( ( #{$emojipicker-popover-preview-emoji-size} - #{$emojipicker-popover-tone-size} ) / 2 ) !default;
+
+
+// @require core/icon/variables.scss
+// @require core/typography/variables.scss
+
+/* EMOJI */
+
+$emoji-size: $icon-size !default;
+$emoji-scale-factor: $emoji-size / $font-size !default;
+
+/* TYPE */
+
+$emoji-set: 'emojione' !default; // apple, google, twitter, emojione
+$emoji-tone: 1 !default;
+
+/* IMAGE */
+
+$emoji-image-path: '//cdn.jsdelivr.net/emojione/assets/png/' !default; //TODO: Add one path for each of the possible sets
+
+/* SPRITE */
+
+$emoji-sprite-columns: 41 !default;
+$emoji-sprite-version: '2.4.4' !default;
+$emoji-sprite-size: 64 !default; // 16, 20, 32, 64
+$emoji-sprite-url: '//unpkg.com/emoji-datasource@#{$emoji-sprite-version}/sheet_#{$emoji-set}_#{$emoji-sprite-size}.png' !default;
+
+
+// @require core/animations/variables.scss
+
+/* ANIMATION */
+
+$expander-animation-duration: $animation-fast !default;
+
+
+/* ATTACHED */
+
+$figcaption-attached-color: 'black' !default;
+$figcaption-attached-color-force: false !default;
+$figcaption-attached-color-basic: true !default;
+
+
+/* FIGCAPTION */
+
+$figcaption-color: 'inherit' !default;
+$figcaption-color-force: false !default;
+$figcaption-color-basic: true !default;
+
+
+// @require widgets/container/variables.scss
+
+/* FIGURE */
+
+$figure-color: $container-color !default;
+$figure-color-force: false !default;
+$figure-color-basic: true !default;
+
+$figure-border-radius: 0 !default;
+
+$figure-padding-x: 0 !default;
+$figure-padding-y: $figure-padding-x !default;
+
+/* IMAGE */
+
+$figure-image-border-radius: inherit !default;
+
+
+// @require core/paths/variables.scss
+
+/* FLAG */
+
+$flag-width: 16px !default;
+$flag-height: 11px !default;
+
+/* PATHS */
+
+$flags-path-images: $path-images !default;
+
+/* FLAGS */
+
+//TODO: Maybe switch the key with the long version of the name
+
+$flags: (
+  'ad': (
+    'andorra',
+    ( -16px 0 )
+  ),
+  'ae': (
+    'united-arab-emirates',
+    ( -32px 0 )
+  ),
+  'af': (
+    'afghanistan',
+    ( -48px 0 )
+  ),
+  'ag': (
+    'antigua',
+    ( -64px 0 )
+  ),
+  'ai': (
+    'anguilla',
+    ( -80px 0 )
+  ),
+  'al': (
+    'albania',
+    ( -96px 0 )
+  ),
+  'am': (
+    'armenia',
+    ( -112px 0 )
+  ),
+  'an': (
+    'netherlands-antilles',
+    ( -128px 0 )
+  ),
+  'ao': (
+    'angola',
+    ( -144px 0 )
+  ),
+  'ar': (
+    'argentina',
+    ( -160px 0 )
+  ),
+  'as': (
+    'american-samoa',
+    ( -176px 0 )
+  ),
+  'at': (
+    'austria',
+    ( -192px 0 )
+  ),
+  'au': (
+    'australia',
+    ( -208px 0 )
+  ),
+  'aw': (
+    'aruba',
+    ( -224px 0 )
+  ),
+  'az': (
+    'azerbaijan',
+    ( -240px 0 )
+  ),
+  'ba': (
+    'bosnia',
+    ( 0 -11px )
+  ),
+  'bb': (
+    'barbados',
+    ( -16px -11px )
+  ),
+  'bd': (
+    'bangladesh',
+    ( -32px -11px )
+  ),
+  'be': (
+    'belgium',
+    ( -48px -11px )
+  ),
+  'bf': (
+    'burkina-faso',
+    ( -64px -11px )
+  ),
+  'bg': (
+    'bulgaria',
+    ( -80px -11px )
+  ),
+  'bh': (
+    'bahrain',
+    ( -96px -11px )
+  ),
+  'bi': (
+    'burundi',
+    ( -112px -11px )
+  ),
+  'bj': (
+    'benin',
+    ( -128px -11px )
+  ),
+  'bm': (
+    'bermuda',
+    ( -144px -11px )
+  ),
+  'bn': (
+    'brunei',
+    ( -160px -11px )
+  ),
+  'bo': (
+    'bolivia',
+    ( -176px -11px )
+  ),
+  'br': (
+    'brazil',
+    ( -192px -11px )
+  ),
+  'bs': (
+    'bahamas',
+    ( -208px -11px )
+  ),
+  'bt': (
+    'bhutan',
+    ( -224px -11px )
+  ),
+  'bv': (
+    'bouvet-island',
+    ( -240px -11px )
+  ),
+  'bw': (
+    'botswana',
+    ( 0 -22px )
+  ),
+  'by': (
+    'belarus',
+    ( -16px -22px )
+  ),
+  'bz': (
+    'belize',
+    ( -32px -22px )
+  ),
+  'ca': (
+    'canada',
+    ( -48px -22px )
+  ),
+  'cd': (
+    'congo',
+    ( -80px -22px )
+  ),
+  'cf': (
+    'central-african-republic',
+    ( -96px -22px )
+  ),
+  'cg': (
+    'congo-brazzaville',
+    ( -112px -22px )
+  ),
+  'ch': (
+    'switzerland',
+    ( -128px -22px )
+  ),
+  'ci': (
+    'cote-divoire',
+    ( -144px -22px )
+  ),
+  'ck': (
+    'cook-islands',
+    ( -160px -22px )
+  ),
+  'cl': (
+    'chile',
+    ( -176px -22px )
+  ),
+  'cm': (
+    'cameroon',
+    ( -192px -22px )
+  ),
+  'cn': (
+    'china',
+    ( -208px -22px )
+  ),
+  'co': (
+    'colombia',
+    ( -224px -22px )
+  ),
+  'cr': (
+    'costa-rica',
+    ( -240px -22px )
+  ),
+  'cu': (
+    'cuba',
+    ( 0 -33px )
+  ),
+  'cv': (
+    'cape-verde',
+    ( -16px -33px )
+  ),
+  'cw': (
+    'curacao',
+    ( -32px -33px )
+  ),
+  'cy': (
+    'cyprus',
+    ( -48px -33px )
+  ),
+  'cz': (
+    'czech-republic',
+    ( -64px -33px )
+  ),
+  'de': (
+    'germany',
+    ( -80px -33px )
+  ),
+  'dj': (
+    'djibouti',
+    ( -96px -33px )
+  ),
+  'dk': (
+    'denmark',
+    ( -112px -33px )
+  ),
+  'dm': (
+    'dominica',
+    ( -128px -33px )
+  ),
+  'do': (
+    'dominican-republic',
+    ( -144px -33px )
+  ),
+  'dz': (
+    'algeria',
+    ( -160px -33px )
+  ),
+  'ec': (
+    'ecuador',
+    ( -176px -33px )
+  ),
+  'ee': (
+    'estonia',
+    ( -192px -33px )
+  ),
+  'eg': (
+    'egypt',
+    ( -208px -33px )
+  ),
+  'eh': (
+    'western-sahara',
+    ( -224px -33px )
+  ),
+  'er': (
+    'eritrea',
+    ( 0 -44px )
+  ),
+  'es': (
+    'spain',
+    ( -16px -44px )
+  ),
+  'et': (
+    'ethiopia',
+    ( -32px -44px )
+  ),
+  'eu': (
+    'european-union',
+    ( -48px -44px )
+  ),
+  'fi': (
+    'finland',
+    ( -64px -44px )
+  ),
+  'fj': (
+    'fiji',
+    ( -80px -44px )
+  ),
+  'fk': (
+    'falkland-islands',
+    ( -96px -44px )
+  ),
+  'fm': (
+    'micronesia',
+    ( -112px -44px )
+  ),
+  'fo': (
+    'faroe-islands',
+    ( -128px -44px )
+  ),
+  'fr': (
+    'france',
+    ( -144px -44px )
+  ),
+  'ga': (
+    'gabon',
+    ( -160px -44px )
+  ),
+  'gb': (
+    'england',
+    ( -176px -44px )
+  ),
+  'gd': (
+    'grenada',
+    ( -192px -44px )
+  ),
+  'ge': (
+    'georgia',
+    ( -208px -44px )
+  ),
+  'gf': (
+    'french-guiana',
+    ( -224px -44px )
+  ),
+  'gg': (
+    'guernsey',
+    ( -240px -44px )
+  ),
+  'gh': (
+    'ghana',
+    ( 0 -55px )
+  ),
+  'gi': (
+    'gibraltar',
+    ( -16px -55px )
+  ),
+  'gl': (
+    'greenland',
+    ( -32px -55px )
+  ),
+  'gm': (
+    'gambia',
+    ( -48px -55px )
+  ),
+  'gn': (
+    'guinea',
+    ( -64px -55px )
+  ),
+  'gp': (
+    'guadeloupe',
+    ( -80px -55px )
+  ),
+  'gq': (
+    'equatorial-guinea',
+    ( -96px -55px )
+  ),
+  'gr': (
+    'greece',
+    ( -112px -55px )
+  ),
+  'gs': (
+    'sandwich-islands',
+    ( -128px -55px )
+  ),
+  'gt': (
+    'guatemala',
+    ( -144px -55px )
+  ),
+  'gu': (
+    'guam',
+    ( -160px -55px )
+  ),
+  'gw': (
+    'guinea-bissau',
+    ( -176px -55px )
+  ),
+  'gy': (
+    'guyana',
+    ( -192px -55px )
+  ),
+  'hk': (
+    'hong-kong',
+    ( -208px -55px )
+  ),
+  'hm': (
+    'heard-island',
+    ( -224px -55px )
+  ),
+  'hn': (
+    'honduras',
+    ( -240px -55px )
+  ),
+  'hr': (
+    'croatia',
+    ( 0 -66px )
+  ),
+  'ht': (
+    'haiti',
+    ( -16px -66px )
+  ),
+  'hu': (
+    'hungary',
+    ( -32px -66px )
+  ),
+  'ic': (
+    'canary-islands',
+    ( -48px -66px )
+  ),
+  'id': (
+    'indonesia',
+    ( -64px -66px )
+  ),
+  'ie': (
+    'ireland',
+    ( -80px -66px )
+  ),
+  'il': (
+    'israel',
+    ( -96px -66px )
+  ),
+  'im': (
+    'isle-of-man',
+    ( -112px -66px )
+  ),
+  'in': (
+    'india',
+    ( -128px -66px )
+  ),
+  'io': (
+    'indian-ocean-territory',
+    ( -144px -66px )
+  ),
+  'iq': (
+    'iraq',
+    ( -160px -66px )
+  ),
+  'ir': (
+    'iran',
+    ( -176px -66px )
+  ),
+  'is': (
+    'iceland',
+    ( -192px -66px )
+  ),
+  'it': (
+    'italy',
+    ( -208px -66px )
+  ),
+  'je': (
+    'jersey',
+    ( -224px -66px )
+  ),
+  'jm': (
+    'jamaica',
+    ( -240px -66px )
+  ),
+  'jo': (
+    'jordan',
+    ( 0 -77px )
+  ),
+  'jp': (
+    'japan',
+    ( -16px -77px )
+  ),
+  'ke': (
+    'kenya',
+    ( -32px -77px )
+  ),
+  'kg': (
+    'kyrgyzstan',
+    ( -48px -77px )
+  ),
+  'kh': (
+    'cambodia',
+    ( -64px -77px )
+  ),
+  'ki': (
+    'kiribati',
+    ( -80px -77px )
+  ),
+  'km': (
+    'comoros',
+    ( -96px -77px )
+  ),
+  'kn': (
+    'saint-kitts-and-nevis',
+    ( -112px -77px )
+  ),
+  'kp': (
+    'north-korea',
+    ( -128px -77px )
+  ),
+  'kr': (
+    'south-korea',
+    ( -144px -77px )
+  ),
+  'kw': (
+    'kuwait',
+    ( -176px -77px )
+  ),
+  'ky': (
+    'cayman-islands',
+    ( -192px -77px )
+  ),
+  'kz': (
+    'kazakhstan',
+    ( -208px -77px )
+  ),
+  'la': (
+    'laos',
+    ( -224px -77px )
+  ),
+  'lb': (
+    'lebanon',
+    ( -240px -77px )
+  ),
+  'lc': (
+    'saint-lucia',
+    ( 0 -88px )
+  ),
+  'li': (
+    'liechtenstein',
+    ( -16px -88px )
+  ),
+  'lk': (
+    'sri-lanka',
+    ( -32px -88px )
+  ),
+  'lr': (
+    'liberia',
+    ( -48px -88px )
+  ),
+  'ls': (
+    'lesotho',
+    ( -64px -88px )
+  ),
+  'lt': (
+    'lithuania',
+    ( -80px -88px )
+  ),
+  'lu': (
+    'luxembourg',
+    ( -96px -88px )
+  ),
+  'lv': (
+    'latvia',
+    ( -112px -88px )
+  ),
+  'ly': (
+    'libya',
+    ( -128px -88px )
+  ),
+  'ma': (
+    'morocco',
+    ( -144px -88px )
+  ),
+  'mc': (
+    'monaco',
+    ( -160px -88px )
+  ),
+  'md': (
+    'moldova',
+    ( -176px -88px )
+  ),
+  'me': (
+    'montenegro',
+    ( -192px -88px )
+  ),
+  'mg': (
+    'madagascar',
+    ( -208px -88px )
+  ),
+  'mh': (
+    'marshall-islands',
+    ( -224px -88px )
+  ),
+  'mk': (
+    'macedonia',
+    ( -240px -88px )
+  ),
+  'ml': (
+    'mali',
+    ( 0 -99px )
+  ),
+  'mm': (
+    'burma',
+    ( -16px -99px )
+  ),
+  'mn': (
+    'mongolia',
+    ( -32px -99px )
+  ),
+  'mo': (
+    'macau',
+    ( -48px -99px )
+  ),
+  'mp': (
+    'northern-mariana-islands',
+    ( -64px -99px )
+  ),
+  'mq': (
+    'martinique',
+    ( -80px -99px )
+  ),
+  'mr': (
+    'mauritania',
+    ( -96px -99px )
+  ),
+  'ms': (
+    'montserrat',
+    ( -112px -99px )
+  ),
+  'mt': (
+    'malta',
+    ( -128px -99px )
+  ),
+  'mu': (
+    'mauritius',
+    ( -144px -99px )
+  ),
+  'mv': (
+    'maldives',
+    ( -160px -99px )
+  ),
+  'mw': (
+    'malawi',
+    ( -176px -99px )
+  ),
+  'mx': (
+    'mexico',
+    ( -192px -99px )
+  ),
+  'my': (
+    'malaysia',
+    ( -208px -99px )
+  ),
+  'mz': (
+    'mozambique',
+    ( -224px -99px )
+  ),
+  'na': (
+    'namibia',
+    ( -240px -99px )
+  ),
+  'nc': (
+    'new-caledonia',
+    ( 0 -110px )
+  ),
+  'ne': (
+    'niger',
+    ( -16px -110px )
+  ),
+  'nf': (
+    'norfolk-island',
+    ( -32px -110px )
+  ),
+  'ng': (
+    'nigeria',
+    ( -48px -110px )
+  ),
+  'ni': (
+    'nicaragua',
+    ( -64px -110px )
+  ),
+  'nl': (
+    'netherlands',
+    ( -80px -110px )
+  ),
+  'no': (
+    'norway',
+    ( -96px -110px )
+  ),
+  'np': (
+    'nepal',
+    ( -112px -110px )
+  ),
+  'nr': (
+    'nauru',
+    ( -128px -110px )
+  ),
+  'nu': (
+    'niue',
+    ( -144px -110px )
+  ),
+  'nz': (
+    'new-zealand',
+    ( -160px -110px )
+  ),
+  'om': (
+    'oman',
+    ( -176px -110px )
+  ),
+  'pa': (
+    'panama',
+    ( -192px -110px )
+  ),
+  'pe': (
+    'peru',
+    ( -208px -110px )
+  ),
+  'pf': (
+    'french-polynesia',
+    ( -224px -110px )
+  ),
+  'pg': (
+    'new-guinea',
+    ( -240px -110px )
+  ),
+  'ph': (
+    'philippines',
+    ( 0 -121px )
+  ),
+  'pk': (
+    'pakistan',
+    ( -16px -121px )
+  ),
+  'pl': (
+    'poland',
+    ( -32px -121px )
+  ),
+  'pm': (
+    'saint-pierre',
+    ( -48px -121px )
+  ),
+  'pn': (
+    'pitcairn-islands',
+    ( -64px -121px )
+  ),
+  'pr': (
+    'puerto-rico',
+    ( -80px -121px )
+  ),
+  'ps': (
+    'palestine',
+    ( -96px -121px )
+  ),
+  'pt': (
+    'portugal',
+    ( -112px -121px )
+  ),
+  'pw': (
+    'palau',
+    ( -128px -121px )
+  ),
+  'py': (
+    'paraguay',
+    ( -144px -121px )
+  ),
+  'qa': (
+    'qatar',
+    ( -160px -121px )
+  ),
+  're': (
+    'reunion',
+    ( -176px -121px )
+  ),
+  'ro': (
+    'romania',
+    ( -192px -121px )
+  ),
+  'rs': (
+    'serbia',
+    ( -208px -121px )
+  ),
+  'ru': (
+    'russia',
+    ( -224px -121px )
+  ),
+  'rw': (
+    'rwanda',
+    ( -240px -121px )
+  ),
+  'sa': (
+    'saudi-arabia',
+    ( 0 -132px )
+  ),
+  'sb': (
+    'solomon-islands',
+    ( -16px -132px )
+  ),
+  'sc': (
+    'seychelles',
+    ( -32px -132px )
+  ),
+  'sd': (
+    'sudan',
+    ( -64px -132px )
+  ),
+  'se': (
+    'sweden',
+    ( -80px -132px )
+  ),
+  'sg': (
+    'singapore',
+    ( -96px -132px )
+  ),
+  'sh': (
+    'saint-helena',
+    ( -112px -132px )
+  ),
+  'si': (
+    'slovenia',
+    ( -128px -132px )
+  ),
+  'sk': (
+    'slovakia',
+    ( -144px -132px )
+  ),
+  'sl': (
+    'sierra-leone',
+    ( -160px -132px )
+  ),
+  'sm': (
+    'san-marino',
+    ( -176px -132px )
+  ),
+  'sn': (
+    'senegal',
+    ( -192px -132px )
+  ),
+  'so': (
+    'somalia',
+    ( -208px -132px )
+  ),
+  'sr': (
+    'suriname',
+    ( -240px -132px )
+  ),
+  'ss': (
+    'south-sudan',
+    ( 0 -143px )
+  ),
+  'st': (
+    'sao-tome',
+    ( -16px -143px )
+  ),
+  'sv': (
+    'el-salvador',
+    ( -32px -143px )
+  ),
+  'sx': (
+    'sint-maarten',
+    ( -48px -143px )
+  ),
+  'sy': (
+    'syria',
+    ( -64px -143px )
+  ),
+  'sz': (
+    'swaziland',
+    ( -80px -143px )
+  ),
+  'tc': (
+    'caicos-islands',
+    ( -96px -143px )
+  ),
+  'td': (
+    'chad',
+    ( -112px -143px )
+  ),
+  'tf': (
+    'french-territories',
+    ( -128px -143px )
+  ),
+  'tg': (
+    'togo',
+    ( -144px -143px )
+  ),
+  'th': (
+    'thailand',
+    ( -160px -143px )
+  ),
+  'tj': (
+    'tajikistan',
+    ( -192px -143px )
+  ),
+  'tk': (
+    'tokelau',
+    ( -208px -143px )
+  ),
+  'tl': (
+    'timorleste',
+    ( -224px -143px )
+  ),
+  'tm': (
+    'turkmenistan',
+    ( -240px -143px )
+  ),
+  'tn': (
+    'tunisia',
+    ( 0 -154px )
+  ),
+  'to': (
+    'tonga',
+    ( -16px -154px )
+  ),
+  'tr': (
+    'turkey',
+    ( -32px -154px )
+  ),
+  'tt': (
+    'trinidad',
+    ( -48px -154px )
+  ),
+  'tv': (
+    'tuvalu',
+    ( -64px -154px )
+  ),
+  'tw': (
+    'taiwan',
+    ( -80px -154px )
+  ),
+  'tz': (
+    'tanzania',
+    ( -96px -154px )
+  ),
+  'ua': (
+    'ukraine',
+    ( -112px -154px )
+  ),
+  'ug': (
+    'uganda',
+    ( -128px -154px )
+  ),
+  'um': (
+    'us-minor-islands',
+    ( -144px -154px )
+  ),
+  'us': (
+    'united-states',
+    ( -160px -154px )
+  ),
+  'uy': (
+    'uruguay',
+    ( -176px -154px )
+  ),
+  'uz': (
+    'uzbekistan',
+    ( -192px -154px )
+  ),
+  'va': (
+    'vatican-city',
+    ( -208px -154px )
+  ),
+  'vc': (
+    'saint-vincent',
+    ( -224px -154px )
+  ),
+  've': (
+    'venezuela',
+    ( -240px -154px )
+  ),
+  'vg': (
+    'british-virgin-islands',
+    ( 0 -165px )
+  ),
+  'vi': (
+    'us-virgin-islands',
+    ( -16px -165px )
+  ),
+  'vn': (
+    'vietnam',
+    ( -32px -165px )
+  ),
+  'vu': (
+    'vanuatu',
+    ( -48px -165px )
+  ),
+  'wf': (
+    'wallis-and-futuna',
+    ( -80px -165px )
+  ),
+  'ws': (
+    'samoa',
+    ( -96px -165px )
+  ),
+  'xk': (
+    'kosovo',
+    ( -112px -165px )
+  ),
+  'ye': (
+    'yemen',
+    ( -128px -165px )
+  ),
+  'yt': (
+    'mayotte',
+    ( -144px -165px )
+  ),
+  'za': (
+    'south-africa',
+    ( -160px -165px )
+  ),
+  'zm': (
+    'zambia',
+    ( -192px -165px )
+  ),
+  'zw': (
+    'zimbabwe',
+    ( -208px -165px )
+  )
+) !default;
+
+
+// @require core/animations/variables.scss
+
+/* FLIPPABLE */
+
+$flippable-perspective: 60rem !default;
+
+/* ANIMATION */
+
+$flippable-animation-duration: $animation-slow !default;
+
+
+/* FIELDSET */
+
+$fieldset-bg-color: transparent !default;
+
+$fieldset-border-color: inherit !default;
+
+
+// @require core/colors/variables.scss
+// @require widgets/container/variables.scss
+
+/* HEADER */
+
+$header-padding-x: $container-padding-x !default;
+$header-padding-y: $container-padding-y !default;
+
+
+// @require decorators/border_radius/variables.scss
+
+/* ACTIONABLE */
+
+$icon-actionable-before-size: 140% !default;
+
+$icon-actionable-before-bg-color: #000000 !default;
+$icon-actionable-before-hover-opacity: .04 !default;
+$icon-actionable-before-active-opacity: .06 !default;
+
+$icon-actionable-before-border-radius: $circular-border-radius !default;
+
+
+// @require core/icon/variables.scss
+// @require core/paths/variables.scss
+
+/* ICON */
+
+$icons: (
+  'checkbox-off': 'check_box_outline_blank',
+  'checkbox-on': 'check_box',
+  'chevron-left': 'chevron_left',
+  'chevron-right': 'chevron_right',
+  'radiobox-off': 'radio_button_unchecked',
+  'radiobox-on': 'radio_button_checked',
+  'rss': 'rss_feed',
+  'star-half': 'star_half',
+  'star-off': 'star_border',
+  'star-on': 'star',
+  'thumb-down': 'thumb_down',
+  'thumb-up': 'thumb_up',
+  'triangle-down': 'arrow_drop_down',
+  'triangle-up': 'arrow_drop_up'
+) !default; // Maps each icon to its ligature/html entity, required for a custom icon font
+
+/* LOCAL */
+
+$icon-font-local: true !default;
+$icon-path-fonts: $path-fonts !default;
+
+/* CDN */
+
+$icon-font-cdn: false !default;
+$icon-font-cdn-eot: "//cdn.rawgit.com/google/material-design-icons/a6145e167b4a3a65640dd6279319cbc77a7e4e96/iconfont/MaterialIcons-Regular.eot" !default;
+$icon-font-cdn-ttf: "//cdn.rawgit.com/google/material-design-icons/a6145e167b4a3a65640dd6279319cbc77a7e4e96/iconfont/MaterialIcons-Regular.ttf" !default;
+$icon-font-cdn-woff: "//cdn.rawgit.com/google/material-design-icons/a6145e167b4a3a65640dd6279319cbc77a7e4e96/iconfont/MaterialIcons-Regular.woff" !default;
+$icon-font-cdn-woff2: "//cdn.rawgit.com/google/material-design-icons/a6145e167b4a3a65640dd6279319cbc77a7e4e96/iconfont/MaterialIcons-Regular.woff2" !default;
+
+/* FUNCTIONS */ //FIXME: Should be in a `functions.scss` file
+
+@function icon ( $name ) {
+
+  @return map-get( $icons, $name );
+
+}
+
+
+// @require ../variables.scss
+// @require core/icon/variables.scss
+// @require widgets/icon/variables.scss
+
+/* PREVIOUS / NEXT */
+
+$carousel-inset-previous-next-z-index: $carousel-indicators-z-index - 1 !default;
+
+$carousel-inset-previous-next-font-size: $icon-scale-factor * 1em !default;
+
+$carousel-inset-previous-next-color: $carousel-indicator-current-bg-color !default;
+
+$carousel-inset-previous-next-opacity: $carousel-indicator-opacity !default;
+$carousel-inset-hover-previous-next-opacity: $carousel-hover-indicator-opacity !default;
+$carousel-inset-previous-next-hover-opacity: $carousel-indicator-hover-opacity !default;
+
+/* PREVIOUS */
+
+$carousel-inset-previous-width: 20% !default;
+
+$carousel-inset-previous-icon: icon( 'chevron-left' ) !default;
+
+/* NEXT */
+
+$carousel-inset-next-width: 100% - $carousel-inset-previous-width !default;
+
+$carousel-inset-next-icon: icon( 'chevron-right' ) !default;
+
+/* ANIMATION */
+
+$carousel-inset-previous-next-animation-duration: $carousel-indicator-animation-duration !default;
+
+
+// @require core/icon/variables.scss
+
+/* CORNER */
+
+$icon-corner-font-size: $icon-scale-factor / 2 * 1em !default;
+
+
+/* SIZES */
+
+$image-sizes-scaling-factor: 12 !default;
+
+
+// @require widgets/container/variables.scss
+
+/* IMAGE */
+
+$image-color: 'inherit' !default;
+$image-color-force: false !default;
+$image-color-basic: true !default;
+
+
+// @require widgets/container/variables.scss
+
+/* INFOBAR */
+
+$infobar-color: $container-color !default;
+$infobar-color-force: false !default;
+$infobar-color-basic: true !default;
+
+/* TITLE */
+
+$infobar-title-size: 'large' !default;
+$infobar-title-size-force: false !default;
+$infobar-title-size-basic: true !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$input-placeholder-colors: map-keys( $colors ) !default;
+
+
+/* PLACEHOLDER */
+
+$input-placeholder-opacity: .65 !default;
+
+
+// @require core/gutter/variables.scss
+
+/* JUSTIFIED LAYOUT */
+
+$justified-layout-padding: 0 !default;
+
+$justified-layout-box-margin: $gutter-half !default;
+
+
+/* RIBBON */
+
+$label-ribbon-z-depth: 1 !default;
+$label-ribbon-z-depth-force: false !default;
+$label-ribbon-z-depth-basic: true !default;
+
+$label-ribbon-fold-size: 1rem !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$label-tag-colors: map-keys( $colors ) !default;
+
+
+// @require core/colors/variables.scss
+
+/* TAG */
+
+$label-tag-padding-left: 1.3em !default;
+
+$label-tag-border-left-radius: 33% 50% !default;
+
+/* CIRCLE */
+
+$label-tag-circle-size: .375em !default;
+
+$label-tab-circle-bg-color: $color-white !default;
+
+$label-tag-circle-box-shadow: inset 0 1px 1px 0 rgba( 0, 0, 0, .1 ) !default;
+
+
+// @require widgets/container/variables.scss
+
+/* LABEL */
+
+$label-color: 'white' !default;
+$label-color-force: false !default;
+$label-color-basic: true !default;
+
+$label-font-weight: 500 !default;
+
+$label-border-radius: $container-border-radius !default;
+
+$label-padding-x: .75em !default;
+$label-padding-y: .5em !default;
+
+$label-inner-gutter: $label-padding-x * .5 !default; // Works best without spaces in the middle
+
+
+// @require widgets/label/variables.scss
+
+/* BUTTON */
+
+$button-color: $label-color !default;
+$button-color-force: false !default;
+$button-color-basic: false !default;
+
+
+// @require core/animations/variables.scss
+// @require core/colors/variables.scss
+// @require widgets/icon/variables.scss
+// @require widgets/label/variables.scss
+
+/* CHECKBOX */
+
+$checkbox-icon-on: icon( 'checkbox-on' ) !default;
+$checkbox-icon-on-color: $color-secondary !default;
+
+$checkbox-icon-off: icon( 'checkbox-off' ) !default;
+$checkbox-icon-off-color: inherit !default;
+
+/* LABEL */
+
+$checkbox-inner-gutter: $label-inner-gutter !default;
+
+/* ANIMATION */
+
+$checkbox-icon-animation-duration: $animation-fast !default;
+
+
+// @require widgets/label/variables.scss
+
+/* INPUT */
+
+$input-color: $label-color !default;
+$input-color-force: false !default;
+$input-color-basic: true !default;
+
+$input-border-radius: $label-border-radius !default;
+
+$input-padding-x: $label-padding-x !default;
+$input-padding-y: $label-padding-y !default;
+
+
+// @require ../variables.scss
+
+/* COMPACT */
+
+$label-compact-padding-x: $label-padding-y !default;
+$label-compact-padding-y: $label-compact-padding-x !default;
+
+$label-compact-inner-gutter: $label-compact-padding-x * .5 !default; // Works best without spaces in the middle
+
+
+// @require widgets/label/compact/variables.scss
+
+/* COMPACT */
+
+$input-compact-padding-x: $label-compact-padding-x !default;
+$input-compact-padding-y: $label-compact-padding-y !default;
+
+
+// @require ../variables.scss
+// @require core/typography/variables.scss
+
+/* CORNER */
+
+$label-corner-z-index: 400 !default;
+
+$label-corner-z-depth: 1 !default;
+$label-corner-z-depth-force: false !default;
+$label-corner-z-depth-basic: true !default;
+
+$label-corner-padding: 1em !default;
+
+$label-corner-size: $line-height-em + ( $label-corner-padding * 2 ) !default;
+
+
+// @require ../variables.scss
+
+/* FLOATING */
+
+$label-floating-z-index: 1000 !default;
+
+$label-floating-z-depth: 4 !default;
+$label-floating-z-depth-force: false !default;
+$label-floating-z-depth-basic: false !default;
+
+$label-floating-padding-x: $label-padding-y * 1.5 !default;
+$label-floating-padding-y: $label-floating-padding-x !default;
+
+$label-floating-offset: 1.5rem !default;
+
+
+// @require ../variables.scss
+
+/* COMPACT */
+
+$label-floating-compact-padding-x: $label-floating-padding-x * .75 !default;
+$label-floating-compact-padding-y: $label-floating-padding-y * .75 !default;
+
+
+/* LAYOUT RESIZABLE */
+
+$layout-resizable-sash-size: 4px !default;
+$layout-resizable-sash-z-index: 1 !default;
+
+
+// @require core/colors/variables.scss
+// @require widgets/icon/variables.scss
+// @require widgets/label/variables.scss
+
+/* LIKER */
+
+$liker-inner-gutter: $label-inner-gutter + .23em !default; //FIXME: A little hacky, done for having the same spacing that it would have if we used plain buttons
+
+/* ICON */
+
+$liker-icon-active-color: $color-secondary !default;
+$liker-icon-opacity: .85 !default;
+$liker-icon-hover-opacity: 1 !default;
+
+/* COUNTER */
+
+$liker-counter-opacity: $liker-icon-opacity !default;
+$liker-counter-hover-opacity: $liker-icon-hover-opacity !default;
+
+/* LABEL */
+
+$liker-label-opacity: $liker-icon-opacity !default;
+$liker-label-hover-opacity: $liker-icon-hover-opacity !default;
+
+/* LIKE */
+
+$liker-like-icon: icon( 'thumb-up' ) !default;
+$liker-like-text-on: 'Like' !default;
+$liker-like-text-off: 'Remove Like' !default;
+
+/* DISLIKE */
+
+$liker-dislike-icon: icon( 'thumb-down' ) !default;
+$liker-dislike-text-on: 'Dislike' !default;
+$liker-dislike-text-off: 'Remove Dislike' !default;
+
+
+/* CLOSED */
+
+$modal-closed-offset: - 3rem !default;
+
+
+// @require core/animations/variables.scss
+
+/* MODAL */
+
+$modal-z-index: 1300 !default;
+
+$modal-z-depth: 6 !default;
+$modal-z-depth-force: true !default;
+$modal-z-depth-basic: true !default;
+
+$modal-max-width: 90vw !default;
+$modal-max-height: 90vh !default;
+
+/* ANIMATION */
+
+$modal-animation-duration: $animation-normal !default;
+
+
+// @require widgets/label/variables.scss
+
+/* NUMBOX */
+
+$numbox-color: $label-color !default;
+$numbox-color-force: false !default;
+$numbox-color-basic: true !default;
+
+$numbox-border-radius: $label-border-radius !default;
+
+
+// @require core/animations/variables.scss
+
+/* OVERLAY */
+
+$overlay-z-index: 500 !default;
+
+$overlay-animation-duration: $animation-fast !default;
+
+/* SIBLINGS */
+
+$overlay-siblings-opacity: .2 !default;
+
+$overlay-siblings-animation-duration: $overlay-animation-duration !default;
+
+
+// @require ../variables.scss
+
+/* DIMMER */
+
+$overlay-dimmer-color: 'black' !default;
+$overlay-dimmer-color-force: true !default;
+$overlay-dimmer-color-basic: true !default;
+
+$overlay-dimmer-bg-opacity: .75 !default;
+
+
+/* DEFAULT */
+
+$panel-default-y-height: 7.5rem !default;
+$panel-default-x-width: $panel-default-y-height * 2 !default;
+
+
+/* SLIM */
+
+$panel-slim-y-height: 4.25rem !default;
+$panel-slim-x-width: $panel-slim-y-height !default;
+
+
+// @require core/animations/variables.scss
+
+/* PANEL */
+
+$panel-z-index: 1200 !default;
+
+$panel-z-depth: 5 !default;
+$panel-z-depth-force: true !default;
+$panel-z-depth-basic: true !default;
+
+/* ANIMATION */
+
+$panel-animation-duration: $animation-normal !default;
+
+
+// @require ../variables.scss
+
+/* PINNED */
+
+$panel-pinned-z-depth: $panel-z-depth !default;
+$panel-pinned-z-depth-force: true !default;
+$panel-pinned-z-depth-basic: true !default;
+
+
+/* PARALLAX */
+
+$parallax-height: 50vh !default;
+$parallax-perspective: 20rem !default;
+
+/* DEEP */
+
+$parallax-deep-translate-z: - $parallax-perspective * 2 !default;
+$parallax-deep-scale: 3 !default;
+
+/* BACKGROUND */
+
+$parallax-background-translate-z: - $parallax-perspective !default;
+$parallax-background-scale: 2 !default;
+
+/* FOREGROUND */
+
+$parallax-foreground-translate-z: $parallax-perspective / ( 10 / 3 ) !default;
+$parallax-foreground-scale: .7 !default;
+
+
+/* PLACEHOLDER */
+
+$placeholder-color: 'gray' !default;
+$placeholder-color-force: false !default;
+$placeholder-color-basic: true !default;
+
+$placeholder-padding-x: $gutter !default;
+$placeholder-padding-y: $placeholder-padding-x !default;
+
+
+/* CLOSED */
+
+$popover-closed-offset: - 1rem !default;
+
+
+// @require core/animations/variables.scss
+// @require core/paths/variables.scss
+
+/* POPOVER */
+
+$popover-z-index: 1600 !default;
+
+$popover-z-depth: 4 !default;
+$popover-z-depth-force: true !default;
+$popover-z-depth-basic: true !default;
+
+$popover-max-width: 80vw !default;
+$popover-max-height: 50vh !default;
+
+/* ANIMATION */
+
+$popover-animation-duration: $animation-fast !default;
+
+
+/* LABELED */
+
+$progressbar-compact-label-font-size: .5em !default;
+
+
+/* COMPACT */
+
+$progressbar-compact-height: .5em !default;
+
+
+/* ANIMATION */
+
+$progressbar-indeterminate-animation-duration: 2s !default;
+
+
+/* LABEL */
+
+$progressbar-label-font-size: .75em !default;
+
+$progressbar-label-padding-x: .5em !default;
+$progressbar-label-padding-y: 0 !default;
+
+
+/* LABELED */
+
+$progressbar-slim-label-font-size: 0 !default;
+
+
+/* SLIM */
+
+$progressbar-slim-height: .25em !default;
+
+
+/* STRIPE */
+
+$progressbar-stripe-size: 3.25em !default;
+
+$progressbar-stripe-opacity: .05 !default;
+
+$progressbar-stripe-color-light: rgba( 255, 255, 255, $progressbar-stripe-opacity ) !default;
+$progressbar-stripe-color-dark: rgba( 0, 0, 0, $progressbar-stripe-opacity ) !default;
+
+/* STRIPES */
+
+$progressbar-stripes-animation-move-duration: $animation-slow !default;
+
+
+// @require core/animations/variables.scss
+
+/* PROGRESSBAR */
+
+$progressbar-color: 'gray' !default;
+$progressbar-color-force: false !default;
+$progressbar-color-basic: true !default;
+
+$progressbar-height: 1em !default;
+
+$progressbar-border-radius: $progressbar-height !default;
+
+/* HIGHLIGHT */
+
+$progressbar-highlight-color: 'secondary' !default;
+$progressbar-highlight-color-force: false !default;
+$progressbar-highlight-color-basic: true !default;
+
+/* ANIMATION */
+
+$progressbar-animation-duration: $animation-fast !default;
+
+
+// @require widgets/icon/variables.scss
+
+/* RADIO */
+
+$radio-icon-on: icon( 'radiobox-on' ) !default;
+$radio-icon-off: icon( 'radiobox-off' ) !default;
+
+
+// @require core/animations/variables.scss
+// @require core/colors/variables.scss
+// @require widgets/container/variables.scss
+
+/* RAILS */
+
+$rails-extra-padding: 30px !default; // Ensuring that even if are using overlay scrollbars we have an extra margin to be confident enough that they won't be visible
+$rails-scrollbar-sizes: 0px, 12px, 15px, 16px, 17px !default; // Possible scrollbars' sizes that we are supporting
+
+/* SHADOW */
+
+$rails-shadow-width: 5em !default;
+$rails-shadow-color: nth( map-get( $colors, $container-color ), 1 ) !default;
+
+/* ANIMATION */
+
+$rails-animation-duration: $animation-fast !default;
+
+
+// @require core/colors/variables.scss
+// @require widgets/icon/variables.scss
+
+/* RATER */
+
+$rater-star-active-color: $color-secondary !default;
+
+/* ICONS */
+
+$star-on-icon: icon( 'star-on' ) !default;
+$star-off-icon: icon( 'star-off' ) !default;
+$star-half-icon: icon( 'star-half' ) !default;
+
+
+// @require core/animations/variables.scss
+
+/* ANIMATION */
+
+$remote-widget-animation-duration: $animation-normal !default;
+
+
+// @require ../widget/variables.scss
+// @require widgets/modal/variables.scss
+
+/* REMOTE MODAL */
+
+$remote-modal-width: 8.75rem !default;
+$remote-modal-height: 8.75rem !default;
+
+/* ANIMATION */
+
+$remote-modal-animation-duration: $modal-animation-duration !default;
+
+
+// @require ../widget/variables.scss
+// @require widgets/panel/variables.scss
+
+/* ANIMATION */
+
+$remote-panel-animation-duration: $panel-animation-duration !default;
+
+
+// @require ../widget/variables.scss
+// @require widgets/popover/variables.scss
+
+/* REMOTE POPOVER */
+
+$remote-popover-width: 5rem !default;
+$remote-popover-height: 5rem !default;
+
+/* ANIMATION */
+
+$remote-popover-animation-duration: $popover-animation-duration !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$ripple-colors: map-keys( $colors ) !default;
+
+
+// @require core/animations/variables.scss
+// @require core/colors/variables.scss
+
+/* RIPPLE */
+
+$ripple-bg-color: $color-black !default;
+
+/* CIRCLE */
+
+$ripple-circle-z-index: 100 !default;
+
+/* ANIMATION */
+
+$ripple-animation-timing-function: cubic-bezier( .25, .8, .25, 1 ) !default; // Taken from Angular Material
+
+$ripple-animation-duration: $animation-slow !default;
+
+
+/* POPOVER */
+
+$select-popover-z-depth: 1 !default;
+$select-popover-z-depth-force: true !default;
+$select-popover-z-depth-basic: true !default;
+
+
+// @require widgets/checkbox/variables.scss
+// @require widgets/icon/variables.scss
+// @require widgets/label/variables.scss
+
+/* SELECT */
+
+$select-z-index: 200 !default;
+
+$select-color: 'white' !default;
+$select-color-force: false !default;
+$select-color-basic: true !default;
+
+$select-padding-x: $label-padding-x / 2 !default;
+$select-padding-y: $label-padding-y / 2 !default;
+
+$select-inner-gutter: $checkbox-inner-gutter !default;
+
+$select-icon-closed: icon( 'triangle-down' ) !default;
+$select-icon-open: icon( 'triangle-up' ) !default;
+
+
+// @require core/colors/variables.scss
+
+/* SELECTABLE TABLE ROW */
+
+$selectable-table-row-selected-bg-color: lighten( $color-primary, 50 ) !default;
+
+
+/* SAMPLE */
+
+$square-sample-size: 4em !default;
+
+$square-sample-color: 'gray' !default;
+$square-sample-color-force: false !default;
+$square-sample-color-basic: true !default;
+
+$square-border-width: 1px !default;
+$square-border-style: solid !default;
+
+/* PARAGRAPH */
+
+$square-sample-p-size: 'xxxsmall' !default;
+$square-smaple-p-size-force: true !default;
+$square-smaple-p-size-basic: true !default;
+
+
+/* SHAPE */
+
+$shape-size: 1em !default;
+
+
+// @require ../variables.scss
+
+/* CIRCLE */
+
+$circle-size: $shape-size !default;
+
+$circle-color: 'gray' !default;
+$circle-color-force: false !default;
+$circle-color-basic: true !default;
+
+
+// @require ../variables.scss
+
+/* SQUARE */
+
+$square-size: $shape-size !default;
+
+
+// @require ../variables.scss
+
+/* TRIANGLE */
+
+$triangle-size: $shape-size !default;
+
+$triangle-color: $color-gray !default;
+
+
+// @require _/math/constants/variables.scss
+// @require core/animations/variables.scss
+// @require decorators/border_radius/variables.scss
+
+/* BAR */
+
+$slider-bar-color: 'gray' !default;
+$slider-bar-color-force: false !default;
+$slider-bar-color-basic: true !default;
+
+$slider-bar-height: .3125em !default;
+
+$slider-bar-border-radius: $slider-bar-height !default;
+
+/* HIGHLIGHT */
+
+$slider-highlight-color: 'secondary' !default;
+$slider-highlight-color-force: false !default;
+$slider-highlight-color-basic: true !default;
+
+/* HANDLER */
+
+$slider-handler-color: $slider-highlight-color !default;
+$slider-handler-color-force: $slider-highlight-color-force !default;
+$slider-handler-color-basic: $slider-highlight-color-basic !default;
+
+$slider-handler-z-depth: 3 !default;
+$slider-handler-z-depth-force: true !default;
+$slider-handler-z-depth-basic: true !default;
+
+$slider-handler-width: 1.25em !default;
+$slider-handler-height: $slider-handler-width !default;
+
+$slider-handler-border-radius: $circular-border-radius !default;
+
+/* HANDLER ACTIVE */
+
+$slider-active-handler-scale: $PHI !default;
+
+$slider-active-handler-box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.14), 1px 1px 8px 0 rgba(0, 0, 0, 0.12), 3px 3px 3px -2px rgba(0, 0, 0, 0.4) !default; //FIXME: Shouldn't be hard coded, we are basically rotating the shadow (z-depth: 3)
+
+/* LABEL TEXT */
+
+$slider-label-font-size: .4375em !default;
+
+/* ANIMATION */
+
+$slider-animation-duration: $animation-fast !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$spinner-colors: map-keys( $colors ) !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$spinner-label-colors: map-keys( $colors ) !default;
+
+
+// @require decorators/border_radius/variables.scss
+// @require widgets/label/compact/variables.scss
+
+/* LABEL */
+
+$spinner-label-z-depth: 1 !default;
+$spinner-label-z-depth-force: true !default;
+$spinner-label-z-depth-basic: true !default;
+
+$spinner-label-color: 'inherit' !default;
+$spinner-label-color-force: false !default;
+$spinner-label-color-basic: true !default;
+
+$spinner-label-padding-x: $label-compact-padding-x !default;
+$spinner-label-padding-y: $spinner-label-padding-x !default;
+
+$spinner-label-border-radius: $circular-border-radius !default;
+
+
+// @require core/colors/variables.scss
+
+/* MULTICOLOR */
+
+$spinner-multicolor-color-first: $color-blue !default;
+$spinner-multicolor-color-second: $color-red !default;
+$spinner-multicolor-color-third: $color-yellow !default;
+$spinner-multicolor-color-fourth: $color-green !default;
+
+
+// @require core/animations/variables.scss
+
+/* SPINNER OVERLAY */
+
+$spinner-overlay-animation-duration: $animation-normal !default;
+
+
+// @require core/colors/variables.scss
+
+/* SPINNER */
+
+$spinner-size: 3.25em !default;
+
+/* STROKE */
+
+$spinner-stroke-width: 7.5% !default; // Expressed in `%` instead of `em` since otherwise the computed value gets doubled by Chrome under Windows 10 (Virtualized)
+
+$spinner-stroke-color: $color-secondary !default;
+
+/* ANIMATION */
+
+$spinner-animation-rotate-duration: 2s !default;
+
+$spinner-stroke-animation-dash-duration: 1.5s !default;
+
+
+/* VALUE */
+
+$statistic-value-size: 'xlarge' !default;
+$statistic-value-size-force: true !default;
+$statistic-value-size-basic: true !default;
+
+/* DESCRIPTION */
+
+$statistic-description-size: 'small' !default;
+$statistic-description-size-force: true !default;
+$statistic-description-size-basic: true !default;
+
+
+// @require widgets/icon/variables.scss
+// @require widgets/label/variables.scss
+
+/* SUBSCRIBER */
+
+$subscriber-inner-gutter: $label-inner-gutter + .23em !default; //FIXME: A little hacky, done for having the same spacing that it would have if we used plain buttons
+
+/* ICON */
+
+$subscriber-icon: icon( 'rss' ) !default;
+$subscriber-icon-active-color: $color-secondary !default;
+
+/* TOGGLE */
+
+$subscriber-toggle-text-on: 'Subscribe' !default;
+$subscriber-toggle-text-off: 'Unsubscribe' !default;
+
+
+// @require _/math/constants/variables.scss
+// @require core/animations/variables.scss
+
+/* BAR */
+
+$switch-bar-color: 'gray' !default;
+$switch-bar-color-force: false !default;
+$switch-bar-color-basic: true !default;
+
+$switch-bar-width: 1.625em !default;
+$switch-bar-height: .9375em !default;
+
+$switch-bar-border-radius: $switch-bar-height !default;
+
+/* HANDLER */
+
+$switch-handler-z-depth: 3 !default;
+$switch-handler-z-depth-force: true !default;
+$switch-handler-z-depth-basic: true !default;
+
+$switch-handler-color: 'gray' !default;
+$switch-handler-color-force: false !default;
+$switch-handler-color-basic: true !default;
+
+$switch-handler-width: 1.3125em !default;
+$switch-handler-height: $switch-handler-width !default;
+
+$switch-handler-border-radius: $switch-handler-height !default;
+
+/* HANDLER:BEFORE */
+
+$switch-handler-before-scale: 0 !default;
+
+/* HANDLER:BEFORE ACTIVE */
+
+$switch-active-handler-before-scale: $PHI !default;
+$switch-active-handler-before-opacity: .25 !default;
+
+/* ANIMATION */
+
+$switch-animation-duration: $animation-fast !default;
+
+
+/* HOVERABLE*/
+
+$table-hoverable-row-odd-hover-bg-color: rgba( 0, 0, 0, .06 ) !default;
+$table-hoverable-row-even-hover-bg-color: $table-hoverable-row-odd-hover-bg-color !default;
+
+
+/* SEPARATED */
+
+$table-separated-border-width: 1px !default;
+$table-separated-border-style: solid !default;
+$table-separated-border-color: inherit !default;
+
+
+// @require ../separated/variables.scss
+
+/* CELLED */
+
+$table-celled-border-width: $table-separated-border-width !default;
+$table-celled-border-style: $table-separated-border-style !default;
+$table-celled-border-color: $table-separated-border-color !default;
+
+
+// @require widgets/icon/variables.scss
+
+/* SORTABLE HEADER */
+
+$table-sortable-th-padding-right: 1.75em !default;
+
+$table-sortable-th-hover-bg-color: rgba( 255, 255, 255, .1 ) !default;
+$table-sortable-th-active-bg-color: rgba( 0, 0, 0, .025 ) !default;
+
+/* SORTABLE HEADER ICON */
+
+$table-sortable-th-icon-opacity: .35 !default;
+$table-sortable-th-icon-active-opacity: 1 !default;
+
+$table-sortable-th-icon-right: .125em !default;
+$soratable-table-th-icon-gutter: .3125em !default;
+
+$sortable-asc-icon: icon( 'triangle-up' ) !default;
+$sortable-desc-icon: icon( 'triangle-down' ) !default;
+
+
+/* STRIPED */
+
+$table-striped-row-odd-bg-color: rgba( 0, 0, 0, .035 ) !default;
+$table-striped-row-even-bg-color: rgba( 0, 0, 0, 0 ) !default;
+
+
+// @require core/gutter/variables.scss
+// @require widgets/container/variables.scss
+
+/* TABLE */
+
+$table-color: 'inherit' !default;
+$table-color-force: false !default;
+$table-color-basic: true !default;
+
+$table-border-radius: $container-border-radius !default;
+
+/* HEADER */
+
+$table-header-bg-color: rgba( 0, 0, 0, .075 ) !default; // It's equal to the one used in label sub left/right
+
+/* FOOTER */
+
+$table-footer-bg-color: $table-header-bg-color !default;
+
+/* ROW EMPTY */
+
+$table-row-empty-height: 4.5em !default;
+
+/* CELL */
+
+$table-cell-padding-x: $gutter !default;
+$table-cell-padding-y: $table-cell-padding-x !default;
+
+
+// @require ../variables.scss
+
+/* CELL */
+
+$table-compact-cell-padding-x: $table-cell-padding-x / 2 !default;
+$table-compact-cell-padding-y: $table-compact-cell-padding-x !default;
+
+
+// @require widgets/container/variables.scss
+
+/* TAGBOX */
+
+$tagbox-color: $container-color !default;
+$tagbox-color-force: false !default;
+$tagbox-color-basic: true !default;
+
+/* PARTIAL */
+
+$tagbox-partial-min-width: 6.5em !default;
+
+
+// @require core/breakpoints/variables.scss
+
+/* AUTOEXPAND */
+
+$toast-autoexpand-breakpoint: 'small' !default;
+$toast-autoexpand-width: map-get( $breakpoints, $toast-autoexpand-breakpoint ) - $breakpoint-epsilon !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$toast-colors: map-keys( $colors ) !default;
+
+
+/* QUEUES */
+
+$toast-queues-z-index: 1500 !default;
+
+
+// @require core/animations/variables.scss
+// @require widgets/container/variables.scss
+
+/* TOAST */
+
+$toast-z-depth: 7 !default;
+$toast-z-depth-force: true !default;
+$toast-z-depth-basic: true !default;
+
+$toast-bg-opacity: 1 !default;
+
+$toast-border-radius: $container-border-radius !default;
+
+/* IMG */
+
+$toast-img-size: 2.25em !default;
+$toast-img-rounded: false !default;
+
+/* ANIMATION */
+
+$toast-animation-duration: $animation-normal !default;
+
+
+/* TOOLBAR */
+
+$toolbar-padding-x: 1em !default;
+$toolbar-padding-y: $toolbar-padding-x / 2 !default;
+
+
+// @require ../variables.scss
+
+/* VERTICAL */
+
+$toolbar-vertical-padding-x: $toolbar-padding-y !default;
+$toolbar-vertical-padding-y: $toolbar-padding-x !default;
+
+
+/* TOOLTIP */
+
+$tooltip-max-width: 18rem !default;
+
+
+// @require core/colors/variables.scss
+
+/* ABBR */
+
+$abbr-border-width: 1px !default;
+$abbr-border-style: dotted !default;
+$abbr-border-color: inherit !default;
+
+
+/* ADDRESS */
+
+$address-font-style: normal !default;
+
+
+// @require core/characters/variables.scss
+// @require core/gutter/variables.scss
+
+/* BLOCKQUOTE */
+
+$blockquote-color: 'transparent' !default;
+$blockquote-color-force: false !default;
+$blockquote-color-basic: true !default;
+
+$blockquote-padding-x: $gutter !default;
+$blockquote-padding-y: $blockquote-padding-x / 2 !default;
+
+/* LINE */
+
+$blockquote-line-width: $gutter-half !default;
+
+$blockquote-line-bg-color: rgba( 0, 0, 0, .15 ) !default;
+
+$blockquote-line-border-radius: $blockquote-line-width !default;
+
+/* FOOTER */
+
+$blockquote-footer-size: 'small' !default;
+$blockquote-footer-size-force: false !default;
+$blockquote-footer-size-basic: true !default;
+
+$blockquote-footer-opacity: .85 !default;
+
+$blockquote-footer-padding-x: 0 !default;
+$blockquote-footer-padding-y: 0 !default;
+
+$blockquote-footer-prefix: $char-mdash + $char-nbsp !default;
+
+
+// @require core/typography/variables.scss
+// @require widgets/container/variables.scss
+
+/* CODE */
+
+$code-font-family: $font-family-monospace !default;
+
+$code-bg-color: rgba( 0, 0, 0, .075 ) !default;
+
+$code-border-radius: $container-border-radius !default;
+
+$code-padding-x: .18em !default;
+$code-padding-y: $code-padding-x / 2 !default;
+
+
+/* SIZES */
+
+$h1-size: 'xxlarge' !default;
+$h2-size: 'xlarge' !default;
+$h3-size: 'large' !default;
+$h4-size: 'medium' !default;
+$h5-size: 'small' !default;
+$h6-size: 'xsmall' !default;
+
+$heading-size-force: true !default;
+$heading-size-basic: true !default;
+
+$heading-font-family: inherit !default;
+$heading-fond-weight: 500 !default;
+
+/* SMALL */
+
+$heading-small-opacity: .875 !default;
+
+
+// @require ../code/variables.scss
+// @require core/typography/variables.scss
+// @require widgets/container/variables.scss
+
+/* KBD */
+
+$kbd-font-family: $font-family-monospace !default;
+$kbd-font-size: .875em !default;
+$kbd-font-weight: bold !default;
+
+$kbd-bg-color: inherit !default;
+
+$kbd-border-radius: $container-border-radius !default;
+
+$kbd-border-width: 1px !default;
+$kbd-border-style: solid !default;
+$kbd-border-color: inherit !default;
+
+$kbd-padding-x: .375em !default;
+$kbd-padding-y: $kbd-padding-x / 2 !default;
+
+
+// @require core/colors/variables.scss
+
+/* COLORS */
+
+$link-colors: map-keys( $colors ) !default;
+
+
+/* LINK */
+
+$link-color: 'primary' !default;
+$link-color-force: true !default;
+$link-color-basic: true !default;
+
+
+// @require core/gutter/variables.scss
+
+/* LISTS */
+
+$list-padding-left: $gutter * 2 !default;
+
+
+// @require ../code/variables.scss
+// @require core/colors/variables.scss
+// @require widgets/container/variables.scss
+
+/* MARK */
+
+$mark-bg-color: rgba( $color-yellow, .25 ) !default;
+
+$mark-padding-x: $code-padding-x !default;
+$mark-padding-y: $code-padding-y !default;
+
+$mark-border-radius: $container-border-radius !default;
+
+
+// @require widgets/container/variables.scss
+
+/* PRE */
+
+$pre-padding-x: $container-padding-x !default;
+$pre-padding-y: $container-padding-y !default;
+
+
+// @require widgets/typography/code/variables.scss
+
+/* SAMP */
+
+$samp-font-family: $code-font-family !default;
+
+
+/* SMALL */
+
+$small-font-size: .75em !default;
+
+
+// @require core/animations/variables.scss
+
+/* SHOW */
+
+$zoomable-show-z-index: 1300 !default;
+
+
+// @require core/animations/variables.scss
+
+/* ZOOMABLE */
+
+$zoomable-z-index: 1300 !default;
+
+/* ANIMATION */
+
+$zoomable-animation-duration: $animation-normal !default;

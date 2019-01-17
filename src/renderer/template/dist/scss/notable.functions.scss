@@ -1,0 +1,711 @@
+
+/* COLOR */
+
+// Based on the compute of `sRGB Luma`
+
+@function is-light ( $color ) {
+
+  $red: red( rgba( $color, 1 ) );
+  $green: green( rgba( $color, 1 ) );
+  $blue: blue( rgba( $color, 1 ) );
+
+  $luma: ( ( $red * .2126 ) + ( $green * .7152 ) + ( $blue * .0722 ) ) / 255;
+
+  @return $luma > .6;
+
+}
+
+@function is-dark ( $color ) {
+
+  @return not is-light ( $color );
+
+}
+
+
+/* MAP */
+
+@function map-previous ( $map, $key ) {
+
+  $all: map-keys( $map );
+  $index: index( $all, $key );
+
+  @return if( $index > 1, nth( $all, $index - 1 ), null );
+
+}
+
+@function map-next ( $map, $key ) {
+
+  $all: map-keys( $map );
+  $index: index( $all, $key );
+
+  @return if( $index < length( $all ), nth( $all, $index + 1 ), null );
+
+}
+
+@function map-set ( $map, $key, $value ) {
+
+  $new: ( $key: $value );
+
+  @return map-merge( $map, $new );
+
+}
+
+/* DEEP */
+
+//SOURCE: https://css-tricks.com/snippets/sass/deep-getset-maps
+
+@function map-deep-get ( $map, $keys... ) {
+
+  @each $key in $keys {
+    $map: map-get( $map, $key );
+  }
+
+  @return $map;
+
+}
+
+//SOURCE: https://css-tricks.com/snippets/sass/deep-getset-maps
+
+@function map-deep-set ( $map, $keys, $value ) {
+
+  $maps: ($map,);
+  $result: null;
+
+  // If the last key is a map already warn the user we will be overriding it with $value
+
+  @if type-of( nth( $keys, -1 ) ) == 'map' {
+    @warn 'The last key you specified is a map; it will be overrided with `#{$value}`';
+  }
+
+  // If `$keys` is a single key just merge and return
+
+  @if length( $keys ) == 1 {
+    @return map-merge( $map, ( $keys: $value ) );
+  }
+
+  // Loop from the first to the second to last key from `$keys` store the associated map to this key in the $maps list if the key doesn't exist, throw an error
+
+  @for $i from 1 through length( $keys ) - 1 {
+
+    $current-key: nth( $keys, $i );
+    $current-map: nth( $maps, -1 );
+    $current-get: map-get( $current-map, $current-key );
+
+    @if $current-get == null {
+      @error 'Key `#{$key}` does\'t exist at current level in map';
+    }
+
+    $maps: append( $maps, $current-get );
+
+  }
+
+  // Loop from the last map to the first one merge it with the previous one
+
+  @for $i from length( $maps ) through 1 {
+    $current-map: nth( $maps, $i );
+    $current-key: nth( $keys, $i );
+    $current-val: if( $i == length( $maps ), $value, $result );
+    $result: map-merge ( $current-map, ( $current-key: $current-val ) );
+  }
+
+  // Return result
+
+  @return $result;
+
+}
+
+
+//SOURCE: http://thesassway.com/advanced/inverse-trigonometric-functions-with-sass
+
+//TODO: Implement 2 ways conversion, from unit to unit, so that we can use it in the trigonometric functions and support a wider range of parameters
+
+/* ANGLE */
+
+@function angle-convert ( $angle, $unit ) {
+
+  $factors: (
+    rad: 1rad,
+    deg: 180deg / $PI,
+    grad: 200grad / $PI,
+    turn: .5turn / $PI
+  );
+
+  @if not unitless( $angle ) {
+    @error 'The angle `#{$angle}` must be unitless';
+  }
+
+  @if not map-has-key( $factors, $unit ) {
+    @error 'Unit `#{$unit}` is not supported. Supported units: deg, rad, grad, turn';
+  }
+
+  @return $angle * map-get( $factors, $unit );
+
+}
+
+
+/* FACTORIAL */
+
+@function fact ( $number ) {
+
+  $result: 1;
+
+  @if $number > 0 {
+
+    @for $i from 1 through $number {
+      $result: $result * $i;
+    }
+
+  }
+
+  @return $result;
+
+}
+
+
+//TODO: Add logarithm and exp support (not really the right place for this comment but creating a file just for it seems overkilling)
+
+/* MATH */
+
+//SOURCE: https://unindented.org/articles/trigonometry-in-sass
+
+// It only supports integer `$exp`
+
+@function pow ( $number, $exp ) {
+
+  $result: 1;
+
+  @if $exp > 0 {
+
+    @for $i from 1 through $exp {
+      $result: $result * $number;
+    }
+
+  } @else if $exp < 0 {
+
+    @for $i from 1 through -$exp {
+      $result: $result / $number;
+    }
+
+  }
+
+  @return $result;
+
+}
+
+//SOURCE: http://www.antimath.info/css/sass-sqrt-function
+
+@function sqrt ( $number ) {
+
+  $prev: 1;
+  $result: $prev;
+
+  @for $i from 1 through 10 {
+    $result: $prev - ( $prev * $prev - abs( $number ) ) / ( 2 * $prev );
+    $prev: $result;
+  }
+
+  @return $result;
+
+}
+
+
+//SOURCE: https://github.com/danielguillan/quantity-queries
+
+/* QUANTITY */
+
+@function _get-last-simple-selector ( $selector ) {
+
+  $parsed: selector-parse( $selector );
+
+  @if length( $parsed ) > 1 {
+    @error '`#{$selector}` contains #{length( $parsed )} selectors but the `_get-last-simple-selector()`function accepts only 1';
+  }
+
+  $last-simple-selector: nth( nth( $parsed, 1 ), -1 );
+
+  @return $last-simple-selector;
+
+}
+
+@function _quantity-build-selector ( $selector-append, $last-selector ) {
+
+  $quantity-selector: ();
+
+  @each $s in & {
+    $last-simple-selector: '~' + if( $last-selector, $last-selector, _get-last-simple-selector( $s ) );
+    $sel: selector-append( $s, $selector-append );
+    $sel2: selector-nest( $sel, $last-simple-selector );
+    $quantity-selector: append( $quantity-selector, $sel, 'comma' );
+    $quantity-selector: append( $quantity-selector, $sel2 , 'comma' );
+  }
+
+  @return $quantity-selector;
+
+}
+
+
+/* UNIT */
+
+@function unit-strip ( $num ) {
+
+  @return $num / ( $num * 0 + 1 );
+
+}
+
+
+// @require _/math/factorial/functions.scss
+// @require _/math/power/functions.scss
+// @require _/unit/functions.scss
+
+//SOURCE: https://unindented.org/articles/trigonometry-in-sass
+
+// They only support `deg` angles
+
+/* TRIGONOMETRY */
+
+@function sin ( $angle ) {
+
+  $rounds: 10;
+  $sin: 0;
+  $angle: unit-strip( $angle ) / 180 * $PI;
+
+  @for $i from 0 through $rounds {
+    $sin: $sin + pow( -1, $i ) * pow( $angle, ( 2 * $i + 1 ) ) / fact( 2 * $i + 1 );
+  }
+
+  @return $sin;
+
+}
+
+@function cos ( $angle ) {
+
+  $rounds: 10;
+  $cos: 0;
+  $angle: unit-strip( $angle ) / 180 * $PI;
+
+  @for $i from 0 through $rounds {
+    $cos: $cos + pow( -1, $i ) * pow( $angle, 2 * $i ) / fact( 2 * $i );
+  }
+
+  @return $cos;
+
+}
+
+@function tan ( $angle ) {
+  @return sin( $angle ) / cos( $angle );
+}
+
+
+// @require _/math/angle/functions.scss
+// @require _/math/power/functions.scss
+// @require _/math/trigonometry/functions.scss
+
+//SOURCE: http://thesassway.com/advanced/inverse-trigonometric-functions-with-sass
+
+/* INVERSE */
+
+@function asin ( $z, $unit: deg ) {
+
+  $threshold: $PI / 180 / 50;
+  $sum: 0;
+  $complement: false;
+  $sign: if( $z != 0, $z / abs( $z ), 1 );
+  $z: abs( $z );
+
+  @if $z > 1 {
+    @warn '`#{$z}` is not a valid input for `asin` function';
+    @return false;
+  }
+
+  @if $z > sin( $PI / 4 ) {
+    $complement: true;
+    $z: sqrt( 1 - pow( $z, 2 ) );
+  }
+
+  $term: $z;
+  $i: 0;
+  $k: 1;
+
+  @while $term > $threshold {
+
+    $sum: $sum + $term;
+
+    $i: $i + 1;
+    $k: $k * ( 2 * $i - 1 ) / ( 2 * $i );
+    $j: 2 * $i + 1;
+
+    $term: $k * pow( $z, $j ) / $j;
+
+  }
+
+  @return angle-convert( $sign * ( if( $complement, $PI / 2 - $sum, $sum ) ), $unit );
+
+}
+
+@function acos ( $z, $unit: deg ) {
+  @return angle-convert( $PI / 2, $unit ) - asin( $z, $unit );
+}
+
+@function atan ( $z, $unit: deg ) {
+  @return asin( $z / sqrt( 1 + pow( $z, 2 ) ), $unit );
+}
+
+
+/* CLASSES */
+
+@function animations-get-classes () {
+
+  $classes: ();
+
+  @each $animation, $duration in $animations {
+
+    $classes: append( $classes, animation-get-class( $animation ) );
+
+  }
+
+  @return $classes;
+
+}
+
+@function animation-get-class ( $animation ) {
+
+  @return $animation;
+
+}
+
+
+// @require _/map/functions.scss
+// @require _/unit/functions.scss
+
+/* BREAKPOINTS */
+
+@function breakpoint-previous ( $breakpoint ) {
+
+  @return map-previous( $breakpoints, $breakpoint );
+
+}
+
+@function breakpoint-next ( $breakpoint ) {
+
+  @return map-next( $breakpoints, $breakpoint );
+
+}
+
+@function breakpoint-min ( $breakpoint ) {
+
+  $value: map-get( $breakpoints, $breakpoint );
+
+  @return if( unit-strip( $value ) != 0, $value, null );
+
+}
+
+@function breakpoint-max ( $breakpoint ) {
+
+  $value: breakpoint-next( $breakpoint );
+
+  @return if( $value, breakpoint-min( $value ) - $breakpoint-epsilon, null );
+
+}
+
+/* CLASSES */
+
+@function breakpoints-get-classes () {
+
+  $classes: ();
+
+  @each $breakpoint, $value in $breakpoints {
+
+    $classes: append( $classes, breakpoint-get-class( $breakpoint ) );
+
+  }
+
+  @return $classes;
+
+}
+
+@function breakpoint-get-class ( $breakpoint ) {
+
+  //TODO: Write in a more general way, using a str-repeat and a map
+
+  $classes: (
+    'xxxxsmall': 'xxxxs',
+    'xxxsmall': 'xxxs',
+    'xxsmall': 'xxs',
+    'xsmall': 'xs',
+    'small': 'sm',
+    'medium': 'md',
+    'large': 'lg',
+    'xlarge': 'xl',
+    'xxlarge': 'xxl',
+    'xxxlarge': 'xxxl',
+    'xxxxlarge': 'xxxxl'
+  );
+
+  @if map-has-key( $classes, $breakpoint ) {
+
+    @return map-get( $classes, $breakpoint );
+
+  } @else {
+
+    // Fall back to the bare key
+
+    @return $breakpoint;
+
+  }
+
+}
+
+
+/* SELECTOR */
+
+@function colors-get-undefined-selector () {
+
+  $selector: '';
+
+  @each $class in colors-get-classes() {
+
+    $selector: $selector + ':not(.#{$class})';
+
+  }
+
+  @return $selector;
+
+}
+
+/* CLASSES */
+
+@function colors-get-classes () {
+
+  $classes: ();
+
+  @each $name, $datas in $colors {
+
+    $classes: append( $classes, color-get-class( $name ) );
+
+  }
+
+  @return $classes;
+
+}
+
+@function color-get-class ( $color ) {
+
+  @return $color;
+
+}
+
+
+/* GRADIENT */
+
+@function gradient-get-start-end-from-color ( $color ) {
+
+  $datas: map-get( $colors, $color );
+
+  $start: nth( $datas, 2 ); // Hover
+  $end: nth( $datas, 3 ); // Active
+
+  @return ( $start, $end );
+
+}
+
+
+/* SIZES */
+
+// Returning the proper font-size at which the icons will look `$icon-size`x`$icon-size`
+
+@function size-from-icon-size ( $icon-size ) {
+
+  @return ( $icon-size / $font-size / $icon-scale-factor ) * 1em;
+
+}
+
+/* SELECTOR */
+
+@function sizes-get-undefined-selector () {
+
+  $selector: '';
+
+  @each $class in sizes-get-classes() {
+
+    $selector: $selector + ':not(.#{$class})';
+
+  }
+
+  @return $selector;
+
+}
+
+/* CLASSES */
+
+@function sizes-get-classes () {
+
+  @return map-keys( $sizes );
+
+}
+
+@function size-get-class ( $size ) {
+
+  @return $size;
+
+}
+
+
+/* UNIT */
+
+@function px ( $length ) {
+
+  $unit: unit( $length );
+
+  @if $unit == 'px' {
+
+    @return $length;
+
+  } @else if $unit == 'em' {
+
+    @return $length / 1em * $font-size;
+
+  } @else if $unit == 'rem' {
+
+    @return $length / 1rem * $font-size;
+
+  } @else {
+
+    @error 'Unit `#{$unit}` is not supported. Supported units: px, em, rem';
+
+  }
+
+}
+
+@function em ( $length ) {
+
+  $unit: unit( $length );
+
+  @if $unit == 'em' {
+
+    @return $length;
+
+  } @else if $unit == 'rem' {
+
+    @return $length / 1rem * 1em;
+
+  } @else if $unit == 'px' {
+
+    @return $length / $font-size * 1em;
+
+  } @else {
+
+    @error 'Unit `#{$unit}` is not supported. Supported units: em, rem, px';
+
+  }
+
+}
+
+@function rem ( $length ) {
+
+  $unit: unit( $length );
+
+  @if $unit == 'rem' {
+
+    @return $length;
+
+  } @else if $unit == 'em' {
+
+    @return $length / 1em * 1rem;
+
+  } @else if $unit == 'px' {
+
+    @return $length / $font-size * 1rem;
+
+  } @else {
+
+    @error 'Unit `#{$unit}` is not supported. Supported units: rem, em, px';
+
+  }
+
+}
+
+
+/* SELECTOR */
+
+@function z-depths-get-undefined-selector () {
+
+  @return ':not([class*="z-depth-"])';
+
+}
+
+/* CLASSES */
+
+@function z-depths-get-classes () {
+
+  $classes: ();
+
+  @each $depth, $shadow in $z-depths {
+
+    $classes: append( $classes, z-depth-get-class( $depth ) );
+
+  }
+
+  @return $classes;
+
+}
+
+@function z-depth-get-class ( $depth ) {
+
+  @return 'z-depth-' + $depth;
+
+}
+
+
+/* RAISABLE */
+
+@function raisable-next ( $depth: 0 ) {
+
+  $z-depth-max: length( map-keys( $z-depths ) ) - 1; // `-1` since we start from `0`
+  $z-depth-raised: min( $z-depth-max, $depth + $raisable-raise-depths );
+
+  @return $z-depth-raised;
+
+}
+
+
+/* SELECTOR */
+
+@function colors-link-get-undefined-selector () {
+
+  $selector: '';
+
+  @each $class in colors-link-get-classes() {
+
+    $selector: $selector + ':not(.#{$class})';
+
+  }
+
+  @return $selector;
+
+}
+
+/* CLASSES */
+
+@function colors-link-get-classes () {
+
+  $classes: ();
+
+  @each $name, $datas in $colors {
+
+    @if index( $link-colors, $name ) {
+
+      $classes: append( $classes, color-link-get-class( $name ) );
+
+    }
+
+  }
+
+  @return $classes;
+
+}
+
+@function color-link-get-class ( $color ) {
+
+  @return 'link-' + $color;
+
+}
