@@ -1,7 +1,7 @@
 # Notable ([DOWNLOAD](https://github.com/fabiospampinato/notable/releases))
 
 <p align="center">
-  <img src="resources/demo/main.png" alt="Notable" width="500">
+  <img src="resources/demo/main.png" alt="Notable" width="750">
 </p>
 
 The markdown-based note-taking app that doesn't suck.
@@ -39,6 +39,10 @@ Upon first instantiation, some tutorial notes will be added to the app, check th
 Part of this comparison is personal opinion: you may disagree on the UI front, things I consider bloat may be considered features by somebody else etc. but hopefully this comparison did a good job at illustrating the main differences.
 
 ## Demo
+
+### Indefinitely Nestable Tags
+
+<img src="resources/demo/tags.png" alt="Indefinitely Nestable Tags" width="750">
 
 ### Editor
 
