@@ -2,16 +2,21 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {app, ipcMain as ipc, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {ipcMain as ipc, Menu, MenuItemConstructorOptions, shell} from 'electron';
 import * as is from 'electron-is';
 import pkg from '@root/package.json';
 import Environment from '@common/environment';
 import UMenu from '@main/utils/menu';
+import About from './about';
 import Route from './route';
 
 /* MAIN */
 
 class Main extends Route {
+
+  /* VARIABLES */
+
+  _prevFlags: StateFlags | false = false;
 
   /* CONSTRUCTOR */
 
@@ -25,15 +30,17 @@ class Main extends Route {
 
   initLocalShortcuts () {}
 
-  initMenu ( flags: StateFlags | false = false ) {
+  initMenu ( flags: StateFlags | false = this._prevFlags ) {
+
+    this._prevFlags = flags; // Storing them because they are needed also when focusing to the window
 
     const template: MenuItemConstructorOptions[] = UMenu.filterTemplate ([
       {
-        label: app.getName (),
+        label: pkg.productName,
         submenu: [
           {
-            role: 'about',
-            visible: is.macOS ()
+            label: `About ${pkg.productName}`,
+            click: () => new About ()
           },
           {
             type: 'separator'
@@ -54,8 +61,7 @@ class Main extends Route {
             click: () => this.win.webContents.send ( 'cwd-change' )
           },
           {
-            type: 'separator',
-            visible: is.macOS ()
+            type: 'separator'
           },
           {
             role: 'services',
@@ -93,6 +99,13 @@ class Main extends Route {
             accelerator: 'CommandOrControl+N',
             enabled: flags && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-new' )
+          },
+          {
+            label: 'New from Template',
+            accelerator: 'CommandOrControl+Alt+Shift+N',
+            enabled: flags && flags.hasNote && flags.isNoteTemplate && !flags.isMultiEditorEditing,
+            visible: flags && flags.hasNote && flags.isNoteTemplate,
+            click: () => this.win.webContents.send ( 'note-duplicate-template' )
           },
           {
             label: 'Duplicate',
@@ -177,6 +190,7 @@ class Main extends Route {
           },
           {
             label: 'Permanently Delete',
+            accelerator: 'CommandOrControl+Alt+Shift+Backspace',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote,
             click: () => this.win.webContents.send ( 'note-permanently-delete' )
@@ -246,10 +260,6 @@ class Main extends Route {
             visible: Environment.isDevelopment
           },
           {
-            role: 'toggledevtools',
-            visible: Environment.isDevelopment
-          },
-          {
             type: 'separator',
             visible: Environment.isDevelopment
           },
@@ -308,6 +318,13 @@ class Main extends Route {
             accelerator: 'Control+Tab',
             click: () => this.win.webContents.send ( 'search-next' )
           },
+          { type: 'separator' },
+          {
+            type: 'checkbox',
+            label: 'Float on Top',
+            checked: !!this.win && this.win.isAlwaysOnTop (),
+            click: () => this.win.setAlwaysOnTop ( !this.win.isAlwaysOnTop () )
+          },
           {
             type: 'separator',
             visible: is.macOS ()
@@ -335,8 +352,16 @@ class Main extends Route {
           },
           { type: 'separator' },
           {
+            label: 'View Changelog',
+            click: () => shell.openExternal ( `${pkg.homepage}/blob/master/CHANGELOG.md` )
+          },
+          {
             label: 'View License',
             click: () => shell.openExternal ( `${pkg.homepage}/blob/master/LICENSE` )
+          },
+          { type: 'separator' },
+          {
+            role: 'toggledevtools'
           }
         ]
       }

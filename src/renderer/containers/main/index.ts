@@ -19,6 +19,7 @@ import Tags from './tags';
 import Trash from './trash';
 import Tutorial from './tutorial';
 import Window from './window';
+import {TagSpecials} from '@renderer/utils/tags';
 
 /* MAIN */
 
@@ -70,7 +71,7 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareResetEditor ( prev: MainState ) {
 
-    if ( !( !prev.editor.editing && !this.state.editor.editing && prev.note.note !== this.state.note.note ) ) return;
+    if ( !( !prev.editor.editing && !this.state.editor.editing && !this.ctx.note.is ( prev.note.note, this.state.note.note, true ) ) ) return;
 
     return this.ctx.editor.previewingState.reset ();
 
@@ -100,7 +101,8 @@ class Main extends Container<MainState, MainCTX> {
       isAttachmentsEditing: app.attachments.isEditing (),
       isNoteFavorited: app.note.isFavorited (),
       isNotePinned: app.note.isPinned (),
-      isNoteDeleted: app.note.isDeleted ()
+      isNoteDeleted: app.note.isDeleted (),
+      isNoteTemplate: !!app.note.getTags ( undefined, TagSpecials.TEMPLATES ).length
     };
 
     if ( _.isEqual ( app._prevFlags, flags ) ) return; // Nothing changed, no need to update the main process

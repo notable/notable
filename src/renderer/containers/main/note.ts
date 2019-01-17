@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import {shell} from 'electron';
 import Dialog from 'electron-dialog';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
+import * as fs from 'fs';
 import {Container} from 'overstated';
 import * as path from 'path';
 import Config from '@common/config';
@@ -16,7 +17,7 @@ import Path from '@renderer/utils/path';
 import Tags, {TagSpecials} from '@renderer/utils/tags';
 import Utils from '@renderer/utils/utils';
 
-const {ALL, FAVORITES, TAGS, UNTAGGED, TRASH} = TagSpecials;
+const {ALL, FAVORITES, TAGS, TEMPLATES, UNTAGGED, TRASH} = TagSpecials;
 
 /* NOTE */
 
@@ -131,7 +132,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  duplicate = async ( note: NoteObj | undefined = this.state.note ) => {
+  duplicate = async ( note: NoteObj | undefined = this.state.note, resetTemplate: boolean = false ) => {
 
     if ( !note ) return;
 
@@ -146,6 +147,17 @@ class Note extends Container<NoteState, MainCTX> {
     duplicateNote.filePath = filePath;
     duplicateNote.checksum = CRC32.str ( filePath );
     duplicateNote.metadata.title = this._inferTitleFromFilePath ( filePath );
+
+    if ( resetTemplate ) {
+
+      duplicateNote.metadata.favorited = false;
+      duplicateNote.metadata.pinned = false;
+
+      const tagsTemplates = this.getTags ( duplicateNote, TEMPLATES );
+
+      duplicateNote.metadata.tags = _.without ( duplicateNote.metadata.tags, ...tagsTemplates );
+
+    }
 
     let noteAdded;
 
@@ -235,9 +247,9 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  is = ( note1?: NoteObj, note2?: NoteObj ): boolean => {
+  is = ( note1?: NoteObj, note2?: NoteObj, loose: boolean = false ): boolean => {
 
-    return note1 === note2 || ( !!note1 && !!note2 && note1.filePath === note2.filePath && note1.content === note2.content );
+    return note1 === note2 || ( !!note1 && !!note2 && note1.filePath === note2.filePath && ( loose || note1.content === note2.content ) );
 
   }
 
@@ -319,12 +331,21 @@ class Note extends Container<NoteState, MainCTX> {
 
     for ( let srcPath of filePaths ) {
 
-      const attachment = this.ctx.attachment.read ( srcPath ),
-            {filePath: dstPath, fileName} = await Path.getAllowedPath ( attachmentsPath, attachment.fileName );
+      let attachment = this.ctx.attachment.get ( srcPath );
 
-      File.copy ( srcPath, dstPath );
+      if ( !attachment ) { // Not an existing attachment
 
-      nextNote.metadata.attachments.push ( fileName );
+        attachment = this.ctx.attachment.read ( srcPath );
+
+        const {filePath: dstPath, fileName} = await Path.getAllowedPath ( attachmentsPath, attachment.fileName );
+
+        attachment.fileName = fileName;
+
+        File.copy ( srcPath, dstPath );
+
+      }
+
+      nextNote.metadata.attachments.push ( attachment.fileName );
 
       nextNote.metadata.attachments = Attachments.sort ( nextNote.metadata.attachments );
 
@@ -517,6 +538,25 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
+  toggleCheckboxAtIndex ( note: NoteObj | undefined = this.state.note, index: number, force?: boolean ) {
+
+    if ( !note ) return;
+
+    const checkboxRe = /^([*+-])([ \t]+\[)((?:x|X| )?)(\])(?!\[|\()/m,
+          checkedRe = /^(x|X)$/,
+          plainContent = this.getPlainContent ( note ),
+          snippet = plainContent.slice ( index, index + 20 ),
+          snippetNext = snippet.replace ( checkboxRe, ( match, $1, $2, $3, $4 ) => {
+            force = _.isBoolean ( force ) ? force : !checkedRe.test ( $3 );
+            const checkmark = force ? 'x' : ' ';
+            return `${$1}${$2}${checkmark}${$4}`;
+          }),
+          plainContentNext = `${plainContent.slice ( 0, index )}${snippetNext}${plainContent.slice ( index + snippet.length, Infinity )}`;
+
+    return this.save ( note, plainContentNext );
+
+  }
+
   openInApp = ( note: NoteObj | undefined = this.state.note ) => {
 
     if ( !note ) return Dialog.alert ( 'This note is no longer stored in disk' );
@@ -638,13 +678,17 @@ class Note extends Container<NoteState, MainCTX> {
 
   sanitize = async ( note: Pick<NoteObj, Exclude<keyof NoteObj, 'metadata'>> & { metadata: Partial<NoteObj['metadata']> } ): Promise<NoteObj> => {
 
-    if ( !note.metadata.title ) {
+    if ( note.metadata.title && _.isNumber ( note.metadata.title ) ) {
+
+      note.metadata.title = String ( note.metadata.title );
+
+    } else if ( !note.metadata.title || !_.isString ( note.metadata.title ) ) {
 
       note.metadata.title = this._inferTitleFromFilePath ( note.filePath );
 
     }
 
-    if ( !note.metadata.stat ) {
+    if ( !note.metadata.stat || !( note.metadata.stat instanceof fs.Stats ) ) {
 
       const stats = await File.stat ( note.filePath );
 
@@ -656,13 +700,15 @@ class Note extends Container<NoteState, MainCTX> {
 
     }
 
-    if ( !note.metadata.dateCreated ) {
+    if ( !note.metadata.dateCreated || !_.isDate ( note.metadata.dateCreated ) ) {
 
       note.metadata.dateCreated = note.metadata.created ? new Date ( note.metadata.created ) : ( note.metadata.stat ? new Date ( note.metadata.stat.ctimeMs ): new Date () );
 
+      if ( _.isNaN ( note.metadata.dateCreated.getTime () ) ) note.metadata.dateCreated = new Date ();
+
     }
 
-    if ( !note.metadata.dateModified ) {
+    if ( !note.metadata.dateModified || !_.isDate ( note.metadata.dateModified ) ) {
 
       note.metadata.dateModified = note.metadata.stat ? new Date ( note.metadata.stat.mtimeMs ) : new Date ();
 
@@ -674,7 +720,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     } else {
 
-      note.metadata.attachments = Attachments.sort ( note.metadata.attachments );
+      note.metadata.attachments = Attachments.sort ( this.sanitizeAttachments ( note.metadata.attachments ) );
 
     }
 
@@ -696,9 +742,17 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  sanitizeTags ( tags: string[] ): string[] {
+  sanitizeAttachments = ( attachments: string [] ): string[] => {
 
-    return tags.map ( tag => _.trim ( tag, Tags.SEPARATOR ) )
+    return attachments.filter ( _.isString )
+                      .filter ( _.identity );
+
+  }
+
+  sanitizeTags = ( tags: string[] ): string[] => {
+
+    return tags.filter ( _.isString )
+               .map ( tag => _.trim ( tag, Tags.SEPARATOR ) )
                .filter ( tag => !/\/\s*\//.test ( tag ) ) //TODO: Should use `Tags.SEPARATOR`
                .filter ( _.identity );
 

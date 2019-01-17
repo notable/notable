@@ -46,15 +46,17 @@ const Config = {
     throwOnError: true,
     displayMode: false,
     errorColor: '#f44336',
-    delimilters: [
-      { left: '¨D¨D', right: '¨D¨D', display: true }, // showdown converts `$$` to `¨D¨D`
-      { left: '\\(', right: '\\)', display: false },
-      { left: '\\[', right: '\\]', display: true },
-      { left: '~', right: '~', display: false, asciimath: true },
+    delimiters: [
+      { left: '$', right: '$', display: false },
       { left: '&&', right: '&&', display: true, asciimath: true }
     ]
   },
-  mermaid: {}
+  mermaid: { //URL: https://github.com/knsv/mermaid/blob/7d3578b31aeea3bc9bbc618dcda57d82574eaffb/src/mermaidAPI.js#L51
+    gantt: {
+      barHeight: 25,
+      fontSize: 14
+    }
+  }
 };
 
 /* EXPORT */

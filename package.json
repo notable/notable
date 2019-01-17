@@ -2,25 +2,24 @@
   "name": "notable",
   "productName": "Notable",
   "description": "The markdown-based note-taking app that doesn't suck.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "scripts": {
     "clean:deps": "del 'node_modules/**/{README,LICENSE,license,.travis.yml,tsconfig.json,*.{md,MD,map,png,svg,ts}}' '!node_modules/**/*.d.ts'",
     "clean:dist": "del dist",
     "clean:releases": "del releases",
-    "clean": "npm-run-all -p clean:dist clean:releases",
+    "clean": "npm run clean:dist && npm run clean:releases",
     "compile": "npm run svelto:prod && npm run iconfont && npm run tutorial && npm run clean:deps && electron-webpack app --env.minify=false",
     "build:mac": "npm run compile && electron-builder --mac",
     "build:win": "npm run compile && electron-builder --win",
     "build:linux": "npm run compile && electron-builder --linux",
-    "build:all": "npm run compile && electron-builder -mwl",
+    "build:all": "npm run clean:releases && npm run compile && electron-builder -mwl",
     "svelto:dev": "svelto build --env development",
     "svelto:prod": "svelto build",
     "iconfont": "icon-font-buildr",
     "comparison": "wkhtmltoimage --quiet --quality 30 --encoding 'UTF-8' --zoom 2 ./resources/comparison/table.html ./resources/comparison/table.png",
     "tutorial": "tar cf ./src/renderer/template//dist/tutorial.tar -C ./resources/tutorial .",
     "dev": "electron-webpack dev",
-    "prod": "npm run compile && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dir && open releases/mac/*.app",
-    "publish": "electron-builder --publish onTag"
+    "prod": "npm run compile && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dir && open releases/mac/*.app"
   },
   "electronWebpack": {
     "staticSourceDirectory": "src/renderer/template/dist",
@@ -92,7 +91,7 @@
         "rpm",
         "snap"
       ],
-      "icon": "resources/icon/icon.png",
+      "icon": "resources/icon",
       "category": "Utility"
     },
     "snap": {
@@ -163,7 +162,6 @@
     "react-dom": "^16.7.0",
     "react-router-static": "^1.0.0",
     "react-window": "^1.4.0",
-    "recompose": "^0.30.0",
     "remark": "^10.0.1",
     "sha1": "^1.1.1",
     "shallowequal": "^1.1.0",
@@ -192,7 +190,7 @@
     "react-hot-loader": "^4.6.3",
     "react-log-updates": "^1.0.7",
     "sass-loader": "^7.1.0",
-    "svelto": "^1.1.1",
+    "svelto": "^1.1.3",
     "terser-webpack-plugin": "^1.2.0",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.2.2",

@@ -131,7 +131,8 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
     const filePaths = remote.dialog.showOpenDialog ({
       title: 'Select Files to Add',
       buttonLabel: 'Add',
-      properties: ['openFile', 'multiSelections']
+      properties: ['openFile', 'multiSelections'],
+      defaultPath: Config.attachments.path
     });
 
     return filePaths || [];

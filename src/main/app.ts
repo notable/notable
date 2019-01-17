@@ -5,7 +5,6 @@ import {app, ipcMain as ipc} from 'electron';
 import {autoUpdater} from 'electron-updater';
 import * as is from 'electron-is';
 import * as fs from 'fs';
-import pkg from '@root/package.json';
 import Config from '@common/config';
 import Environment from '@common/environment';
 import CWD from './windows/cwd';
@@ -33,23 +32,7 @@ class App {
 
   init () {
 
-    this.initAbout ();
     this.initContextMenu ();
-
-  }
-
-  initAbout () {
-
-    if ( !is.macOS () ) return;
-
-    const {productName, version, license, author} = pkg;
-
-    app.setAboutPanelOptions ({
-      applicationName: productName,
-      applicationVersion: version,
-      copyright: `${license} © ${author.name}`,
-      version: ''
-    });
 
   }
 

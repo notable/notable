@@ -192,6 +192,10 @@ div.button:not(.active).bordered > i.icon {
   background: #181818;
 }
 
+.react-window-list {
+  will-change: auto !important;
+}
+
 #mainbar {
   background-color: #181818;
   /* border-left: 1px solid #494949; */
@@ -218,6 +222,14 @@ div.button:not(.active).bordered > i.icon {
 #mainbar .editor input {
   display: inline-block;
   margin-left: 0 !important;
+}
+
+#mainbar .editor input[type="checkbox"] {
+  appearance: checkbox !important;
+  -webkit-appearance: checkbox !important;
+  margin: 0 0.35em 0.25em 0 !important;
+  width: auto !important;
+  opacity: 1 !important;
 }
 
 #mainbar .editor pre {
@@ -308,7 +320,7 @@ div.button:not(.active).bordered > i.icon {
 
 #sidebar,
 #middlebar,
-#mainbar-toolbar,
+#mainbar > *:not(.editor),
 .popover,
 .title {
   user-select: none !important;
@@ -362,8 +374,19 @@ strong {
   width: auto !important;
 }
 
+.editor.preview p code,
+.editor.preview li code,
+.editor.preview table code {
+  background-color: rgba( 27, 31, 35, .05 ) !important;
+  padding: .2em .4em !important;
+}
+
 .editor.preview .task-list-item {
   margin-left: -1.6em;
+}
+
+.editor.preview .task-list-item > p {
+  margin: 0;
 }
 
 .editor.preview a:not(.button) > i.icon {
@@ -409,4 +432,24 @@ kbd {
 
 .mermaid {
   text-align: center;
+}
+
+.mermaid text[font-size="14"] {
+  font-size: 14px !important;
+}
+
+#about {
+  background-color: #ececec;
+}
+
+#about > *:not(:last-child) {
+  margin-bottom: 5px !important;
+}
+
+#about .title {
+  font-weight: bold;
+}
+
+#about .desc {
+  font-size: .5946142301em;
 }
