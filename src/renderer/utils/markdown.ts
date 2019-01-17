@@ -53,6 +53,24 @@ const Markdown = {
 
     },
 
+    resolveRelativeLinks () {
+
+      const {path: attachmentsPath} = Config.attachments,
+            {path: notesPath} = Config.notes;
+
+      if ( !attachmentsPath || !notesPath ) return [];
+
+      return [{
+        type: 'language',
+        regex: `\\[([^\\]]*)\\]\\((\\.[^\\)]*)\\)`,
+        replace ( match, $1, $2 ) {
+          const filePath = path.resolve ( notesPath, $2 );
+          return `[${$1}](file://${encodeURI ( filePath )})`;
+        }
+      }];
+
+    },
+
     encodeSpecialLinks () { // Or they won't be parsed as images/links whatever
 
       return [{
@@ -200,11 +218,11 @@ const Markdown = {
 
     if ( Markdown.converter ) return Markdown.converter;
 
-    const {checkbox, encodeSpecialLinks, attachment, note, tag, katex, mermaid} = Markdown.extensions;
+    const {checkbox, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, katex, mermaid} = Markdown.extensions;
 
     const converter = new showdown.Converter ({
       metadata: true,
-      extensions: [showdownHighlight, showdownTargetBlack, checkbox (), encodeSpecialLinks (), attachment (), note (), tag (), katex (), mermaid ()]
+      extensions: [showdownHighlight, showdownTargetBlack, checkbox (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag (), katex (), mermaid ()]
     });
 
     converter.setFlavor ( 'github' );
