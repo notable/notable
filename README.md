@@ -32,7 +32,7 @@ So I built my own.
 
 Upon first instantiation, some tutorial notes will be added to the app, check them out for more in-depth details about the app and how to use it. You can also find the raw version [here](https://github.com/fabiospampinato/notable/tree/master/resources/tutorial/notes).
 
-## Comparison
+## [Comparison](resources/comparison/table.png?raw=true)
 
 [![Click to Enlarge](resources/comparison/table.png)](resources/comparison/table.png?raw=true)
 
