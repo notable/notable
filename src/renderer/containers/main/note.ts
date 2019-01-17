@@ -551,7 +551,7 @@ class Note extends Container<NoteState, MainCTX> {
             const checkmark = force ? 'x' : ' ';
             return `${$1}${$2}${checkmark}${$4}`;
           }),
-          plainContentNext = `${plainContent.slice ( 0, index )}${snippetNext}${plainContent.slice ( index + snippetNext.length, Infinity )}`;
+          plainContentNext = `${plainContent.slice ( 0, index )}${snippetNext}${plainContent.slice ( index + snippet.length, Infinity )}`;
 
     return this.save ( note, plainContentNext );
 
