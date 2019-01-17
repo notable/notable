@@ -46,7 +46,7 @@ class Main extends Route {
             type: 'separator'
           },
           {
-            label: 'Export...',
+            label: 'Export HTML',
             enabled: flags && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'export' )
           },

@@ -104,41 +104,52 @@ class CWD extends Container<CWDState, CWDCTX> {
   }
 
   export = (note) => {
-    const filepath = remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+
+    const filepath = remote.dialog.showSaveDialog (remote.getCurrentWindow (), {
       title: 'Export Note',
-      defaultPath: note.getTitle(),
+      defaultPath: note.getTitle (),
       buttonLabel : 'Export',
       filters :[
        {name: 'HTML', extensions: ['html']}
       ]
     });
 
-    let exportContent = '';;
-    const { plainContent } = note.get();    
-    const fileType = filepath.substr(filepath.lastIndexOf('.') + 1).toLowerCase();
-    switch(fileType) {
+    let exportContent = '';
+    const { plainContent } = note.get ();
+    const fileType = filepath.substr ( filepath.lastIndexOf ( '.' ) + 1 ).toLowerCase ();
+
+    switch ( fileType ) {
+
       case 'html':
         const cssList = [
-          'node_modules/primer-markdown/build/build.css', 
-          'node_modules/codemirror/lib/codemirror.css', 
+          'node_modules/primer-markdown/build/build.css',
+          'node_modules/codemirror/lib/codemirror.css',
           'node_modules/codemirror-github-light/lib/codemirror-github-light-theme.css'];
-        const style = cssList.map(css => fs.readFileSync(path.resolve('', css), 'utf8')).join('');
+
+        const style = cssList.map ( css => fs.readFileSync ( path.resolve( '', css ), 'utf8' ) ).join( '' );
+
         exportContent = `
         <head>
           <style>${style}</style>
         </head>
         <div class='markdown-body'>
-          ${Markdown.render(plainContent)}
-        </div>
-        `;
+          ${Markdown.render ( plainContent ) }
+        </div>`;
         break;
+
     }
-    fs.writeFile(filepath, exportContent, err => {
+
+    fs.writeFile ( filepath, exportContent, err => {
+
       if (err) {
-        Dialog.alert(err.message);
+
+        Dialog.alert ( err.message );
         return;
+
       }
-      Dialog.alert('Export file success!');
+
+      Dialog.alert ( 'Export file success!' );
+
     });
   }
 
