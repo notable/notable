@@ -6707,7 +6707,7 @@ address a:hover {
 /* COLORS */
 p a,
 li a,
-address a, .link-primary {
+address a, .link-primary, table a {
   color: #4f8cc9;
 }
 
