@@ -57,10 +57,10 @@ class Main extends Route {
                 label: 'HTML',
                 click: () => this.win.webContents.send ( 'export-html' )
               },
-              // {
-              //   label: 'Markdown',
-              //   click: () => this.win.webContents.send ( 'export-markdown' )
-              // },
+              {
+                label: 'Markdown',
+                click: () => this.win.webContents.send ( 'export-markdown' )
+              },
               // {
               //   label: 'PDF',
               //   click: () => this.win.webContents.send ( 'export-pdf' )

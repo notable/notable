@@ -105,7 +105,11 @@ ${content}
 
     },
 
-    markdown: () => {}, //TODO
+    markdown: async ( note: NoteObj ) => {
+
+      return note.content;
+
+    },
 
     pdf: () => {} //TODO
 
