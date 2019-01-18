@@ -52,6 +52,16 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 
 <img src="resources/demo/multi_editor.png" alt="Editor" width="750">
 
+## Installation
+
+Download the [current release](https://github.com/fabiospampinato/notable/releases) and install the same any application is installed.
+
+### Install on macOS via Homebrew
+
+```
+brew cask install notable
+```
+
 ## Contributing
 
 If you have an idea, or you have found a problem, please open an [issue](https://github.com/fabiospampinato/notable/issues) about it.
