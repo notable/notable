@@ -2,8 +2,11 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {ipcMain as ipc, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {ipcMain as ipc, BrowserWindow, Menu, MenuItemConstructorOptions, shell} from 'electron';
 import * as is from 'electron-is';
+import * as fs from 'fs';
+import * as mkdirp from 'mkdirp';
+import * as path from 'path';
 import pkg from '@root/package.json';
 import Environment from '@common/environment';
 import UMenu from '@main/utils/menu';
@@ -61,10 +64,10 @@ class Main extends Route {
                 label: 'Markdown',
                 click: () => this.win.webContents.send ( 'export-markdown' )
               },
-              // {
-              //   label: 'PDF',
-              //   click: () => this.win.webContents.send ( 'export-pdf' )
-              // }
+              {
+                label: 'PDF',
+                click: () => this.win.webContents.send ( 'export-pdf' )
+              }
             ]
           },
           {
@@ -399,6 +402,7 @@ class Main extends Route {
     this.___fullscreenLeave ();
     this.___flagsUpdate ();
     this.___navigateUrl ();
+    this.___printPDF ();
 
   }
 
@@ -459,6 +463,59 @@ class Main extends Route {
     event.preventDefault ();
 
     shell.openExternal ( url );
+
+  }
+
+  /* PRINT PDF */
+
+  ___printPDF () {
+
+    ipc.on ( 'print-pdf', this.__printPDF.bind ( this ) );
+
+  }
+
+  __printPDF ( event, options ) {
+
+    const win = new BrowserWindow ({
+      show: false,
+      webPreferences: {
+        webSecurity: false
+      }
+    });
+
+    if ( options.html ) {
+
+      win.loadURL ( `data:text/html;charset=utf-8,${options.html}` );
+
+    } else if ( options.src ) {
+
+      win.loadFile ( options.src );
+
+    } else {
+
+      return console.error ( 'No content or file to print to PDF provided' );
+
+    }
+
+    win.webContents.on ( 'did-finish-load', () => {
+      win.webContents.printToPDF ( {}, ( err, data ) => {
+        if ( err ) return console.error ( err );
+        fs.writeFile ( options.dst, data, err => {
+          if ( err ) {
+            if ( err.code === 'ENOENT' ) {
+              mkdirp ( path.dirname ( options.dst ), err => {
+                if ( err ) return console.error ( err );
+                fs.writeFile ( options.dst, data, err => {
+                  if ( err ) return console.error ( err );
+                });
+              });
+            } else {
+              return console.error ( err );
+            }
+          }
+        });
+      });
+    });
 
   }
 

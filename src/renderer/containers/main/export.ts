@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {remote} from 'electron';
+import {ipcRenderer as ipc, remote} from 'electron';
 import Dialog from 'electron-dialog';
 import * as mime from 'mime-types';
 import * as os from 'os';
@@ -44,7 +44,7 @@ class Export extends Container<ExportState, MainCTX> {
 
   renderers = {
 
-    html: async ( note: NoteObj, options = { base64: true, icons: false, metadata: true } ) => {
+    html: async ( note: NoteObj, notePath: string, options = { base64: true, icons: false, metadata: true } ) => {
 
       //TODO: Remove the inline style once `misc.css` gets integrated with Svelto
 
@@ -111,7 +111,13 @@ ${content}
 
     },
 
-    pdf: () => {} //TODO
+    pdf: async ( note: NoteObj, dst: string ) => {
+
+      const html = await this.renderers.html ( note, dst, { base64: false, icons: false, metadata: false } );
+
+      ipc.send ( 'print-pdf', { html, dst } );
+
+    }
 
   }
 
@@ -137,12 +143,14 @@ ${content}
 
       /* CONTENT */
 
-      const content = await renderer ( note ),
-            name = path.parse ( note.filePath ).name,
+      const {name} = path.parse ( note.filePath ),
             baseName = `${name}.${extension}`,
-            {filePath: notePath} = await Path.getAllowedPath ( notesPath, baseName );
+            {filePath: notePath} = await Path.getAllowedPath ( notesPath, baseName ),
+            content = await renderer ( note, notePath );
 
-      File.write ( notePath, content );
+      if ( content ) {
+        File.write ( notePath, content );
+      }
 
       /* ATTACHMENTS */
 
