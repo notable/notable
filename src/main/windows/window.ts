@@ -55,7 +55,7 @@ class Window {
 
     if ( !Environment.isDevelopment ) return;
 
-    this.win.webContents.openDevTools ();
+    // this.win.webContents.openDevTools ();
 
     this.win.webContents.on ( 'devtools-opened', () => {
 
