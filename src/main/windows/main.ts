@@ -117,20 +117,20 @@ class Main extends Route {
         submenu: [
           {
             label: 'New',
-            accelerator: 'CommandOrControl+N',
+            accelerator: 'CmdOrCtrl+N',
             enabled: flags && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-new' )
           },
           {
             label: 'New from Template',
-            accelerator: 'CommandOrControl+Alt+Shift+N',
+            accelerator: 'CmdOrCtrl+Alt+Shift+N',
             enabled: flags && flags.hasNote && flags.isNoteTemplate && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote && flags.isNoteTemplate,
             click: () => this.win.webContents.send ( 'note-duplicate-template' )
           },
           {
             label: 'Duplicate',
-            accelerator: 'CommandOrControl+Shift+N',
+            accelerator: 'CmdOrCtrl+Shift+N',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-duplicate' )
           },
@@ -139,13 +139,13 @@ class Main extends Route {
           },
           {
             label: 'Open in Default App',
-            accelerator: 'CommandOrControl+O',
+            accelerator: 'CmdOrCtrl+O',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-open-in-app' )
           },
           {
             label: `Reveal in ${is.macOS () ? 'Finder' : 'Folder'}`,
-            accelerator: 'CommandOrControl+Alt+R',
+            accelerator: 'CmdOrCtrl+Alt+R',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-reveal' )
           },
@@ -154,19 +154,19 @@ class Main extends Route {
           },
           {
             label: flags && flags.hasNote && flags.isEditorEditing ? 'Stop Editing' : 'Edit',
-            accelerator: 'CommandOrControl+E',
+            accelerator: 'CmdOrCtrl+E',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-toggle' )
           },
           {
             label: flags && flags.hasNote && flags.isTagsEditing ? 'Stop Editing Tags' : 'Edit Tags',
-            accelerator: 'CommandOrControl+Shift+T',
+            accelerator: 'CmdOrCtrl+Shift+T',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-tags-toggle' )
           },
           {
             label: flags && flags.hasNote && flags.isAttachmentsEditing ? 'Stop Editing Attachments' : 'Edit Attachments',
-            accelerator: 'CommandOrControl+Shift+A',
+            accelerator: 'CmdOrCtrl+Shift+A',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-attachments-toggle' )
           },
@@ -175,13 +175,13 @@ class Main extends Route {
           },
           {
             label: flags && flags.hasNote && flags.isNoteFavorited ? 'Unfavorite' : 'Favorite',
-            accelerator: 'CommandOrControl+D',
+            accelerator: 'CmdOrCtrl+D',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-favorite-toggle' )
           },
           {
             label: flags && flags.hasNote && flags.isNotePinned ? 'Unpin' : 'Pin',
-            accelerator: 'CommandOrControl+P',
+            accelerator: 'CmdOrCtrl+P',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-pin-toggle' )
           },
@@ -190,28 +190,28 @@ class Main extends Route {
           },
           {
             label: 'Move to Trash',
-            accelerator: 'CommandOrControl+Backspace',
+            accelerator: 'CmdOrCtrl+Backspace',
             enabled: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isEditorEditing,
             click: () => this.win.webContents.send ( 'note-move-to-trash' )
           },
           {
             label: 'Move to Trash',
-            accelerator: 'CommandOrControl+Alt+Backspace',
+            accelerator: 'CmdOrCtrl+Alt+Backspace',
             enabled: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote && !flags.isNoteDeleted && flags.isEditorEditing,
             click: () => this.win.webContents.send ( 'note-move-to-trash' )
           },
           {
             label: 'Restore',
-            accelerator: 'CommandOrControl+Shift+Backspace',
+            accelerator: 'CmdOrCtrl+Shift+Backspace',
             enabled: flags && flags.hasNote && flags.isNoteDeleted && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote && flags.isNoteDeleted,
             click: () => this.win.webContents.send ( 'note-restore' )
           },
           {
             label: 'Permanently Delete',
-            accelerator: 'CommandOrControl+Alt+Shift+Backspace',
+            accelerator: 'CmdOrCtrl+Alt+Shift+Backspace',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote,
             click: () => this.win.webContents.send ( 'note-permanently-delete' )
@@ -235,17 +235,17 @@ class Main extends Route {
           },
           {
             label: 'Select Notes - All',
-            accelerator: 'CommandOrControl+Alt+A',
+            accelerator: 'CmdOrCtrl+Alt+A',
             click: () => this.win.webContents.send ( 'multi-editor-select-all' )
           },
           {
             label: 'Select Notes - Invert',
-            accelerator: 'CommandOrControl+Alt+I',
+            accelerator: 'CmdOrCtrl+Alt+I',
             click: () => this.win.webContents.send ( 'multi-editor-select-invert' )
           },
           {
             label: 'Select Notes - Clear',
-            accelerator: 'CommandOrControl+Alt+C',
+            accelerator: 'CmdOrCtrl+Alt+C',
             click: () => this.win.webContents.send ( 'multi-editor-select-clear' )
           },
           {
@@ -290,7 +290,7 @@ class Main extends Route {
           { type: 'separator' },
           {
             label: 'Toggle Focus Mode',
-            accelerator: 'CommandOrControl+Alt+F',
+            accelerator: 'CmdOrCtrl+Alt+F',
             click: () => this.win.webContents.send ( 'window-focus-toggle' )
           },
           { role: 'togglefullscreen' }
@@ -310,7 +310,7 @@ class Main extends Route {
           },
           {
             label: 'Search',
-            accelerator: 'CommandOrControl+F',
+            accelerator: 'CmdOrCtrl+F',
             click: () => this.win.webContents.send ( 'search-focus' )
           },
           {
