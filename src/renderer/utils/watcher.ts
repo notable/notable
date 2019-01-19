@@ -2,7 +2,11 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import * as chokidar from 'chokidar';
+
+/* IMPORT LAZY */
+
+const laxy = require ( 'laxy' ),
+      chokidar = laxy ( () => require ( 'chokidar' ) )();
 
 /* WATCHER */
 

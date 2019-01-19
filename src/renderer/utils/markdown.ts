@@ -6,16 +6,20 @@ import 'katex/dist/katex.min.css';
 
 import * as _ from 'lodash';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
-import * as mermaid from 'mermaid';
 import * as path from 'path';
 import * as pify from 'pify';
-import * as remark from 'remark';
 import * as strip from 'strip-markdown';
 import * as showdown from 'showdown';
-import * as showdownHighlight from 'showdown-highlight';
-import * as showdownKatex from 'showdown-katex-studdown';
-import * as showdownTargetBlack from 'showdown-target-blank';
 import Config from '@common/config';
+
+/* IMPORT LAZY */
+
+const laxy = require ( 'laxy' ),
+      mermaid = laxy ( () => require ( 'mermaid' ) )(),
+      remark = laxy ( () => require ( 'remark' ) )(),
+      showdownHighlight = laxy ( () => require ( 'showdown-highlight' ) )(),
+      showdownKatex = laxy ( () => require ( 'showdown-katex-studdown' ) )(),
+      showdownTargetBlack = laxy ( () => require ( 'showdown-target-blank' ) )();
 
 /* MARKDOWN */
 

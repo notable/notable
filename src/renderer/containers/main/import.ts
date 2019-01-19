@@ -3,7 +3,6 @@
 
 import {remote} from 'electron';
 import Dialog from 'electron-dialog';
-import EnexDump from 'enex-dump';
 import {Container} from 'overstated';
 import * as path from 'path';
 import * as sha1 from 'sha1';
@@ -11,6 +10,11 @@ import Config from '@common/config';
 import File from '@renderer/utils/file';
 import Metadata from '@renderer/utils/metadata';
 import Path from '@renderer/utils/path';
+
+/* IMPORT LAZY */
+
+const laxy = require ( 'laxy' ),
+      EnexDump = laxy ( () => require ( 'enex-dump' ).default )();
 
 /* IMPORT */
 

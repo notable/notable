@@ -3,11 +3,15 @@
 
 import {shell} from 'electron';
 import Dialog from 'electron-dialog';
-import * as decompress from 'decompress';
 import {Container} from 'overstated';
 import * as path from 'path';
 import pkg from '@root/package.json';
 import Config from '@common/config';
+
+/* IMPORT LAZY */
+
+const laxy = require ( 'laxy' ),
+      decompress = laxy ( () => require ( 'decompress' ) )();
 
 /* TUTORIAL */
 
