@@ -450,6 +450,10 @@ kbd {
   font-size: .5946142301em;
 }
 
+body.markdown-body {
+  padding: 20px;
+}
+
 /* custom checkboxes and radios */
 input[type="checkbox"], input[type="checkbox"]:focus, input[type="radio"],
 input[type="radio"]:focus, input[type="checkbox"]:hover:active,

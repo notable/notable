@@ -54,9 +54,19 @@ class Editor extends Container<EditorState, MainCTX> {
 
       const cm = this.getCodeMirror ();
 
-      if ( !cm || state.docHeight !== this._getDocHeight ( cm ) ) return;
+      if ( !cm ) return;
 
-      cm.setSelections ( state.selections );
+      if ( state.history ) {
+
+        cm.doc.setHistory ( state.history );
+
+      }
+
+      if ( !state.selections.length || ( state.selections.length === 1 && state.selections[0].anchor.ch === 0 && state.selections[0].anchor.line === 0 ) || state.docHeight === this._getDocHeight ( cm ) ) {
+
+        cm.setSelections ( state.selections );
+
+      }
 
     },
 
@@ -80,8 +90,31 @@ class Editor extends Container<EditorState, MainCTX> {
 
       this.editingState.set ({
         scrollTop: 0,
-        selections: []
+        history: {
+          done: [],
+          undone: []
+        },
+        selections: [{
+          anchor: {
+            ch: 0,
+            line: 0
+          },
+          head: {
+            ch: 0,
+            line: 0
+          }
+        }]
       });
+
+    },
+
+    focus: () => {
+
+      const cm = this.getCodeMirror ();
+
+      if ( !cm ) return;
+
+      cm.focus ();
 
     }
 

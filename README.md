@@ -32,13 +32,17 @@ So I built my own.
 
 Upon first instantiation, some tutorial notes will be added to the app, check them out for more in-depth details about the app and how to use it. You can also find the raw version [here](https://github.com/fabiospampinato/notable/tree/master/resources/tutorial/notes).
 
-## Comparison
+## [Comparison](resources/comparison/table.png?raw=true)
 
 [![Click to Enlarge](resources/comparison/table.png)](resources/comparison/table.png?raw=true)
 
 Part of this comparison is personal opinion: you may disagree on the UI front, things I consider bloat may be considered features by somebody else etc. but hopefully this comparison did a good job at illustrating the main differences.
 
 ## Demo
+
+### Indefinitely Nestable Tags
+
+<img src="resources/demo/tags.png" alt="Indefinitely Nestable Tags" width="750">
 
 ### Editor
 

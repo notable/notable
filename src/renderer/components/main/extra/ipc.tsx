@@ -34,6 +34,9 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.on ( 'cwd-change', this.__cwdChange );
     ipc.on ( 'cwd-open-in-app', this.__cwdOpenInApp );
     ipc.on ( 'import', this.__import );
+    ipc.on ( 'export-html', this.__exportHTML );
+    ipc.on ( 'export-markdown', this.__exportMarkdown );
+    ipc.on ( 'export-pdf', this.__exportPDF );
     ipc.on ( 'window-focus-toggle', this.__windowFocusToggle );
     ipc.on ( 'window-fullscreen-set', this.__windowFullscreenSet );
     ipc.on ( 'multi-editor-select-all', this.__multiEditorSelectAll );
@@ -67,6 +70,9 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.removeListener ( 'cwd-change', this.__cwdChange );
     ipc.removeListener ( 'cwd-open-in-app', this.__cwdOpenInApp );
     ipc.removeListener ( 'import', this.__import );
+    ipc.removeListener ( 'export-html', this.__exportHTML );
+    ipc.removeListener ( 'export-markdown', this.__exportMarkdown );
+    ipc.removeListener ( 'export-pdf', this.__exportPDF );
     ipc.removeListener ( 'window-focus-toggle', this.__windowFocusToggle );
     ipc.removeListener ( 'window-fullscreen-set', this.__windowFullscreenSet );
     ipc.removeListener ( 'multi-editor-select-all', this.__multiEditorSelectAll );
@@ -112,6 +118,24 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   __import = () => {
 
     this.main.import.select ();
+
+  }
+
+  __exportHTML = () => {
+
+    this.main.export.exportHTML ();
+
+  }
+
+  __exportMarkdown = () => {
+
+    this.main.export.exportMarkdown ();
+
+  }
+
+  __exportPDF = () => {
+
+    this.main.export.exportPDF ();
 
   }
 

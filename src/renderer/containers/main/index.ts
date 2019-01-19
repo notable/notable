@@ -7,6 +7,7 @@ import {Container, compose} from 'overstated';
 import Attachment from './attachment';
 import Attachments from './attachments';
 import Editor from './editor';
+import Export from './export';
 import Import from './import';
 import Loading from './loading';
 import MultiEditor from './multi_editor';
@@ -149,6 +150,7 @@ export default compose ({
   attachment: Attachment,
   attachments: Attachments,
   editor: Editor,
+  export: Export,
   import: Import,
   loading: Loading,
   multiEditor: MultiEditor,

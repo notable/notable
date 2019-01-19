@@ -5,7 +5,6 @@ import * as React from 'react';
 import {connect} from 'overstated';
 import Main from '@renderer/containers/main';
 import Code from './code';
-import CodeUtils from './code/utils';
 
 /* EDITOR EDITING */
 
@@ -13,31 +12,23 @@ class EditorEditing extends React.Component<any, undefined> {
 
   componentDidMount () {
 
-    this.focus ();
+    this.props.focus ();
+    this.props.reset ();
 
   }
 
   componentDidUpdate () {
 
-    this.focus ();
-
-  }
-
-  focus () {
-
-    const cm = this.props.getCodeMirror ();
-
-    if ( !cm ) return;
-
-    CodeUtils.focus ( cm );
+    this.props.focus ();
+    this.props.reset ();
 
   }
 
   render () {
 
-    const {content, saveState, restoreState} = this.props;
+    const {content, save, restore} = this.props;
 
-    return <Code className="layout-content editor editing" value={content} onBlur={saveState} onFocus={restoreState} />;
+    return <Code className="layout-content editor editing" value={content} onBlur={save} onFocus={restore} />;
 
   }
 
@@ -50,8 +41,9 @@ export default connect ({
   selector: ({ container }) => ({
     id: container.note.getChecksum (),
     content: container.note.getPlainContent (),
-    getCodeMirror: container.editor.getCodeMirror,
-    saveState: container.editor.editingState.save,
-    restoreState: container.editor.editingState.restore
+    focus: container.editor.editingState.focus,
+    save: container.editor.editingState.save,
+    restore: container.editor.editingState.restore,
+    reset: container.editor.editingState.reset
   })
 })( EditorEditing );

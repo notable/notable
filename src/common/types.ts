@@ -79,6 +79,8 @@ type EditorPreviewingState = undefined | {
   scrollTop: number
 };
 
+type ExportState = {};
+
 type ImportState = {};
 
 type LoadingState = {
@@ -132,6 +134,7 @@ type MainState = {
   attachment: AttachmentState,
   attachments: AttachmentsState,
   editor: EditorState,
+  export: ExportState,
   import: ImportState,
   loading: LoadingState,
   multiEditor: MultiEditorState,
@@ -158,6 +161,7 @@ type MainCTX = {
   attachment: import ( '@renderer/containers/main/attachment' ).default,
   attachments: import ( '@renderer/containers/main/attachments' ).default,
   editor: import ( '@renderer/containers/main/editor' ).default,
+  export: import ( '@renderer/containers/main/export' ).default,
   import: import ( '@renderer/containers/main/import' ).default,
   loading: import ( '@renderer/containers/main/loading' ).default,
   multiEditor: import ( '@renderer/containers/main/multi_editor' ).default,
