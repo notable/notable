@@ -50,7 +50,7 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 
 ### Multi-Note Editor
 
-<img src="resources/demo/multi_editor.png" alt="Editor" width="750">
+<img src="resources/demo/multi_editor.png" alt="Multi-Note Editor" width="750">
 
 ## Contributing
 
