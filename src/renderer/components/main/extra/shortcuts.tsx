@@ -106,6 +106,8 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
     window.getSelection ().selectAllChildren ( $editor[0] );
 
+    return; //TSC
+
   }
 
   __editorsEscape () {

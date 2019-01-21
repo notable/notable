@@ -61,7 +61,7 @@ class Export extends Container<ExportState, MainCTX> {
           metadata: string[] = [];
 
       if ( !options.icons ) {
-        content = content.replace ( /<i class="icon xsmall">([^<]*?)<\/i>/gi, '' ); // Removing icons, as they won't get renderer
+        content = content.replace ( /<i class="icon[^"]*?">([^<]*?)<\/i>/gi, '' ); // Removing icons, as they won't get renderer
       }
 
       if ( options.metadata ) {
