@@ -8,6 +8,10 @@ import Utils from '@renderer/utils/utils';
 
 class Editor extends Container<EditorState, MainCTX> {
 
+  /* VARIABLES */
+
+  _prevSplitEditing = false;
+
   /* STATE */
 
   state = {
@@ -213,7 +217,9 @@ class Editor extends Container<EditorState, MainCTX> {
 
   toggleSplit = ( split: boolean = !this.state.split ) => {
 
-    const editing = split || this.isEditing ();
+    const editing = split ? true : this._prevSplitEditing;
+
+    if ( split ) this._prevSplitEditing = this.isEditing (); // Saving editing state
 
     return this.setState ({ editing, split });
 
