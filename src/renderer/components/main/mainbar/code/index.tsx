@@ -2,6 +2,8 @@
 /* IMPORT */
 
 import './codemirror';
+
+import * as _ from 'lodash';
 import * as is from 'electron-is';
 import * as React from 'react';
 import {UnControlled as CodeMirror} from 'react-codemirror2';
@@ -50,11 +52,11 @@ const options: any = { //TSC
 
 /* CODE */
 
-const Code = ({ className, value, onBlur, onFocus }) => {
+const Code = ({ className, value, onBlur = _.noop, onFocus = _.noop, onChange = _.noop }) => {
 
   Utils.initOptions ( options );
 
-  return <CodeMirror className={className} value={value} options={options} onBlur={onBlur} onFocus={onFocus} />
+  return <CodeMirror className={className} value={value} options={options} onBlur={onBlur} onFocus={onFocus} onChange={onChange} />;
 
 };
 

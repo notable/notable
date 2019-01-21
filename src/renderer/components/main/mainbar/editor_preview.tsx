@@ -20,7 +20,7 @@ const EditorPreview = ({ content }) => {
 
 export default connect ({
   container: Main,
-  selector: ({ container }) => ({
-    content: container.note.getPlainContent ()
+  selector: ({ container, content }) => ({
+    content: content || container.note.getPlainContent ()
   })
 })( EditorPreview );
