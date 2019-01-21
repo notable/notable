@@ -20,7 +20,7 @@ function clipboard ( str ) {
   console.log ( 'Copied to clipboard!' );
 }
 
-function skeleton ( inlineCSS = false ) {
+function skeleton ( inlineCSS = true ) {
   const css = Array.from ( document.styleSheets ).map ( css => css.href ).filter ( _.identity );
   $('body > :not(#app)').remove ();
   $('#main').children ().not ( '#sidebar, #middlebar, #mainbar' ).remove ();
