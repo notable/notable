@@ -64,6 +64,7 @@ class Main extends Container<MainState, MainCTX> {
 
     if ( !( prev.note.note && !this.state.note.note ) ) return;
 
+    if ( this.ctx.editor.isSplit () ) this.ctx.editor.toggleSplit ( false );
     if ( this.ctx.editor.isEditing () ) this.ctx.editor.toggleEditing ( false );
     if ( this.ctx.tags.isEditing () ) this.ctx.tags.toggleEditing ( false );
     if ( this.ctx.attachments.isEditing () ) this.ctx.attachments.toggleEditing ( false );
@@ -72,7 +73,7 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareResetEditor ( prev: MainState ) {
 
-    if ( !( !prev.editor.editing && !this.state.editor.editing && !this.ctx.note.is ( prev.note.note, this.state.note.note, true ) ) ) return;
+    if ( !( ( ( !prev.editor.editing && !this.state.editor.editing ) || this.state.editor.split ) && !this.ctx.note.is ( prev.note.note, this.state.note.note, true ) ) ) return;
 
     return this.ctx.editor.previewingState.reset ();
 
