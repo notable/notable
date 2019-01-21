@@ -227,6 +227,19 @@
   display: block !important;
 }
 
+#mainbar .split-editor {
+  height: 100%;
+}
+
+#mainbar .split-editor > .editor {
+  height: auto;
+  width: 50%;
+}
+
+#mainbar .split-editor > .editor.preview {
+  border-left: 1px solid #e2e2e2 !important;
+}
+
 #mainbar .multi-editor {
   position: absolute;
   top: 50%;

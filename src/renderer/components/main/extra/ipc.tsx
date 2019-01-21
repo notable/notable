@@ -39,6 +39,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.on ( 'export-pdf', this.__exportPDF );
     ipc.on ( 'window-focus-toggle', this.__windowFocusToggle );
     ipc.on ( 'window-fullscreen-set', this.__windowFullscreenSet );
+    ipc.on ( 'editor-split-toggle', this.__editorSplitToggle );
     ipc.on ( 'multi-editor-select-all', this.__multiEditorSelectAll );
     ipc.on ( 'multi-editor-select-invert', this.__multiEditorSelectInvert );
     ipc.on ( 'multi-editor-select-clear', this.__multiEditorSelectClear );
@@ -75,6 +76,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.removeListener ( 'export-pdf', this.__exportPDF );
     ipc.removeListener ( 'window-focus-toggle', this.__windowFocusToggle );
     ipc.removeListener ( 'window-fullscreen-set', this.__windowFullscreenSet );
+    ipc.removeListener ( 'editor-split-toggle', this.__editorSplitToggle );
     ipc.removeListener ( 'multi-editor-select-all', this.__multiEditorSelectAll );
     ipc.removeListener ( 'multi-editor-select-invert', this.__multiEditorSelectInvert );
     ipc.removeListener ( 'multi-editor-select-clear', this.__multiEditorSelectClear );
@@ -148,6 +150,12 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   __windowFullscreenSet = ( event, isFullscreen? ) => {
 
     this.main.window.toggleFullscreen ( isFullscreen );
+
+  }
+
+  __editorSplitToggle = () => {
+
+    this.main.editor.toggleSplit ();
 
   }
 

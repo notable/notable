@@ -293,6 +293,11 @@ class Main extends Route {
             accelerator: 'CmdOrCtrl+Alt+F',
             click: () => this.win.webContents.send ( 'window-focus-toggle' )
           },
+          {
+            label: 'Toggle Split View Mode',
+            accelerator: 'CmdOrCtrl+Alt+S',
+            click: () => this.win.webContents.send ( 'editor-split-toggle' )
+          },
           { role: 'togglefullscreen' }
         ]
       },

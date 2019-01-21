@@ -11,7 +11,8 @@ class Editor extends Container<EditorState, MainCTX> {
   /* STATE */
 
   state = {
-    editing: false
+    editing: false,
+    split: false
   };
 
   /* HELPERS */
@@ -186,6 +187,8 @@ class Editor extends Container<EditorState, MainCTX> {
 
   toggleEditing = ( editing: boolean = !this.state.editing ) => {
 
+    if ( this.isSplit () ) return;
+
     if ( editing ) {
 
       this.previewingState.save ();
@@ -199,6 +202,20 @@ class Editor extends Container<EditorState, MainCTX> {
     }
 
     return this.setState ({ editing });
+
+  }
+
+  isSplit = (): boolean => {
+
+    return this.state.split;
+
+  }
+
+  toggleSplit = ( split: boolean = !this.state.split ) => {
+
+    const editing = split || this.isEditing ();
+
+    return this.setState ({ editing, split });
 
   }
 
