@@ -82,13 +82,17 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   __editorToggle () {
 
+    if ( this.props.container.editor.isSplit () ) return null;
+
     this.props.container.editor.toggleEditing ();
+
+    return; //TSC
 
   }
 
   __editorSave () {
 
-    if ( !this.props.container.editor.isEditing () ) return null;
+    if ( !this.props.container.editor.isEditing () || this.props.container.editor.isSplit () ) return null;
 
     this.props.container.editor.toggleEditing ();
 
@@ -98,13 +102,17 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   __editorSelectAll () {
 
-    if ( this.props.container.editor.isEditing () || this.props.container.multiEditor.isEditing () ) return null;
+    if ( this.props.container.multiEditor.isEditing () ) return null;
 
-    const $editor = $('#mainbar .editor');
+    const $editorEditing = $('#mainbar .editor.editing');
 
-    if ( !$editor.length ) return null;
+    if ( $editorEditing.length && $editorEditing[0].contains ( document.activeElement ) ) return null;
 
-    window.getSelection ().selectAllChildren ( $editor[0] );
+    const $editorPreview = $('#mainbar .editor.preview');
+
+    if ( !$editorPreview.length ) return null;
+
+    window.getSelection ().selectAllChildren ( $editorPreview[0] );
 
     return; //TSC
 
@@ -116,7 +124,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
     if ( this.props.container.multiEditor.isEditing () ) return this.props.container.multiEditor.selectClear ();
 
-    if ( this.props.container.editor.isEditing () ) return this.props.container.editor.toggleEditing ( false );
+    if ( this.props.container.editor.isEditing () && !this.props.container.editor.isSplit () ) return this.props.container.editor.toggleEditing ( false );
 
     return null;
 
