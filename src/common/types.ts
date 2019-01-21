@@ -201,6 +201,7 @@ type StateFlags = {
   hasNote: boolean,
   isAttachmentsEditing: boolean,
   isEditorEditing: boolean,
+  isEditorSplitView: boolean,
   isMultiEditorEditing: boolean,
   isNoteDeleted: boolean,
   isNoteFavorited: boolean,

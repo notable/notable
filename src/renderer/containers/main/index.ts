@@ -96,14 +96,15 @@ class Main extends Container<MainState, MainCTX> {
 
     const flags: StateFlags = {
       hasNote: !!app.note.get (),
-      isEditorEditing: app.editor.isEditing (),
-      isMultiEditorEditing: app.multiEditor.isEditing (),
-      isTagsEditing: app.tags.isEditing (),
       isAttachmentsEditing: app.attachments.isEditing (),
+      isEditorEditing: app.editor.isEditing (),
+      isEditorSplitView: app.editor.isSplit (),
+      isMultiEditorEditing: app.multiEditor.isEditing (),
+      isNoteDeleted: app.note.isDeleted (),
       isNoteFavorited: app.note.isFavorited (),
       isNotePinned: app.note.isPinned (),
-      isNoteDeleted: app.note.isDeleted (),
-      isNoteTemplate: !!app.note.getTags ( undefined, TagSpecials.TEMPLATES ).length
+      isNoteTemplate: !!app.note.getTags ( undefined, TagSpecials.TEMPLATES ).length,
+      isTagsEditing: app.tags.isEditing ()
     };
 
     if ( _.isEqual ( app._prevFlags, flags ) ) return; // Nothing changed, no need to update the main process
