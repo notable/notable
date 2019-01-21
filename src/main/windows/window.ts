@@ -73,7 +73,7 @@ class Window {
 
   events () {
 
-    this.___readyToShow ();
+    this.___didFinishLoad ();
     this.___closed ();
     this.___focused ();
 
@@ -81,13 +81,13 @@ class Window {
 
   /* READY TO SHOW */
 
-  ___readyToShow () {
+  ___didFinishLoad () {
 
-    this.win.on ( 'ready-to-show', this.__readyToShow.bind ( this ) );
+    this.win.webContents.on ( 'did-finish-load', this.__didFinishLoad.bind ( this ) );
 
   }
 
-  __readyToShow () {
+  __didFinishLoad () {
 
     this.win.show ();
     this.win.focus ();

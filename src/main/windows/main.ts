@@ -525,7 +525,7 @@ class Main extends Route {
 
     super.load ();
 
-    setTimeout ( this.__readyToShow.bind ( this ), 500 ); //TODO: Ideally the timeout should be 0, for for that we need to minimize the amount of work happening before the skeleton can be rendered
+    setTimeout ( this.__didFinishLoad.bind ( this ), 500 ); //TODO: Ideally the timeout should be 0, for for that we need to minimize the amount of work happening before the skeleton can be rendered
 
   }
 
