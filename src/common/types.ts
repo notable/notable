@@ -65,7 +65,8 @@ type AttachmentsState = {
 };
 
 type EditorState = {
-  editing: boolean
+  editing: boolean,
+  split: boolean
 };
 
 type EditorEditingState = undefined | {

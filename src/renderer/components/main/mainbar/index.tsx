@@ -8,11 +8,12 @@ import PopoverNoteAttachments from '@renderer/components/main/popovers/popover_n
 import PopoverTagsAttachments from '@renderer/components/main/popovers/popover_note_tags';
 import Editor from './editor';
 import MultiEditor from './multi_editor';
+import SplitEditor from './split_editor';
 import Toolbar from './toolbar';
 
 /* MAINBAR */
 
-const Mainbar = ({ isMultiEditing }) => (
+const Mainbar = ({ isMultiEditing, isSplit }) => (
   <div id="mainbar" className="layout">
     { isMultiEditing ? (
       <MultiEditor />
@@ -21,7 +22,7 @@ const Mainbar = ({ isMultiEditing }) => (
         <PopoverNoteAttachments />
         <PopoverTagsAttachments />
         <Toolbar />
-        <Editor />
+        {isSplit ? <SplitEditor /> : <Editor />}
       </>
     )}
   </div>
@@ -32,7 +33,8 @@ const Mainbar = ({ isMultiEditing }) => (
 export default connect ({
   container: Main,
   selector: ({ container }) => ({
-    isMultiEditing: container.multiEditor.isEditing ()
+    isMultiEditing: container.multiEditor.isEditing (),
+    isSplit: container.editor.isSplit ()
   })
 })( Mainbar );
 
