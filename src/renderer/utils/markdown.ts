@@ -261,6 +261,8 @@ const Markdown = {
 
   strip: async ( str: string ): Promise<string> => {
 
+    if ( !Markdown.is ( str ) ) return str;
+
     return ( await pify ( remark ().use ( strip ).process )( str ) ).toString ();
 
   }
