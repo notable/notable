@@ -141,7 +141,7 @@ class Window {
       icon: path.join ( __static, 'images', `icon.${is.windows () ? 'ico' : 'png'}` ),
       show: false,
       title: pkg.productName,
-      titleBarStyle: 'hiddenInset',
+      titleBarStyle: 'hidden',
       webPreferences: {
         webSecurity: false
       }
