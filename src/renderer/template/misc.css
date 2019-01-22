@@ -246,7 +246,7 @@ div.button:not(.active).bordered > i.icon {
 }
 
 #mainbar .split-editor > .editor.preview {
-  border-left: 1px solid #e2e2e2 !important;
+  border-left: 1px solid #494949 !important;
 }
 
 #mainbar .multi-editor {
