@@ -26,9 +26,9 @@ class EditorEditing extends React.Component<any, undefined> {
 
   render () {
 
-    const {content, save, restore} = this.props;
+    const {content, save, restore, onChange} = this.props;
 
-    return <Code className="layout-content editor editing" value={content} onBlur={save} onFocus={restore} />;
+    return <Code className="layout-content editor editing" value={content} onBlur={save} onFocus={restore} onChange={onChange} />;
 
   }
 
@@ -38,7 +38,8 @@ class EditorEditing extends React.Component<any, undefined> {
 
 export default connect ({
   container: Main,
-  selector: ({ container }) => ({
+  selector: ({ container, onChange }) => ({
+    onChange,
     id: container.note.getChecksum (),
     content: container.note.getPlainContent (),
     focus: container.editor.editingState.focus,

@@ -333,7 +333,7 @@ div.button:not(.active).bordered > i.icon {
 
 #sidebar,
 #middlebar,
-#mainbar > *:not(.editor),
+#mainbar > *:not(.editor):not(.split-editor),
 .popover,
 .title {
   user-select: none !important;

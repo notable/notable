@@ -64,6 +64,7 @@ class Main extends Container<MainState, MainCTX> {
 
     if ( !( prev.note.note && !this.state.note.note ) ) return;
 
+    if ( this.ctx.editor.isSplit () ) this.ctx.editor.toggleSplit ( false );
     if ( this.ctx.editor.isEditing () ) this.ctx.editor.toggleEditing ( false );
     if ( this.ctx.tags.isEditing () ) this.ctx.tags.toggleEditing ( false );
     if ( this.ctx.attachments.isEditing () ) this.ctx.attachments.toggleEditing ( false );
@@ -72,7 +73,7 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareResetEditor ( prev: MainState ) {
 
-    if ( !( !prev.editor.editing && !this.state.editor.editing && !this.ctx.note.is ( prev.note.note, this.state.note.note, true ) ) ) return;
+    if ( !( ( ( !prev.editor.editing && !this.state.editor.editing ) || this.state.editor.split ) && !this.ctx.note.is ( prev.note.note, this.state.note.note, true ) ) ) return;
 
     return this.ctx.editor.previewingState.reset ();
 
@@ -96,14 +97,15 @@ class Main extends Container<MainState, MainCTX> {
 
     const flags: StateFlags = {
       hasNote: !!app.note.get (),
-      isEditorEditing: app.editor.isEditing (),
-      isMultiEditorEditing: app.multiEditor.isEditing (),
-      isTagsEditing: app.tags.isEditing (),
       isAttachmentsEditing: app.attachments.isEditing (),
+      isEditorEditing: app.editor.isEditing (),
+      isEditorSplitView: app.editor.isSplit (),
+      isMultiEditorEditing: app.multiEditor.isEditing (),
+      isNoteDeleted: app.note.isDeleted (),
       isNoteFavorited: app.note.isFavorited (),
       isNotePinned: app.note.isPinned (),
-      isNoteDeleted: app.note.isDeleted (),
-      isNoteTemplate: !!app.note.getTags ( undefined, TagSpecials.TEMPLATES ).length
+      isNoteTemplate: !!app.note.getTags ( undefined, TagSpecials.TEMPLATES ).length,
+      isTagsEditing: app.tags.isEditing ()
     };
 
     if ( _.isEqual ( app._prevFlags, flags ) ) return; // Nothing changed, no need to update the main process

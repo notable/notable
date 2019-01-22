@@ -155,7 +155,7 @@ class Main extends Route {
           {
             label: flags && flags.hasNote && flags.isEditorEditing ? 'Stop Editing' : 'Edit',
             accelerator: 'CmdOrCtrl+E',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            enabled: flags && flags.hasNote && !flags.isEditorSplitView && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-toggle' )
           },
           {
