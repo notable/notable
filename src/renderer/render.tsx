@@ -5,7 +5,7 @@ import '@static/css/notable.min.css';
 import '@static/javascript/notable.min.js';
 import './template/misc.css';
 import './template/misc-dark.css';
-import './template/github_dark.css';
+import './template/github-dark.css';
 import './template/codemirror-one-dark.css';
 
 import * as React from 'react';

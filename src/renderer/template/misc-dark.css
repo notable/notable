@@ -106,40 +106,6 @@ div.button:not(.active).bordered > i.icon {
   border-bottom: 1px solid #494949 !important;
 }
 
-/* custom checkboxes from GitHub-Dark */
-#mainbar .editor input[type="checkbox"],
-#mainbar .editor input[type="checkbox"]:focus,
-#mainbar .editor input[type="checkbox"]:hover:active,
-#mainbar .editor input[type="checkbox"]:disabled,
-#mainbar .editor input[type="checkbox"]:hover:disabled,
-#mainbar .editor input[type="checkbox"]:hover:active:disabled {
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  background-color: #181818 !important;
-  border: 1px solid #484848 !important;
-  color: #eee !important;
-  height: 1em !important;
-  width: 1em !important;
-}
-
-input[type="checkbox"]:checked {
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 0h512v512H0z"/><path fill="%23ddd" d="M99 213l-1 89 104 102 205-201v-91L203 315 99 213z"/></svg>') !important;
-  background-size: cover !important;
-}
-
-input[type="checkbox"]:indeterminate {
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="%23000"/><rect x="64" y="192" width="384" height="128" fill="%23ddd"/></svg>') !important;
-  background-size: cover !important;
-}
-
-#mainbar .editor input.focus[type="text"],
-#mainbar .editor input[type="checkbox"]:focus,
-#mainbar .editor input[type="checkbox"]:hover:active {
-  border-color: /*[[base-color]]*/ #4f8cc9 !important;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .075), 0 0 2px /*[[base-color]]*/ #4f8cc9 !important;
-  outline-color: /*[[base-color]]*/ #4f8cc9 !important;
-}
-
 /* links in tables */
 table a {
   color: #4f8cc9;
