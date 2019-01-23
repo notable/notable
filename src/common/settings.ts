@@ -13,8 +13,7 @@ const Settings = new Store ({
     cwd: undefined,
     codemirror: {
       options: {
-        lineWrapping: true,
-        // theme: 'one-dark'
+        lineWrapping: true
       }
     },
     sorting: {

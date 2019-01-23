@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import 'highlight.js/styles/atom-one-dark';
+import 'highlight.js/styles/atom-one-dark'; // Syntax highlight in preview dark
 import 'katex/dist/katex.min.css';
 
 import * as _ from 'lodash';

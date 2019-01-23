@@ -23,8 +23,8 @@
     }
 
     .layout-header {
-      background-color: #4b4a4a;
-      border-color: #222;
+      background-color: #000;
+      border-color: #000;
       color: #fff
     }
 
@@ -116,7 +116,7 @@
     body {
       background-color: #181818;
       color: #dcdcdc;
-      border-color: #484848;
+      border-color: #414141;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
       font-size: 1rem;
       line-height: 1.375;
@@ -124,7 +124,7 @@
     }
 
     ::placeholder {
-      color: rgba(200, 200, 200, .65)
+      color: rgba(220, 220, 220, .65)
     }
 
     #app,
@@ -134,46 +134,46 @@
     }
 
     #sidebar {
-      background-color: #181818;
+      background-color: #333e45;
       flex: 1 1 165px;
       min-width: 165px;
       max-width: 350px
     }
 
     #middlebar {
-      background-color: #212124;
+      background-color: #fdfdfd;
       flex: 2 2 193px;
       min-width: 193px;
       max-width: 450px
     }
 
     #middlebar .layout-header {
-      background: #212124;
-      border-color: #494949
+      background: #f4f4f4;
+      border-color: #d8d8d8
     }
 
     #middlebar .header {
+      background-color: #f8f8f8;
       height: 27px;
       flex-grow: 0;
+      border-bottom: 1px solid #e2e2e2 !important;
+      color: rgba(31, 31, 31, .65);
       padding: 0;
       text-align: center;
       overflow: hidden;
       display: flex
     }
 
-    #middlebar>#middlebar-toolbar.layout-header {
-      background: #181818
-    }
-
     #mainbar {
-      background-color: #181818;
+      background-color: #f4f4f4;
+      border-left: 1px solid #d8d8d8;
       flex: 4 4 327px;
       min-width: 327px
     }
 
     #mainbar .layout-header {
-      background: #181818;
-      border-color: #494949
+      background: #f4f4f4;
+      border-color: #d8d8d8
     }
 
     .layout .layout-header {
@@ -186,6 +186,39 @@
     .layout-content {
       height: 0;
       overflow: auto
+    }
+
+    #sidebar {
+      background-color: #181818
+    }
+
+    #middlebar {
+      background-color: #212124
+    }
+
+    #middlebar .layout-header {
+      background: #212124;
+      border-color: #494949
+    }
+
+    #middlebar .header {
+      background-color: inherit !important;
+      border-bottom: none !important;
+      color: inherit !important
+    }
+
+    #middlebar>#middlebar-toolbar.layout-header {
+      background: #181818
+    }
+
+    #mainbar {
+      background-color: #181818;
+      border-left: none !important
+    }
+
+    #mainbar .layout-header {
+      background: #181818;
+      border-color: #494949
     }
 
     .header {
@@ -226,7 +259,7 @@
 
 <body>
   <div id="app">
-    <div id="main" class="app-wrapper layout horizontal">
+    <div id="main" class="layout horizontal app-wrapper">
       <div id="sidebar" class="layout" style=""></div>
       <div id="middlebar" class="layout" style="">
         <div id="middlebar-toolbar" class="layout-header"></div>

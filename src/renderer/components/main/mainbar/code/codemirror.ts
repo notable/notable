@@ -3,8 +3,6 @@
 
 import 'codemirror/lib/codemirror.css';
 // import 'codemirror-github-light/lib/codemirror-github-light-theme.css';
-// import 'codemirror-github-dark/lib/codemirror-github-dark-theme.css';
-// import 'codemirror-one-dark-theme/one-dark.css';
 import 'primer-markdown/build/build.css';
 import 'codemirror/keymap/sublime.js';
 import 'codemirror/mode/apl/apl.js';

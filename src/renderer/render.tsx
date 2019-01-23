@@ -5,8 +5,8 @@ import '@static/css/notable.min.css';
 import '@static/javascript/notable.min.js';
 import './template/misc.css';
 import './template/misc-dark.css';
-import './template/github-dark.css';
-import './template/codemirror-one-dark.css';
+import './template/github-dark.css'; // Preview mode dark
+import './template/codemirror-one-dark.css'; // Edit mode dark
 
 import * as React from 'react';
 import {render as renderDOM} from 'react-dom';

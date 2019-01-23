@@ -55,7 +55,7 @@ class Window {
 
     if ( !Environment.isDevelopment ) return;
 
-    // this.win.webContents.openDevTools ();
+    this.win.webContents.openDevTools ();
 
     this.win.webContents.on ( 'devtools-opened', () => {
 
@@ -137,22 +137,17 @@ class Window {
 
     options = _.merge ( dimensions, {
       frame: !is.macOS (),
-      backgroundColor: '#181818',
+      backgroundColor: '#fdfdfd',
       icon: path.join ( __static, 'images', `icon.${is.windows () ? 'ico' : 'png'}` ),
       show: false,
       title: pkg.productName,
       titleBarStyle: 'hiddenInset',
       webPreferences: {
         webSecurity: false
-      },
-      width: 0,
-      height: 0,
-      x: 0,
-      y: 0
+      }
     }, options );
 
     const win = new BrowserWindow ( options );
-    win.show ();
 
     state.manage ( win );
 
