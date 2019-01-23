@@ -143,7 +143,7 @@ const Markdown = {
           replace ( match, $1, $2, $3 ) {
             $2 = decodeURI ( $2 );
             const filePath = path.join ( attachmentsPath, $2 );
-            return `<img${$1}src="file://${filePath}" class="attachment" data-filename="${$2}"${$3}>`;
+            return `<img${$1}src="file://${encodeURI ( filePath )}" class="attachment" data-filename="${$2}"${$3}>`;
           }
         },
         { // Link Button
@@ -153,7 +153,7 @@ const Markdown = {
             $2 = decodeURI ( $2 );
             const basename = path.basename ( $2 );
             const filePath = path.join ( attachmentsPath, $2 );
-            return `<a${$1}href="file://${filePath}" class="attachment button gray" data-filename="${$2}"${$3}><i class="icon small">paperclip</i><span>${basename}</span></a>`;
+            return `<a${$1}href="file://${encodeURI ( filePath )}" class="attachment button gray" data-filename="${$2}"${$3}><i class="icon small">paperclip</i><span>${basename}</span></a>`;
           }
         },
         { // Link
@@ -162,7 +162,7 @@ const Markdown = {
           replace ( match, $1, $2, $3 ) {
             $2 = decodeURI ( $2 );
             const filePath = path.join ( attachmentsPath, $2 );
-            return `<a${$1}href="file://${filePath}" class="attachment" data-filename="${$2}"${$3}><i class="icon xsmall">paperclip</i>`;
+            return `<a${$1}href="file://${encodeURI ( filePath )}" class="attachment" data-filename="${$2}"${$3}><i class="icon xsmall">paperclip</i>`;
           }
         }
       ];
@@ -183,7 +183,7 @@ const Markdown = {
             $2 = decodeURI ( $2 );
             const basename = path.basename ( $2 );
             const filePath = path.join ( notesPath, $2 );
-            return `<a${$1}href="file://${filePath}" class="note button gray" data-filepath="${filePath}"${$3}><i class="icon small">note</i><span>${basename}</span></a>`;
+            return `<a${$1}href="file://${encodeURI ( filePath )}" class="note button gray" data-filepath="${filePath}"${$3}><i class="icon small">note</i><span>${basename}</span></a>`;
           }
         },
         { // Link
@@ -192,7 +192,7 @@ const Markdown = {
           replace ( match, $1, $2, $3 ) {
             $2 = decodeURI ( $2 );
             const filePath = path.join ( notesPath, $2 );
-            return `<a${$1}href="file://${filePath}" class="note" data-filepath="${filePath}"${$3}><i class="icon xsmall">note</i>`;
+            return `<a${$1}href="file://${encodeURI ( filePath )}" class="note" data-filepath="${filePath}"${$3}><i class="icon xsmall">note</i>`;
           }
         }
       ];
