@@ -4,9 +4,9 @@
   "description": "The markdown-based note-taking app that doesn't suck.",
   "version": "1.1.0",
   "scripts": {
-    "clean:deps": "del 'node_modules/**/{README,LICENSE,license,.travis.yml,tsconfig.json,*.{md,MD,map,png,svg,ts}}' '!node_modules/**/*.d.ts'",
-    "clean:dist": "del dist",
-    "clean:releases": "del releases",
+    "clean:deps": "npx del 'node_modules/**/{README,LICENSE,license,.travis.yml,tsconfig.json,*.{md,MD,map,png,svg,ts}}' '!node_modules/**/*.d.ts'",
+    "clean:dist": "npx del dist",
+    "clean:releases": "npx del releases",
     "clean": "npm run clean:dist && npm run clean:releases",
     "compile": "npm run svelto:prod && npm run iconfont && npm run tutorial && npm run clean:deps && electron-webpack app --env.minify=false",
     "build:mac": "npm run compile && electron-builder --mac",
