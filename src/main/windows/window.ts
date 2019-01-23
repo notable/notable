@@ -143,6 +143,7 @@ class Window {
       title: pkg.productName,
       titleBarStyle: 'hiddenInset',
       webPreferences: {
+        nodeIntegration: true,
         webSecurity: false
       }
     }, options );
