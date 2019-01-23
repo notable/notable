@@ -823,6 +823,12 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( !_refresh || this.ctx.multiEditor.isSkippable () ) return;
 
+    if ( isActiveNote ) {
+
+      await this.ctx.tag.setFromNote ( nextNote );
+
+    }
+
     await this.ctx.tag.update ();
     await this.ctx.search.update ( index ); //OPTIMIZE: This could be skipped
 
