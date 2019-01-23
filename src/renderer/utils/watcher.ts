@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import * as fs from 'fs';
 
 /* IMPORT LAZY */
 
@@ -17,11 +18,12 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
   /* VARIABLES */
 
   let filesStats = {}, // filePath => fs.Stats
-      renameSignalers = {}; // ino => Function
+      renameSignalers = {}, // ino => Function
+      renameTimeout = 150; // Amount of time to wait for the complementary add/unlink event
 
   /* HELPERS */
 
-  function emit ( event, args ) {
+  function emit ( event: string, args: any[] ) {
 
     if ( !callbacks[event] ) return;
 
@@ -31,7 +33,13 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
   /* HANDLERS */
 
-  async function add ( filePath, stats ) {
+  function change ( filePath: string, stats: fs.Stats ) {
+
+    emit ( 'change', [filePath, stats] );
+
+  }
+
+  function add ( filePath: string, stats: fs.Stats ) {
 
     stats = stats || {}; // Just to be safe
 
@@ -39,7 +47,7 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
     const renameSignaler = renameSignalers[stats.ino];
 
-    if ( renameSignaler ) {
+    if ( renameSignaler ) { // Rename
 
       const prevPath = renameSignaler ();
 
@@ -47,41 +55,61 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
     } else {
 
-      emit ( 'add', [filePath, stats] );
+      const timeoutId = setTimeout ( () => { // Added
+
+        delete renameSignalers[stats.ino];
+
+        emit ( 'add', [filePath, stats] );
+
+      }, renameTimeout );
+
+      renameSignalers[stats.ino] = () => { // Renamed
+
+        clearTimeout ( timeoutId );
+
+        delete renameSignalers[stats.ino];
+
+        return filePath;
+
+      };
 
     }
 
   }
 
-  function change () {
-
-    emit ( 'change', arguments );
-
-  }
-
-  function unlink ( filePath ) {
-
-    const args = arguments; //TSC
+  function unlink ( filePath: string ) {
 
     const stats = filesStats[filePath] || {}; // Just to be safe
 
-    const timeoutId = setTimeout ( () => { // Deleted
+    const renameSignaler = renameSignalers[stats.ino];
 
-      delete renameSignalers[stats.ino];
+    if ( renameSignaler ) { // Rename
 
-      emit ( 'unlink', args );
+      const newPath = renameSignaler ();
 
-    }, 150 );
+      emit ( 'rename', [filePath, newPath, stats] );
 
-    renameSignalers[stats.ino] = () => { // Renamed
+    } else {
 
-      clearTimeout ( timeoutId );
+      const timeoutId = setTimeout ( () => { // Deleted
 
-      delete renameSignalers[stats.ino];
+        delete renameSignalers[stats.ino];
 
-      return filePath;
+        emit ( 'unlink', [filePath] );
 
-    };
+      }, renameTimeout );
+
+      renameSignalers[stats.ino] = () => { // Renamed
+
+        clearTimeout ( timeoutId );
+
+        delete renameSignalers[stats.ino];
+
+        return filePath;
+
+      };
+
+    }
 
   }
 
