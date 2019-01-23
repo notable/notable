@@ -14,7 +14,7 @@ import Path from '@renderer/utils/path';
 /* IMPORT LAZY */
 
 const laxy = require ( 'laxy' ),
-      EnexDump = laxy ( () => require ( 'enex-dump' ).default )();
+      EnexDump = laxy ( () => require ( 'enex-dump' ) )();
 
 /* IMPORT */
 

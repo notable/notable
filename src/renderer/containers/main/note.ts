@@ -271,15 +271,15 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  getDateCreated = ( note: NoteObj | undefined = this.state.note ): Date => {
+  getCreated = ( note: NoteObj | undefined = this.state.note ): Date => {
 
-    return note ? note.metadata.dateCreated : new Date ();
+    return note ? note.metadata.created : new Date ();
 
   }
 
-  getDateModified = ( note: NoteObj | undefined = this.state.note ): Date => {
+  getModified = ( note: NoteObj | undefined = this.state.note ): Date => {
 
-    return note ? note.metadata.dateModified : new Date ();
+    return note ? note.metadata.modified : new Date ();
 
   }
 
@@ -639,8 +639,9 @@ class Note extends Container<NoteState, MainCTX> {
     const metadata = _.clone ( note.metadata );
 
     delete metadata.stat;
-    delete metadata.dateCreated;
-    delete metadata.dateModified;
+
+    metadata.created = metadata.created.toISOString () as any;
+    metadata.modified = new Date ().toISOString () as any;
 
     if ( !this.getAttachments ( note ).length ) delete metadata.attachments;
     if ( !this.getTags ( note ).length ) delete metadata.tags;
@@ -656,7 +657,7 @@ class Note extends Container<NoteState, MainCTX> {
 
       if ( notePrev && notePrev !== note ) {
 
-        note.metadata.dateModified = new Date ();
+        note.metadata.modified = new Date ();
 
         await this.replace ( notePrev, note );
 
@@ -700,17 +701,19 @@ class Note extends Container<NoteState, MainCTX> {
 
     }
 
-    if ( !note.metadata.dateCreated || !_.isDate ( note.metadata.dateCreated ) ) {
+    if ( !note.metadata.created || !_.isDate ( note.metadata.created ) ) {
 
-      note.metadata.dateCreated = note.metadata.created ? new Date ( note.metadata.created ) : ( note.metadata.stat ? new Date ( note.metadata.stat.ctimeMs ): new Date () );
+      note.metadata.created = note.metadata.created ? new Date ( note.metadata.created ) : ( note.metadata.stat ? new Date ( note.metadata.stat.ctimeMs ): new Date () );
 
-      if ( _.isNaN ( note.metadata.dateCreated.getTime () ) ) note.metadata.dateCreated = new Date ();
+      if ( _.isNaN ( note.metadata.created.getTime () ) ) note.metadata.created = new Date ();
 
     }
 
-    if ( !note.metadata.dateModified || !_.isDate ( note.metadata.dateModified ) ) {
+    if ( !note.metadata.modified || !_.isDate ( note.metadata.modified ) ) {
 
-      note.metadata.dateModified = note.metadata.stat ? new Date ( note.metadata.stat.mtimeMs ) : new Date ();
+      note.metadata.modified = note.metadata.modified ? new Date ( note.metadata.modified ) : ( note.metadata.stat ? new Date ( note.metadata.stat.mtimeMs ) : new Date () );
+
+      if ( _.isNaN ( note.metadata.modified.getTime () ) ) note.metadata.modified = new Date ();
 
     }
 
