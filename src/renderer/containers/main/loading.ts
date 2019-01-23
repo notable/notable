@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 
 /* LOADING */
 
@@ -12,6 +12,16 @@ class Loading extends Container<LoadingState, MainCTX> {
   state = {
     loading: true
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 

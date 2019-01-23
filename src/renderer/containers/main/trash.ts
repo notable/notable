@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import Dialog from 'electron-dialog';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import {TagSpecials} from '@renderer/utils/tags';
 
 const {TRASH} = TagSpecials;
@@ -10,6 +10,16 @@ const {TRASH} = TagSpecials;
 /* TRASH */
 
 class Trash extends Container<TrashState, MainCTX> {
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 

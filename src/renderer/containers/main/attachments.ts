@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import CallsBatch from 'calls-batch';
 import {remote} from 'electron';
 import * as globby from 'globby';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import Utils from '@renderer/utils/utils';
 import watcher from '@renderer/utils/watcher';
@@ -24,6 +24,16 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
     attachments: {},
     editing: false
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* LIFECYCLE */
 

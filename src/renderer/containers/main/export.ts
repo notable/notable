@@ -6,7 +6,7 @@ import {ipcRenderer as ipc, remote} from 'electron';
 import Dialog from 'electron-dialog';
 import * as mime from 'mime-types';
 import * as os from 'os';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
 import stringMatches from 'string-matches';
 import * as sha1 from 'sha1';
@@ -17,6 +17,16 @@ import Path from '@renderer/utils/path';
 /* EXPORT */
 
 class Export extends Container<ExportState, MainCTX> {
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 

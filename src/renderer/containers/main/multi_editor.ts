@@ -3,7 +3,7 @@
 
 import * as _ from 'lodash';
 import Dialog from 'electron-dialog';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Tags from '@renderer/utils/tags';
 
 /* EDITOR */
@@ -16,6 +16,16 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
     notes: [] as NoteObj[],
     skippable: false // Some refreshing tasks are skippable since we are going to call the same function again
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 

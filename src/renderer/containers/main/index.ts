@@ -3,7 +3,7 @@
 
 import * as _ from 'lodash';
 import {ipcRenderer as ipc} from 'electron';
-import {Container, compose} from 'overstated';
+import {Container, autosuspend, compose} from 'overstated';
 import Attachment from './attachment';
 import Attachments from './attachments';
 import Editor from './editor';
@@ -29,6 +29,16 @@ class Main extends Container<MainState, MainCTX> {
   /* VARIABLES */
 
   _prevFlags;
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* MIDDLEWARES */
 

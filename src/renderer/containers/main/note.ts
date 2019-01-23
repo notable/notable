@@ -6,7 +6,7 @@ import {shell} from 'electron';
 import Dialog from 'electron-dialog';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
 import * as fs from 'fs';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
 import Config from '@common/config';
 import Attachments from '@renderer/utils/attachments';
@@ -34,6 +34,16 @@ class Note extends Container<NoteState, MainCTX> {
   state = {
     note: undefined as NoteObj | undefined
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 

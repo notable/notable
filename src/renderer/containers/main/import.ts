@@ -3,7 +3,7 @@
 
 import {remote} from 'electron';
 import Dialog from 'electron-dialog';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
 import * as sha1 from 'sha1';
 import Config from '@common/config';
@@ -19,6 +19,16 @@ const laxy = require ( 'laxy' ),
 /* IMPORT */
 
 class Import extends Container<ImportState, MainCTX> {
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 

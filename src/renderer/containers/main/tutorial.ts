@@ -3,7 +3,7 @@
 
 import {shell} from 'electron';
 import Dialog from 'electron-dialog';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
 import pkg from '@root/package.json';
 import Config from '@common/config';
@@ -16,6 +16,16 @@ const laxy = require ( 'laxy' ),
 /* TUTORIAL */
 
 class Tutorial extends Container<TutorialState, MainCTX> {
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 

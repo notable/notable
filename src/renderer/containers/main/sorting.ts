@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import Settings from '@common/settings';
 import {SortingBys, SortingTypes} from '@renderer/utils/sorting';
@@ -17,6 +17,16 @@ class Sorting extends Container<SortingState, MainCTX> {
     by: Config.sorting.by,
     type: Config.sorting.type
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 

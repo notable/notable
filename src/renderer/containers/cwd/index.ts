@@ -6,7 +6,7 @@ import Dialog from 'electron-dialog';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 import * as os from 'os';
-import {Container, compose} from 'overstated';
+import {Container, autosuspend, compose} from 'overstated';
 import * as path from 'path';
 import * as pify from 'pify';
 import Config from '@common/config';
@@ -17,6 +17,16 @@ import File from '@renderer/utils/file';
 /* CWD */
 
 class CWD extends Container<CWDState, CWDCTX> {
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 

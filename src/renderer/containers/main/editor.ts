@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Utils from '@renderer/utils/utils';
 
 /* EDITOR */
@@ -18,6 +18,16 @@ class Editor extends Container<EditorState, MainCTX> {
     editing: false,
     split: false
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 

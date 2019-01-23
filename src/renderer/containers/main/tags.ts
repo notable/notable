@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import UTags, {TagSpecials, TagSpecialsNames} from '@renderer/utils/tags';
 
 const {SEPARATOR} = UTags;
@@ -18,6 +18,16 @@ class Tags extends Container<TagsState, MainCTX> {
     tags: {},
     editing: false
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 

@@ -4,7 +4,7 @@
 import * as _ from 'lodash';
 import {shell} from 'electron';
 import Dialog from 'electron-dialog';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
 import File from '@renderer/utils/file';
 
@@ -17,6 +17,16 @@ class Attachment extends Container<AttachmentState, MainCTX> {
   autosuspend = {
     methods: /^(?!_|middleware|(?:(?:get|is|has)(?![a-z0-9]))|read)/
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 

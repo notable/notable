@@ -3,7 +3,7 @@
 
 import * as _ from 'lodash';
 import * as isShallowEqual from 'shallowequal';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 
 /* SEARCH */
@@ -21,6 +21,16 @@ class Search extends Container<SearchState, MainCTX> {
     query: '',
     notes: [] as NoteObj[]
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 

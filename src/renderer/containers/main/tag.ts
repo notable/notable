@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Tags, {TagSpecials} from '@renderer/utils/tags';
 import Utils from '@renderer/utils/utils';
 
@@ -24,6 +24,16 @@ class Tag extends Container<TagState, MainCTX> {
   state = {
     tag: DEFAULT
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 
