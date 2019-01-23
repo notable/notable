@@ -31,6 +31,41 @@ const Markdown = {
 
   extensions: {
 
+    katex () {
+
+      try {
+
+        return showdownKatex ( Config.katex );
+
+      } catch ( e ) {
+
+        return `<p class="text-red">[KaTeX error: ${e.message}]</p>`;
+
+      }
+
+    },
+
+    mermaid () {
+
+      mermaid.initialize ( Config.mermaid );
+
+      return [{
+        type: 'language',
+        regex: '```mermaid([^`]*)```',
+        replace ( match, $1 ) {
+          const id = `mermaid-${CRC32.str ( $1 )}`;
+          try {
+            const svg = mermaid.render ( id, $1 );
+            return `<div class="mermaid">${svg}</div>`;
+          } catch ( e ) {
+            $(`#${id}`).remove ();
+            return `<p class="text-red">[mermaid error: ${e.message}]</p>`;
+          }
+        }
+      }];
+
+    },
+
     checkbox () {
 
       // We are wrapping the metadata (the match index, which is a number) in numbers so that the syntax highlighter won't probably mess with it and it's unlikely that somebody will ever write the same thing
@@ -187,41 +222,6 @@ const Markdown = {
         }
       ];
 
-    },
-
-    katex () {
-
-      try {
-
-        return showdownKatex ( Config.katex );
-
-      } catch ( e ) {
-
-        return `<p class="text-red">[KaTeX error: ${e.message}]</p>`;
-
-      }
-
-    },
-
-    mermaid () {
-
-      mermaid.initialize ( Config.mermaid );
-
-      return [{
-        type: 'language',
-        regex: '```mermaid([^`]*)```',
-        replace ( match, $1 ) {
-          const id = `mermaid-${CRC32.str ( $1 )}`;
-          try {
-            const svg = mermaid.render ( id, $1 );
-            return `<div class="mermaid">${svg}</div>`;
-          } catch ( e ) {
-            $(`#${id}`).remove ();
-            return `<p class="text-red">[mermaid error: ${e.message}]</p>`;
-          }
-        }
-      }];
-
     }
 
   },
@@ -230,11 +230,11 @@ const Markdown = {
 
     if ( Markdown.converter ) return Markdown.converter;
 
-    const {checkbox, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, katex, mermaid} = Markdown.extensions;
+    const {katex, mermaid, checkbox, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
 
     const converter = new showdown.Converter ({
       metadata: true,
-      extensions: [showdownHighlight, showdownTargetBlack, checkbox (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag (), katex (), mermaid ()]
+      extensions: [showdownHighlight, showdownTargetBlack, katex (), mermaid (), checkbox (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
     });
 
     converter.setFlavor ( 'github' );
