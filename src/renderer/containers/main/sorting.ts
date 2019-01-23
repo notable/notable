@@ -63,8 +63,8 @@ class Sorting extends Container<SortingState, MainCTX> {
   sort = ( notes: NoteObj[], by: SortingBys = this.state.by, type: SortingTypes = this.state.type ): NoteObj[] => {
 
     const iteratees = {
-      [SortingBys.DATE_CREATED]: this.ctx.note.getDateCreated,
-      [SortingBys.DATE_MODIFIED]: this.ctx.note.getDateModified,
+      [SortingBys.DATE_CREATED]: this.ctx.note.getCreated,
+      [SortingBys.DATE_MODIFIED]: this.ctx.note.getModified,
       [SortingBys.TITLE]: this.ctx.note.getTitle
     };
 

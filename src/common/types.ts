@@ -18,9 +18,8 @@ type AttachmentsObj = {
 
 type NoteMetadataObj = {
   attachments: string[],
-  created?: number,
-  dateCreated: Date,
-  dateModified: Date,
+  created: Date,
+  modified: Date,
   deleted: boolean,
   favorited: boolean,
   pinned: boolean,

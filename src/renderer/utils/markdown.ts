@@ -27,6 +27,8 @@ const Markdown = {
 
   converter: undefined,
 
+  markdownRe: /_|\*|~|`|<|:|^>|^#|\]|---|===|\d\.|[*+-][ \t]+\[|\n\n/m,
+
   extensions: {
 
     checkbox () {
@@ -243,13 +245,23 @@ const Markdown = {
 
   },
 
+  is: ( str: string ): boolean => { // Checks if `str` _could_ be using some Markdown features, it doesn't tell reliably when it actually is, only when it isn't. Useful for skipping unnecessary renderings
+
+    return Markdown.markdownRe.test ( str );
+
+  },
+
   render: _.memoize ( ( str: string ): string => {
+
+    if ( !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
     return Markdown.getConverter ().makeHtml ( str );
 
   }),
 
   strip: async ( str: string ): Promise<string> => {
+
+    if ( !Markdown.is ( str ) ) return str;
 
     return ( await pify ( remark ().use ( strip ).process )( str ) ).toString ();
 
