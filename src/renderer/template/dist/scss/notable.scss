@@ -2116,7 +2116,7 @@ $color-base-text: #dcdcdc;
 
 $color-black: #dcdcdc;
 
-$color-primary: #1565c0 !default; // Blue-800
+$color-primary: #4f8cc9 !default; // GitHub-Dark
 $color-secondary: #ef6c00 !default; // Orange-800
 
 $color-gray: #e0e0e0 !default; // Gray-300
@@ -2125,77 +2125,45 @@ $color-orange: #ff9800 !default; // Orange-500
 $color-red: #f44336 !default; // Red-500
 $color-yellow: #fabf40 !default; // Yellow-700
 
-
-// $color-primary-border: #ff0000;
-// $color-secondary-border: #ff0000;
-
-// $color-black-border: #ff0000;
-// $color-gray-border: #ff0000;
-// $color-green-border: #ff0000;
-// $color-red-border: #ff0000;
-// $color-white-border: #ff0000;
-// $color-yellow-border: #ff0000;
-
-// $color-base-border: #ff0000;
-// $color-inherit-border: #ff0000;
-// $color-transparent-border: #ff0000;
-
-
 /* PRIMARY */
 
 $color-primary-bg: $color-primary !default;
 $color-primary-border: lighten( $color-primary-bg, $color-border-lighten-amount ) !default;
-
-
 
 /* SECONDARY */
 
 $color-secondary-bg: $color-secondary !default;
 $color-secondary-border: lighten( $color-secondary-bg, $color-border-lighten-amount ) !default;
 
-
-
 /* BLACK */
 
 $color-black-bg: $color-black !default;
 $color-black-border: lighten( $color-black-bg, $color-border-lighten-amount ) !default;
-
-
 
 /* GRAY */
 
 $color-gray-bg: $color-gray !default;
 $color-gray-border: lighten( $color-gray-bg, $color-border-lighten-amount ) !default;
 
-
-
 /* GREEN */
 
 $color-green-bg: $color-green !default;
 $color-green-border: lighten( $color-green-bg, $color-border-lighten-amount ) !default;
-
-
 
 /* RED */
 
 $color-red-bg: $color-red !default;
 $color-red-border: lighten( $color-red-bg, $color-border-lighten-amount ) !default;
 
-
-
 /* WHITE */
 
 $color-white-bg: $color-white !default;
 $color-white-border: lighten( $color-white-bg, $color-border-lighten-amount ) !default;
 
-
-
 /* YELLOW */
 
 $color-yellow-bg: $color-yellow !default;
 $color-yellow-border: lighten( $color-yellow-bg, $color-border-lighten-amount ) !default;
-
-
 
 /* BASE */
 
@@ -2492,38 +2460,6 @@ $colors: (
 
 
 $colors: map-remove( $colors, 'tertiary', 'quaternary', 'blue', 'brown', 'olive', 'orange', 'pink', 'purple', 'teal', 'violet', 'error', 'success', 'warning' );
-
-// $color-base-border: lighten( $color-base-bg, $color-border-darken-amount ) !default;
-
-
-// $color-primary-border: #ff0000 !default;
-// $color-secondary-border: #ff0000 !default;
-// $color-black-border: #ff0000 !default;
-// $color-gray-border: #ff0000 !default;
-// $color-green-border: #ff0000 !default;
-// $color-red-border: #ff0000 !default;
-// $color-white-border: #ff0000 !default;
-// $color-yellow-border: #ff0000 !default;
-// $color-base-border: #ff0000 !default;
-// $color-inherit-border: #ff0000 !default;
-// $color-transparent-border: #ff0000 !default;
-
-
-// $colors: (
-//   'primary': ( $color-primary-bg, $color-primary-bg-hover, $color-primary-bg-active, #ff0000, $color-primary-accent, $color-primary-text ),
-//   'secondary': ( $color-secondary-bg, $color-secondary-bg-hover, $color-secondary-bg-active, #ff0000, $color-secondary-accent, $color-secondary-text ),
-
-//   'black': ( $color-black-bg, $color-black-bg-hover, $color-black-bg-active, #ff0000, $color-black-accent, $color-black-text ),
-//   'gray': ( $color-gray-bg, $color-gray-bg-hover, $color-gray-bg-active, #ff0000, $color-gray-accent, $color-gray-text ),
-//   'green': ( $color-green-bg, $color-green-bg-hover, $color-green-bg-active, #ff0000, $color-green-accent, $color-green-text ),
-//   'red': ( $color-red-bg, $color-red-bg-hover, $color-red-bg-active, #ff0000, $color-red-accent, $color-red-text ),
-//   'white': ( $color-white-bg, $color-white-bg-hover, $color-white-bg-active, #ff0000, $color-white-accent, $color-white-text ),
-//   'yellow': ( $color-yellow-bg, $color-yellow-bg-hover, $color-yellow-bg-active, #ff0000, $color-yellow-accent, $color-yellow-text ),
-
-//   'base': ( $color-base-bg, $color-base-bg-hover, $color-base-bg-active, #ff0000, $color-base-accent, $color-base-text ),
-//   'inherit': ( $color-inherit-bg, $color-inherit-bg-hover, $color-inherit-bg-active, #ff0000, $color-inherit-accent, $color-inherit-text ),
-//   'transparent': ( $color-transparent-bg, $color-transparent-bg-hover, $color-transparent-bg-active, #ff0000, $color-transparent-accent, $color-transparent-text )
-// ) !default;
 
 
 //SOURCE: https://github.com/thoughtbot/bourbon/blob/master/core/bourbon/addons/_timing-functions.scss
@@ -5834,18 +5770,6 @@ $zoomable-z-index: 1300 !default;
 /* ANIMATION */
 
 $zoomable-animation-duration: $animation-normal !default;
-
-// $color-primary-border: #ff0000 !default;
-// $color-secondary-border: #ff0000 !default;
-// $color-black-border: #ff0000 !default;
-// $color-gray-border: #ff0000 !default;
-// $color-green-border: #ff0000 !default;
-// $color-red-border: #ff0000 !default;
-// $color-white-border: #ff0000 !default;
-// $color-yellow-border: #ff0000 !default;
-// $color-base-border: #ff0000 !default;
-// $color-inherit-border: #ff0000 !default;
-// $color-transparent-border: #ff0000 !default;
 
 
 /* ROTATION */

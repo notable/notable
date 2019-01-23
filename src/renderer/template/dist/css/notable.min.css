@@ -1345,7 +1345,7 @@ html {
 
 /* SELECTION */
 ::selection {
-  background-color: rgba(21, 101, 192, 0.2);
+  background-color: rgba(79, 140, 201, 0.2);
   text-shadow: none;
 }
 
@@ -1993,7 +1993,7 @@ dl:last-child, p:last-child, pre:last-child {
 
 /* COLORS */
 .border-primary {
-  border-color: #1565c0 !important;
+  border-color: #4f8cc9 !important;
 }
 
 .border-secondary {
@@ -2038,17 +2038,17 @@ dl:last-child, p:last-child, pre:last-child {
 
 /* COLORS */
 .primary {
-  background-color: #1565c0;
-  border-color: #3d8eea;
+  background-color: #4f8cc9;
+  border-color: #8db5dc;
   color: #ffffff;
 }
 
 .hover.primary {
-  background-color: #176fd2;
+  background-color: #5f96ce;
 }
 
 .active.primary {
-  background-color: #135bae;
+  background-color: #3f82c4;
 }
 
 .secondary {
@@ -2197,11 +2197,11 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
 
 /* COLORS */
 .actionable.primary:not(.disabled):not(.active):hover, .primary.button:not(.disabled):not(.active):hover, .button > .primary:not(.disabled):not(.active):hover {
-  background-color: #176fd2;
+  background-color: #5f96ce;
 }
 
 .actionable.primary:not(.disabled):not(.ripple):active, .primary.button:not(.disabled):not(.ripple):active, .button > .primary:not(.disabled):not(.ripple):active {
-  background-color: #135bae;
+  background-color: #3f82c4;
 }
 
 .actionable.secondary:not(.disabled):not(.active):hover, .secondary.button:not(.disabled):not(.active):hover, .button > .secondary:not(.disabled):not(.active):hover {
@@ -2271,19 +2271,19 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
 /* INVERTED */
 .inverted.primary {
   background-color: #ffffff;
-  border-color: #1565c0;
-  color: #1565c0;
+  border-color: #4f8cc9;
+  color: #4f8cc9;
 }
 
 .inverted.hover.primary, .inverted.actionable.primary:not(.disabled):not(.active):hover, .inverted.primary.button:not(.disabled):not(.active):hover, .button > .inverted.primary:not(.disabled):not(.active):hover {
-  background-color: #176fd2;
-  border-color: #1565c0;
+  background-color: #5f96ce;
+  border-color: #4f8cc9;
   color: #ffffff;
 }
 
 .inverted.active.primary, .inverted.actionable.primary:not(.disabled):not(.ripple):active, .inverted.primary.button:not(.disabled):not(.ripple):active, .button > .inverted.primary:not(.disabled):not(.ripple):active {
-  background-color: #135bae;
-  border-color: #1565c0;
+  background-color: #3f82c4;
+  border-color: #4f8cc9;
   color: #ffffff;
 }
 
@@ -2434,7 +2434,7 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
 /* INVERTED */
 /* TEXT */
 .text-primary {
-  color: #1565c0 !important;
+  color: #4f8cc9 !important;
 }
 
 .text-secondary {
@@ -5341,7 +5341,7 @@ html.flexbox-tweener .popover.fullscreen-request.card > .card-block {
 
 /* COLORS */
 .ripple-primary > .ripple-circle:before {
-  background-color: #1565c0;
+  background-color: #4f8cc9;
 }
 
 .ripple-secondary > .ripple-circle:before {
@@ -5785,7 +5785,7 @@ svg.spinner:only-child,
 
 /* COLORS */
 svg.spinner.primary circle {
-  stroke: #1565c0;
+  stroke: #4f8cc9;
 }
 
 svg.spinner.secondary circle {
@@ -5839,7 +5839,7 @@ svg.spinner.base circle {
 }
 
 .spinner-label.secondary circle {
-  stroke: #1565c0;
+  stroke: #4f8cc9;
 }
 
 .spinner-label.black circle {
@@ -6711,19 +6711,19 @@ address a:hover {
 p a,
 li a,
 address a, .link-primary {
-  color: #1565c0;
+  color: #4f8cc9;
 }
 
 p a:hover,
 li a:hover,
 address a:hover, .link-primary:hover {
-  color: #176fd2;
+  color: #5f96ce;
 }
 
 p a:active,
 li a:active,
 address a:active, .link-primary:active {
-  color: #135bae;
+  color: #3f82c4;
 }
 
 .link-secondary {
