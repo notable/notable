@@ -9,7 +9,7 @@
 }
 
 #sidebar {
-  background-color: #181818;
+  background-color: #333E45;
   flex: 1 1 165px;
   min-width: 165px;
   max-width: 350px;
@@ -33,7 +33,7 @@
 
 #sidebar .tag {
   justify-content: left;
-  color: #dcdcdc;
+  color: #fdfdfd;
   background-color: transparent;
 }
 
@@ -47,7 +47,7 @@
 
 #sidebar .tag.label.active,
 #sidebar .tag.button:active {
-  background-color: rgba( 255, 255, 255, .15 );
+  background-color: rgba( 0, 0, 0, .2 );
 }
 
 #sidebar .tag .name {
@@ -80,15 +80,15 @@
 }
 
 #middlebar {
-  background-color: #212124;
+  background-color: #fdfdfd;
   flex: 2 2 193px;
   min-width: 193px;
   max-width: 450px;
 }
 
 #middlebar .layout-header {
-  background: #212124;
-  border-color: #494949;
+  background: #f4f4f4;
+  border-color: #d8d8d8;
 }
 
 #middlebar .layout-header .search > * {
@@ -96,16 +96,15 @@
 }
 
 #middlebar .layout-header input {
-  background: #202020;
   width: 0;
 }
 
 #middlebar .header {
-  /* background-color: #f8f8f8; */
+  background-color: #f8f8f8;
   height: 27px;
   flex-grow: 0;
-  /* border-bottom: 1px solid #e2e2e2 !important; */
-  /* color: rgba(31, 31, 31, 0.65); */
+  border-bottom: 1px solid #e2e2e2 !important;
+  color: rgba(31, 31, 31, 0.65);
   padding: 0;
   text-align: center;
   overflow: hidden;
@@ -118,7 +117,7 @@
 
 #middlebar .header .sort-by,
 #middlebar .header .sort-type {
-  background-color: #212124;
+  background-color: #f8f8f8;
   padding: 5px 10px;
   margin-bottom: 0 !important;
 }
@@ -133,10 +132,6 @@
 
 #middlebar .header .sort-type i.icon {
   transition: transform .15s;
-}
-
-div.button:not(.active).bordered > i.icon {
-  color: #bebebe;
 }
 
 #middlebar .layout-content.react-window-list {
@@ -159,12 +154,12 @@ div.button:not(.active).bordered > i.icon {
 }
 
 #middlebar .note-button.button:hover {
-  background-color: #2f3440;
+  background-color: #f3f3f3;
 }
 
 #middlebar .note-button.label.active,
 #middlebar .note-button.button:active {
-  background-color: #323951;
+  background-color: #eeeeee;
 }
 
 #middlebar .note-button .title {
@@ -188,49 +183,31 @@ div.button:not(.active).bordered > i.icon {
   font-size: .6em;
 }
 
-#middlebar > #middlebar-toolbar.layout-header {
-  background: #181818;
-}
-
 .react-window-list {
   will-change: auto !important;
 }
 
-
-/* middlebar notes background color should match #middlebar.background-color */
-.label:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent), .button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
-  background-color: #212124;
-  border-color: #484848;
-  color: #dcdcdc;
-}
-
-.button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
-  background-color: #212124;
-  border-color: #484848;
-  color: #dcdcdc;
-}
-
 #mainbar {
-  background-color: #181818;
-  /* border-left: 1px solid #494949; */
+  background-color: #f4f4f4;
+  border-left: 1px solid #d8d8d8;
   flex: 4 4 327px;
   min-width: 327px;
 }
 
 #mainbar .layout-header {
-  background: #181818;
-  border-color: #494949;
+  background: #f4f4f4;
+  border-color: #d8d8d8;
 }
 
 #mainbar .header {
   height: auto;
   flex-grow: 0;
-  border-bottom: 1px solid #494949 !important;
+  border-bottom: 1px solid #d8d8d8 !important;
 }
 
 #mainbar .editor {
   padding: 20px;
-  background-color: #181818;
+  background-color: #fdfdfd;
 }
 
 #mainbar .editor input {
@@ -239,10 +216,10 @@ div.button:not(.active).bordered > i.icon {
 }
 
 #mainbar .editor input[type="checkbox"] {
-  /* appearance: checkbox !important; */
-  /* -webkit-appearance: checkbox !important; */
+  appearance: checkbox !important;
+  -webkit-appearance: checkbox !important;
   margin: 0 0.35em 0.25em 0 !important;
-  /* width: auto !important; */
+  width: auto !important;
   opacity: 1 !important;
 }
 
@@ -260,7 +237,7 @@ div.button:not(.active).bordered > i.icon {
 }
 
 #mainbar .split-editor > .editor.preview {
-  border-left: 1px solid #494949 !important;
+  border-left: 1px solid #e2e2e2 !important;
 }
 
 #mainbar .multi-editor {
@@ -359,7 +336,7 @@ div.button:not(.active).bordered > i.icon {
 }
 
 .editor.preview {
-  background-color: #141414 !important;
+  background-color: #fdfdfd;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif !important;
   font-size: 16px !important;
   line-height: 1.5 !important;
@@ -376,7 +353,6 @@ div.button:not(.active).bordered > i.icon {
   flex-grow: 1;
   padding: 0 20px !important;
   color: #1f1f1f !important;
-  background: #141414 !important;
 }
 
 .CodeMirror,
@@ -435,8 +411,8 @@ kbd {
 
 #cwd .layout-header,
 #error-boundary .layout-header {
-  background-color: #181818;
-  border-bottom: 1px solid #494949 !important;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #d8d8d8 !important;
 }
 
 #cwd .layout-content {
@@ -479,57 +455,4 @@ kbd {
 
 body.markdown-body {
   padding: 20px;
-}
-
-/* custom checkboxes and radios from GitHub-Dark */
-input[type="checkbox"], input[type="checkbox"]:focus, input[type="radio"],
-input[type="radio"]:focus, input[type="checkbox"]:hover:active,
-input[type="radio"]:hover:active, input[type="checkbox"]:disabled,
-input[type="checkbox"]:hover:disabled,
-input[type="checkbox"]:hover:active:disabled {
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  background-color: #181818 !important;
-  border: 1px solid #484848 !important;
-  color: #eee !important;
-  height: 1em !important;
-  width: 1em !important;
-}
-
-input[type="radio"] {
-  border-radius: 100% !important;
-}
-
-input[type="checkbox"]:checked {
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 0h512v512H0z"/><path fill="%23ddd" d="M99 213l-1 89 104 102 205-201v-91L203 315 99 213z"/></svg>') !important;
-  background-size: cover !important;
-}
-
-input[type="checkbox"]:indeterminate {
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="%23000"/><rect x="64" y="192" width="384" height="128" fill="%23ddd"/></svg>') !important;
-  background-size: cover !important;
-}
-
-input[type="radio"]:checked {
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="%23000"/><circle cx="256" cy="256" r="96" fill="%23ddd"/></svg>') !important;
-  background-size: cover !important;
-}
-
-input.focus[type="text"], input[type="checkbox"]:focus, input[type="checkbox"]:hover:active {
-  border-color: /*[[base-color]]*/ #4f8cc9 !important;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .075), 0 0 2px /*[[base-color]]*/ #4f8cc9 !important;
-  outline-color: /*[[base-color]]*/ #4f8cc9 !important;
-}
-
-/* links in tables */
-table a {
-  color: #4f8cc9;
-}
-
-table a:hover {
-  color: #5f96ce;
-}
-
-table a:active {
-  color: #3f82c4;
 }
