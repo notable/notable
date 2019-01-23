@@ -70,6 +70,14 @@ div.button:not(.active).bordered > i.icon {
   color: #dcdcdc;
 }
 
+.button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent).hover, .button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent):hover {
+  background-color: #2f3440;
+}
+
+.button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent).active, .button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent):active {
+  background-color: #323951;
+}
+
 #mainbar {
   background-color: #181818;
   border-left: none !important;
