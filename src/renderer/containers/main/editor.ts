@@ -193,6 +193,8 @@ class Editor extends Container<EditorState, MainCTX> {
 
     if ( this.isSplit () ) return;
 
+    if ( editing && this.isEditing () ) return;
+
     if ( editing ) {
 
       this.previewingState.save ();
