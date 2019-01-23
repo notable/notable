@@ -196,6 +196,20 @@ div.button:not(.active).bordered > i.icon {
   will-change: auto !important;
 }
 
+
+/* middlebar notes background color should match #middlebar.background-color */
+.label:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent), .button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
+  background-color: #212124;
+  border-color: #484848;
+  color: #dcdcdc;
+}
+
+.button:not(.primary):not(.secondary):not(.black):not(.gray):not(.green):not(.red):not(.white):not(.yellow):not(.base):not(.inherit):not(.transparent) {
+  background-color: #212124;
+  border-color: #484848;
+  color: #dcdcdc;
+}
+
 #mainbar {
   background-color: #181818;
   /* border-left: 1px solid #494949; */
