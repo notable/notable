@@ -91,7 +91,7 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareSaveEditor ( prev: MainState ) {
 
-    if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, this.state.note.note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length >= 1 ) ) ) ) return;
+    if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, this.state.note.note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length > 1 ) ) ) ) return;
 
     const cm = this.ctx.editor.getCodeMirror ();
 
