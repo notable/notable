@@ -2,6 +2,7 @@
 $color-hover-lighten-amount: 4 !default;
 $color-active-darken-amount: $color-hover-lighten-amount !default;
 $color-border-darken-amount: $color-active-darken-amount * 4 !default;
+$color-border-lighten-amount: $color-border-darken-amount !default;
 
 $color-white: #181818;
 $color-white-text: #dcdcdc;
@@ -10,3 +11,57 @@ $color-base: #181818;
 $color-base-text: #dcdcdc;
 
 $color-black: #dcdcdc;
+
+$color-primary: #1565c0 !default; // Blue-800
+$color-secondary: #ef6c00 !default; // Orange-800
+
+$color-gray: #e0e0e0 !default; // Gray-300
+$color-green: #4caf50 !default; // Green-500
+$color-orange: #ff9800 !default; // Orange-500
+$color-red: #f44336 !default; // Red-500
+$color-yellow: #fabf40 !default; // Yellow-700
+
+/* PRIMARY */
+
+$color-primary-bg: $color-primary !default;
+$color-primary-border: lighten( $color-primary-bg, $color-border-lighten-amount ) !default;
+
+/* SECONDARY */
+
+$color-secondary-bg: $color-secondary !default;
+$color-secondary-border: lighten( $color-secondary-bg, $color-border-lighten-amount ) !default;
+
+/* BLACK */
+
+$color-black-bg: $color-black !default;
+$color-black-border: lighten( $color-black-bg, $color-border-lighten-amount ) !default;
+
+/* GRAY */
+
+$color-gray-bg: $color-gray !default;
+$color-gray-border: lighten( $color-gray-bg, $color-border-lighten-amount ) !default;
+
+/* GREEN */
+
+$color-green-bg: $color-green !default;
+$color-green-border: lighten( $color-green-bg, $color-border-lighten-amount ) !default;
+
+/* RED */
+
+$color-red-bg: $color-red !default;
+$color-red-border: lighten( $color-red-bg, $color-border-lighten-amount ) !default;
+
+/* WHITE */
+
+$color-white-bg: $color-white !default;
+$color-white-border: lighten( $color-white-bg, $color-border-lighten-amount ) !default;
+
+/* YELLOW */
+
+$color-yellow-bg: $color-yellow !default;
+$color-yellow-border: lighten( $color-yellow-bg, $color-border-lighten-amount ) !default;
+
+/* BASE */
+
+$color-base-bg: $color-base !default;
+$color-base-border: lighten( $color-base-bg, $color-border-lighten-amount ) !default;
