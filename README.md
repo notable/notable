@@ -1,4 +1,4 @@
-# Notable ([DOWNLOAD](https://github.com/fabiospampinato/notable/releases))
+# Notable ([DOWNLOAD](#downloading))
 
 <p align="center">
   <img src="resources/demo/main.png" alt="Notable" width="750">
@@ -51,6 +51,17 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 ### Multi-Note Editor
 
 <img src="resources/demo/multi_editor.png" alt="Multi-Note Editor" width="750">
+
+## Downloading
+
+Check [releases](https://github.com/fabiospampinato/notable/releases) for downloading the _Notable_ cosidering variety of OSs and architectures.
+
+Or simple follow the packaging installation instructions.
+
+### Mac (brew)
+```
+brew cask install notable
+```
 
 ## Contributing
 
