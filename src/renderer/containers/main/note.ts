@@ -729,7 +729,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( !note.metadata.created || !_.isDate ( note.metadata.created ) ) {
 
-      note.metadata.created = note.metadata.created ? new Date ( note.metadata.created ) : ( note.metadata.stat ? new Date ( note.metadata.stat.ctimeMs ): new Date () );
+      note.metadata.created = note.metadata.created ? new Date ( note.metadata.created ) : ( note.metadata.stat ? new Date ( note.metadata.stat.birthtimeMs ): new Date () );
 
       if ( _.isNaN ( note.metadata.created.getTime () ) ) note.metadata.created = new Date ();
 
