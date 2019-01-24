@@ -125,8 +125,6 @@ class Editor extends Container<EditorState, MainCTX> {
 
     focus: () => {
 
-      if ( document.activeElement && $.isEditable ( document.activeElement ) ) return;
-
       const cm = this.getCodeMirror ();
 
       if ( !cm ) return;
