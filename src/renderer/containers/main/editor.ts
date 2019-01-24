@@ -243,6 +243,16 @@ class Editor extends Container<EditorState, MainCTX> {
 
   }
 
+  getContent = (): string | undefined => {
+
+    const cm = this.getCodeMirror ();
+
+    if ( !cm ) return;
+
+    return cm.getValue ();
+
+  }
+
   update = () => {
 
     const cm = this.getCodeMirror ();

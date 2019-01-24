@@ -10,6 +10,8 @@ import Code from './code';
 
 class EditorEditing extends React.Component<any, undefined> {
 
+  _currentContent: string = this.props.content;
+
   componentDidMount () {
 
     this.props.focus ();
@@ -24,11 +26,27 @@ class EditorEditing extends React.Component<any, undefined> {
 
   }
 
+  shouldComponentUpdate ( nextProps ) {
+
+    return nextProps.content !== this._currentContent;
+
+  }
+
+  __change = ( cm, pos, content ) => {
+
+    this._currentContent = content;
+
+    if ( !this.props.onChange ) return;
+
+    this.props.onChange ( cm, pos, content );
+
+  }
+
   render () {
 
-    const {content, save, restore, onChange} = this.props;
+    const {content, autosave, save, restore} = this.props;
 
-    return <Code className="layout-content editor editing" value={content} onBlur={save} onFocus={restore} onChange={onChange} />;
+    return <Code className="layout-content editor editing" value={content} onBlur={() => { save (); autosave () }} onFocus={restore} onChange={this.__change} />;
 
   }
 
@@ -42,6 +60,7 @@ export default connect ({
     onChange,
     id: container.note.getChecksum (),
     content: container.note.getPlainContent (),
+    autosave: container.note.autosave,
     focus: container.editor.editingState.focus,
     save: container.editor.editingState.save,
     restore: container.editor.editingState.restore,

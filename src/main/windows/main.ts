@@ -8,7 +8,6 @@ import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
 import pkg from '@root/package.json';
-import Environment from '@common/environment';
 import UMenu from '@main/utils/menu';
 import About from './about';
 import Route from './route';
@@ -272,18 +271,6 @@ class Main extends Route {
       {
         label: 'View',
         submenu: [
-          {
-            role: 'reload',
-            visible: Environment.isDevelopment
-          },
-          {
-            role: 'forcereload',
-            visible: Environment.isDevelopment
-          },
-          {
-            type: 'separator',
-            visible: Environment.isDevelopment
-          },
           { role: 'resetzoom' },
           { role: 'zoomin' },
           { role: 'zoomout' },

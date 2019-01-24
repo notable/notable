@@ -590,6 +590,22 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
+  autosave = () => {
+
+    if ( !this.ctx.editor.isEditing () ) return;
+
+    const note = this.get ();
+
+    if ( !note ) return;
+
+    const content = this.ctx.editor.getContent ();
+
+    if ( !_.isString ( content ) ) return;
+
+    return this.save ( note, content );
+
+  }
+
   save = async ( note: NoteObj | undefined = this.state.note, plainContent: string ) => {
 
     if ( !note ) return;
