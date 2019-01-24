@@ -110,6 +110,10 @@ div.button:not(.active).bordered > i.icon {
   border-bottom: 1px solid #494949 !important;
 }
 
+#about {
+  background-color: #181818;
+}
+
 /* links in tables */
 table a {
   color: #4f8cc9;
