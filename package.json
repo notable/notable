@@ -2,7 +2,7 @@
   "name": "notable",
   "productName": "Notable",
   "description": "The markdown-based note-taking app that doesn't suck.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "scripts": {
     "clean:deps": "npx del 'node_modules/**/{README,LICENSE,license,.travis.yml,tsconfig.json,*.{md,MD,map,png,svg,ts}}' '!node_modules/**/*.d.ts'",
     "clean:dist": "npx del dist",
