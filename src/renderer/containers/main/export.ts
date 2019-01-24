@@ -80,7 +80,9 @@ class Export extends Container<ExportState, MainCTX> {
           `<meta name="metadata:tags" content="${this.ctx.note.getTags ( note ).join ( ', ' )}">`,
           `<meta name="metadata:deleted" content="${this.ctx.note.isDeleted ()}">`,
           `<meta name="metadata:favorited" content="${this.ctx.note.isFavorited ()}">`,
-          `<meta name="metadata:pinned" content="${this.ctx.note.isPinned ()}">`
+          `<meta name="metadata:pinned" content="${this.ctx.note.isPinned ()}">`,
+          `<meta name="metadata:created" content="${this.ctx.note.getCreated ().toISOString ()}">`,
+          `<meta name="metadata:modified" content="${this.ctx.note.getModified ().toISOString ()}">`
         );
       }
 
