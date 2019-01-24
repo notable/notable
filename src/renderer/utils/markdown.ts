@@ -11,6 +11,9 @@ import * as pify from 'pify';
 import * as strip from 'strip-markdown';
 import * as showdown from 'showdown';
 import Config from '@common/config';
+import Utils from './utils';
+
+const {encodeFilePath} = Utils;
 
 /* IMPORT LAZY */
 
@@ -111,7 +114,7 @@ const Markdown = {
           } else if ( filePath.startsWith ( notesPath ) ) {
             return `[${$1}](${notesToken}/${filePath.slice ( notesPath.length )})`;
           } else {
-            return `[${$1}](file://${encodeURI ( filePath )})`;
+            return `[${$1}](file://${encodeFilePath ( filePath )})`;
           }
         }
       }];
@@ -124,7 +127,7 @@ const Markdown = {
         type: 'language',
         regex: `\\[([^\\]]*)\\]\\(((?:${Config.attachments.token}|${Config.notes.token}|${Config.tags.token})/[^\\)]*)\\)`,
         replace ( match, $1, $2 ) {
-          return `[${$1}](${encodeURI ( $2 )})`;
+          return `[${$1}](${encodeFilePath ( $2 )})`;
         }
       }];
 
@@ -143,7 +146,7 @@ const Markdown = {
           replace ( match, $1, $2, $3 ) {
             $2 = decodeURI ( $2 );
             const filePath = path.join ( attachmentsPath, $2 );
-            return `<img${$1}src="file://${encodeURI ( filePath )}" class="attachment" data-filename="${$2}"${$3}>`;
+            return `<img${$1}src="file://${encodeFilePath ( filePath )}" class="attachment" data-filename="${$2}"${$3}>`;
           }
         },
         { // Link Button
@@ -153,7 +156,7 @@ const Markdown = {
             $2 = decodeURI ( $2 );
             const basename = path.basename ( $2 );
             const filePath = path.join ( attachmentsPath, $2 );
-            return `<a${$1}href="file://${encodeURI ( filePath )}" class="attachment button gray" data-filename="${$2}"${$3}><i class="icon small">paperclip</i><span>${basename}</span></a>`;
+            return `<a${$1}href="file://${encodeFilePath ( filePath )}" class="attachment button gray" data-filename="${$2}"${$3}><i class="icon small">paperclip</i><span>${basename}</span></a>`;
           }
         },
         { // Link
@@ -162,7 +165,7 @@ const Markdown = {
           replace ( match, $1, $2, $3 ) {
             $2 = decodeURI ( $2 );
             const filePath = path.join ( attachmentsPath, $2 );
-            return `<a${$1}href="file://${encodeURI ( filePath )}" class="attachment" data-filename="${$2}"${$3}><i class="icon xsmall">paperclip</i>`;
+            return `<a${$1}href="file://${encodeFilePath ( filePath )}" class="attachment" data-filename="${$2}"${$3}><i class="icon xsmall">paperclip</i>`;
           }
         }
       ];
@@ -183,7 +186,7 @@ const Markdown = {
             $2 = decodeURI ( $2 );
             const basename = path.basename ( $2 );
             const filePath = path.join ( notesPath, $2 );
-            return `<a${$1}href="file://${encodeURI ( filePath )}" class="note button gray" data-filepath="${filePath}"${$3}><i class="icon small">note</i><span>${basename}</span></a>`;
+            return `<a${$1}href="file://${encodeFilePath ( filePath )}" class="note button gray" data-filepath="${filePath}"${$3}><i class="icon small">note</i><span>${basename}</span></a>`;
           }
         },
         { // Link
@@ -192,7 +195,7 @@ const Markdown = {
           replace ( match, $1, $2, $3 ) {
             $2 = decodeURI ( $2 );
             const filePath = path.join ( notesPath, $2 );
-            return `<a${$1}href="file://${encodeURI ( filePath )}" class="note" data-filepath="${filePath}"${$3}><i class="icon xsmall">note</i>`;
+            return `<a${$1}href="file://${encodeFilePath ( filePath )}" class="note" data-filepath="${filePath}"${$3}><i class="icon xsmall">note</i>`;
           }
         }
       ];

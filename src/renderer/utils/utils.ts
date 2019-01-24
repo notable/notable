@@ -7,11 +7,19 @@ import * as os from 'os';
 
 const Utils = {
 
+  pathSepRe: /(?:\/|\\)+/g,
+
   batchify ( batch, fn ) {
 
     return function ( ...args ) {
       batch.add ( fn, args );
     };
+
+  },
+
+  encodeFilePath ( filePath: string ): string {
+
+    return encodeURI ( filePath.replace ( Utils.pathSepRe, '/' ) );
 
   },
 
