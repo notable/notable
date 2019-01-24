@@ -54,19 +54,7 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 
 ## Contributing
 
-If you have an idea, or you have found a problem, please open an [issue](https://github.com/fabiospampinato/notable/issues) about it.
-
-If you want to make a pull request, or fork the app, you should:
-
-```bash
-git clone https://github.com/fabiospampinato/notable.git
-cd notable
-npm install
-npm run svelto:dev
-npm run iconfont
-npm run tutorial
-npm run dev
-```
+There are multiple ways to contribute to this project, read about them [here](https://github.com/fabiospampinato/notable/blob/master/.github/CONTRIBUTING.md).
 
 ## Related
 
