@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import {app, ipcMain as ipc} from 'electron';
+import {app, ipcMain as ipc, globalShortcut} from 'electron';
 import {autoUpdater} from 'electron-updater';
 import * as is from 'electron-is';
 import * as fs from 'fs';
@@ -10,6 +10,7 @@ import Environment from '@common/environment';
 import CWD from './windows/cwd';
 import Main from './windows/main';
 import Window from './windows/window';
+import Settings from '@common/settings';
 
 /* APP */
 
@@ -18,6 +19,7 @@ class App {
   /* VARIABLES */
 
   win: Window;
+  globalToggleShortcut: String;
 
   /* CONSTRUCTOR */
 
@@ -123,6 +125,40 @@ class App {
 
   }
 
+  /* Global Shortcut */
+
+  __registerGlobalToggleShortcut () {
+
+    const accelerator = Settings.get ( 'keybindings.globalToggleWindow' );
+
+    if ( this.globalToggleShortcut && globalShortcut.isRegistered( this.globalToggleShortcut ) ) {
+
+      globalShortcut.unregister( this.globalToggleShortcut );
+
+    }
+
+    if ( accelerator ) {
+
+      globalShortcut.register( accelerator, () => {
+
+        if ( this.win.win.isVisible () && this.win.win.isFocused () ) this.win.win.hide ();
+
+        else {
+
+          if ( this.win.win.isMinimized () ) this.win.win.restore ();
+
+          this.win.win.show ();
+
+        }
+
+      });
+
+      this.globalToggleShortcut = accelerator;
+
+    }
+
+  }
+
   /* API */
 
   load () {
@@ -132,6 +168,8 @@ class App {
     if ( cwd && fs.existsSync ( cwd ) ) {
 
       this.win = new Main ();
+
+      this.__registerGlobalToggleShortcut ();
 
     } else {
 
