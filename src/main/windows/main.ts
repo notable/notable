@@ -520,7 +520,19 @@ class Main extends Route {
 
     if ( accelerator ) {
 
-      globalShortcut.register( accelerator, () => this.win.isVisible () && this.win.isFocused () ? this.win.hide () : this.win.show () );
+      globalShortcut.register( accelerator, () => {
+
+        if ( this.win.isVisible () && this.win.isFocused () ) this.win.hide ();
+
+        else {
+
+          if ( this.win.isMinimized () ) this.win.restore ();
+
+          this.win.show ();
+
+        }
+
+      });
 
     }
 
