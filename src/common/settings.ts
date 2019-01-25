@@ -20,7 +20,10 @@ const Settings = new Store ({
       by: 'title',
       type: 'ascending'
     },
-    tutorial: false // Did we import the tutorial yet?
+    tutorial: false, // Did we import the tutorial yet?
+    keybindings: {
+      globalToggleWindow: ""
+    }
   }
 });
 

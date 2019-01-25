@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {ipcMain as ipc, BrowserWindow, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {ipcMain as ipc, BrowserWindow, Menu, MenuItemConstructorOptions, shell, globalShortcut} from 'electron';
 import * as is from 'electron-is';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
@@ -11,6 +11,7 @@ import pkg from '@root/package.json';
 import UMenu from '@main/utils/menu';
 import About from './about';
 import Route from './route';
+import Settings from '@common/settings';
 
 /* MAIN */
 
@@ -511,6 +512,20 @@ class Main extends Route {
 
   }
 
+  /* Global Shortcut */
+
+  __registerGlobalShortcut () {
+
+    const accelerator = Settings.get ( 'keybindings.globalToggleWindow' );
+
+    if ( accelerator ) {
+
+      globalShortcut.register( accelerator, () => this.win.isVisible () ? this.win.hide () : this.win.show () );
+
+    }
+
+  }
+
   /* LOAD */
 
   load () {
@@ -518,6 +533,8 @@ class Main extends Route {
     super.load ();
 
     setTimeout ( this.__didFinishLoad.bind ( this ), 500 ); //TODO: Ideally the timeout should be 0, for for that we need to minimize the amount of work happening before the skeleton can be rendered
+
+    this.__registerGlobalShortcut ();
 
   }
 
