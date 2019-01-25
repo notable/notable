@@ -16,7 +16,7 @@ Some issues are created with missing information ([`needs more info`](https://gi
 
 ### Comment on issues
 
-We are always looking for more opinions, leaving a comment in the issue tracker is a good opportinity influence the future direction of Notable.
+We are always looking for more opinions, leaving a comment in the issue tracker is a good opportunity to influence the future direction of Notable.
 
 We also consider the number of ":+1:" an issue has when deciding if we are going to work on it in the [Next milestone](https://github.com/fabiospampinato/notable/milestone/1) or not, so be sure to add your ":+1:" to the issues you're most interested in.
 
@@ -26,7 +26,7 @@ We have a [subreddit](https://www.reddit.com/r/notable). Feel free to join us th
 
 ### Submit a pull request
 
-Pull requests are especially welcomed for issues labeled as [`bug`](https://github.com/fabiospampinato/notable/issues?q=is%3Aissue+is%3Aopen+label%3Abug) or [`help wanted`](https://github.com/fabiospampinato/notable/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22). Pull requests for other issues can be considered too but before working on them you should let us know that you'd like to submit one, so that we can tell you if a pull request can be considered for that particular issue, what the pull request should actually implement and how.
+Pull requests are especially welcome for issues labeled as [`bug`](https://github.com/fabiospampinato/notable/issues?q=is%3Aissue+is%3Aopen+label%3Abug) or [`help wanted`](https://github.com/fabiospampinato/notable/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22). Pull requests for other issues can be considered too but before working on them you should let us know that you'd like to submit one, so that we can tell you if a pull request can be considered for that particular issue, what the pull request should actually implement and how.
 
 Follow these steps in order to get Notable ready for development:
 
