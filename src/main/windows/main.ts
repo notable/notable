@@ -514,7 +514,7 @@ class Main extends Route {
 
   /* Global Shortcut */
 
-  __registerGlobalShortcut () {
+  __registerGlobalToggleShortcut () {
 
     const accelerator = Settings.get ( 'keybindings.globalToggleWindow' );
 
@@ -546,7 +546,7 @@ class Main extends Route {
 
     setTimeout ( this.__didFinishLoad.bind ( this ), 500 ); //TODO: Ideally the timeout should be 0, for for that we need to minimize the amount of work happening before the skeleton can be rendered
 
-    this.__registerGlobalShortcut ();
+    this.__registerGlobalToggleShortcut ();
 
   }
 
