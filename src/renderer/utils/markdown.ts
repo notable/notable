@@ -119,20 +119,36 @@ const Markdown = {
 
       if ( !attachmentsPath || !notesPath ) return [];
 
-      return [{
-        type: 'language',
-        regex: `\\[([^\\]]*)\\]\\((\\.[^\\)]*)\\)`,
-        replace ( match, $1, $2 ) {
-          const filePath = path.resolve ( notesPath, $2 );
-          if ( filePath.startsWith ( attachmentsPath ) ) {
-            return `[${$1}](${attachmentsToken}/${filePath.slice ( attachmentsPath.length )})`;
-          } else if ( filePath.startsWith ( notesPath ) ) {
-            return `[${$1}](${notesToken}/${filePath.slice ( notesPath.length )})`;
-          } else {
-            return `[${$1}](file://${encodeFilePath ( filePath )})`;
+      return [
+        { // Markdown
+          type: 'language',
+          regex: `\\[([^\\]]*)\\]\\((\\.[^\\)]*)\\)`,
+          replace ( match, $1, $2 ) {
+            const filePath = path.resolve ( notesPath, $2 );
+            if ( filePath.startsWith ( attachmentsPath ) ) {
+              return `[${$1}](${attachmentsToken}/${filePath.slice ( attachmentsPath.length )})`;
+            } else if ( filePath.startsWith ( notesPath ) ) {
+              return `[${$1}](${notesToken}/${filePath.slice ( notesPath.length )})`;
+            } else {
+              return `[${$1}](file://${encodeFilePath ( filePath )})`;
+            }
+          }
+        },
+        { // <img>, <a>
+          type: 'output',
+          regex: /<(img|a)\s(.*?)(src|href)="(\.[^"]*)"(.*?)>/gm,
+          replace ( match, $1, $2, $3, $4, $5 ) {
+            const filePath = path.resolve ( notesPath, $4 );
+            if ( filePath.startsWith ( attachmentsPath ) ) {
+              return `<${$1} ${$2} ${$3}="${attachmentsToken}/${filePath.slice ( attachmentsPath.length )}" ${$5}>`;
+            } else if ( filePath.startsWith ( notesPath ) ) {
+              return `<${$1} ${$2} ${$3}="${notesToken}/${filePath.slice ( notesPath.length )}"${$5}>`;
+            } else {
+              return `<${$1} ${$2} ${$3}="file://${encodeFilePath ( filePath )}"${$5}>`;
+            }
           }
         }
-      }];
+      ];
 
     },
 
