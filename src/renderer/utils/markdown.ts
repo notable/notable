@@ -134,9 +134,9 @@ const Markdown = {
             }
           }
         },
-        { // <img>, <a>
+        { // <a>, <img>, <source>
           type: 'output',
-          regex: /<(img|a)\s(.*?)(src|href)="(\.[^"]*)"(.*?)>/gm,
+          regex: /<(a|img|source)\s(.*?)(src|href)="(\.[^"]*)"(.*?)>/gm,
           replace ( match, $1, $2, $3, $4, $5 ) {
             const filePath = path.resolve ( notesPath, $4 );
             if ( filePath.startsWith ( attachmentsPath ) ) {
@@ -171,13 +171,13 @@ const Markdown = {
       if ( !attachmentsPath ) return [];
 
       return [
-        { // Image
+        { // <img>, <source>
           type: 'output',
-          regex: `<img(.*?)src="${token}/([^"]+)"(.*?)>`,
-          replace ( match, $1, $2, $3 ) {
-            $2 = decodeURI ( $2 );
-            const filePath = path.join ( attachmentsPath, $2 );
-            return `<img${$1}src="file://${encodeFilePath ( filePath )}" class="attachment" data-filename="${$2}"${$3}>`;
+          regex: `<(img|source)(.*?)src="${token}/([^"]+)"(.*?)>`,
+          replace ( match, $1, $2, $3, $4 ) {
+            $3 = decodeURI ( $3 );
+            const filePath = path.join ( attachmentsPath, $3 );
+            return `<${$1}${$2}src="file://${encodeFilePath ( filePath )}" class="attachment" data-filename="${$3}"${$4}>`;
           }
         },
         { // Link Button
