@@ -21,8 +21,7 @@ const laxy = require ( 'laxy' ),
       mermaid = laxy ( () => require ( 'mermaid' ) )(),
       remark = laxy ( () => require ( 'remark' ) )(),
       showdownHighlight = laxy ( () => require ( 'showdown-highlight' ) )(),
-      showdownKatex = laxy ( () => require ( 'showdown-katex-studdown' ) )(),
-      showdownTargetBlack = laxy ( () => require ( 'showdown-target-blank' ) )();
+      showdownKatex = laxy ( () => require ( 'showdown-katex-studdown' ) )();
 
 /* MARKDOWN */
 
@@ -94,6 +93,22 @@ const Markdown = {
           replace: () => ''
         }
       ];
+
+    },
+
+    targetBlankLinks () {
+
+      return [{
+        type: 'output',
+        regex: '<a(.*?)href="(.)(.*?)>',
+        replace ( match, $1, $2, $3 ) {
+          if ( $2 === '#' ) { // URL fragment
+            return match;
+          } else {
+            return `<a${$1}target="_blank" href="${$2}${$3}>`;
+          }
+        }
+      }];
 
     },
 
@@ -233,11 +248,11 @@ const Markdown = {
 
     if ( Markdown.converter ) return Markdown.converter;
 
-    const {katex, mermaid, checkbox, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
+    const {katex, mermaid, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
 
     const converter = new showdown.Converter ({
       metadata: true,
-      extensions: [showdownHighlight, showdownTargetBlack, katex (), mermaid (), checkbox (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
+      extensions: [showdownHighlight, katex (), mermaid (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
     });
 
     converter.setFlavor ( 'github' );
