@@ -55,7 +55,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   async _inferTitleFromLine ( line: string | null, fallback: string = 'Untitled' ): Promise<string> {
 
-    return line ? ( await Markdown.strip ( line ) ).trim () || fallback : fallback;
+    return line ? await Markdown.strip ( line.trim () ) || fallback : fallback;
 
   }
 

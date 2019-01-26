@@ -29,7 +29,7 @@ const Markdown = {
 
   converter: undefined,
 
-  markdownRe: /_|\*|~|`|<|:|^>|^#|\]|---|===|\d\.|[*+-][ \t]+\[|\n\n/m,
+  markdownRe: /_|\*|~|`|<|:|^>|^#|\]|---|===|\d\.|[*+-]\s|\n\n/m,
 
   extensions: {
 
@@ -297,7 +297,7 @@ const Markdown = {
 
     if ( !Markdown.is ( str ) ) return str;
 
-    return ( await pify ( remark ().use ( strip ).process )( str ) ).toString ();
+    return ( await pify ( remark ().use ( strip ).process )( str ) ).toString ().trim ();
 
   }
 
