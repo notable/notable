@@ -141,7 +141,7 @@ const Markdown = {
       return [
         { // Link
           type: 'lang',
-          regex: /(?<!(?:^|\n)(?: {0,3})(?:```+|~~~+)(?: *)(?:[^\s`~]*)\n(?:[\s\S]*?)|`)\[{2}(.*?\|?.*?)\]{2}/g,
+          regex: /(?<!`)\[\[(.*?)\]\]/g,
           replace (match, $1, $2) {
             matches.push($1);
             var n = matches.length - 1;
