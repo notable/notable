@@ -215,7 +215,7 @@ const Markdown = {
 
     const converter = new showdown.Converter ({
       metadata: true,
-      extensions: [showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag (), wikilink (), showdownHighlight, katex (), mermaid ()]
+      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), wikilink (), note (), tag (),  katex (), mermaid ()]
     });
 
     converter.setFlavor ( 'github' );
