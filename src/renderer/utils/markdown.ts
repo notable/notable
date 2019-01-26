@@ -138,8 +138,18 @@ const Markdown = {
       if ( !notesPath ) return [];
 
       var matches = [];
+      var codeblocks = [];
       return [
-        { // Link
+        { // Extract Codeblocks
+          type: 'lang',
+          regex: /((?:^|\n {0,3})(```+|~~~+)(?: *)([^\s`~]*)\n([\s\S]*?)\n(?: {0,3})\2)/g,
+          replace (match, $1) {
+            codeblocks.push($1);
+            var n = codeblocks.length - 1;
+            return '%CODEBLOCK' + n + '%';
+          }
+        },
+        { // Extract Wikilinks
           type: 'lang',
           regex: /(?<!`)\[\[(.*?)\]\]/g,
           replace (match, $1, $2) {
@@ -148,7 +158,15 @@ const Markdown = {
             return '%PLACEHOLDER' + n + '%';
           }
         },
-        {
+        { // Reinsert Codeblocks
+            type: 'lang',
+            regex: /%CODEBLOCK.*?%/gi,
+            replace (match) {
+                var codeblock = codeblocks.shift();
+                return codeblock;
+            }
+        },
+        { // Transform Wikilinks
           type: 'output',
           filter (text) {
                 for (var i=0; i< matches.length; ++i) {
