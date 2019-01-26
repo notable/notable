@@ -133,7 +133,7 @@ const Markdown = {
     // Wikilink
     wikilink () {
 
-      const {path: notesPath} = Config.notes;
+      const {path: notesPath, re} = Config.notes;
 
       if ( !notesPath ) return [];
 
@@ -166,10 +166,16 @@ const Markdown = {
                     };
 
                     wikiLink = decodeURI ( wikiLink );
-                    var basename = [wikiLink, 'md'].join('.'); // the extension should be configurable (= default extension)
+                    
+                    if (wikiLink.match(re)) {
+                      var basename = wikiLink; 
+                    } else {
+                      var basename = [wikiLink, 'md'].join('.'); // the extension should be configurable (= default extension)
+                    }
+
                     var filePath = path.join ( notesPath, basename ); 
-                    // var link = `<a target="_blank" href="file://${filePath}" class="note" data-filepath="${filePath}"><i class="icon xsmall">note</i>${linkText}</a>`;
                     var link = `<a href="@note/${basename}">${linkText}</a>`
+                    
                     // find placeholder and replace with link
                     var pat = '%PLACEHOLDER' + i + '%';
                     var text = text.replace(new RegExp(pat, 'gi'), link);
