@@ -130,6 +130,41 @@ const Markdown = {
 
     },
 
+    // Wikilink
+    wikilink () {
+
+      const {path: notesPath} = Config.notes;
+
+      if ( !notesPath ) return [];
+
+      return [
+        { // Link
+          type: 'output',
+          regex: /\[{2}(.*?\|?.*?)\]{2}/g,
+          replace ( match, $1 ) {
+            const content  = $1
+            const splits = content.split("|"); 
+
+            if (splits.length === 1) {
+              const wikiLink = splits[0].trim();
+              const linkText = splits[0].trim();
+            }
+            else {
+              const wikiLink = splits[1].trim();
+              const linkText = splits[0].trim();
+            };
+
+            wikiLink = decodeURI ( wikiLink );
+            const basename = [wikiLink, 'md'].join('.'); // the extension should be configurable (= default extension)
+            const filePath = path.join ( notesPath, basename ); 
+            return `<a target="_blank" href="file://${filePath}" class="note" data-filepath="${filePath}"><i class="icon xsmall">note</i>${linkText}</a>`;
+          }
+        }
+      ];
+
+    },
+
+
     katex () {
 
       return showdownKatex ( Config.katex );
@@ -157,11 +192,11 @@ const Markdown = {
 
     if ( Markdown.converter ) return Markdown.converter;
 
-    const {encodeSpecialLinks, attachment, note, tag, katex, mermaid} = Markdown.extensions;
+    const {encodeSpecialLinks, attachment, note, tag, wikilink, katex, mermaid} = Markdown.extensions;
 
     const converter = new showdown.Converter ({
       metadata: true,
-      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag (), katex (), mermaid ()]
+      extensions: [showdownHighlight, showdownTargetBlack, encodeSpecialLinks (),attachment (), note (), tag (), wikilink (), katex (), mermaid ()]
     });
 
     converter.setFlavor ( 'github' );
