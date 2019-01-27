@@ -4,7 +4,7 @@
 import * as _ from 'lodash';
 import CallsBatch from 'calls-batch';
 import {remote} from 'electron';
-import * as globby from 'globby';
+import glob from 'tiny-glob';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import Utils from '@renderer/utils/utils';
@@ -39,7 +39,7 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
 
   refresh = async () => {
 
-    const filePaths = Utils.globbyNormalize ( await globby ( Config.attachments.globs, { cwd: Config.attachments.path, absolute: true } ) );
+    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.attachments.glob, { cwd: Config.attachments.path, absolute: true, filesOnly: true } ) );
 
     const attachments = filePaths.reduce ( ( acc, filePath ) => {
 

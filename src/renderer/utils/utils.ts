@@ -31,11 +31,11 @@ const Utils = {
 
   },
 
-  globbyNormalize ( filePaths: string[] ): string[] {
+  normalizeFilePaths ( filePaths: string[] ): string[] {
 
     if ( os.platform () !== 'win32' ) return filePaths;
 
-    return filePaths.map ( filePath => filePath.replace ( /(\\|\/)/g, '\\' ) );
+    return filePaths.map ( filePath => filePath.replace ( Utils.pathSepRe, '\\' ) );
 
   },
 

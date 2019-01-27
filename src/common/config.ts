@@ -15,8 +15,8 @@ const Config = {
       const cwd = Config.cwd;
       return cwd ? path.join ( cwd, 'attachments' ) : undefined;
     },
-    globs: ['**/*', '!**/.*'],
-    re: /attachments(?:\\|\/)(?!\.).*$/, // Excluding dot files
+    glob: '**/*',
+    re: /./,
     token: '@attachment' // Usable in urls
   },
   notes: {
@@ -24,7 +24,7 @@ const Config = {
       const cwd = Config.cwd;
       return cwd ? path.join ( cwd, 'notes' ) : undefined;
     },
-    globs: ['**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,txt}'],
+    glob: '**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,txt}',
     re: /\.(?:md|mkd|mdwn|mdown|markdown|markdn|mdtxt|mdtext|txt)$/,
     token: '@note' // Usable in urls
   },

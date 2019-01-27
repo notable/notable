@@ -3,7 +3,7 @@
 
 import * as _ from 'lodash';
 import CallsBatch from 'calls-batch';
-import * as globby from 'globby';
+import glob from 'tiny-glob';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import Utils from '@renderer/utils/utils';
@@ -37,7 +37,7 @@ class Notes extends Container<NotesState, MainCTX> {
 
   refresh = async () => {
 
-    const filePaths = Utils.globbyNormalize ( await globby ( Config.notes.globs, { cwd: Config.notes.path, absolute: true } ) );
+    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.notes.glob, { cwd: Config.notes.path, absolute: true, filesOnly: true } ) );
 
     const notes = {};
 
