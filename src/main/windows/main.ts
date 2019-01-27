@@ -277,6 +277,7 @@ class Main extends Route {
           { type: 'separator' },
           {
             label: 'Toggle Focus Mode',
+            type: 'checkbox',
             accelerator: 'CmdOrCtrl+Alt+F',
             click: () => this.win.webContents.send ( 'window-focus-toggle' )
           },
@@ -285,7 +286,10 @@ class Main extends Route {
             accelerator: 'CmdOrCtrl+Alt+S',
             click: () => this.win.webContents.send ( 'editor-split-toggle' )
           },
-          { role: 'togglefullscreen' }
+          {
+            role: 'togglefullscreen',
+            type: 'checkbox'
+          }
         ]
       },
       {
@@ -374,7 +378,9 @@ class Main extends Route {
           },
           { type: 'separator' },
           {
-            role: 'toggledevtools'
+            role: 'toggledevtools',
+            type: 'checkbox',
+            checked: this.win.webContents.isDevToolsOpened ()
           }
         ]
       }
