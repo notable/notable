@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import * as isShallowEqual from 'shallowequal';
+import * as isShallowEqual from 'is-shallow-equal';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 
