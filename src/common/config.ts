@@ -38,10 +38,6 @@ const Config = {
     by: Settings.get ( 'sorting.by' ),
     type: Settings.get ( 'sorting.type' )
   },
-  flags: {
-    TUTORIAL: true, // Write the tutorial notes upon first instantiation
-    OPTIMISTIC_RENDERING: true // Assume writes are successful in order to render changes faster
-  },
   katex: {
     throwOnError: true,
     displayMode: false,
