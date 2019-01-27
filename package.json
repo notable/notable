@@ -164,15 +164,13 @@
     "react-dom": "^16.7.0",
     "react-router-static": "^1.0.0",
     "react-window": "^1.4.0",
-    "remark": "^10.0.1",
     "sha1": "^1.1.1",
     "shallowequal": "^1.1.0",
     "showdown": "^1.9.0",
     "showdown-highlight": "^2.1.3",
     "showdown-katex-studdown": "^0.4.0",
     "showdown-target-blank": "^1.0.2",
-    "string-matches": "^1.1.3",
-    "strip-markdown": "^3.0.3"
+    "string-matches": "^1.1.3"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",

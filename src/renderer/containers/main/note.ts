@@ -53,9 +53,9 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  async _inferTitleFromLine ( line: string | null, fallback: string = 'Untitled' ): Promise<string> {
+  _inferTitleFromLine ( line: string | null, fallback: string = 'Untitled' ): string {
 
-    return line ? await Markdown.strip ( line.trim () ) || fallback : fallback;
+    return line ? Markdown.strip ( line.trim () ) || fallback : fallback;
 
   }
 
@@ -617,7 +617,7 @@ class Note extends Container<NoteState, MainCTX> {
     const nextNote = _.cloneDeep ( note ),
           titleLinePrev = Utils.getFirstUnemptyLine ( note.plainContent ),
           titleLineNext = Utils.getFirstUnemptyLine ( plainContent ),
-          title = ( titleLinePrev !== titleLineNext ) ? await this._inferTitleFromLine ( titleLineNext ) : note.metadata.title,
+          title = ( titleLinePrev !== titleLineNext ) ? this._inferTitleFromLine ( titleLineNext ) : note.metadata.title,
           didTitleChange = ( title !== note.metadata.title );
 
     nextNote.metadata.title = title;
