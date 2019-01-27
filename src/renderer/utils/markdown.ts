@@ -25,6 +25,7 @@ const laxy = require ( 'laxy' ),
 const Markdown = {
 
   re: /_|\*|~|`|<|:|^>|^#|\]|---|===|\d\.|[*+-]\s|\n\n/m,
+  wrapperRe: /^<p>(.*?)<\/p>$/,
 
   extensions: {
 
@@ -305,7 +306,7 @@ const Markdown = {
 
   render: _.memoize ( ( str: string ): string => {
 
-    if ( !Markdown.is ( str ) ) return `<p>${str}</p>`;
+    if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
     return Markdown.converters.preview ().makeHtml ( str );
 
@@ -313,9 +314,9 @@ const Markdown = {
 
   strip: ( str: string ): string => {
 
-    if ( !Markdown.is ( str ) ) return str;
+    if ( !str || !Markdown.is ( str ) ) return str;
 
-    return Markdown.converters.strip ().makeHtml ( str ).trim ();
+    return Markdown.converters.strip ().makeHtml ( str ).trim ().replace ( Markdown.wrapperRe, '$1' );
 
   }
 
