@@ -87,9 +87,12 @@ class Notes extends Container<NotesState, MainCTX> {
         if ( call[0] === unlink && index < lastDeleteIndex ) call[1][1] = false;
         return call;
       });
-      /* SKIPPING UPDATES ON MULTIPLE CHANGES */
+      /* SKIPPING UPDATES ON MULTIPLE CHANGES & MULTIPLE CONSECUTIVE CHANGES TO THE SAME FILE */
       const lastChangeIndex = _.findLastIndex ( queueNext, call => call[0] === change );
-      queueNext = queueNext.map ( ( call, index ) => {
+      queueNext = queueNext.filter ( ( call, index ) => {
+        const callNext = queueNext[index + 1];
+        return !callNext || call[0] !== callNext[0] || call[1][0] !== callNext[1][0];
+      }).map ( ( call, index ) => {
         if ( call[0] === change && index < lastChangeIndex ) call[1][1] = false;
         return call;
       });
@@ -125,6 +128,7 @@ class Notes extends Container<NotesState, MainCTX> {
       const nextNote = await this.ctx.note.read ( nextFilePath );
       if ( !nextNote ) return;
       if ( this.ctx.note.is ( note, nextNote ) ) return;
+      if ( note.metadata.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
       await this.ctx.note.replace ( note, nextNote, _refresh );
     };
 
