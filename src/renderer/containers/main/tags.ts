@@ -35,7 +35,7 @@ class Tags extends Container<TagsState, MainCTX> {
 
     function toggle ( parent, key: string, deletable: boolean = false ) {
       const tag: TagObj = parent[key];
-      const index = tag.notes.indexOf ( note );
+      const index = tag.notes.findIndex ( n => n.checksum === note.checksum && n.filePath === note.filePath ); //FIXME: This should actually be `tag.notes.indexOf ( note )` but for some reason some times it doesn't work
       if ( add ) {
         if ( index === -1 ) {
           tag.notes.push ( note );
@@ -193,21 +193,21 @@ class Tags extends Container<TagsState, MainCTX> {
 
     const tags = this.get ();
 
-    if ( updates.add ) {
-
-      updates.add.forEach ( note => {
-
-        this._toggleNote ( tags, note, true, true );
-
-      });
-
-    }
-
     if ( updates.remove ) {
 
       updates.remove.forEach ( note => {
 
         this._toggleNote ( tags, note, false, true );
+
+      });
+
+    }
+
+    if ( updates.add ) {
+
+      updates.add.forEach ( note => {
+
+        this._toggleNote ( tags, note, true, true );
 
       });
 

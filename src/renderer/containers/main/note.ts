@@ -586,15 +586,15 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( !note ) return;
 
-    const content = this.ctx.editor.getContent ();
+    const data = this.ctx.editor.getData ();
 
-    if ( !_.isString ( content ) ) return;
+    if ( !data ) return;
 
-    return this.save ( note, content );
+    return this.save ( note, data.content, data.modified );
 
   }
 
-  save = async ( note: NoteObj | undefined = this.state.note, plainContent: string ) => {
+  save = async ( note: NoteObj | undefined = this.state.note, plainContent: string, modified?: Date ) => {
 
     if ( !note ) return;
 
@@ -613,6 +613,8 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( didTitleChange ) {
 
+      await this.replace ( note, nextNote ); // In order to immediately update the structures, this avoids some problems when editing a file very quickly
+
       const ext = path.extname ( note.filePath ) || '.md',
             {filePath} = await Path.getAllowedPath ( path.dirname ( nextNote.filePath ), `${title}${ext}` );
 
@@ -626,14 +628,14 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  write = async ( note: NoteObj ) => { // Remember to update the export methods when modifying the written metadata
+  write = async ( note: NoteObj, modified: Date = new Date () ) => { // Remember to update the export methods when modifying the written metadata
 
     const metadata = _.clone ( note.metadata );
 
     delete metadata.stat;
 
     metadata.created = metadata.created.toISOString () as any;
-    metadata.modified = new Date ().toISOString () as any;
+    metadata.modified = modified.toISOString () as any;
 
     if ( !this.getAttachments ( note ).length ) delete metadata.attachments;
     if ( !this.getTags ( note ).length ) delete metadata.tags;

@@ -106,10 +106,10 @@ class Notes extends Container<NotesState, MainCTX> {
 
     const add = async ( filePath, _refresh?: boolean ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
-      const prevNote = this.ctx.note.get ( filePath );
-      if ( prevNote ) return;
       const note = await this.ctx.note.read ( filePath );
       if ( !note ) return;
+      const prevNote = this.ctx.note.get ( filePath );
+      if ( prevNote ) return;
       await this.ctx.note.add ( note, _refresh );
     };
 
@@ -123,12 +123,16 @@ class Notes extends Container<NotesState, MainCTX> {
         if ( isFilePathSupported ( filePath ) ) return unlink ( filePath );
         return;
       }
-      const note = this.ctx.note.get ( filePath );
-      if ( !note ) return add ( nextFilePath );
       const nextNote = await this.ctx.note.read ( nextFilePath );
       if ( !nextNote ) return;
+      const note = this.ctx.note.get ( filePath );
+      if ( !note ) return add ( nextFilePath );
       if ( this.ctx.note.is ( note, nextNote ) ) return;
       if ( note.metadata.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
+      if ( !nextNote.content.length && ( Math.abs ( note.metadata.modified.getTime () - nextNote.metadata.modified.getTime () ) < 1000 ) ) return; //FIXME: For some reason some times the note gets read as an empty string, maybe we are reading and writing at "the same" time and the file gets cleared?
+      const currentNote = this.ctx.note.get ();
+      const editorData = this.ctx.editor.getData ();
+      if ( editorData && this.ctx.note.is ( nextNote, currentNote ) && editorData.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
       await this.ctx.note.replace ( note, nextNote, _refresh );
     };
 
