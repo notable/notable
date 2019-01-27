@@ -7,6 +7,7 @@ import Settings from './settings';
 /* CONFIG */
 
 const Config = {
+  autoupdate: true,
   get cwd () {
     return Settings.get ( 'cwd' );
   },

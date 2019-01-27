@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import {ipcRenderer as ipc} from 'electron';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
+import Config from '@common/config';
 import Main from '@renderer/containers/main';
 
 /* GLOBAL PLUGINS */
@@ -23,8 +24,12 @@ class GlobalPlugins extends Component<{ container: IMain }, undefined> {
 
     $.$window.on ( 'beforeunload', this.__beforeUnload );
 
-    this._updaterTimeout = setTimeout ( this.__updaterCheck, 1000 );
-    this._updaterInterval = setInterval ( this.__updaterCheck, 86400000 );
+    if ( Config.autoupdate ) {
+
+      this._updaterTimeout = setTimeout ( this.__updaterCheck, 1000 );
+      this._updaterInterval = setInterval ( this.__updaterCheck, 86400000 );
+
+    }
 
   }
 
