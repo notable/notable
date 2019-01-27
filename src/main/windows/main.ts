@@ -18,7 +18,7 @@ class Main extends Route {
 
   /* VARIABLES */
 
-  _prevFlags: StateFlags | false = false;
+  _prevStateFlags: StateFlags | false = false;
 
   /* CONSTRUCTOR */
 
@@ -32,9 +32,9 @@ class Main extends Route {
 
   initLocalShortcuts () {}
 
-  initMenu ( flags: StateFlags | false = this._prevFlags ) {
+  initMenu ( flags: StateFlags | false = this._prevStateFlags ) {
 
-    this._prevFlags = flags; // Storing them because they are needed also when focusing to the window
+    this._prevStateFlags = flags; // Storing them because they are needed also when focusing to the window
 
     const template: MenuItemConstructorOptions[] = UMenu.filterTemplate ([
       {
