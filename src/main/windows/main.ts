@@ -19,6 +19,7 @@ class Main extends Route {
   /* VARIABLES */
 
   _prevStateFlags: StateFlags | false = false;
+  _prevUpdateCheckTimestamp: number = 0;
 
   /* CONSTRUCTOR */
 
@@ -36,6 +37,8 @@ class Main extends Route {
 
     this._prevStateFlags = flags; // Storing them because they are needed also when focusing to the window
 
+    const updaterCanCheck = this._updaterCanCheck ();
+
     const template: MenuItemConstructorOptions[] = UMenu.filterTemplate ([
       {
         label: pkg.productName,
@@ -43,6 +46,11 @@ class Main extends Route {
           {
             label: `About ${pkg.productName}`,
             click: () => new About ()
+          },
+          {
+            label: updaterCanCheck ? 'Check for Updates...' : 'Checking for Updates...',
+            enabled: updaterCanCheck,
+            click: this._updaterCheck
           },
           {
             type: 'separator'
@@ -508,6 +516,26 @@ class Main extends Route {
         });
       });
     });
+
+  }
+
+  /* UPDATER */
+
+  _updaterCanCheck () {
+
+    return ( Date.now () - this._prevUpdateCheckTimestamp ) >= 2000;
+
+  }
+
+  _updaterCheck = () => {
+
+    this._prevUpdateCheckTimestamp = Date.now ();
+
+    this.initMenu ();
+
+    ipc.emit ( 'updater-check', true );
+
+    setTimeout ( this.initMenu.bind ( this ), 2000 );
 
   }
 
