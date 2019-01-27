@@ -1,12 +1,13 @@
 
 /* IMPORT */
 
-import {app, ipcMain as ipc} from 'electron';
-import {autoUpdater} from 'electron-updater';
+import {app, ipcMain as ipc, Event} from 'electron';
+import {autoUpdater as updater} from 'electron-updater';
 import * as is from 'electron-is';
 import * as fs from 'fs';
 import Config from '@common/config';
 import Environment from '@common/environment';
+import Notification from '@main/utils/notification';
 import CWD from './windows/cwd';
 import Main from './windows/main';
 import Window from './windows/window';
@@ -54,6 +55,7 @@ class App {
     this.___activate ();
     this.___ready ();
     this.___cwdChanged ();
+    this.___updaterCheck ();
 
   }
 
@@ -101,8 +103,6 @@ class App {
 
     this.initDebug ();
 
-    autoUpdater.checkForUpdatesAndNotify ();
-
     this.load ();
 
   }
@@ -120,6 +120,29 @@ class App {
     if ( this.win ) this.win.win.close ();
 
     this.load ();
+
+  }
+
+  /* UPDATER CHECK */
+
+  ___updaterCheck () {
+
+    ipc.on ( 'updater-check', this.__updaterCheck.bind ( this ) );
+
+  }
+
+  async __updaterCheck ( notifications: Event | boolean = false ) {
+
+    if ( notifications === true ) {
+
+      updater.removeAllListeners ();
+      updater.on ( 'update-available', () => Notification.show ( 'A new update is available', 'Downloading it right now...' ) );
+      updater.on ( 'update-not-available', () => Notification.show ( 'No update is available', 'You\'re already using the latest version' ) );
+      updater.on ( 'error', err => Notification.show ( 'An error occurred', err.message ) );
+
+    }
+
+    updater.checkForUpdatesAndNotify ();
 
   }
 

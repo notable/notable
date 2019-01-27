@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import {ipcRenderer as ipc} from 'electron';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
@@ -13,6 +14,8 @@ class GlobalPlugins extends Component<{ container: IMain }, undefined> {
   /* VARIABLES */
 
   _exitCaught = false;
+  _updaterTimeout: NodeJS.Timeout;
+  _updaterInterval: NodeJS.Timeout;
 
   /* SPECIAL */
 
@@ -20,11 +23,17 @@ class GlobalPlugins extends Component<{ container: IMain }, undefined> {
 
     $.$window.on ( 'beforeunload', this.__beforeUnload );
 
+    this._updaterTimeout = setTimeout ( this.__updaterCheck, 1000 );
+    this._updaterInterval = setInterval ( this.__updaterCheck, 86400000 );
+
   }
 
   componentWillUnmount () {
 
     $.$window.off ( 'beforeunload', this.__beforeUnload );
+
+    clearTimeout ( this._updaterTimeout );
+    clearInterval ( this._updaterInterval );
 
   }
 
@@ -43,6 +52,12 @@ class GlobalPlugins extends Component<{ container: IMain }, undefined> {
     await this.props.container.note.autosave ();
 
     setTimeout ( window.close, 0 ); // Deferring or it won't work
+
+  }
+
+  __updaterCheck = () => {
+
+    ipc.send ( 'updater-check' );
 
   }
 
