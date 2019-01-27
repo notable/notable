@@ -202,8 +202,6 @@ class Tag extends Container<TagState, MainCTX> {
 
     if ( tagNext ) return this.ctx.tag.set ( tagNext );
 
-    return; //TSC
-
   }
 
   previous = () => {

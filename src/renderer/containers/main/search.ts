@@ -166,8 +166,6 @@ class Search extends Container<SearchState, MainCTX> {
 
     if ( noteNext ) return this.ctx.note.set ( noteNext, true );
 
-    return; //TSC
-
   }
 
   previous = () => {

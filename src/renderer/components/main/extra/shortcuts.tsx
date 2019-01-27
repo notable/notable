@@ -86,8 +86,6 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
     this.props.container.editor.toggleEditing ();
 
-    return; //TSC
-
   }
 
   __editorSave () {
@@ -95,8 +93,6 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
     if ( !this.props.container.editor.isEditing () || this.props.container.editor.isSplit () ) return null;
 
     this.props.container.editor.toggleEditing ();
-
-    return; //TSC
 
   }
 
@@ -113,8 +109,6 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
     if ( !$editorPreview.length ) return null;
 
     window.getSelection ().selectAllChildren ( $editorPreview[0] );
-
-    return; //TSC
 
   }
 
