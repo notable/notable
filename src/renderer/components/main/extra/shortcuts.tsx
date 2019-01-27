@@ -3,7 +3,6 @@
 
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
-import Environment from '@common/environment';
 import Main from '@renderer/containers/main';
 
 /* SHORTCUTS */
@@ -27,9 +26,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
     'ctrl+page_down': [this.__searchNext, true],
     'ctrl+page_up': [this.__searchPrevious, true],
     'ctrl+alt+page_down': [this.__tagNext, true],
-    'ctrl+alt+page_up': [this.__tagPrevious, true],
-    'ctmd+r': [this.__reload, true],
-    'ctmd+shift+r': [this.__reload, true]
+    'ctrl+alt+page_up': [this.__tagPrevious, true]
   };
 
   /* SPECIAL */
@@ -177,18 +174,6 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
   __tagPrevious () {
 
     this.props.container.tag.previous ();
-
-  }
-
-  __reload ( event ) {
-
-    if ( !Environment.isDevelopment ) return null;
-
-    window['__bypass_beforeunload__'] = true;
-
-    location.reload ( !!event.shiftKey );
-
-    return; //TSC
 
   }
 

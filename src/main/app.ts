@@ -53,6 +53,8 @@ class App {
 
     this.___windowAllClosed ();
     this.___activate ();
+    this.___beforeQuit ();
+    this.___forceQuit ();
     this.___ready ();
     this.___cwdChanged ();
     this.___updaterCheck ();
@@ -88,6 +90,46 @@ class App {
     if ( this.win && this.win.win ) return;
 
     this.load ();
+
+  }
+
+  /* BEFORE QUIT */
+
+  ___beforeQuit () {
+
+    app.on ( 'before-quit', this.__beforeQuit.bind ( this ) );
+
+  }
+
+  ___beforeQuit_off () {
+
+    app.removeAllListeners ( 'before-quit' );
+
+  }
+
+  __beforeQuit ( event ) {
+
+    if ( !this.win || !this.win.win ) return;
+
+    event.preventDefault ();
+
+    this.win.win.webContents.send ( 'app-quit' );
+
+  }
+
+  /* FORCE QUIT */
+
+  ___forceQuit () {
+
+    ipc.on ( 'force-quit', this.__forceQuit.bind ( this ) );
+
+  }
+
+  __forceQuit () {
+
+    this.___beforeQuit_off ();
+
+    app.quit ();
 
   }
 
