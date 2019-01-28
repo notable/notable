@@ -103,7 +103,7 @@ class App {
 
   ___beforeQuit_off = () => {
 
-    app.removeAllListeners ( 'before-quit' );
+    app.removeListener ( 'before-quit', this.__beforeQuit );
 
   }
 

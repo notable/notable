@@ -421,6 +421,16 @@ class Main extends Route {
 
   }
 
+  cleanup () {
+
+    super.cleanup ();
+
+    ipc.removeListener ( 'force-close', this.__forceClose );
+    ipc.removeListener ( 'flags-update', this.__flagsUpdate );
+    ipc.removeListener ( 'print-pdf', this.__printPDF );
+
+  }
+
   /* CLOSE */
 
   ___close = () => {
@@ -431,7 +441,7 @@ class Main extends Route {
 
   ___close_off = () => {
 
-    this.win.removeAllListeners ( 'close' );
+    this.win.removeListener ( 'close', this.__close );
 
   }
 

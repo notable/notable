@@ -78,6 +78,12 @@ class Window {
 
   }
 
+  cleanup () {
+
+    this.win.removeAllListeners ();
+
+  }
+
   /* READY TO SHOW */
 
   ___didFinishLoad = () => {
@@ -102,6 +108,8 @@ class Window {
   }
 
   __closed = () => {
+
+    this.cleanup ();
 
     delete this.win;
 
