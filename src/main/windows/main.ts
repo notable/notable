@@ -283,8 +283,10 @@ class Main extends Route {
           },
           {
             label: 'Toggle Split View Mode',
+            type: 'checkbox',
             accelerator: 'CmdOrCtrl+Alt+S',
-            click: () => this.win.webContents.send ( 'editor-split-toggle' )
+            click: () => this.win.webContents.send ( 'editor-split-toggle' ),
+            checked: flags && flags.isEditorSplitView
           },
           {
             role: 'togglefullscreen',
