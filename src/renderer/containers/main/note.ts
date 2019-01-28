@@ -53,9 +53,9 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  async _inferTitleFromLine ( line: string | null, fallback: string = 'Untitled' ): Promise<string> {
+  _inferTitleFromLine ( line: string | null, fallback: string = 'Untitled' ): string {
 
-    return line ? ( await Markdown.strip ( line ) ).trim () || fallback : fallback;
+    return line ? Markdown.strip ( line.trim () ) || fallback : fallback;
 
   }
 
@@ -97,15 +97,9 @@ class Note extends Container<NoteState, MainCTX> {
           checksum = CRC32.str ( filePath ),
           note = await this.sanitize ({ content, filePath, checksum, plainContent, metadata });
 
-    let noteAdded;
+    await this.add ( note );
 
-    if ( Config.flags.OPTIMISTIC_RENDERING ) {
-
-      await this.add ( note );
-
-      noteAdded = this.get ( filePath );
-
-    }
+    let noteAdded = this.get ( filePath );
 
     await this.write ( note );
 
@@ -169,15 +163,9 @@ class Note extends Container<NoteState, MainCTX> {
 
     }
 
-    let noteAdded;
+    await this.add ( duplicateNote );
 
-    if ( Config.flags.OPTIMISTIC_RENDERING ) {
-
-      await this.add ( duplicateNote );
-
-      noteAdded = this.get ( filePath );
-
-    }
+    let noteAdded = this.get ( filePath );
 
     await this.write ( duplicateNote );
 
@@ -548,7 +536,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  toggleCheckboxAtIndex ( note: NoteObj | undefined = this.state.note, index: number, force?: boolean ) {
+  toggleCheckboxAtIndex = ( note: NoteObj | undefined = this.state.note, index: number, force?: boolean ) => {
 
     if ( !note ) return;
 
@@ -598,15 +586,15 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( !note ) return;
 
-    const content = this.ctx.editor.getContent ();
+    const data = this.ctx.editor.getData ();
 
-    if ( !_.isString ( content ) ) return;
+    if ( !data ) return;
 
-    return this.save ( note, content );
+    return this.save ( note, data.content, data.modified );
 
   }
 
-  save = async ( note: NoteObj | undefined = this.state.note, plainContent: string ) => {
+  save = async ( note: NoteObj | undefined = this.state.note, plainContent: string, modified?: Date ) => {
 
     if ( !note ) return;
 
@@ -617,57 +605,37 @@ class Note extends Container<NoteState, MainCTX> {
     const nextNote = _.cloneDeep ( note ),
           titleLinePrev = Utils.getFirstUnemptyLine ( note.plainContent ),
           titleLineNext = Utils.getFirstUnemptyLine ( plainContent ),
-          title = ( titleLinePrev !== titleLineNext ) ? await this._inferTitleFromLine ( titleLineNext ) : note.metadata.title,
+          title = ( titleLinePrev !== titleLineNext ) ? this._inferTitleFromLine ( titleLineNext ) : note.metadata.title,
           didTitleChange = ( title !== note.metadata.title );
 
     nextNote.metadata.title = title;
     nextNote.plainContent = plainContent;
 
-    let filePathNext = note.filePath;
-
     if ( didTitleChange ) {
+
+      await this.replace ( note, nextNote ); // In order to immediately update the structures, this avoids some problems when editing a file very quickly
 
       const ext = path.extname ( note.filePath ) || '.md',
             {filePath} = await Path.getAllowedPath ( path.dirname ( nextNote.filePath ), `${title}${ext}` );
 
-      filePathNext = filePath;
+      nextNote.filePath = filePath;
+
+      await this.replace ( note, nextNote );
 
     }
 
-    if ( Config.flags.OPTIMISTIC_RENDERING ) {
-
-      nextNote.filePath = filePathNext;
-
-      if ( didTitleChange ) {
-
-        await this.replace ( note, nextNote );
-
-      }
-
-      await this.write ( nextNote );
-
-    } else {
-
-      await this.write ( nextNote );
-
-      if ( didTitleChange ) {
-
-        File.rename ( nextNote.filePath, filePathNext );
-
-      }
-
-    }
+    await this.write ( nextNote, modified );
 
   }
 
-  write = async ( note: NoteObj ) => { // Remember to update the export methods when modifying the written metadata
+  write = async ( note: NoteObj, modified: Date = new Date () ) => { // Remember to update the export methods when modifying the written metadata
 
     const metadata = _.clone ( note.metadata );
 
     delete metadata.stat;
 
     metadata.created = metadata.created.toISOString () as any;
-    metadata.modified = new Date ().toISOString () as any;
+    metadata.modified = modified.toISOString () as any;
 
     if ( !this.getAttachments ( note ).length ) delete metadata.attachments;
     if ( !this.getTags ( note ).length ) delete metadata.tags;
@@ -677,17 +645,13 @@ class Note extends Container<NoteState, MainCTX> {
 
     note.content = Metadata.set ( note.plainContent, metadata );
 
-    if ( Config.flags.OPTIMISTIC_RENDERING ) {
+    const notePrev = this.get ( note.filePath );
 
-      const notePrev = this.get ( note.filePath );
+    if ( notePrev && notePrev !== note ) {
 
-      if ( notePrev && notePrev !== note ) {
+      note.metadata.modified = new Date ();
 
-        note.metadata.modified = new Date ();
-
-        await this.replace ( notePrev, note );
-
-      }
+      await this.replace ( notePrev, note );
 
     }
 

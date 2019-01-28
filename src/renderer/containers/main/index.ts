@@ -91,13 +91,17 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareSaveEditor ( prev: MainState ) {
 
-    if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( prev.editor.editing && !prev.editor.split && this.state.editor.split ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, this.state.note.note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length > 1 ) ) ) ) return;
+    const note = this.ctx.note.get ();
 
-    const content = this.ctx.editor.getContent ();
+    if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( prev.editor.editing && !prev.editor.split && this.state.editor.split ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length > 1 ) ) ) ) return;
 
-    if ( !_.isString ( content ) ) return;
+    if ( !( prev.note.note && note && ( prev.note.note.plainContent === note.plainContent || prev.note.note.metadata.modified.getTime () >= note.metadata.modified.getTime () ) ) ) return;
 
-    return this.ctx.note.save ( prev.note.note, content );
+    const data = this.ctx.editor.getData ();
+
+    if ( !data ) return;
+
+    return this.ctx.note.save ( prev.note.note, data.content, data.modified );
 
   }
 

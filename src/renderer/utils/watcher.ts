@@ -17,11 +17,69 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
   /* VARIABLES */
 
-  let filesStats = {}, // filePath => fs.Stats
-      renameSignalers = {}, // ino => Function
+  let stats = {}, // filePath => fs.Stats //TODO: Maybe make this a weak map
+      locks = {}, // id => releaseFn
       renameTimeout = 150; // Amount of time to wait for the complementary add/unlink event
 
   /* HELPERS */
+
+  function getId ( filePath: string, stat?: fs.Stats ): string | undefined {
+
+    stat = stat || stats[filePath];
+
+    if ( !stat ) {
+
+      try {
+
+        stat = fs.statSync ( filePath );
+
+      } catch {
+
+        return;
+
+      }
+
+    }
+
+    stats[filePath] = stat; // Caching for future use
+
+    return `${stat.ino}`; //TODO: Switch to BigInt (https://github.com/nodejs/node/issues/12115)
+
+  }
+
+  function getLock ( id: string | undefined, timeout: number, handlers: { free: Function, override: Function, overridden: Function } ) { //TODO: Find a more appropriate name
+
+    if ( !id ) return handlers.free (); // Free
+
+    const release = locks[id];
+
+    if ( release ) { // Override
+
+      handlers.override ( release () );
+
+    } else {
+
+      const timeoutId = setTimeout ( () => { // Free
+
+        delete locks[id];
+
+        handlers.free ();
+
+      }, timeout );
+
+      locks[id] = () => { // Overridden // Function for releasing the lock
+
+        clearTimeout ( timeoutId );
+
+        delete locks[id];
+
+        return handlers.overridden ();
+
+      };
+
+    }
+
+  }
 
   function emit ( event: string, args: any[] ) {
 
@@ -33,83 +91,33 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
   /* HANDLERS */
 
-  function change ( filePath: string, stats: fs.Stats ) {
+  function change ( filePath: string, stats?: fs.Stats ) {
 
     emit ( 'change', [filePath, stats] );
 
   }
 
-  function add ( filePath: string, stats: fs.Stats ) {
+  function add ( filePath: string, stats?: fs.Stats ) {
 
-    stats = stats || {}; // Just to be safe
+    const id = getId ( filePath, stats );
 
-    filesStats[filePath] = stats;
-
-    const renameSignaler = renameSignalers[stats.ino];
-
-    if ( renameSignaler ) { // Rename
-
-      const prevPath = renameSignaler ();
-
-      emit ( 'rename', [prevPath, filePath, stats] );
-
-    } else {
-
-      const timeoutId = setTimeout ( () => { // Added
-
-        delete renameSignalers[stats.ino];
-
-        emit ( 'add', [filePath, stats] );
-
-      }, renameTimeout );
-
-      renameSignalers[stats.ino] = () => { // Renamed
-
-        clearTimeout ( timeoutId );
-
-        delete renameSignalers[stats.ino];
-
-        return filePath;
-
-      };
-
-    }
+    getLock ( id, renameTimeout, {
+      free: () => emit ( 'add', [filePath, stats] ),
+      override: prevPath => emit ( 'rename', [prevPath, filePath, stats] ),
+      overridden: () => filePath
+    });
 
   }
 
   function unlink ( filePath: string ) {
 
-    const stats = filesStats[filePath] || {}; // Just to be safe
+    const id = getId ( filePath );
 
-    const renameSignaler = renameSignalers[stats.ino];
-
-    if ( renameSignaler ) { // Rename
-
-      const newPath = renameSignaler ();
-
-      emit ( 'rename', [filePath, newPath, stats] );
-
-    } else {
-
-      const timeoutId = setTimeout ( () => { // Deleted
-
-        delete renameSignalers[stats.ino];
-
-        emit ( 'unlink', [filePath] );
-
-      }, renameTimeout );
-
-      renameSignalers[stats.ino] = () => { // Renamed
-
-        clearTimeout ( timeoutId );
-
-        delete renameSignalers[stats.ino];
-
-        return filePath;
-
-      };
-
-    }
+    getLock ( id, renameTimeout, {
+      free: () => emit ( 'unlink', [filePath] ),
+      override: newPath => emit ( 'rename', [filePath, newPath] ),
+      overridden: () => filePath
+    });
 
   }
 

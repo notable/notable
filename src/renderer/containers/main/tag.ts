@@ -146,6 +146,8 @@ class Tag extends Container<TagState, MainCTX> {
 
   setFromNote = async ( note?: NoteObj ) => {
 
+    if ( !note ) return;
+
     const tag = this.state.tag,
           tags = this.ctx.note.getTags ( note );
 
@@ -159,8 +161,6 @@ class Tag extends Container<TagState, MainCTX> {
     if ( this.ctx.note.getTags ( note, tag ).length ) return;
 
     /* SETTING NEXT */
-
-    if ( !note ) return this.set ( ALL );
 
     const tagsTemplates = this.ctx.note.getTags ( note, TEMPLATES );
 
@@ -201,8 +201,6 @@ class Tag extends Container<TagState, MainCTX> {
           tagNext = $tags.eq ( indexWrapped ).data ( 'tag' );
 
     if ( tagNext ) return this.ctx.tag.set ( tagNext );
-
-    return; //TSC
 
   }
 

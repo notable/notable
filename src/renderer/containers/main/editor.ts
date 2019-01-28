@@ -241,13 +241,16 @@ class Editor extends Container<EditorState, MainCTX> {
 
   }
 
-  getContent = (): string | undefined => {
+  getData = (): { content: string, modified: Date } | undefined => {
 
     const cm = this.getCodeMirror ();
 
     if ( !cm ) return;
 
-    return cm.getValue ();
+    return {
+      content: cm.__content__, //UGLY
+      modified: cm.__modified_date__ //UGLY
+    };
 
   }
 

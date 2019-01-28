@@ -7,11 +7,19 @@ import * as os from 'os';
 
 const Utils = {
 
+  pathSepRe: /(?:\/|\\)+/g,
+
   batchify ( batch, fn ) {
 
     return function ( ...args ) {
       batch.add ( fn, args );
     };
+
+  },
+
+  encodeFilePath ( filePath: string ): string {
+
+    return encodeURI ( filePath.replace ( Utils.pathSepRe, '/' ) );
 
   },
 
@@ -23,11 +31,11 @@ const Utils = {
 
   },
 
-  globbyNormalize ( filePaths: string[] ): string[] {
+  normalizeFilePaths ( filePaths: string[] ): string[] {
 
     if ( os.platform () !== 'win32' ) return filePaths;
 
-    return filePaths.map ( filePath => filePath.replace ( /(\\|\/)/g, '\\' ) );
+    return filePaths.map ( filePath => filePath.replace ( Utils.pathSepRe, '\\' ) );
 
   },
 

@@ -4,7 +4,7 @@
 import * as _ from 'lodash';
 import CallsBatch from 'calls-batch';
 import {remote} from 'electron';
-import * as globby from 'globby';
+import glob from 'tiny-glob';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import Utils from '@renderer/utils/utils';
@@ -39,7 +39,7 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
 
   refresh = async () => {
 
-    const filePaths = Utils.globbyNormalize ( await globby ( Config.attachments.globs, { cwd: Config.attachments.path, absolute: true } ) );
+    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.attachments.glob, { cwd: Config.attachments.path, absolute: true, filesOnly: true } ) );
 
     const attachments = filePaths.reduce ( ( acc, filePath ) => {
 
@@ -77,17 +77,19 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
 
     const add = async ( filePath ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
+      const attachment = await this.ctx.attachment.read ( filePath );
+      if ( !attachment ) return;
       const prevAttachment = this.ctx.attachment.get ( filePath );
       if ( prevAttachment ) return;
-      const attachment = await this.ctx.attachment.read ( filePath );
       await this.ctx.attachment.add ( attachment );
     };
 
     const rename = async ( filePath, nextFilePath ) => {
       if ( !isFilePathSupported ( nextFilePath ) ) return unlink ( filePath );
+      const nextAttachment = await this.ctx.attachment.read ( nextFilePath );
+      if ( !nextAttachment ) return;
       const attachment = this.ctx.attachment.get ( filePath );
       if ( !attachment ) return add ( nextFilePath );
-      const nextAttachment = await this.ctx.attachment.read ( nextFilePath );
       await this.ctx.attachment.replace ( attachment, nextAttachment );
     };
 
