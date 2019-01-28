@@ -37,6 +37,8 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.on ( 'export-html', this.__exportHTML );
     ipc.on ( 'export-markdown', this.__exportMarkdown );
     ipc.on ( 'export-pdf', this.__exportPDF );
+    ipc.on ( 'app-quit', this.__appQuit );
+    ipc.on ( 'window-close', this.__windowClose );
     ipc.on ( 'window-focus-toggle', this.__windowFocusToggle );
     ipc.on ( 'window-fullscreen-set', this.__windowFullscreenSet );
     ipc.on ( 'editor-split-toggle', this.__editorSplitToggle );
@@ -74,6 +76,8 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.removeListener ( 'export-html', this.__exportHTML );
     ipc.removeListener ( 'export-markdown', this.__exportMarkdown );
     ipc.removeListener ( 'export-pdf', this.__exportPDF );
+    ipc.removeListener ( 'app-quit', this.__appQuit );
+    ipc.removeListener ( 'window-close', this.__windowClose );
     ipc.removeListener ( 'window-focus-toggle', this.__windowFocusToggle );
     ipc.removeListener ( 'window-fullscreen-set', this.__windowFullscreenSet );
     ipc.removeListener ( 'editor-split-toggle', this.__editorSplitToggle );
@@ -138,6 +142,22 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   __exportPDF = () => {
 
     this.main.export.exportPDF ();
+
+  }
+
+  __appQuit = async () => {
+
+    await this.main.note.autosave ();
+
+    ipc.send ( 'force-quit' );
+
+  }
+
+  __windowClose = async () => {
+
+    await this.main.note.autosave ();
+
+    ipc.send ( 'force-close' );
 
   }
 

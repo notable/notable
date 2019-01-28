@@ -3,7 +3,7 @@
 
 import * as _ from 'lodash';
 import {ipcRenderer as ipc} from 'electron';
-import {Container, compose} from 'overstated';
+import {Container, autosuspend, compose} from 'overstated';
 import Attachment from './attachment';
 import Attachments from './attachments';
 import Editor from './editor';
@@ -29,6 +29,16 @@ class Main extends Container<MainState, MainCTX> {
   /* VARIABLES */
 
   _prevFlags;
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* MIDDLEWARES */
 
@@ -81,15 +91,17 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareSaveEditor ( prev: MainState ) {
 
-    if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, this.state.note.note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length >= 1 ) ) ) ) return;
+    const note = this.ctx.note.get ();
 
-    const cm = this.ctx.editor.getCodeMirror ();
+    if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( prev.editor.editing && !prev.editor.split && this.state.editor.split ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length > 1 ) ) ) ) return;
 
-    if ( !cm ) return;
+    if ( !( prev.note.note && note && ( prev.note.note.plainContent === note.plainContent || prev.note.note.metadata.modified.getTime () >= note.metadata.modified.getTime () ) ) ) return;
 
-    const plainContent = cm.getValue ();
+    const data = this.ctx.editor.getData ();
 
-    return this.ctx.note.save ( prev.note.note, plainContent );
+    if ( !data ) return;
+
+    return this.ctx.note.save ( prev.note.note, data.content, data.modified );
 
   }
 

@@ -6,6 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "lib": ["dom", "scripthost", "es2015", "es2016", "es2017"],
+    "noImplicitReturns": false,
     "noUnusedParameters": false,
     "resolveJsonModule": true,
     "strict": false,

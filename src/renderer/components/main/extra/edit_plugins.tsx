@@ -10,6 +10,10 @@ import Main from '@renderer/containers/main';
 
 class EditPlugins extends Component<{ container: IMain }, undefined> {
 
+  /* VARIABLES */
+
+  _autosaveInterval: NodeJS.Timeout;
+
   /* SPECIAL */
 
   componentDidMount () {
@@ -17,12 +21,16 @@ class EditPlugins extends Component<{ container: IMain }, undefined> {
     $.$window.on ( 'resize', this.__update );
     $.$document.on ( 'layoutresizable:resize', this.__update );
 
+    this._autosaveInterval = setInterval ( this.__autosave, 5000 );
+
   }
 
   componentWillUnmount () {
 
     $.$window.off ( 'resize', this.__update );
     $.$document.off ( 'layoutresizable:resize', this.__update );
+
+    clearInterval ( this._autosaveInterval );
 
   }
 
@@ -33,6 +41,12 @@ class EditPlugins extends Component<{ container: IMain }, undefined> {
     this.props.container.editor.update ();
 
   }, 50 )
+
+  __autosave = () => {
+
+    this.props.container.note.autosave ();
+
+  }
 
 }
 

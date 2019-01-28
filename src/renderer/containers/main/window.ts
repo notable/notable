@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import {remote} from 'electron';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 
 /* WINDOW */
 
@@ -14,6 +14,16 @@ class Window extends Container<WindowState, MainCTX> {
     focus: false,
     fullscreen: remote.getCurrentWindow ().isFullScreen ()
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 

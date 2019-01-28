@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Utils from '@renderer/utils/utils';
 
 /* EDITOR */
@@ -18,6 +18,16 @@ class Editor extends Container<EditorState, MainCTX> {
     editing: false,
     split: false
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 
@@ -114,8 +124,6 @@ class Editor extends Container<EditorState, MainCTX> {
     },
 
     focus: () => {
-
-      if ( document.activeElement && $.isEditable ( document.activeElement ) ) return;
 
       const cm = this.getCodeMirror ();
 
@@ -230,6 +238,19 @@ class Editor extends Container<EditorState, MainCTX> {
     const ele = $('.CodeMirror')[0];
 
     return ele && ele.CodeMirror;
+
+  }
+
+  getData = (): { content: string, modified: Date } | undefined => {
+
+    const cm = this.getCodeMirror ();
+
+    if ( !cm ) return;
+
+    return {
+      content: cm.__content__, //UGLY
+      modified: cm.__modified_date__ //UGLY
+    };
 
   }
 

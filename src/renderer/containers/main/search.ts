@@ -2,8 +2,8 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import * as isShallowEqual from 'shallowequal';
-import {Container} from 'overstated';
+import * as isShallowEqual from 'is-shallow-equal';
+import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 
 /* SEARCH */
@@ -21,6 +21,16 @@ class Search extends Container<SearchState, MainCTX> {
     query: '',
     notes: [] as NoteObj[]
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 
@@ -155,8 +165,6 @@ class Search extends Container<SearchState, MainCTX> {
           noteNext = notes[indexWrapped];
 
     if ( noteNext ) return this.ctx.note.set ( noteNext, true );
-
-    return; //TSC
 
   }
 
