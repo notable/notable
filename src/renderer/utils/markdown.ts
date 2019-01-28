@@ -26,7 +26,7 @@ const laxy = require ( 'laxy' ),
 
 const Markdown = {
 
-  re: /_|\*|~|`|<|:|^>|^#|\]|---|===|\d\.|[*+-]\s|\n\n/m,
+  re: /_|\*|~|`|<|:|^>|^#|\]|---|===|^\s*\d\.|^\s*[*+-]\s|\n\s*\n/m,
   wrapperRe: /^<p>(.*?)<\/p>$/,
 
   extensions: {
