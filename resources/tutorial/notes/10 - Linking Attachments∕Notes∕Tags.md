@@ -32,13 +32,15 @@ Attachments can be rendered inline, linked to, and linked to via a button. The `
 
 ## Notes
 
-Notes can be linked to, and linked to via a button. The `@note` token is used for this.
+Notes can be linked to, and linked to via a button. The `@note` token is used for this. Wiki-style links are supported too.
 
 ##### Syntax
 
 ```markdown
 [Shortcuts](@note/07 - Shortcuts.md)
 [](@note/07 - Shortcuts.md)
+[[Importing|08 - Importing.md]]
+[[08 - Importing]]
 ```
 
 ##### Result
@@ -46,6 +48,10 @@ Notes can be linked to, and linked to via a button. The `@note` token is used fo
 [Shortcuts](@note/07 - Shortcuts.md)
 
 [](@note/07 - Shortcuts.md)
+
+[[Importing|08 - Importing.md]]
+
+[[08 - Importing]]
 
 ## Tags
 
