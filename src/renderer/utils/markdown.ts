@@ -93,7 +93,7 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /(?:<pre><code\s[^>]*language-(?:asciimath|tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(.+?)\$\$)|(?:\$(.+?)\$)/g,
+        regex: /(?:<pre><code\s[^>]*language-(?:asciimath|tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(?!<)(\S.*?\S)\$\$(?!\d))|(?:\$(?!<)(\S.*?\S)\$(?!\d))/g,
         replace ( match, $1, $2, $3, index, content ) {
           if ( Markdown.extensions.code.includes ( content, index, false ) ) return match;
           const asciimath = $1 || $2 || $3;
@@ -113,7 +113,7 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(.+?)\$\$)|(?:\$(.+?)\$)/g,
+        regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(?!<)(\S.*?\S)\$\$(?!\d))|(?:\$(?!<)(\S.*?\S)\$(?!\d))/g,
         replace ( match, $1, $2, $3, index, content ) {
           if ( Markdown.extensions.code.includes ( content, index, false ) ) return match;
           const tex = $1 || $2 || $3;
