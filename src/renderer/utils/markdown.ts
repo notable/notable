@@ -6,6 +6,7 @@ import 'katex/dist/katex.min.css';
 
 import * as _ from 'lodash';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
+import {AllHtmlEntities as entities} from 'html-entities';
 import * as path from 'path';
 import * as showdown from 'showdown';
 import Config from '@common/config';
@@ -30,6 +31,35 @@ const Markdown = {
 
   extensions: {
 
+    code: { // Detecting code ranges early on and once, so that we can skip future plugins
+
+      ranges: [] as [number, number][], // [startIndex, endIndex][]
+
+      languageRe: /(^|[^\\])(`+)([^\r]*?[^`])\2(?!`)/gm,
+      outputRe: /<code[^>]*?>([^]*?)<\/code>/g,
+
+      includes ( str: string, index: number, language: boolean ) {
+
+        const re = language ? Markdown.extensions.code.languageRe : Markdown.extensions.code.outputRe;
+
+        re.lastIndex = 0;
+
+        let match;
+
+        while ( match = re.exec ( str ) ) {
+
+          if ( index < match.index ) return false;
+
+          if ( index >= match.index && index < ( match.index + match[0].length ) ) return true;
+
+        }
+
+        return false;
+
+      }
+
+    },
+
     strip () {
 
       return [{
@@ -44,11 +74,16 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /<pre><code(?:\s([^>]*))?>([^]*?)<\/code><\/pre>/g,
+        regex: /<pre><code(?:\s([^>]*))?>([^]+?)<\/code><\/pre>/g,
         replace ( match, $1, $2 ) {
-          const language = Highlighter.inferLanguage ( $1 );
-          const highlighted = Highlighter.highlight ( $2, language );
-          return `<pre><code ${$1 || ''}>${highlighted}</code></pre>`;
+          try {
+            const language = Highlighter.inferLanguage ( $1 );
+            const highlighted = Highlighter.highlight ( entities.decode ( $2 ), language );
+            return `<pre><code ${$1 || ''}>${highlighted}</code></pre>`;
+          } catch ( e ) {
+            console.error ( `[highlight] ${e.message}` );
+            return match;
+          }
         }
       }];
 
@@ -58,14 +93,15 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(.+?)\$\$)|(?:\$(.+?)\$)/g,
-        replace ( match, $1, $2, $3 ) {
+        regex: /(?:<pre><code\s[^>]*language-(?:asciimath|tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(.+?)\$\$)|(?:\$(.+?)\$)/g,
+        replace ( match, $1, $2, $3, index, content ) {
+          if ( Markdown.extensions.code.includes ( content, index, false ) ) return match;
           const asciimath = $1 || $2 || $3;
           try {
-            const tex = AsciiMath.toTeX ( asciimath );
+            const tex = AsciiMath.toTeX ( entities.decode ( asciimath ) );
             return !!$3 ? `$${tex}$` : `$$${tex}$$`;
           } catch ( e ) {
-            console.error ( `[AsciiMath] ${e.message}` );
+            console.error ( `[asciimath] ${e.message}` );
             return match;
           }
         }
@@ -78,13 +114,14 @@ const Markdown = {
       return [{
         type: 'output',
         regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(.+?)\$\$)|(?:\$(.+?)\$)/g,
-        replace ( match, $1, $2, $3 ) {
+        replace ( match, $1, $2, $3, index, content ) {
+          if ( Markdown.extensions.code.includes ( content, index, false ) ) return match;
           const tex = $1 || $2 || $3;
           try {
             Config.katex.displayMode = !$3;
-            return katex.renderToString ( tex, Config.katex );
+            return katex.renderToString ( entities.decode ( tex ), Config.katex );
           } catch ( e ) {
-            console.error ( `[KaTeX] ${e.message}` );
+            console.error ( `[katex] ${e.message}` );
             return match;
           }
         }
@@ -97,12 +134,12 @@ const Markdown = {
       mermaid.initialize ( Config.mermaid );
 
       return [{
-        type: 'language',
-        regex: '```mermaid([^`]*)```',
+        type: 'output',
+        regex: /<pre><code\s[^>]*language-mermaid[^>]*>([^]+?)<\/code><\/pre>/g,
         replace ( match, $1 ) {
           const id = `mermaid-${CRC32.str ( $1 )}`;
           try {
-            const svg = mermaid.render ( id, $1 );
+            const svg = mermaid.render ( id, entities.decode ( $1 ) );
             return `<div class="mermaid">${svg}</div>`;
           } catch ( e ) {
             console.error ( `[mermaid] ${e.message}` );
@@ -146,7 +183,7 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: '<a(.*?)href="(.)(.*?)>',
+        regex: /<a(.*?)href="(.)(.*?)>/g,
         replace ( match, $1, $2, $3 ) {
           if ( $2 === '#' ) { // URL fragment
             return match;
@@ -168,8 +205,9 @@ const Markdown = {
       return [
         { // Markdown
           type: 'language',
-          regex: `\\[([^\\]]*)\\]\\((\\.[^\\)]*)\\)`,
-          replace ( match, $1, $2 ) {
+          regex: /\[([^\]]*)\]\((\.[^\)]*)\)/g,
+          replace ( match, $1, $2, index, content ) {
+            if ( Markdown.extensions.code.includes ( content, index, true ) ) return match;
             const filePath = path.resolve ( notesPath, $2 );
             if ( filePath.startsWith ( attachmentsPath ) ) {
               return `[${$1}](${attachmentsToken}/${filePath.slice ( attachmentsPath.length )})`;
@@ -203,7 +241,8 @@ const Markdown = {
       return [{
         type: 'language',
         regex: `\\[([^\\]]*)\\]\\(((?:${Config.attachments.token}|${Config.notes.token}|${Config.tags.token})/[^\\)]*)\\)`,
-        replace ( match, $1, $2 ) {
+        replace ( match, $1, $2, index, content ) {
+          if ( Markdown.extensions.code.includes ( content, index, true ) ) return match;
           return `[${$1}](${encodeFilePath ( $2 )})`;
         }
       }];
@@ -311,7 +350,8 @@ const Markdown = {
       return [{
         type: 'language',
         regex: /\[\[([^|\]]+?)(?:\|([^\]]+?))?\]\]/g,
-        replace ( match, $1, $2 ) {
+        replace ( match, $1, $2, index, content ) {
+          if ( Markdown.extensions.code.includes ( content, index, true ) ) return match;
           const title = $2 ? $1 : '';
           const note = $2 || $1;
           const {name, ext} = path.parse ( note );

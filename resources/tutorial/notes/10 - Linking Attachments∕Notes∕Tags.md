@@ -10,8 +10,6 @@ Sometimes, like when writing a tutorial for a note-taking app :wink:, you may ne
 
 These special links can also be right-clicked so that you can perform some actions on them.
 
-> **Note**: You don't actually need to escape these special urls, it's done for you, check the actual source of this note.
-
 ## Attachments
 
 Attachments can be rendered inline, linked to, and linked to via a button. The `@attachment` token is used for this.

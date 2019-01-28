@@ -2,7 +2,6 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {AllHtmlEntities as entities} from 'html-entities';
 import * as Prism from 'prismjs';
 import {languages} from 'prismjs/components.js';
 
@@ -44,7 +43,7 @@ const Highlighter = {
 
     if ( !language || !Highlighter.initLanguage ( language ) ) return str;
 
-    return Prism.highlight ( entities.decode ( str ), Prism.languages[language], language );
+    return Prism.highlight ( str, Prism.languages[language], language );
 
   }
 
