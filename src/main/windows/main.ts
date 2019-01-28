@@ -377,12 +377,16 @@ class Main extends Route {
             click: () => shell.openExternal ( pkg.homepage )
           },
           {
-            label: 'Tutorial',
-            click: () => this.win.webContents.send ( 'tutorial-dialog' )
+            label: 'Subreddit',
+            click: () => shell.openExternal ( 'https://www.reddit.com/r/notable' )
           },
           {
             label: 'Support',
             click: () => shell.openExternal ( pkg.bugs.url )
+          },
+          {
+            label: 'Tutorial',
+            click: () => this.win.webContents.send ( 'tutorial-dialog' )
           },
           { type: 'separator' },
           {
