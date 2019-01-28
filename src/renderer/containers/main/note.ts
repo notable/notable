@@ -536,7 +536,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  toggleCheckboxAtIndex ( note: NoteObj | undefined = this.state.note, index: number, force?: boolean ) {
+  toggleCheckboxAtIndex = ( note: NoteObj | undefined = this.state.note, index: number, force?: boolean ) => {
 
     if ( !note ) return;
 

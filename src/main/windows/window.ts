@@ -28,9 +28,6 @@ class Window {
     this.options = options;
     this.stateOptions = stateOptions;
 
-    this.init ();
-    this.events ();
-
   }
 
   /* SPECIAL */
@@ -41,7 +38,9 @@ class Window {
     this.initDebug ();
     this.initLocalShortcuts ();
     this.initMenu ();
+
     this.load ();
+    this.events ();
 
   }
 
@@ -81,13 +80,13 @@ class Window {
 
   /* READY TO SHOW */
 
-  ___didFinishLoad () {
+  ___didFinishLoad = () => {
 
-    this.win.webContents.on ( 'did-finish-load', this.__didFinishLoad.bind ( this ) );
+    this.win.webContents.on ( 'did-finish-load', this.__didFinishLoad );
 
   }
 
-  __didFinishLoad () {
+  __didFinishLoad = () => {
 
     this.win.show ();
     this.win.focus ();
@@ -96,13 +95,13 @@ class Window {
 
   /* CLOSED */
 
-  ___closed () {
+  ___closed = () => {
 
-    this.win.on ( 'closed', this.__closed.bind ( this ) );
+    this.win.on ( 'closed', this.__closed );
 
   }
 
-  __closed () {
+  __closed = () => {
 
     delete this.win;
 
@@ -110,13 +109,13 @@ class Window {
 
   /* FOCUSED */
 
-  ___focused () {
+  ___focused = () => {
 
-    this.win.on ( 'focus', this.__focused.bind ( this ) );
+    this.win.on ( 'focus', this.__focused );
 
   }
 
-  __focused () {
+  __focused = () => {
 
     this.initMenu ();
 

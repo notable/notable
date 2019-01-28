@@ -11,27 +11,13 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   /* VARIABLES */
 
-  shortcuts = {
-    'ctmd+shift+e': [this.__editorToggle, true],
-    'ctmd+shift+p': [this.__editorToggle, true],
-    'ctrl+shift+p': [this.__editorToggle, true],
-    'ctmd+s': [this.__editorSave, true],
-    'ctmd+a': [this.__editorSelectAll, false],
-    'esc': [this.__editorsEscape, true],
-    'delete': [this.__noteMoveToTrash, false],
-    'shift+delete': [this.__noteRestoreFromTrash, true],
-    'ctrl+delete': [this.__noteDelete, true],
-    'up, left': [this.__searchPrevious, false],
-    'down, right': [this.__searchNext, false],
-    'ctrl+page_down': [this.__searchNext, true],
-    'ctrl+page_up': [this.__searchPrevious, true],
-    'ctrl+alt+page_down': [this.__tagNext, true],
-    'ctrl+alt+page_up': [this.__tagPrevious, true]
-  };
+  shortcuts: { [index: string]: [Function, boolean] } = {};
 
   /* SPECIAL */
 
   componentDidMount () {
+
+    this.initShortcuts ();
 
     $.$document.on ( 'keydown', this.__keydown );
 
@@ -40,6 +26,30 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
   componentWillUnmount () {
 
     $.$document.off ( 'keydown', this.__keydown );
+
+  }
+
+  /* SHORTCUTS */
+
+  initShortcuts = () => {
+
+    this.shortcuts = {
+      'ctmd+shift+e': [this.__editorToggle, true],
+      'ctmd+shift+p': [this.__editorToggle, true],
+      'ctrl+shift+p': [this.__editorToggle, true],
+      'ctmd+s': [this.__editorSave, true],
+      'ctmd+a': [this.__editorSelectAll, false],
+      'esc': [this.__editorsEscape, true],
+      'delete': [this.__noteMoveToTrash, false],
+      'shift+delete': [this.__noteRestoreFromTrash, true],
+      'ctrl+delete': [this.__noteDelete, true],
+      'up, left': [this.__searchPrevious, false],
+      'down, right': [this.__searchNext, false],
+      'ctrl+page_down': [this.__searchNext, true],
+      'ctrl+page_up': [this.__searchPrevious, true],
+      'ctrl+alt+page_down': [this.__tagNext, true],
+      'ctrl+alt+page_up': [this.__tagPrevious, true]
+    };
 
   }
 
@@ -80,7 +90,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   /* HANDLERS */
 
-  __editorToggle () {
+  __editorToggle = () => {
 
     if ( this.props.container.editor.isSplit () ) return null;
 
@@ -88,7 +98,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   }
 
-  __editorSave () {
+  __editorSave = () => {
 
     if ( !this.props.container.editor.isEditing () || this.props.container.editor.isSplit () ) return null;
 
@@ -96,7 +106,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   }
 
-  __editorSelectAll () {
+  __editorSelectAll = () => {
 
     if ( this.props.container.multiEditor.isEditing () ) return null;
 
@@ -112,7 +122,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   }
 
-  __editorsEscape () {
+  __editorsEscape = () => {
 
     if ( this.props.container.attachments.isEditing () || this.props.container.tags.isEditing () ) return null;
 
@@ -124,14 +134,14 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   }
 
-  __noteMoveToTrash () {
+  __noteMoveToTrash = () => {
 
     if ( this.props.container.editor.isEditing () || this.props.container.multiEditor.isEditing () || this.props.container.note.isDeleted () ) return null;
 
     return this.props.container.note.toggleDeleted ( undefined, true );
 
   }
-  __noteRestoreFromTrash () {
+  __noteRestoreFromTrash = () => {
 
     if ( this.props.container.editor.isEditing () || this.props.container.multiEditor.isEditing () || !this.props.container.note.isDeleted () ) return null;
 
@@ -139,7 +149,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   }
 
-  __noteDelete () {
+  __noteDelete = () => {
 
     if ( this.props.container.editor.isEditing () || this.props.container.multiEditor.isEditing () ) return null;
 
@@ -147,25 +157,25 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   }
 
-  __searchPrevious () {
+  __searchPrevious = () => {
 
     this.props.container.search.previous ();
 
   }
 
-  __searchNext () {
+  __searchNext = () => {
 
     this.props.container.search.next ();
 
   }
 
-  __tagNext () {
+  __tagNext = () => {
 
     this.props.container.tag.next ();
 
   }
 
-  __tagPrevious () {
+  __tagPrevious = () => {
 
     this.props.container.tag.previous ();
 

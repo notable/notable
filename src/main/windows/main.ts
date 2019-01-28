@@ -46,7 +46,7 @@ class Main extends Route {
         submenu: [
           {
             label: `About ${pkg.productName}`,
-            click: () => new About ()
+            click: () => new About ().init ()
           },
           {
             label: updaterCanCheck ? 'Check for Updates...' : 'Checking for Updates...',
@@ -423,19 +423,19 @@ class Main extends Route {
 
   /* CLOSE */
 
-  ___close () {
+  ___close = () => {
 
-    this.win.on ( 'close', this.__close.bind ( this ) );
+    this.win.on ( 'close', this.__close );
 
   }
 
-  ___close_off () {
+  ___close_off = () => {
 
     this.win.removeAllListeners ( 'close' );
 
   }
 
-  __close ( event ) {
+  __close = ( event ) => {
 
     event.preventDefault ();
 
@@ -445,13 +445,13 @@ class Main extends Route {
 
   /* FORCE CLOSE */
 
-  ___forceClose () {
+  ___forceClose = () => {
 
-    ipc.on ( 'force-close', this.__forceClose.bind ( this ) );
+    ipc.on ( 'force-close', this.__forceClose );
 
   }
 
-  __forceClose () {
+  __forceClose = () => {
 
     this.___close_off ();
 
@@ -461,13 +461,13 @@ class Main extends Route {
 
   /* FULLSCREEN ENTER */
 
-  ___fullscreenEnter () {
+  ___fullscreenEnter = () => {
 
-    this.win.on ( 'enter-full-screen', this.__fullscreenEnter.bind ( this ) );
+    this.win.on ( 'enter-full-screen', this.__fullscreenEnter );
 
   }
 
-  __fullscreenEnter () {
+  __fullscreenEnter = () => {
 
     this.win.webContents.send ( 'window-fullscreen-set', true );
 
@@ -475,13 +475,13 @@ class Main extends Route {
 
   /* FULLSCREEN LEAVE */
 
-  ___fullscreenLeave () {
+  ___fullscreenLeave = () => {
 
-    this.win.on ( 'leave-full-screen', this.__fullscreenLeave.bind ( this ) );
+    this.win.on ( 'leave-full-screen', this.__fullscreenLeave );
 
   }
 
-  __fullscreenLeave () {
+  __fullscreenLeave = () => {
 
     this.win.webContents.send ( 'window-fullscreen-set', false );
 
@@ -489,13 +489,13 @@ class Main extends Route {
 
   /* FLAGS UPDATE */
 
-  ___flagsUpdate () {
+  ___flagsUpdate = () => {
 
-    ipc.on ( 'flags-update', this.__flagsUpdate.bind ( this ) );
+    ipc.on ( 'flags-update', this.__flagsUpdate );
 
   }
 
-  __flagsUpdate ( event, flags ) {
+  __flagsUpdate = ( event, flags ) => {
 
     this.initMenu ( flags );
 
@@ -503,13 +503,13 @@ class Main extends Route {
 
   /* NAVIGATE URL */
 
-  ___navigateUrl () {
+  ___navigateUrl = () => {
 
-    this.win.webContents.on ( 'new-window', this.__navigateUrl.bind ( this ) );
+    this.win.webContents.on ( 'new-window', this.__navigateUrl );
 
   }
 
-  __navigateUrl ( event, url ) {
+  __navigateUrl = ( event, url ) => {
 
     if ( url === this.win.webContents.getURL () ) return;
 
@@ -521,13 +521,13 @@ class Main extends Route {
 
   /* PRINT PDF */
 
-  ___printPDF () {
+  ___printPDF = () => {
 
-    ipc.on ( 'print-pdf', this.__printPDF.bind ( this ) );
+    ipc.on ( 'print-pdf', this.__printPDF );
 
   }
 
-  __printPDF ( event, options ) {
+  __printPDF = ( event, options ) => {
 
     const win = new BrowserWindow ({
       show: false,
@@ -574,7 +574,7 @@ class Main extends Route {
 
   /* UPDATER */
 
-  _updaterCanCheck () {
+  _updaterCanCheck = () => {
 
     return ( Date.now () - this._prevUpdateCheckTimestamp ) >= 2000;
 
@@ -588,7 +588,7 @@ class Main extends Route {
 
     ipc.emit ( 'updater-check', true );
 
-    setTimeout ( this.initMenu.bind ( this ), 2000 );
+    setTimeout ( this.initMenu, 2000 );
 
   }
 
@@ -598,7 +598,7 @@ class Main extends Route {
 
     super.load ();
 
-    setTimeout ( this.__didFinishLoad.bind ( this ), 500 ); //TODO: Ideally the timeout should be 0, for for that we need to minimize the amount of work happening before the skeleton can be rendered
+    setTimeout ( this.__didFinishLoad, 500 ); //TODO: Ideally the timeout should be 0, for for that we need to minimize the amount of work happening before the skeleton can be rendered
 
   }
 

@@ -63,13 +63,13 @@ class App {
 
   /* WINDOW ALL CLOSED */
 
-  ___windowAllClosed () {
+  ___windowAllClosed = () => {
 
-    app.on ( 'window-all-closed', this.__windowAllClosed.bind ( this ) );
+    app.on ( 'window-all-closed', this.__windowAllClosed );
 
   }
 
-  __windowAllClosed () {
+  __windowAllClosed = () => {
 
     if ( is.macOS () ) return;
 
@@ -79,13 +79,13 @@ class App {
 
   /* ACTIVATE */
 
-  ___activate () {
+  ___activate = () => {
 
-    app.on ( 'activate', this.__activate.bind ( this ) );
+    app.on ( 'activate', this.__activate );
 
   }
 
-  __activate () {
+  __activate = () => {
 
     if ( this.win && this.win.win ) return;
 
@@ -95,13 +95,13 @@ class App {
 
   /* BEFORE QUIT */
 
-  ___beforeQuit () {
+  ___beforeQuit = () => {
 
-    app.on ( 'before-quit', this.__beforeQuit.bind ( this ) );
+    app.on ( 'before-quit', this.__beforeQuit );
 
   }
 
-  ___beforeQuit_off () {
+  ___beforeQuit_off = () => {
 
     app.removeAllListeners ( 'before-quit' );
 
@@ -119,13 +119,13 @@ class App {
 
   /* FORCE QUIT */
 
-  ___forceQuit () {
+  ___forceQuit = () => {
 
-    ipc.on ( 'force-quit', this.__forceQuit.bind ( this ) );
+    ipc.on ( 'force-quit', this.__forceQuit );
 
   }
 
-  __forceQuit () {
+  __forceQuit = () => {
 
     this.___beforeQuit_off ();
 
@@ -135,13 +135,13 @@ class App {
 
   /* READY */
 
-  ___ready () {
+  ___ready = () => {
 
-    app.on ( 'ready', this.__ready.bind ( this ) );
+    app.on ( 'ready', this.__ready );
 
   }
 
-  __ready () {
+  __ready = () => {
 
     this.initDebug ();
 
@@ -151,13 +151,13 @@ class App {
 
   /* CWD CHANGED */
 
-  ___cwdChanged () {
+  ___cwdChanged = () => {
 
-    ipc.on ( 'cwd-changed', this.__cwdChanged.bind ( this ) );
+    ipc.on ( 'cwd-changed', this.__cwdChanged );
 
   }
 
-  __cwdChanged () {
+  __cwdChanged = () => {
 
     if ( this.win ) this.win.win.close ();
 
@@ -167,13 +167,13 @@ class App {
 
   /* UPDATER CHECK */
 
-  ___updaterCheck () {
+  ___updaterCheck = () => {
 
-    ipc.on ( 'updater-check', this.__updaterCheck.bind ( this ) );
+    ipc.on ( 'updater-check', this.__updaterCheck );
 
   }
 
-  async __updaterCheck ( notifications: Event | boolean = false ) {
+  __updaterCheck = async ( notifications: Event | boolean = false ) => {
 
     if ( notifications === true ) {
 
@@ -203,6 +203,8 @@ class App {
       this.win = new CWD ();
 
     }
+
+    this.win.init ();
 
   }
 
