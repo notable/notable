@@ -73,7 +73,7 @@ class App {
 
     if ( is.macOS () ) return;
 
-    app.quit ();
+    this.quit ();
 
   }
 
@@ -107,7 +107,7 @@ class App {
 
   }
 
-  __beforeQuit ( event ) {
+  __beforeQuit = ( event ) => {
 
     if ( !this.win || !this.win.win ) return;
 
@@ -129,7 +129,7 @@ class App {
 
     this.___beforeQuit_off ();
 
-    app.quit ();
+    this.quit ();
 
   }
 
@@ -205,6 +205,14 @@ class App {
     }
 
     this.win.init ();
+
+  }
+
+  quit () {
+
+    app['isQuitting'] = true;
+
+    app.quit ();
 
   }
 

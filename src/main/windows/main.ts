@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {ipcMain as ipc, BrowserWindow, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {app, ipcMain as ipc, BrowserWindow, Menu, MenuItemConstructorOptions, shell} from 'electron';
 import * as is from 'electron-is';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
@@ -446,6 +446,8 @@ class Main extends Route {
   }
 
   __close = ( event ) => {
+
+    if ( app['isQuitting'] ) return;
 
     event.preventDefault ();
 
