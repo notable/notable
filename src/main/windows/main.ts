@@ -2,8 +2,11 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {ipcMain as ipc, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {app, ipcMain as ipc, BrowserWindow, Menu, MenuItemConstructorOptions, shell} from 'electron';
 import * as is from 'electron-is';
+import * as fs from 'fs';
+import * as mkdirp from 'mkdirp';
+import * as path from 'path';
 import pkg from '@root/package.json';
 import Environment from '@common/environment';
 import UMenu from '@main/utils/menu';
@@ -13,6 +16,11 @@ import Route from './route';
 /* MAIN */
 
 class Main extends Route {
+
+  /* VARIABLES */
+
+  _prevStateFlags: StateFlags | false = false;
+  _prevUpdateCheckTimestamp: number = 0;
 
   /* CONSTRUCTOR */
 
@@ -26,7 +34,11 @@ class Main extends Route {
 
   initLocalShortcuts () {}
 
-  initMenu ( flags: StateFlags | false = false ) {
+  initMenu ( flags: StateFlags | false = this._prevStateFlags ) {
+
+    this._prevStateFlags = flags; // Storing them because they are needed also when focusing to the window
+
+    const updaterCanCheck = this._updaterCanCheck ();
 
     const template: MenuItemConstructorOptions[] = UMenu.filterTemplate ([
       {
@@ -34,7 +46,12 @@ class Main extends Route {
         submenu: [
           {
             label: `About ${pkg.productName}`,
-            click: () => new About ()
+            click: () => new About ().init ()
+          },
+          {
+            label: updaterCanCheck ? 'Check for Updates...' : 'Checking for Updates...',
+            enabled: updaterCanCheck,
+            click: this._updaterCheck
           },
           {
             type: 'separator'
@@ -42,6 +59,24 @@ class Main extends Route {
           {
             label: 'Import...',
             click: () => this.win.webContents.send ( 'import' )
+          },
+          {
+            label: 'Export',
+            enabled: flags && ( flags.hasNote || flags.isMultiEditorEditing ),
+            submenu: [
+              {
+                label: 'HTML',
+                click: () => this.win.webContents.send ( 'export-html' )
+              },
+              {
+                label: 'Markdown',
+                click: () => this.win.webContents.send ( 'export-markdown' )
+              },
+              {
+                label: 'PDF',
+                click: () => this.win.webContents.send ( 'export-pdf' )
+              }
+            ]
           },
           {
             type: 'separator'
@@ -90,13 +125,20 @@ class Main extends Route {
         submenu: [
           {
             label: 'New',
-            accelerator: 'CommandOrControl+N',
+            accelerator: 'CmdOrCtrl+N',
             enabled: flags && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-new' )
           },
           {
+            label: 'New from Template',
+            accelerator: 'CmdOrCtrl+Alt+Shift+N',
+            enabled: flags && flags.hasNote && flags.isNoteTemplate && !flags.isMultiEditorEditing,
+            visible: flags && flags.hasNote && flags.isNoteTemplate,
+            click: () => this.win.webContents.send ( 'note-duplicate-template' )
+          },
+          {
             label: 'Duplicate',
-            accelerator: 'CommandOrControl+Shift+N',
+            accelerator: 'CmdOrCtrl+Shift+N',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-duplicate' )
           },
@@ -105,13 +147,13 @@ class Main extends Route {
           },
           {
             label: 'Open in Default App',
-            accelerator: 'CommandOrControl+O',
+            accelerator: 'CmdOrCtrl+O',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-open-in-app' )
           },
           {
             label: `Reveal in ${is.macOS () ? 'Finder' : 'Folder'}`,
-            accelerator: 'CommandOrControl+Alt+R',
+            accelerator: 'CmdOrCtrl+Alt+R',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-reveal' )
           },
@@ -120,19 +162,19 @@ class Main extends Route {
           },
           {
             label: flags && flags.hasNote && flags.isEditorEditing ? 'Stop Editing' : 'Edit',
-            accelerator: 'CommandOrControl+E',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            accelerator: 'CmdOrCtrl+E',
+            enabled: flags && flags.hasNote && !flags.isEditorSplitView && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-toggle' )
           },
           {
             label: flags && flags.hasNote && flags.isTagsEditing ? 'Stop Editing Tags' : 'Edit Tags',
-            accelerator: 'CommandOrControl+Shift+T',
+            accelerator: 'CmdOrCtrl+Shift+T',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-tags-toggle' )
           },
           {
             label: flags && flags.hasNote && flags.isAttachmentsEditing ? 'Stop Editing Attachments' : 'Edit Attachments',
-            accelerator: 'CommandOrControl+Shift+A',
+            accelerator: 'CmdOrCtrl+Shift+A',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-attachments-toggle' )
           },
@@ -141,13 +183,13 @@ class Main extends Route {
           },
           {
             label: flags && flags.hasNote && flags.isNoteFavorited ? 'Unfavorite' : 'Favorite',
-            accelerator: 'CommandOrControl+D',
+            accelerator: 'CmdOrCtrl+D',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-favorite-toggle' )
           },
           {
             label: flags && flags.hasNote && flags.isNotePinned ? 'Unpin' : 'Pin',
-            accelerator: 'CommandOrControl+P',
+            accelerator: 'CmdOrCtrl+P',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-pin-toggle' )
           },
@@ -156,27 +198,28 @@ class Main extends Route {
           },
           {
             label: 'Move to Trash',
-            accelerator: 'CommandOrControl+Backspace',
+            accelerator: 'CmdOrCtrl+Backspace',
             enabled: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isEditorEditing,
             click: () => this.win.webContents.send ( 'note-move-to-trash' )
           },
           {
             label: 'Move to Trash',
-            accelerator: 'CommandOrControl+Alt+Backspace',
+            accelerator: 'CmdOrCtrl+Alt+Backspace',
             enabled: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote && !flags.isNoteDeleted && flags.isEditorEditing,
             click: () => this.win.webContents.send ( 'note-move-to-trash' )
           },
           {
             label: 'Restore',
-            accelerator: 'CommandOrControl+Shift+Backspace',
+            accelerator: 'CmdOrCtrl+Shift+Backspace',
             enabled: flags && flags.hasNote && flags.isNoteDeleted && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote && flags.isNoteDeleted,
             click: () => this.win.webContents.send ( 'note-restore' )
           },
           {
             label: 'Permanently Delete',
+            accelerator: 'CmdOrCtrl+Alt+Shift+Backspace',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             visible: flags && flags.hasNote,
             click: () => this.win.webContents.send ( 'note-permanently-delete' )
@@ -186,9 +229,9 @@ class Main extends Route {
       {
         label: 'Edit',
         submenu: [
-          // { role: 'undo' },
-          // { role: 'redo' },
-          // { type: 'separator' },
+          { role: 'undo' },
+          { role: 'redo' },
+          { type: 'separator' },
           { role: 'cut' },
           { role: 'copy' },
           { role: 'paste' },
@@ -200,17 +243,17 @@ class Main extends Route {
           },
           {
             label: 'Select Notes - All',
-            accelerator: 'CommandOrControl+Alt+A',
+            accelerator: 'CmdOrCtrl+Alt+A',
             click: () => this.win.webContents.send ( 'multi-editor-select-all' )
           },
           {
             label: 'Select Notes - Invert',
-            accelerator: 'CommandOrControl+Alt+I',
+            accelerator: 'CmdOrCtrl+Alt+I',
             click: () => this.win.webContents.send ( 'multi-editor-select-invert' )
           },
           {
             label: 'Select Notes - Clear',
-            accelerator: 'CommandOrControl+Alt+C',
+            accelerator: 'CmdOrCtrl+Alt+C',
             click: () => this.win.webContents.send ( 'multi-editor-select-clear' )
           },
           {
@@ -246,10 +289,6 @@ class Main extends Route {
             visible: Environment.isDevelopment
           },
           {
-            role: 'toggledevtools',
-            visible: Environment.isDevelopment
-          },
-          {
             type: 'separator',
             visible: Environment.isDevelopment
           },
@@ -259,8 +298,13 @@ class Main extends Route {
           { type: 'separator' },
           {
             label: 'Toggle Focus Mode',
-            accelerator: 'CommandOrControl+Alt+F',
+            accelerator: 'CmdOrCtrl+Alt+F',
             click: () => this.win.webContents.send ( 'window-focus-toggle' )
+          },
+          {
+            label: 'Toggle Split View Mode',
+            accelerator: 'CmdOrCtrl+Alt+S',
+            click: () => this.win.webContents.send ( 'editor-split-toggle' )
           },
           { role: 'togglefullscreen' }
         ]
@@ -279,7 +323,7 @@ class Main extends Route {
           },
           {
             label: 'Search',
-            accelerator: 'CommandOrControl+F',
+            accelerator: 'CmdOrCtrl+F',
             click: () => this.win.webContents.send ( 'search-focus' )
           },
           {
@@ -308,6 +352,13 @@ class Main extends Route {
             accelerator: 'Control+Tab',
             click: () => this.win.webContents.send ( 'search-next' )
           },
+          { type: 'separator' },
+          {
+            type: 'checkbox',
+            label: 'Float on Top',
+            checked: !!this.win && this.win.isAlwaysOnTop (),
+            click: () => this.win.setAlwaysOnTop ( !this.win.isAlwaysOnTop () )
+          },
           {
             type: 'separator',
             visible: is.macOS ()
@@ -326,12 +377,16 @@ class Main extends Route {
             click: () => shell.openExternal ( pkg.homepage )
           },
           {
-            label: 'Tutorial',
-            click: () => this.win.webContents.send ( 'tutorial-dialog' )
+            label: 'Subreddit',
+            click: () => shell.openExternal ( 'https://www.reddit.com/r/notable' )
           },
           {
             label: 'Support',
             click: () => shell.openExternal ( pkg.bugs.url )
+          },
+          {
+            label: 'Tutorial',
+            click: () => this.win.webContents.send ( 'tutorial-dialog' )
           },
           { type: 'separator' },
           {
@@ -341,6 +396,10 @@ class Main extends Route {
           {
             label: 'View License',
             click: () => shell.openExternal ( `${pkg.homepage}/blob/master/LICENSE` )
+          },
+          { type: 'separator' },
+          {
+            role: 'toggledevtools'
           }
         ]
       }
@@ -356,22 +415,75 @@ class Main extends Route {
 
     super.events ();
 
+    this.___close ();
+    this.___forceClose ();
     this.___fullscreenEnter ();
     this.___fullscreenLeave ();
     this.___flagsUpdate ();
     this.___navigateUrl ();
+    this.___printPDF ();
+
+  }
+
+  cleanup () {
+
+    super.cleanup ();
+
+    ipc.removeListener ( 'force-close', this.__forceClose );
+    ipc.removeListener ( 'flags-update', this.__flagsUpdate );
+    ipc.removeListener ( 'print-pdf', this.__printPDF );
+
+  }
+
+  /* CLOSE */
+
+  ___close = () => {
+
+    this.win.on ( 'close', this.__close );
+
+  }
+
+  ___close_off = () => {
+
+    this.win.removeListener ( 'close', this.__close );
+
+  }
+
+  __close = ( event ) => {
+
+    if ( app['isQuitting'] ) return;
+
+    event.preventDefault ();
+
+    this.win.webContents.send ( 'window-close' );
+
+  }
+
+  /* FORCE CLOSE */
+
+  ___forceClose = () => {
+
+    ipc.on ( 'force-close', this.__forceClose );
+
+  }
+
+  __forceClose = () => {
+
+    this.___close_off ();
+
+    this.win.close ();
 
   }
 
   /* FULLSCREEN ENTER */
 
-  ___fullscreenEnter () {
+  ___fullscreenEnter = () => {
 
-    this.win.on ( 'enter-full-screen', this.__fullscreenEnter.bind ( this ) );
+    this.win.on ( 'enter-full-screen', this.__fullscreenEnter );
 
   }
 
-  __fullscreenEnter () {
+  __fullscreenEnter = () => {
 
     this.win.webContents.send ( 'window-fullscreen-set', true );
 
@@ -379,13 +491,13 @@ class Main extends Route {
 
   /* FULLSCREEN LEAVE */
 
-  ___fullscreenLeave () {
+  ___fullscreenLeave = () => {
 
-    this.win.on ( 'leave-full-screen', this.__fullscreenLeave.bind ( this ) );
+    this.win.on ( 'leave-full-screen', this.__fullscreenLeave );
 
   }
 
-  __fullscreenLeave () {
+  __fullscreenLeave = () => {
 
     this.win.webContents.send ( 'window-fullscreen-set', false );
 
@@ -393,13 +505,13 @@ class Main extends Route {
 
   /* FLAGS UPDATE */
 
-  ___flagsUpdate () {
+  ___flagsUpdate = () => {
 
-    ipc.on ( 'flags-update', this.__flagsUpdate.bind ( this ) );
+    ipc.on ( 'flags-update', this.__flagsUpdate );
 
   }
 
-  __flagsUpdate ( event, flags ) {
+  __flagsUpdate = ( event, flags ) => {
 
     this.initMenu ( flags );
 
@@ -407,19 +519,102 @@ class Main extends Route {
 
   /* NAVIGATE URL */
 
-  ___navigateUrl () {
+  ___navigateUrl = () => {
 
-    this.win.webContents.on ( 'new-window', this.__navigateUrl.bind ( this ) );
+    this.win.webContents.on ( 'new-window', this.__navigateUrl );
 
   }
 
-  __navigateUrl ( event, url ) {
+  __navigateUrl = ( event, url ) => {
 
     if ( url === this.win.webContents.getURL () ) return;
 
     event.preventDefault ();
 
     shell.openExternal ( url );
+
+  }
+
+  /* PRINT PDF */
+
+  ___printPDF = () => {
+
+    ipc.on ( 'print-pdf', this.__printPDF );
+
+  }
+
+  __printPDF = ( event, options ) => {
+
+    const win = new BrowserWindow ({
+      show: false,
+      webPreferences: {
+        webSecurity: false
+      }
+    });
+
+    if ( options.html ) {
+
+      win.loadURL ( `data:text/html;charset=utf-8,${options.html}` );
+
+    } else if ( options.src ) {
+
+      win.loadFile ( options.src );
+
+    } else {
+
+      return console.error ( 'No content or file to print to PDF provided' );
+
+    }
+
+    win.webContents.on ( 'did-finish-load', () => {
+      win.webContents.printToPDF ( {}, ( err, data ) => {
+        if ( err ) return console.error ( err );
+        fs.writeFile ( options.dst, data, err => {
+          if ( err ) {
+            if ( err.code === 'ENOENT' ) {
+              mkdirp ( path.dirname ( options.dst ), err => {
+                if ( err ) return console.error ( err );
+                fs.writeFile ( options.dst, data, err => {
+                  if ( err ) return console.error ( err );
+                });
+              });
+            } else {
+              return console.error ( err );
+            }
+          }
+        });
+      });
+    });
+
+  }
+
+  /* UPDATER */
+
+  _updaterCanCheck = () => {
+
+    return ( Date.now () - this._prevUpdateCheckTimestamp ) >= 2000;
+
+  }
+
+  _updaterCheck = () => {
+
+    this._prevUpdateCheckTimestamp = Date.now ();
+
+    this.initMenu ();
+
+    ipc.emit ( 'updater-check', true );
+
+    setTimeout ( this.initMenu, 2000 );
+
+  }
+
+  /* LOAD */
+
+  load () {
+
+    super.load ();
+
+    setTimeout ( this.__didFinishLoad, 500 ); //TODO: Ideally the timeout should be 0, for for that we need to minimize the amount of work happening before the skeleton can be rendered
 
   }
 

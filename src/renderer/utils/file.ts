@@ -56,11 +56,11 @@ const File = {
 
   },
 
-  async read ( filePath: string ): Promise<string | undefined> {
+  async read ( filePath: string, encoding: string = 'utf8' ): Promise<string | undefined> {
 
     try {
 
-      return ( await pify ( fs.readFile )( filePath, { encoding: 'utf8' } ) ).toString ();
+      return ( await pify ( fs.readFile )( filePath, {encoding} ) ).toString ();
 
     } catch ( e ) {
 

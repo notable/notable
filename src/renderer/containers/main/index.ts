@@ -3,10 +3,11 @@
 
 import * as _ from 'lodash';
 import {ipcRenderer as ipc} from 'electron';
-import {Container, compose} from 'overstated';
+import {Container, autosuspend, compose} from 'overstated';
 import Attachment from './attachment';
 import Attachments from './attachments';
 import Editor from './editor';
+import Export from './export';
 import Import from './import';
 import Loading from './loading';
 import MultiEditor from './multi_editor';
@@ -19,6 +20,7 @@ import Tags from './tags';
 import Trash from './trash';
 import Tutorial from './tutorial';
 import Window from './window';
+import {TagSpecials} from '@renderer/utils/tags';
 
 /* MAIN */
 
@@ -27,6 +29,16 @@ class Main extends Container<MainState, MainCTX> {
   /* VARIABLES */
 
   _prevFlags;
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* MIDDLEWARES */
 
@@ -62,6 +74,7 @@ class Main extends Container<MainState, MainCTX> {
 
     if ( !( prev.note.note && !this.state.note.note ) ) return;
 
+    if ( this.ctx.editor.isSplit () ) this.ctx.editor.toggleSplit ( false );
     if ( this.ctx.editor.isEditing () ) this.ctx.editor.toggleEditing ( false );
     if ( this.ctx.tags.isEditing () ) this.ctx.tags.toggleEditing ( false );
     if ( this.ctx.attachments.isEditing () ) this.ctx.attachments.toggleEditing ( false );
@@ -70,7 +83,7 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareResetEditor ( prev: MainState ) {
 
-    if ( !( !prev.editor.editing && !this.state.editor.editing && prev.note.note !== this.state.note.note ) ) return;
+    if ( !( ( ( !prev.editor.editing && !this.state.editor.editing ) || this.state.editor.split ) && !this.ctx.note.is ( prev.note.note, this.state.note.note, true ) ) ) return;
 
     return this.ctx.editor.previewingState.reset ();
 
@@ -78,15 +91,17 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareSaveEditor ( prev: MainState ) {
 
-    if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, this.state.note.note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length >= 1 ) ) ) ) return;
+    const note = this.ctx.note.get ();
 
-    const cm = this.ctx.editor.getCodeMirror ();
+    if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( prev.editor.editing && !prev.editor.split && this.state.editor.split ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length > 1 ) ) ) ) return;
 
-    if ( !cm ) return;
+    if ( !( prev.note.note && note && ( prev.note.note.plainContent === note.plainContent || prev.note.note.metadata.modified.getTime () >= note.metadata.modified.getTime () ) ) ) return;
 
-    const plainContent = cm.getValue ();
+    const data = this.ctx.editor.getData ();
 
-    return this.ctx.note.save ( prev.note.note, plainContent );
+    if ( !data ) return;
+
+    return this.ctx.note.save ( prev.note.note, data.content, data.modified );
 
   }
 
@@ -94,13 +109,15 @@ class Main extends Container<MainState, MainCTX> {
 
     const flags: StateFlags = {
       hasNote: !!app.note.get (),
-      isEditorEditing: app.editor.isEditing (),
-      isMultiEditorEditing: app.multiEditor.isEditing (),
-      isTagsEditing: app.tags.isEditing (),
       isAttachmentsEditing: app.attachments.isEditing (),
+      isEditorEditing: app.editor.isEditing (),
+      isEditorSplitView: app.editor.isSplit (),
+      isMultiEditorEditing: app.multiEditor.isEditing (),
+      isNoteDeleted: app.note.isDeleted (),
       isNoteFavorited: app.note.isFavorited (),
       isNotePinned: app.note.isPinned (),
-      isNoteDeleted: app.note.isDeleted ()
+      isNoteTemplate: !!app.note.getTags ( undefined, TagSpecials.TEMPLATES ).length,
+      isTagsEditing: app.tags.isEditing ()
     };
 
     if ( _.isEqual ( app._prevFlags, flags ) ) return; // Nothing changed, no need to update the main process
@@ -147,6 +164,7 @@ export default compose ({
   attachment: Attachment,
   attachments: Attachments,
   editor: Editor,
+  export: Export,
   import: Import,
   loading: Loading,
   multiEditor: MultiEditor,

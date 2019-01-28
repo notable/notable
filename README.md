@@ -1,7 +1,7 @@
 # Notable ([DOWNLOAD](https://github.com/fabiospampinato/notable/releases))
 
 <p align="center">
-  <img src="resources/demo/main.png" alt="Notable" width="500">
+  <img src="resources/demo/main.png" alt="Notable" width="750">
 </p>
 
 The markdown-based note-taking app that doesn't suck.
@@ -32,7 +32,7 @@ So I built my own.
 
 Upon first instantiation, some tutorial notes will be added to the app, check them out for more in-depth details about the app and how to use it. You can also find the raw version [here](https://github.com/fabiospampinato/notable/tree/master/resources/tutorial/notes).
 
-## Comparison
+## [Comparison](resources/comparison/table.png?raw=true)
 
 [![Click to Enlarge](resources/comparison/table.png)](resources/comparison/table.png?raw=true)
 
@@ -40,29 +40,21 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 
 ## Demo
 
+### Indefinitely Nestable Tags
+
+<img src="resources/demo/tags.png" alt="Indefinitely Nestable Tags" width="750">
+
 ### Editor
 
 <img src="resources/demo/editor.png" alt="Editor" width="750">
 
 ### Multi-Note Editor
 
-<img src="resources/demo/multi_editor.png" alt="Editor" width="750">
+<img src="resources/demo/multi_editor.png" alt="Multi-Note Editor" width="750">
 
 ## Contributing
 
-If you have an idea, or you have found a problem, please open an [issue](https://github.com/fabiospampinato/notable/issues) about it.
-
-If you want to make a pull request, or fork the app, you should:
-
-```bash
-git clone https://github.com/fabiospampinato/notable.git
-cd notable
-npm install
-npm run svelto:dev
-npm run iconfont
-npm run tutorial
-npm run dev
-```
+There are multiple ways to contribute to this project, read about them [here](https://github.com/fabiospampinato/notable/blob/master/.github/CONTRIBUTING.md).
 
 ## Related
 

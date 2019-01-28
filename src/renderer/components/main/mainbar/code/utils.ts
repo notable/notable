@@ -30,13 +30,6 @@ const Utils = {
 
   },
 
-  focus ( cm ) {
-
-    cm.focus ();
-    cm.setCursor ({ line: 0, ch: 0 });
-
-  },
-
   walkSelections ( cm, callback ) {
 
     cm.listSelections ().forEach ( selection => {

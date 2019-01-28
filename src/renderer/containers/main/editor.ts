@@ -1,18 +1,41 @@
 
 /* IMPORT */
 
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Utils from '@renderer/utils/utils';
 
 /* EDITOR */
 
 class Editor extends Container<EditorState, MainCTX> {
 
+  /* VARIABLES */
+
+  _prevSplitEditing = false;
+
   /* STATE */
 
   state = {
-    editing: false
+    editing: false,
+    split: false
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
+
+  /* HELPERS */
+
+  _getDocHeight ( cm ): number {
+
+    return cm.cursorCoords ( { line: Infinity, ch: Infinity }, 'local' ).top;
+
+  }
 
   /* VIEW STATE */
 
@@ -30,6 +53,7 @@ class Editor extends Container<EditorState, MainCTX> {
       return {
         filePath: note.filePath,
         scrollTop: $('.CodeMirror-scroll')[0].scrollTop,
+        docHeight: this._getDocHeight ( cm ),
         selections: cm.listSelections ()
       };
 
@@ -47,7 +71,17 @@ class Editor extends Container<EditorState, MainCTX> {
 
       if ( !cm ) return;
 
-      cm.setSelections ( state.selections );
+      if ( state.history ) {
+
+        cm.doc.setHistory ( state.history );
+
+      }
+
+      if ( !state.selections.length || ( state.selections.length === 1 && state.selections[0].anchor.ch === 0 && state.selections[0].anchor.line === 0 ) || state.docHeight === this._getDocHeight ( cm ) ) {
+
+        cm.setSelections ( state.selections );
+
+      }
 
     },
 
@@ -71,8 +105,31 @@ class Editor extends Container<EditorState, MainCTX> {
 
       this.editingState.set ({
         scrollTop: 0,
-        selections: []
+        history: {
+          done: [],
+          undone: []
+        },
+        selections: [{
+          anchor: {
+            ch: 0,
+            line: 0
+          },
+          head: {
+            ch: 0,
+            line: 0
+          }
+        }]
       });
+
+    },
+
+    focus: () => {
+
+      const cm = this.getCodeMirror ();
+
+      if ( !cm ) return;
+
+      cm.focus ();
 
     }
 
@@ -142,6 +199,8 @@ class Editor extends Container<EditorState, MainCTX> {
 
   toggleEditing = ( editing: boolean = !this.state.editing ) => {
 
+    if ( this.isSplit () ) return;
+
     if ( editing ) {
 
       this.previewingState.save ();
@@ -158,11 +217,50 @@ class Editor extends Container<EditorState, MainCTX> {
 
   }
 
+  isSplit = (): boolean => {
+
+    return this.state.split;
+
+  }
+
+  toggleSplit = ( split: boolean = !this.state.split ) => {
+
+    const editing = split ? true : this._prevSplitEditing;
+
+    if ( split ) this._prevSplitEditing = this.isEditing (); // Saving editing state
+
+    return this.setState ({ editing, split });
+
+  }
+
   getCodeMirror = () => { // Getting the instance in a reliable way
 
     const ele = $('.CodeMirror')[0];
 
     return ele && ele.CodeMirror;
+
+  }
+
+  getData = (): { content: string, modified: Date } | undefined => {
+
+    const cm = this.getCodeMirror ();
+
+    if ( !cm ) return;
+
+    return {
+      content: cm.__content__, //UGLY
+      modified: cm.__modified_date__ //UGLY
+    };
+
+  }
+
+  update = () => {
+
+    const cm = this.getCodeMirror ();
+
+    if ( !cm ) return;
+
+    cm.refresh ();
 
   }
 

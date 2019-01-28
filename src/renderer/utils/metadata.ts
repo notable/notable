@@ -17,7 +17,15 @@ const Parser = {
 
   parse ( str ) {
 
-    return yaml.safeLoad ( str, Parser.options );
+    try {
+
+      return yaml.safeLoad ( str, Parser.options );
+
+    } catch ( e ) {
+
+      return {};
+
+    }
 
   },
 

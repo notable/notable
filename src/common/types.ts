@@ -18,9 +18,8 @@ type AttachmentsObj = {
 
 type NoteMetadataObj = {
   attachments: string[],
-  created?: number,
-  dateCreated: Date,
-  dateModified: Date,
+  created: Date,
+  modified: Date,
   deleted: boolean,
   favorited: boolean,
   pinned: boolean,
@@ -65,7 +64,8 @@ type AttachmentsState = {
 };
 
 type EditorState = {
-  editing: boolean
+  editing: boolean,
+  split: boolean
 };
 
 type EditorEditingState = undefined | {
@@ -78,6 +78,8 @@ type EditorPreviewingState = undefined | {
   filePath: string,
   scrollTop: number
 };
+
+type ExportState = {};
 
 type ImportState = {};
 
@@ -132,6 +134,7 @@ type MainState = {
   attachment: AttachmentState,
   attachments: AttachmentsState,
   editor: EditorState,
+  export: ExportState,
   import: ImportState,
   loading: LoadingState,
   multiEditor: MultiEditorState,
@@ -158,6 +161,7 @@ type MainCTX = {
   attachment: import ( '@renderer/containers/main/attachment' ).default,
   attachments: import ( '@renderer/containers/main/attachments' ).default,
   editor: import ( '@renderer/containers/main/editor' ).default,
+  export: import ( '@renderer/containers/main/export' ).default,
   import: import ( '@renderer/containers/main/import' ).default,
   loading: import ( '@renderer/containers/main/loading' ).default,
   multiEditor: import ( '@renderer/containers/main/multi_editor' ).default,
@@ -179,6 +183,12 @@ type IMain = MainCTX & { ctx: MainCTX };
 type CWDState = {};
 
 type CWDCTX = {
+  get ();
+  set ();
+  select ();
+  selectDefault ();
+  openInApp ();
+  dialog ();
   tutorial: import ( '@renderer/containers/main/tutorial' ).default
 };
 
@@ -190,9 +200,11 @@ type StateFlags = {
   hasNote: boolean,
   isAttachmentsEditing: boolean,
   isEditorEditing: boolean,
+  isEditorSplitView: boolean,
   isMultiEditorEditing: boolean,
   isNoteDeleted: boolean,
   isNoteFavorited: boolean,
   isNotePinned: boolean,
-  isTagsEditing: boolean
+  isTagsEditing: boolean,
+  isNoteTemplate: boolean
 };

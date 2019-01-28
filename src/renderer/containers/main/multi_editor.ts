@@ -3,7 +3,7 @@
 
 import * as _ from 'lodash';
 import Dialog from 'electron-dialog';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Tags from '@renderer/utils/tags';
 
 /* EDITOR */
@@ -16,6 +16,16 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
     notes: [] as NoteObj[],
     skippable: false // Some refreshing tasks are skippable since we are going to call the same function again
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* HELPERS */
 
@@ -49,6 +59,37 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
   }
 
   /* API */
+
+  toggleNoteRange = ( noteEnd: NoteObj ) => {
+
+    const notesSelected = this.getNotes (),
+          notes = this.ctx.search.getNotes (),
+          noteStart = _.last ( notesSelected );
+
+    if ( !noteStart ) return;
+
+    let startIndex = notes.indexOf ( noteStart ),
+        endIndex = notes.indexOf ( noteEnd ),
+        minIndex = Math.min ( startIndex, endIndex ),
+        maxIndex = Math.max ( startIndex, endIndex );
+
+    if ( minIndex === maxIndex ) return;
+
+    if ( minIndex === startIndex ) { // Direction: down
+
+      minIndex += 1;
+      maxIndex += 1;
+
+    }
+
+    const notesTarget = notes.slice ( minIndex, maxIndex ),
+          notesToSelect = _.difference ( notesTarget, notesSelected ),
+          notesToDeselect = _.intersection ( notesTarget, notesSelected ),
+          notesNext = notesSelected.filter ( note => !notesToDeselect.includes ( note ) ).concat ( notesToSelect );
+
+    return this.setNotes ( notesNext );
+
+  }
 
   toggleNote = ( note: NoteObj, force?: boolean ) => {
 

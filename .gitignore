@@ -21,6 +21,7 @@
 .project
 .settings
 .tmproj
+.vscode
 *.esproj
 *.sublime-project
 *.sublime-workspace
@@ -34,6 +35,5 @@ Thumbs.db
 # Other paths to ignore
 bower_components
 node_modules
-package-lock.json
 dist
 releases

@@ -1,16 +1,13 @@
 
 /* IMPORT */
 
+import {debug, HMR} from 'overstated';
+import logUpdates from 'react-log-updates';
 import Environment from '@common/environment';
 
 /* DEBUGGING */
 
 async function debugging () {
-
-  if ( !Environment.isDevelopment ) return;
-
-  const {debug, HMR} = await import ( 'overstated' );
-  const {default: logUpdates} = await import ( 'react-log-updates' );
 
   logUpdates ({
     enabled: Environment.isDevelopment,

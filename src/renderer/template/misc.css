@@ -218,10 +218,26 @@
 #mainbar .editor input[type="checkbox"] {
   appearance: checkbox !important;
   -webkit-appearance: checkbox !important;
+  margin: 0 0.35em 0.25em 0 !important;
+  width: auto !important;
+  opacity: 1 !important;
 }
 
 #mainbar .editor pre {
   display: block !important;
+}
+
+#mainbar .split-editor {
+  height: 100%;
+}
+
+#mainbar .split-editor > .editor {
+  height: auto;
+  width: 50%;
+}
+
+#mainbar .split-editor > .editor.preview {
+  border-left: 1px solid #e2e2e2 !important;
 }
 
 #mainbar .multi-editor {
@@ -308,7 +324,7 @@
 
 #sidebar,
 #middlebar,
-#mainbar-toolbar,
+#mainbar > *:not(.editor):not(.split-editor),
 .popover,
 .title {
   user-select: none !important;
@@ -364,12 +380,12 @@ strong {
   padding: .2em .4em !important;
 }
 
-.editor.preview input[type="checkbox"] {
-  width: auto !important;
-}
-
 .editor.preview .task-list-item {
   margin-left: -1.6em;
+}
+
+.editor.preview .task-list-item > p {
+  margin: 0;
 }
 
 .editor.preview a:not(.button) > i.icon {
@@ -417,6 +433,10 @@ kbd {
   text-align: center;
 }
 
+.mermaid text[font-size="14"] {
+  font-size: 14px !important;
+}
+
 #about {
   background-color: #ececec;
 }
@@ -431,4 +451,8 @@ kbd {
 
 #about .desc {
   font-size: .5946142301em;
+}
+
+body.markdown-body {
+  padding: 20px;
 }

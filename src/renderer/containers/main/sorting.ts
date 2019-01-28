@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import Settings from '@common/settings';
 import {SortingBys, SortingTypes} from '@renderer/utils/sorting';
@@ -17,6 +17,16 @@ class Sorting extends Container<SortingState, MainCTX> {
     by: Config.sorting.by,
     type: Config.sorting.type
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 
@@ -63,8 +73,8 @@ class Sorting extends Container<SortingState, MainCTX> {
   sort = ( notes: NoteObj[], by: SortingBys = this.state.by, type: SortingTypes = this.state.type ): NoteObj[] => {
 
     const iteratees = {
-      [SortingBys.DATE_CREATED]: this.ctx.note.getDateCreated,
-      [SortingBys.DATE_MODIFIED]: this.ctx.note.getDateModified,
+      [SortingBys.DATE_CREATED]: this.ctx.note.getCreated,
+      [SortingBys.DATE_MODIFIED]: this.ctx.note.getModified,
       [SortingBys.TITLE]: this.ctx.note.getTitle
     };
 

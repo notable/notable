@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {Container} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import Tags, {TagSpecials} from '@renderer/utils/tags';
 import Utils from '@renderer/utils/utils';
 
@@ -24,6 +24,16 @@ class Tag extends Container<TagState, MainCTX> {
   state = {
     tag: DEFAULT
   };
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 
@@ -136,6 +146,8 @@ class Tag extends Container<TagState, MainCTX> {
 
   setFromNote = async ( note?: NoteObj ) => {
 
+    if ( !note ) return;
+
     const tag = this.state.tag,
           tags = this.ctx.note.getTags ( note );
 
@@ -150,8 +162,6 @@ class Tag extends Container<TagState, MainCTX> {
 
     /* SETTING NEXT */
 
-    if ( !note ) return this.set ( ALL );
-
     const tagsTemplates = this.ctx.note.getTags ( note, TEMPLATES );
 
     if ( tagsTemplates.length ) return this.set ( tagsTemplates[0] );
@@ -160,9 +170,9 @@ class Tag extends Container<TagState, MainCTX> {
 
     if ( tagsNotebooks.length ) return this.set ( tagsNotebooks[0] );
 
-    if ( this.ctx.note.isFavorited ( note ) ) return this.set ( FAVORITES );
+    if ( tags.length ) return this.set ( tags[0] );
 
-    if ( tags.length ) return this.set ( ALL );
+    if ( this.ctx.note.isFavorited ( note ) ) return this.set ( FAVORITES );
 
     return this.set ( UNTAGGED );
 
@@ -191,8 +201,6 @@ class Tag extends Container<TagState, MainCTX> {
           tagNext = $tags.eq ( indexWrapped ).data ( 'tag' );
 
     if ( tagNext ) return this.ctx.tag.set ( tagNext );
-
-    return; //TSC
 
   }
 

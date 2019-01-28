@@ -6,7 +6,7 @@ import Dialog from 'electron-dialog';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 import * as os from 'os';
-import {Container, compose} from 'overstated';
+import {Container, autosuspend, compose} from 'overstated';
 import * as path from 'path';
 import * as pify from 'pify';
 import Config from '@common/config';
@@ -18,6 +18,16 @@ import File from '@renderer/utils/file';
 
 class CWD extends Container<CWDState, CWDCTX> {
 
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
+
   /* API */
 
   get = () => {
@@ -27,6 +37,8 @@ class CWD extends Container<CWDState, CWDCTX> {
   }
 
   set = async ( folderPath: string ) => {
+
+    if ( Config.cwd === folderPath ) return Dialog.alert ( 'This is already the current data directory' );
 
     try {
 
@@ -41,7 +53,7 @@ class CWD extends Container<CWDState, CWDCTX> {
       const notesPath = Config.notes.path,
             hadNotes = ( notesPath && await File.exists ( notesPath ) );
 
-      if ( !hadTutorial && !hadNotes && Config.flags.TUTORIAL ) {
+      if ( !hadTutorial && !hadNotes ) {
 
         await this.ctx.tutorial.import ();
 
@@ -90,10 +102,14 @@ class CWD extends Container<CWDState, CWDCTX> {
 
   dialog = (): string | undefined => {
 
+    const cwd = Config.cwd,
+          defaultPath = cwd ? path.dirname ( cwd ) : os.homedir ();
+
     const folderPaths = remote.dialog.showOpenDialog ({
       title: 'Select Data Directory',
       buttonLabel: 'Select',
-      properties: ['openDirectory', 'createDirectory', 'showHiddenFiles']
+      properties: ['openDirectory', 'createDirectory', 'showHiddenFiles'],
+      defaultPath
     });
 
     if ( !folderPaths || !folderPaths.length ) return;

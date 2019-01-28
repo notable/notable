@@ -3,8 +3,8 @@
 
 import {shell} from 'electron';
 import Dialog from 'electron-dialog';
-import * as decompress from 'decompress';
-import {Container} from 'overstated';
+import * as unzip from 'extract-zip';
+import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
 import pkg from '@root/package.json';
 import Config from '@common/config';
@@ -12,6 +12,16 @@ import Config from '@common/config';
 /* TUTORIAL */
 
 class Tutorial extends Container<TutorialState, MainCTX> {
+
+  /* CONSTRUCTOR */
+
+  constructor () {
+
+    super ();
+
+    autosuspend ( this );
+
+  }
 
   /* API */
 
@@ -21,10 +31,11 @@ class Tutorial extends Container<TutorialState, MainCTX> {
 
     if ( !cwd ) return;
 
-    const tutorialPath = path.join ( __static, 'tutorial.tar' );
+    const tutorialPath = path.join ( __static, 'tutorial.zip' );
 
-    return decompress ( tutorialPath, cwd, {
-      filter: file => !/^\./.test ( path.basename ( file.path ) ) // Some dot files junk might get included
+    unzip ( tutorialPath, { dir: cwd }, err => {
+      if ( !err ) return;
+      Dialog.alert ( 'Failed to import the tutorial notes, please report the issue' );
     });
 
   }
