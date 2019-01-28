@@ -19,11 +19,15 @@ Some syntax plugins for providing you [KaTeX](https://katex.org) and [mermaid](h
 
 #### KaTeX
 
+Wrap a formula in `$$` to display it as a block:
+
 $$e^{iπ} + 1 = 0$$
 
-Inline expressions: $e = mc^2$, are supported too.
+Wrap it in `$` to display it inline: $e = mc^2$.
 
-You can also use [AsciiMath](http://asciimath.org): ~sum_(i=1)^n i^3=((n(n+1))/2)^2~.
+You can also use [AsciiMath](http://asciimath.org): $sum_(i=1)^n i^3=((n(n+1))/2)^2$.
+
+> **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a formula, and the ending `$` character musn't be followed by a digit.
 
 #### mermaid
 
