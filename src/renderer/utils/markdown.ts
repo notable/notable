@@ -306,77 +306,18 @@ const Markdown = {
 
     wikilink () {
 
-      const {path: notesPath, re} = Config.notes;
+      const {token} = Config.notes;
 
-      if ( !notesPath ) return [];
-
-      var matches = [];
-      var codeblocks = [];
-      return [
-        { // Extract Codeblocks
-          type: 'lang',
-          regex: /((?:^|\n {0,3})(```+|~~~+)(?: *)([^\s`~]*)\n([\s\S]*?)\n(?: {0,3})\2)/g,
-          replace (match, $1) {
-            codeblocks.push($1);
-            var n = codeblocks.length - 1;
-            return '%CODEBLOCK' + n + '%';
-          }
-        },
-        { // Extract Wikilinks
-          type: 'lang',
-          regex: /(?<!`)\[\[(.*?)\]\]/g,
-          replace (match, $1, $2) {
-            matches.push($1);
-            var n = matches.length - 1;
-            return '%PLACEHOLDER' + n + '%';
-          }
-        },
-        { // Reinsert Codeblocks
-            type: 'lang',
-            regex: /%CODEBLOCK.*?%/gi,
-            replace (match) {
-                var codeblock = codeblocks.shift();
-                return codeblock;
-            }
-        },
-        { // Transform Wikilinks
-          type: 'output',
-          filter (text) {
-                for (var i=0; i< matches.length; ++i) {
-                    var content = matches[i]
-
-                    var splits = content.split("|");
-
-                    if (splits.length === 1) {
-                      var wikiLink = splits[0].trim();
-                      var linkText = splits[0].trim();
-                    }
-                    else {
-                      var wikiLink = splits[1].trim();
-                      var linkText = splits[0].trim();
-                    };
-
-                    wikiLink = decodeURI ( wikiLink );
-
-                    if (wikiLink.match(re)) {
-                      var basename = wikiLink;
-                    } else {
-                      var basename = [wikiLink, 'md'].join('.'); // the extension should be configurable (= default extension)
-                    }
-
-                    var filePath = path.join ( notesPath, basename );
-                    var link = `<a href="@note/${basename}">${linkText}</a>`
-
-                    // find placeholder and replace with link
-                    var pat = '%PLACEHOLDER' + i + '%';
-                    var text = text.replace(new RegExp(pat, 'gi'), link);
-                }
-                //reset array
-                matches = [];
-                return text;
-            }
+      return [{
+        type: 'language',
+        regex: /\[\[([^|\]]+?)(?:\|([^\]]+?))?\]\]/g,
+        replace ( match, $1, $2 ) {
+          const title = $2 ? $1 : '';
+          const note = $2 || $1;
+          const {name, ext} = path.parse ( note );
+          return `<a href="${token}/${name}${ext || '.md'}">${title}</a>`;
         }
-      ];
+      }];
 
     }
 
@@ -390,7 +331,7 @@ const Markdown = {
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag (), wikilink ()]
+        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag ()]
       });
 
       converter.setFlavor ( 'github' );
