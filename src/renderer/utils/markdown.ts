@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import 'prism-github/prism-github.css';
+import 'prism-theme-one-dark/prism-onedark.css';
 import 'katex/dist/katex.min.css';
 
 import * as _ from 'lodash';
