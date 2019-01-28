@@ -19,6 +19,7 @@ class Window {
   win: BrowserWindow;
   options: object;
   stateOptions: object;
+  _didFocus: boolean = false;
 
   /* CONSTRUCTOR */
 
@@ -94,6 +95,8 @@ class Window {
 
   __didFinishLoad = () => {
 
+    if ( this._didFocus ) return;
+
     this.win.show ();
     this.win.focus ();
 
@@ -124,6 +127,8 @@ class Window {
   }
 
   __focused = () => {
+
+    this._didFocus = true;
 
     this.initMenu ();
 
