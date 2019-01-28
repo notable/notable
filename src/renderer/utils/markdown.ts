@@ -9,6 +9,7 @@ import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's 
 import * as path from 'path';
 import * as showdown from 'showdown';
 import Config from '@common/config';
+import AsciiMath from './asciimath';
 import Highlighter from './highlighter';
 import Utils from './utils';
 
@@ -18,7 +19,7 @@ const {encodeFilePath} = Utils;
 
 const laxy = require ( 'laxy' ),
       mermaid = laxy ( () => require ( 'mermaid' ) )(),
-      showdownKatex = laxy ( () => require ( 'showdown-katex-studdown' ) )();
+      katex = laxy ( () => require ( 'katex' ) )();
 
 /* MARKDOWN */
 
@@ -53,17 +54,41 @@ const Markdown = {
 
     },
 
+    asciimath2tex () {
+
+      return [{
+        type: 'output',
+        regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(.+?)\$\$)|(?:\$(.+?)\$)/g,
+        replace ( match, $1, $2, $3 ) {
+          const asciimath = $1 || $2 || $3;
+          try {
+            const tex = AsciiMath.toTeX ( asciimath );
+            return !!$3 ? `$${tex}$` : `$$${tex}$$`;
+          } catch ( e ) {
+            console.error ( `[AsciiMath] ${e.message}` );
+            return match;
+          }
+        }
+      }];
+
+    },
+
     katex () {
 
-      try {
-
-        return showdownKatex ( Config.katex );
-
-      } catch ( e ) {
-
-        return `<p class="text-red">[KaTeX error: ${e.message}]</p>`;
-
-      }
+      return [{
+        type: 'output',
+        regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(.+?)\$\$)|(?:\$(.+?)\$)/g,
+        replace ( match, $1, $2, $3 ) {
+          const tex = $1 || $2 || $3;
+          try {
+            Config.katex.displayMode = !$3;
+            return katex.renderToString ( tex, Config.katex );
+          } catch ( e ) {
+            console.error ( `[KaTeX] ${e.message}` );
+            return match;
+          }
+        }
+      }];
 
     },
 
@@ -80,6 +105,7 @@ const Markdown = {
             const svg = mermaid.render ( id, $1 );
             return `<div class="mermaid">${svg}</div>`;
           } catch ( e ) {
+            console.error ( `[mermaid] ${e.message}` );
             $(`#${id}`).remove ();
             return `<p class="text-red">[mermaid error: ${e.message}]</p>`;
           }
@@ -284,11 +310,11 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {highlight, katex, mermaid, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
+      const {asciimath2tex, katex, mermaid, highlight, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [highlight (), katex (), mermaid (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
+        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
       });
 
       converter.setFlavor ( 'github' );

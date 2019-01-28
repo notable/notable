@@ -42,11 +42,7 @@ const Config = {
   katex: {
     throwOnError: true,
     displayMode: false,
-    errorColor: '#f44336',
-    delimiters: [
-      { left: '$', right: '$', display: false },
-      { left: '&&', right: '&&', display: true, asciimath: true }
-    ]
+    errorColor: '#f44336'
   },
   mermaid: { //URL: https://github.com/knsv/mermaid/blob/7d3578b31aeea3bc9bbc618dcda57d82574eaffb/src/mermaidAPI.js#L51
     gantt: {
