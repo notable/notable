@@ -7,8 +7,6 @@ import 'katex/dist/katex.min.css';
 import * as _ from 'lodash';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
 import * as path from 'path';
-import * as pify from 'pify';
-import * as strip from 'strip-markdown';
 import * as showdown from 'showdown';
 import Config from '@common/config';
 import Utils from './utils';
@@ -19,20 +17,27 @@ const {encodeFilePath} = Utils;
 
 const laxy = require ( 'laxy' ),
       mermaid = laxy ( () => require ( 'mermaid' ) )(),
-      remark = laxy ( () => require ( 'remark' ) )(),
       showdownHighlight = laxy ( () => require ( 'showdown-highlight' ) )(),
-      showdownKatex = laxy ( () => require ( 'showdown-katex-studdown' ) )(),
-      showdownTargetBlack = laxy ( () => require ( 'showdown-target-blank' ) )();
+      showdownKatex = laxy ( () => require ( 'showdown-katex-studdown' ) )();
 
 /* MARKDOWN */
 
 const Markdown = {
 
-  converter: undefined,
-
-  markdownRe: /_|\*|~|`|<|:|^>|^#|\]|---|===|\d\.|[*+-][ \t]+\[|\n\n/m,
+  re: /_|\*|~|`|<|:|^>|^#|\]|---|===|\d\.|[*+-]\s|\n\n/m,
+  wrapperRe: /^<p>(.*?)<\/p>$/,
 
   extensions: {
+
+    strip () {
+
+      return [{
+        type: 'language',
+        regex: /[\][=~`#|()*_-]/g,
+        replace: ''
+      }];
+
+    },
 
     katex () {
 
@@ -97,6 +102,22 @@ const Markdown = {
 
     },
 
+    targetBlankLinks () {
+
+      return [{
+        type: 'output',
+        regex: '<a(.*?)href="(.)(.*?)>',
+        replace ( match, $1, $2, $3 ) {
+          if ( $2 === '#' ) { // URL fragment
+            return match;
+          } else {
+            return `<a${$1}target="_blank" href="${$2}${$3}>`;
+          }
+        }
+      }];
+
+    },
+
     resolveRelativeLinks () {
 
       const {path: attachmentsPath, token: attachmentsToken} = Config.attachments,
@@ -104,20 +125,36 @@ const Markdown = {
 
       if ( !attachmentsPath || !notesPath ) return [];
 
-      return [{
-        type: 'language',
-        regex: `\\[([^\\]]*)\\]\\((\\.[^\\)]*)\\)`,
-        replace ( match, $1, $2 ) {
-          const filePath = path.resolve ( notesPath, $2 );
-          if ( filePath.startsWith ( attachmentsPath ) ) {
-            return `[${$1}](${attachmentsToken}/${filePath.slice ( attachmentsPath.length )})`;
-          } else if ( filePath.startsWith ( notesPath ) ) {
-            return `[${$1}](${notesToken}/${filePath.slice ( notesPath.length )})`;
-          } else {
-            return `[${$1}](file://${encodeFilePath ( filePath )})`;
+      return [
+        { // Markdown
+          type: 'language',
+          regex: `\\[([^\\]]*)\\]\\((\\.[^\\)]*)\\)`,
+          replace ( match, $1, $2 ) {
+            const filePath = path.resolve ( notesPath, $2 );
+            if ( filePath.startsWith ( attachmentsPath ) ) {
+              return `[${$1}](${attachmentsToken}/${filePath.slice ( attachmentsPath.length )})`;
+            } else if ( filePath.startsWith ( notesPath ) ) {
+              return `[${$1}](${notesToken}/${filePath.slice ( notesPath.length )})`;
+            } else {
+              return `[${$1}](file://${encodeFilePath ( filePath )})`;
+            }
+          }
+        },
+        { // <a>, <img>, <source>
+          type: 'output',
+          regex: /<(a|img|source)\s(.*?)(src|href)="(\.[^"]*)"(.*?)>/gm,
+          replace ( match, $1, $2, $3, $4, $5 ) {
+            const filePath = path.resolve ( notesPath, $4 );
+            if ( filePath.startsWith ( attachmentsPath ) ) {
+              return `<${$1} ${$2} ${$3}="${attachmentsToken}/${filePath.slice ( attachmentsPath.length )}" ${$5}>`;
+            } else if ( filePath.startsWith ( notesPath ) ) {
+              return `<${$1} ${$2} ${$3}="${notesToken}/${filePath.slice ( notesPath.length )}"${$5}>`;
+            } else {
+              return `<${$1} ${$2} ${$3}="file://${encodeFilePath ( filePath )}"${$5}>`;
+            }
           }
         }
-      }];
+      ];
 
     },
 
@@ -140,13 +177,13 @@ const Markdown = {
       if ( !attachmentsPath ) return [];
 
       return [
-        { // Image
+        { // <img>, <source>
           type: 'output',
-          regex: `<img(.*?)src="${token}/([^"]+)"(.*?)>`,
-          replace ( match, $1, $2, $3 ) {
-            $2 = decodeURI ( $2 );
-            const filePath = path.join ( attachmentsPath, $2 );
-            return `<img${$1}src="file://${encodeFilePath ( filePath )}" class="attachment" data-filename="${$2}"${$3}>`;
+          regex: `<(img|source)(.*?)src="${token}/([^"]+)"(.*?)>`,
+          replace ( match, $1, $2, $3, $4 ) {
+            $3 = decodeURI ( $3 );
+            const filePath = path.join ( attachmentsPath, $3 );
+            return `<${$1}${$2}src="file://${encodeFilePath ( filePath )}" class="attachment" data-filename="${$3}"${$4}>`;
           }
         },
         { // Link Button
@@ -229,44 +266,57 @@ const Markdown = {
 
   },
 
-  getConverter () {
+  converters: {
 
-    if ( Markdown.converter ) return Markdown.converter;
+    preview: _.memoize ( () => {
 
-    const {katex, mermaid, checkbox, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
+      const {katex, mermaid, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
 
-    const converter = new showdown.Converter ({
-      metadata: true,
-      extensions: [showdownHighlight, showdownTargetBlack, katex (), mermaid (), checkbox (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
-    });
+      const converter = new showdown.Converter ({
+        metadata: true,
+        extensions: [showdownHighlight, katex (), mermaid (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
+      });
 
-    converter.setFlavor ( 'github' );
+      converter.setFlavor ( 'github' );
 
-    Markdown.converter = converter;
+      return converter;
 
-    return converter;
+    }),
+
+    strip: _.memoize ( () => {
+
+      const {strip} = Markdown.extensions;
+
+      const converter = new showdown.Converter ({
+        metadata: true,
+        extensions: [strip]
+      });
+
+      return converter;
+
+    })
 
   },
 
   is: ( str: string ): boolean => { // Checks if `str` _could_ be using some Markdown features, it doesn't tell reliably when it actually is, only when it isn't. Useful for skipping unnecessary renderings
 
-    return Markdown.markdownRe.test ( str );
+    return Markdown.re.test ( str );
 
   },
 
   render: _.memoize ( ( str: string ): string => {
 
-    if ( !Markdown.is ( str ) ) return `<p>${str}</p>`;
+    if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
-    return Markdown.getConverter ().makeHtml ( str );
+    return Markdown.converters.preview ().makeHtml ( str );
 
   }),
 
-  strip: async ( str: string ): Promise<string> => {
+  strip: ( str: string ): string => {
 
-    if ( !Markdown.is ( str ) ) return str;
+    if ( !str || !Markdown.is ( str ) ) return str;
 
-    return ( await pify ( remark ().use ( strip ).process )( str ) ).toString ();
+    return Markdown.converters.strip ().makeHtml ( str ).trim ().replace ( Markdown.wrapperRe, '$1' );
 
   }
 

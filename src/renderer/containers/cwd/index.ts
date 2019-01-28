@@ -53,7 +53,7 @@ class CWD extends Container<CWDState, CWDCTX> {
       const notesPath = Config.notes.path,
             hadNotes = ( notesPath && await File.exists ( notesPath ) );
 
-      if ( !hadTutorial && !hadNotes && Config.flags.TUTORIAL ) {
+      if ( !hadTutorial && !hadNotes ) {
 
         await this.ctx.tutorial.import ();
 
