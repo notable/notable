@@ -61,7 +61,7 @@ class Export extends Container<ExportState, MainCTX> {
       const css = await this._getResources ([
         'node_modules/codemirror/lib/codemirror.css',
         'node_modules/codemirror-github-light/lib/codemirror-github-light-theme.css',
-        'node_modules/highlight.js/styles/github.css',
+        'node_modules/prism-github/prism-github.css',
         'node_modules/katex/dist/katex.min.css',
         'node_modules/primer-markdown/build/build.css',
         `${__static}/css/notable.min.css`

@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import 'highlight.js/styles/github.css';
+import 'prism-github/prism-github.css';
 import 'katex/dist/katex.min.css';
 
 import * as _ from 'lodash';
@@ -9,6 +9,7 @@ import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's 
 import * as path from 'path';
 import * as showdown from 'showdown';
 import Config from '@common/config';
+import Highlighter from './highlighter';
 import Utils from './utils';
 
 const {encodeFilePath} = Utils;
@@ -17,7 +18,6 @@ const {encodeFilePath} = Utils;
 
 const laxy = require ( 'laxy' ),
       mermaid = laxy ( () => require ( 'mermaid' ) )(),
-      showdownHighlight = laxy ( () => require ( 'showdown-highlight' ) )(),
       showdownKatex = laxy ( () => require ( 'showdown-katex-studdown' ) )();
 
 /* MARKDOWN */
@@ -35,6 +35,20 @@ const Markdown = {
         type: 'language',
         regex: /[\][=~`#|()*_-]/g,
         replace: ''
+      }];
+
+    },
+
+    highlight () {
+
+      return [{
+        type: 'output',
+        regex: /<pre><code(?:\s([^>]*))?>([^]*?)<\/code><\/pre>/g,
+        replace ( match, $1, $2 ) {
+          const language = Highlighter.inferLanguage ( $1 );
+          const highlighted = Highlighter.highlight ( $2, language );
+          return `<pre><code ${$1 || ''}>${highlighted}</code></pre>`;
+        }
       }];
 
     },
@@ -270,11 +284,11 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {katex, mermaid, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
+      const {highlight, katex, mermaid, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [showdownHighlight, katex (), mermaid (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
+        extensions: [highlight (), katex (), mermaid (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
       });
 
       converter.setFlavor ( 'github' );
