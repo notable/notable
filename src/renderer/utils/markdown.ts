@@ -401,13 +401,13 @@ const Markdown = {
 
   },
 
-  render: _.memoize ( ( str: string ): string => {
+  render: ( str: string ): string => {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
     return Markdown.converters.preview ().makeHtml ( str );
 
-  }),
+  },
 
   strip: ( str: string ): string => {
 
