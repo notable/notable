@@ -93,13 +93,13 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /(?:<pre><code\s[^>]*language-(?:asciimath|tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(?!<)(\S.*?\S)\$\$(?!\d))|(?:\$(?!<)(\S.*?\S)\$(?!\d))/g,
-        replace ( match, $1, $2, $3, index, content ) {
+        regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:&&(?!<)(\S.*?\S)&&(?!\d))|(?:&amp;(?!<)&amp;(?!<)(\S.*?\S)&amp;(?!<)&amp;(?!\d))|(?:&(?!<|amp;)(\S.*?\S)&(?!\d))|(?:&amp;(?!<)(\S.*?\S)&amp;(?!\d))/g,
+        replace ( match, $1, $2, $3, $4, $5, index, content ) {
           if ( Markdown.extensions.code.includes ( content, index, false ) ) return match;
-          const asciimath = $1 || $2 || $3;
+          const asciimath = $1 || $2 || $3 || $4 || $5;
           try {
-            const tex = AsciiMath.toTeX ( entities.decode ( asciimath ) );
-            return !!$3 ? `$${tex}$` : `$$${tex}$$`;
+            let tex = AsciiMath.toTeX ( entities.decode ( asciimath ) );
+            return !!$4 || !!$5 ? `$${tex}$` : `$$${tex}$$`;
           } catch ( e ) {
             console.error ( `[asciimath] ${e.message}` );
             return match;
