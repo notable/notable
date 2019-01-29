@@ -159,9 +159,17 @@ class App {
 
   __cwdChanged = () => {
 
-    if ( this.win ) this.win.win.close ();
+    if ( this.win && this.win.win ) {
 
-    this.load ();
+      this.win.win.once ( 'closed', this.load.bind ( this ) );
+
+      this.win.win.close ();
+
+    } else {
+
+      this.load ();
+
+    }
 
   }
 
