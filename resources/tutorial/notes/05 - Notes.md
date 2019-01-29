@@ -15,19 +15,27 @@ Notes can have some metadata: if they are favorited or not, which tags they have
 
 ## Syntax Plugins
 
-Some syntax plugins for providing you [KaTeX](https://katex.org) and [mermaid](https://github.com/knsv/mermaid) support are built-in, check out this note's source.
+Some syntax plugins for providing you [KaTeX](https://katex.org), [AsciiMath](http://asciimath.org) and [mermaid](https://github.com/knsv/mermaid) support are built-in, check out this note's source.
 
 #### KaTeX
 
 Wrap a formula in `$$` to display it as a block:
 
-$$e^{iπ} + 1 = 0$$
+$$f{x} = \int_{-\infty}^\infty \hat f\xi\,e^{2 \pi i \xi x} \,d\xi$$
 
-Wrap it in `$` to display it inline: $e = mc^2$.
-
-You can also use [AsciiMath](http://asciimath.org): $sum_(i=1)^n i^3=((n(n+1))/2)^2$.
+Wrap it in `$` to display it inline: $e^{iπ} + 1 = 0$.
 
 > **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a formula, and the ending `$` character musn't be followed by a digit.
+
+#### AsciiMath
+
+Wrap a formula in `&&` to display it as a block:
+
+&&sum_(i=1)^n i^3=((n(n+1))/2)^2&&
+
+Wrap it in `&` to display it inline: &e = mc^2&.
+
+> **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a formula, and the ending `&` character musn't be followed by a digit.
 
 #### mermaid
 
