@@ -129,6 +129,7 @@
     "react"
   ],
   "dependencies": {
+    "asciimath2tex": "^1.1.0",
     "calls-batch": "^1.1.1",
     "chokidar": "^2.0.4",
     "codemirror": "git://github.com/fabiospampinato/CodeMirror.git",
