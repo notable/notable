@@ -1,3 +1,56 @@
+### Version 1.3.0
+
+##### New Features
+- Updater: added a menu entry for checking for updates
+- Added a menu entry for opening the subreddit
+- Added Wiki-style links supports
+- Added support for linking to attachments from `source` elements
+
+##### Improvements
+- Notes: avoiding unnecessary updates because of filesystem changes
+- Much more reliable autosaving and more accurate modification date
+- Dependencies: removed `remark` and `strip-markdown`
+- Dependencies: removed `showdown-target-blank`
+- Dependencies: removed `electron-localshortcut`
+- Dependencies: replaced `decompress` with `extract-zip`
+- Dependencies: replaced `globby` to `tiny-glob`
+- Dependencies: replaced `shallowequal` with `is-shallow-equal`
+- Dependencies: replaced `highlight.js` with `prism`
+- Dependencies: replaced `showdown-katex-studdown` with `asciimath2tex`
+- Dependencies: updated `enex-dump` (shaved ~10mb from bundle)
+- Updater: checking for updates after the app is loaded and every 24h
+- Markdown: avoiding storing previous renders
+- Tutorial: mentioning the subreddit and the Patreon page
+- Tutorial: mentioning Wiki-style links
+- Tutorial: updated sections about KaTeX and AsciiMath
+
+##### Bug Fixes
+- Fixed support for URLs fragments
+- Fixed support for relative links inside `a` and `img` tags
+- Markdown: made extensions much more reliable
+- Markdown: more advanced stripping logic
+- Markdown: un-wrapping the output when stripping
+- Markdown: improved support for emails
+- Markdown: ensuring anonymous code blocks are rendered properly
+- Autosave: properly handling app quits, window closes and reloads events
+- Ensuring the app quits when asked to do so
+- Ensuring the app doesn’t crash when changing data directory
+- Search: ensuring existing tags are still selectable even when they have no results
+- Avoiding refocusing windows twice
+- KaTeX: requiring a stricter syntax
+  - Wrap formulas in `$$..$$` and `$..$`
+  - There mustn't be spaces at the beginning and end of a formula
+  - The ending `$` character musn't be followed by a digit
+- AsciiMath: ensuring it doesn’t conflict with KaTeX
+  - Wrap formulas in `&&..&&` and `&..&`
+  - There mustn't be spaces at the beginning and end of a formula
+  - The ending `&` character musn't be followed by a digit
+- Ensuring the columns are not themselves scrollable
+- Improved toggleable checkboxes implementation
+- Removed shortcut for `Toggle Developer Tools`
+- Updater: ensuring secondary notifications are shown only when manually checking for updates
+- Updater: ensuring the menu gets properly restored after checking
+
 ### Version 1.2.0
 
 ##### New Features
