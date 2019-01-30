@@ -73,11 +73,28 @@ const Markdown = {
 
     strip () {
 
-      return [{
-        type: 'language',
-        regex: /[\][=~`#|()*_-]/g,
-        replace: ''
-      }];
+      return [
+        { // Standalone syntax
+          type: 'language',
+          regex: /--+|==+|```+|~~~+/gm,
+          replace: () => ''
+        },
+        { // Wrap syntax
+          type: 'language',
+          regex: /_.*?_|\*.*?\*|~.*?~|`.*?`|\[.*?\]/gm,
+          replace: match => match.slice ( 1, -1 )
+        },
+        { // Start syntax
+          type: 'language',
+          regex: /^(\s*)(?:>(?:\s*?>)*|#+|\d+\.|[*+-](?=\s))/gm, //TODO: If multiple of these get chained together this regex will fail
+          replace: ( match, $1 ) => $1
+        },
+        { // HTML
+          type: 'output',
+          regex: /<[^>]*?>/g,
+          replace: () => ''
+        }
+      ];
 
     },
 
@@ -405,6 +422,8 @@ const Markdown = {
         metadata: true,
         extensions: [strip]
       });
+
+      converter.setFlavor ( 'github' );
 
       return converter;
 
