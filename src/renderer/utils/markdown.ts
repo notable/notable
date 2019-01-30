@@ -34,6 +34,9 @@ const Markdown = {
     utilities: {
 
       anchorOutputRe: /<a[^>]*>(.*?)<\/a>/g,
+      checkboxLanguageRe: /^(\s*[*+-][ \t]+\[(?:x|X| )?\])(?!\[|\()/gm,
+      checkboxCheckmarkRe: /\[([^\]]*?)\]/g,
+      checkboxCheckedRe: /\[(x|X)\]/g,
       codeLanguageRe: /(^|[^\\])(`+)([^\r]*?[^`])\2(?!`)/gm,
       codeOutputRe: /<code[^>]*?>([^]*?)<\/code>/g,
 
@@ -66,6 +69,34 @@ const Markdown = {
         const re = language ? Markdown.extensions.utilities.codeLanguageRe : Markdown.extensions.utilities.codeOutputRe;
 
         return Markdown.extensions.utilities.isInside ( re, str, index );
+
+      },
+
+      toggleCheckbox ( str: string, nth: number, force?: boolean ) {
+
+        const {checkboxLanguageRe, checkboxCheckmarkRe, checkboxCheckedRe} = Markdown.extensions.utilities;
+
+        checkboxLanguageRe.lastIndex = 0;
+
+        let checkbox, nthCurrent = -1;
+
+        while ( checkbox = checkboxLanguageRe.exec ( str ) ) {
+
+          if ( Markdown.extensions.utilities.isInsideCode ( str, checkbox.index, true ) ) continue;
+
+          nthCurrent++;
+
+          if ( nthCurrent !== nth ) continue;
+
+          force = _.isBoolean ( force ) ? force : !checkboxCheckedRe.test ( checkbox[0] );
+
+          const checkboxNext = checkbox[0].replace ( checkboxCheckmarkRe, force ? '[x]' : '[ ]' );
+
+          return `${str.slice ( 0, checkbox.index )}${checkboxNext}${str.slice ( checkbox.index + checkbox[0].length, Infinity )}`;
+
+        }
+
+        return str;
 
       }
 
@@ -182,27 +213,23 @@ const Markdown = {
 
     checkbox () {
 
-      // We are wrapping the metadata (the match index, which is a number) in numbers so that the syntax highlighter won't probably mess with it and it's unlikely that somebody will ever write the same thing
+      let nth = 0;
 
       return [
-        { // Adding metadata
+        { // Resetting the counter
           type: 'language',
-          regex: /([*+-][ \t]+\[(?:x|X| )?\])(?!\[|\()/gm,
-          replace ( match, $1, index ) {
-            return `${$1}7381125${index - 2}7381125`; //TODO: The matched string it appears to be wrapped into `\n\n` and `\n\n`, so the index is offsetted by 2, why? Is this because of showdown?
+          regex: /^/g,
+          replace () {
+            nth = 0;
+            return '';
           }
         },
-        { // Transforming metadata into attributes
+        { // Adding metadata
           type: 'output',
-          regex: /<input type="checkbox"(?: disabled)?([^>]*)>7381125(\d+?)7381125/gm,
-          replace ( match, $1, $2 ) {
-            return `<input type="checkbox"${$1} data-index="${$2}">`
+          regex: /<input type="checkbox"(?: disabled)?([^>]*)>/gm,
+          replace ( match, $1 ) {
+            return `<input type="checkbox"${$1} data-nth="${nth++}">`
           }
-        },
-        { // Cleaning up leftover metadata
-          type: 'output',
-          regex: /7381125(\d+?)7381125/gm,
-          replace: () => ''
         }
       ];
 

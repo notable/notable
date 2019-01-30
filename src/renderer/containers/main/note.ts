@@ -536,20 +536,12 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  toggleCheckboxAtIndex = ( note: NoteObj | undefined = this.state.note, index: number, force?: boolean ) => {
+  toggleCheckboxNth = ( note: NoteObj | undefined = this.state.note, nth: number, force?: boolean ) => {
 
     if ( !note ) return;
 
-    const checkboxRe = /^([*+-])([ \t]+\[)((?:x|X| )?)(\])(?!\[|\()/m,
-          checkedRe = /^(x|X)$/,
-          plainContent = this.getPlainContent ( note ),
-          snippet = plainContent.slice ( index, index + 20 ),
-          snippetNext = snippet.replace ( checkboxRe, ( match, $1, $2, $3, $4 ) => {
-            force = _.isBoolean ( force ) ? force : !checkedRe.test ( $3 );
-            const checkmark = force ? 'x' : ' ';
-            return `${$1}${$2}${checkmark}${$4}`;
-          }),
-          plainContentNext = `${plainContent.slice ( 0, index )}${snippetNext}${plainContent.slice ( index + snippet.length, Infinity )}`;
+    const plainContent = this.getPlainContent ( note ),
+          plainContentNext = Markdown.extensions.utilities.toggleCheckbox ( plainContent, nth, force );
 
     return this.save ( note, plainContentNext );
 
