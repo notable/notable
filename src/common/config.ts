@@ -7,6 +7,7 @@ import Settings from './settings';
 /* CONFIG */
 
 const Config = {
+  autoupdate: true,
   get cwd () {
     return Settings.get ( 'cwd' );
   },
@@ -15,8 +16,8 @@ const Config = {
       const cwd = Config.cwd;
       return cwd ? path.join ( cwd, 'attachments' ) : undefined;
     },
-    globs: ['**/*', '!**/.*'],
-    re: /attachments(?:\\|\/)(?!\.).*$/, // Excluding dot files
+    glob: '**/*',
+    re: /./,
     token: '@attachment' // Usable in urls
   },
   notes: {
@@ -24,7 +25,7 @@ const Config = {
       const cwd = Config.cwd;
       return cwd ? path.join ( cwd, 'notes' ) : undefined;
     },
-    globs: ['**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,txt}'],
+    glob: '**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,txt}',
     re: /\.(?:md|mkd|mdwn|mdown|markdown|markdn|mdtxt|mdtext|txt)$/,
     token: '@note' // Usable in urls
   },
@@ -41,11 +42,7 @@ const Config = {
   katex: {
     throwOnError: true,
     displayMode: false,
-    errorColor: '#f44336',
-    delimiters: [
-      { left: '$', right: '$', display: false },
-      { left: '&&', right: '&&', display: true, asciimath: true }
-    ]
+    errorColor: '#f44336'
   },
   mermaid: { //URL: https://github.com/knsv/mermaid/blob/7d3578b31aeea3bc9bbc618dcda57d82574eaffb/src/mermaidAPI.js#L51
     gantt: {

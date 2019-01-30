@@ -55,11 +55,11 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
 
     const $input = $(event.currentTarget),
           checked = $input.prop ( 'checked' ),
-          index = $input.data ( 'index' );
+          nth = $input.data ( 'nth' );
 
-    if ( !_.isNumber ( index ) ) return;
+    if ( !_.isNumber ( nth ) ) return;
 
-    this.props.container.note.toggleCheckboxAtIndex ( undefined, index, checked );
+    this.props.container.note.toggleCheckboxNth ( undefined, nth, checked );
 
   }
 

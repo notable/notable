@@ -24,6 +24,10 @@ We also consider the number of ":+1:" an issue has when deciding if we are going
 
 We have a [subreddit](https://www.reddit.com/r/notable). Feel free to join us there, discussions not strictly related to the issue tracker are done there.
 
+### Join the Patreon
+
+At least until Notable becomes self-sustaining I plan to maintain a [Patreon page](https://www.patreon.com/fabiospampinato), feel free to support me there.
+
 ### Submit a pull request
 
 Pull requests are especially welcome for issues labeled as [`bug`](https://github.com/fabiospampinato/notable/issues?q=is%3Aissue+is%3Aopen+label%3Abug) or [`help wanted`](https://github.com/fabiospampinato/notable/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22). Pull requests for other issues can be considered too but before working on them you should let us know that you'd like to submit one, so that we can tell you if a pull request can be considered for that particular issue, what the pull request should actually implement and how.

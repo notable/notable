@@ -1,14 +1,17 @@
 
 /* IMPORT */
 
-import 'highlight.js/styles/github.css';
+import 'prism-github/prism-github.css';
 import 'katex/dist/katex.min.css';
 
 import * as _ from 'lodash';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
+import {AllHtmlEntities as entities} from 'html-entities';
 import * as path from 'path';
 import * as showdown from 'showdown';
 import Config from '@common/config';
+import AsciiMath from './asciimath';
+import Highlighter from './highlighter';
 import Utils from './utils';
 
 const {encodeFilePath} = Utils;
@@ -17,39 +20,172 @@ const {encodeFilePath} = Utils;
 
 const laxy = require ( 'laxy' ),
       mermaid = laxy ( () => require ( 'mermaid' ) )(),
-      showdownHighlight = laxy ( () => require ( 'showdown-highlight' ) )(),
-      showdownKatex = laxy ( () => require ( 'showdown-katex-studdown' ) )();
+      katex = laxy ( () => require ( 'katex' ) )();
 
 /* MARKDOWN */
 
 const Markdown = {
 
-  re: /_|\*|~|`|<|:|^>|^#|\]|---|===|\d\.|[*+-]\s|\n\n/m,
+  re: /_.*?_|\*.*?\*|~.*?~|`.*?`|<.*?>|:.*?:|^\s*>|^\s*#|\[.*?\]|--|==|```|~~~|^\s*\d+\.|^\s*[*+-]\s|\n\s*\n/m,
   wrapperRe: /^<p>(.*?)<\/p>$/,
 
   extensions: {
 
+    utilities: {
+
+      anchorOutputRe: /<a[^>]*>(.*?)<\/a>/g,
+      checkboxLanguageRe: /^(\s*[*+-][ \t]+\[(?:x|X| )?\])(?!\[|\()/gm,
+      checkboxCheckmarkRe: /\[([^\]]*?)\]/g,
+      checkboxCheckedRe: /\[(x|X)\]/g,
+      codeLanguageRe: /(^|[^\\])(`+)([^\r]*?[^`])\2(?!`)/gm,
+      codeOutputRe: /<code[^>]*?>([^]*?)<\/code>/g,
+
+      isInside ( re: RegExp, str: string, index: number ) { // Checks if the index is inside the ranges matched by the regex in the string
+
+        re.lastIndex = 0;
+
+        let match;
+
+        while ( match = re.exec ( str ) ) {
+
+          if ( index < match.index ) return false;
+
+          if ( index >= match.index && index < ( match.index + match[0].length ) ) return true;
+
+        }
+
+        return false;
+
+      },
+
+      isInsideAnchor ( str: string, index: number ) {
+
+        return Markdown.extensions.utilities.isInside ( Markdown.extensions.utilities.anchorOutputRe, str, index );
+
+      },
+
+      isInsideCode ( str: string, index: number, language: boolean = false ) {
+
+        const re = language ? Markdown.extensions.utilities.codeLanguageRe : Markdown.extensions.utilities.codeOutputRe;
+
+        return Markdown.extensions.utilities.isInside ( re, str, index );
+
+      },
+
+      toggleCheckbox ( str: string, nth: number, force?: boolean ) {
+
+        const {checkboxLanguageRe, checkboxCheckmarkRe, checkboxCheckedRe} = Markdown.extensions.utilities;
+
+        checkboxLanguageRe.lastIndex = 0;
+
+        let checkbox, nthCurrent = -1;
+
+        while ( checkbox = checkboxLanguageRe.exec ( str ) ) {
+
+          if ( Markdown.extensions.utilities.isInsideCode ( str, checkbox.index, true ) ) continue;
+
+          nthCurrent++;
+
+          if ( nthCurrent !== nth ) continue;
+
+          force = _.isBoolean ( force ) ? force : !checkboxCheckedRe.test ( checkbox[0] );
+
+          const checkboxNext = checkbox[0].replace ( checkboxCheckmarkRe, force ? '[x]' : '[ ]' );
+
+          return `${str.slice ( 0, checkbox.index )}${checkboxNext}${str.slice ( checkbox.index + checkbox[0].length, Infinity )}`;
+
+        }
+
+        return str;
+
+      }
+
+    },
+
     strip () {
 
+      return [
+        { // Standalone syntax
+          type: 'language',
+          regex: /--+|==+|```+|~~~+/gm,
+          replace: () => ''
+        },
+        { // Wrap syntax
+          type: 'language',
+          regex: /_.*?_|\*.*?\*|~.*?~|`.*?`|\[.*?\]/gm,
+          replace: match => match.slice ( 1, -1 )
+        },
+        { // Start syntax
+          type: 'language',
+          regex: /^(\s*)(?:>(?:\s*?>)*|#+|\d+\.|[*+-](?=\s))/gm, //TODO: If multiple of these get chained together this regex will fail
+          replace: ( match, $1 ) => $1
+        },
+        { // HTML
+          type: 'output',
+          regex: /<[^>]*?>/g,
+          replace: () => ''
+        }
+      ];
+
+    },
+
+    highlight () {
+
       return [{
-        type: 'language',
-        regex: /[\][=~`#|()*_-]/g,
-        replace: ''
+        type: 'output',
+        regex: /<pre><code\s[^>]*(language-[^>]*)>([^]+?)<\/code><\/pre>/g,
+        replace ( match, $1, $2 ) {
+          try {
+            const language = Highlighter.inferLanguage ( $1 );
+            const highlighted = Highlighter.highlight ( $2, language );
+            return `<pre><code ${$1 || ''}>${highlighted}</code></pre>`;
+          } catch ( e ) {
+            console.error ( `[highlight] ${e.message}` );
+            return match;
+          }
+        }
+      }];
+
+    },
+
+    asciimath2tex () {
+
+      return [{
+        type: 'output',
+        regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:&&(?!<)(\S.*?\S)&&(?!\d))|(?:&amp;(?!<)&amp;(?!<)(\S.*?\S)&amp;(?!<)&amp;(?!\d))|(?:&(?!<|amp;)(\S.*?\S)&(?!\d))|(?:&amp;(?!<)(\S.*?\S)&amp;(?!\d))/g,
+        replace ( match, $1, $2, $3, $4, $5, index, content ) {
+          if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
+          if ( Markdown.extensions.utilities.isInsideAnchor ( content, index ) ) return match; // In order to better support encoded emails
+          const asciimath = $1 || $2 || $3 || $4 || $5;
+          try {
+            let tex = AsciiMath.toTeX ( entities.decode ( asciimath ) );
+            return !!$4 || !!$5 ? `$${tex}$` : `$$${tex}$$`;
+          } catch ( e ) {
+            console.error ( `[asciimath] ${e.message}` );
+            return match;
+          }
+        }
       }];
 
     },
 
     katex () {
 
-      try {
-
-        return showdownKatex ( Config.katex );
-
-      } catch ( e ) {
-
-        return `<p class="text-red">[KaTeX error: ${e.message}]</p>`;
-
-      }
+      return [{
+        type: 'output',
+        regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(?!<)(\S.*?\S)\$\$(?!\d))|(?:\$(?!<)(\S.*?\S)\$(?!\d))/g,
+        replace ( match, $1, $2, $3, index, content ) {
+          if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
+          const tex = $1 || $2 || $3;
+          try {
+            Config.katex.displayMode = !$3;
+            return katex.renderToString ( entities.decode ( tex ), Config.katex );
+          } catch ( e ) {
+            console.error ( `[katex] ${e.message}` );
+            return match;
+          }
+        }
+      }];
 
     },
 
@@ -58,14 +194,15 @@ const Markdown = {
       mermaid.initialize ( Config.mermaid );
 
       return [{
-        type: 'language',
-        regex: '```mermaid([^`]*)```',
+        type: 'output',
+        regex: /<pre><code\s[^>]*language-mermaid[^>]*>([^]+?)<\/code><\/pre>/g,
         replace ( match, $1 ) {
           const id = `mermaid-${CRC32.str ( $1 )}`;
           try {
-            const svg = mermaid.render ( id, $1 );
+            const svg = mermaid.render ( id, entities.decode ( $1 ) );
             return `<div class="mermaid">${svg}</div>`;
           } catch ( e ) {
+            console.error ( `[mermaid] ${e.message}` );
             $(`#${id}`).remove ();
             return `<p class="text-red">[mermaid error: ${e.message}]</p>`;
           }
@@ -76,27 +213,23 @@ const Markdown = {
 
     checkbox () {
 
-      // We are wrapping the metadata (the match index, which is a number) in numbers so that the syntax highlighter won't probably mess with it and it's unlikely that somebody will ever write the same thing
+      let nth = 0;
 
       return [
-        { // Adding metadata
+        { // Resetting the counter
           type: 'language',
-          regex: /([*+-][ \t]+\[(?:x|X| )?\])(?!\[|\()/gm,
-          replace ( match, $1, index ) {
-            return `${$1}7381125${index - 2}7381125`; //TODO: The matched string it appears to be wrapped into `\n\n` and `\n\n`, so the index is offsetted by 2, why? Is this because of showdown?
+          regex: /^/g,
+          replace () {
+            nth = 0;
+            return '';
           }
         },
-        { // Transforming metadata into attributes
+        { // Adding metadata
           type: 'output',
-          regex: /<input type="checkbox"(?: disabled)?([^>]*)>7381125(\d+?)7381125/gm,
-          replace ( match, $1, $2 ) {
-            return `<input type="checkbox"${$1} data-index="${$2}">`
+          regex: /<input type="checkbox"(?: disabled)?([^>]*)>/gm,
+          replace ( match, $1 ) {
+            return `<input type="checkbox"${$1} data-nth="${nth++}">`
           }
-        },
-        { // Cleaning up leftover metadata
-          type: 'output',
-          regex: /7381125(\d+?)7381125/gm,
-          replace: () => ''
         }
       ];
 
@@ -106,7 +239,7 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: '<a(.*?)href="(.)(.*?)>',
+        regex: /<a(.*?)href="(.)(.*?)>/g,
         replace ( match, $1, $2, $3 ) {
           if ( $2 === '#' ) { // URL fragment
             return match;
@@ -128,8 +261,9 @@ const Markdown = {
       return [
         { // Markdown
           type: 'language',
-          regex: `\\[([^\\]]*)\\]\\((\\.[^\\)]*)\\)`,
-          replace ( match, $1, $2 ) {
+          regex: /\[([^\]]*)\]\((\.[^\)]*)\)/g,
+          replace ( match, $1, $2, index, content ) {
+            if ( Markdown.extensions.utilities.isInsideCode ( content, index, true ) ) return match;
             const filePath = path.resolve ( notesPath, $2 );
             if ( filePath.startsWith ( attachmentsPath ) ) {
               return `[${$1}](${attachmentsToken}/${filePath.slice ( attachmentsPath.length )})`;
@@ -163,7 +297,8 @@ const Markdown = {
       return [{
         type: 'language',
         regex: `\\[([^\\]]*)\\]\\(((?:${Config.attachments.token}|${Config.notes.token}|${Config.tags.token})/[^\\)]*)\\)`,
-        replace ( match, $1, $2 ) {
+        replace ( match, $1, $2, index, content ) {
+          if ( Markdown.extensions.utilities.isInsideCode ( content, index, true ) ) return match;
           return `[${$1}](${encodeFilePath ( $2 )})`;
         }
       }];
@@ -262,6 +397,24 @@ const Markdown = {
         }
       ];
 
+    },
+
+    wikilink () {
+
+      const {token} = Config.notes;
+
+      return [{
+        type: 'language',
+        regex: /\[\[([^|\]]+?)(?:\|([^\]]+?))?\]\]/g,
+        replace ( match, $1, $2, index, content ) {
+          if ( Markdown.extensions.utilities.isInsideCode ( content, index, true ) ) return match;
+          const title = $2 ? $1 : '';
+          const note = $2 || $1;
+          const {name, ext} = path.parse ( note );
+          return `<a href="${token}/${name}${ext || '.md'}">${title}</a>`;
+        }
+      }];
+
     }
 
   },
@@ -270,14 +423,19 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {katex, mermaid, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag} = Markdown.extensions;
+      const {asciimath2tex, katex, mermaid, highlight, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, wikilink} = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [showdownHighlight, katex (), mermaid (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), note (), tag ()]
+        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag ()]
       });
 
       converter.setFlavor ( 'github' );
+
+      converter.setOption ( 'disableForced4SpacesIndentedSublists', true );
+      converter.setOption ( 'ghMentions', false );
+      converter.setOption ( 'smartIndentationFix', true );
+      converter.setOption ( 'smoothLivePreview', true );
 
       return converter;
 
@@ -292,6 +450,8 @@ const Markdown = {
         extensions: [strip]
       });
 
+      converter.setFlavor ( 'github' );
+
       return converter;
 
     })
@@ -304,13 +464,13 @@ const Markdown = {
 
   },
 
-  render: _.memoize ( ( str: string ): string => {
+  render: ( str: string ): string => {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
     return Markdown.converters.preview ().makeHtml ( str );
 
-  }),
+  },
 
   strip: ( str: string ): string => {
 

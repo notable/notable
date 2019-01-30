@@ -3,9 +3,10 @@
 
 import * as _ from 'lodash';
 import CallsBatch from 'calls-batch';
-import * as globby from 'globby';
+import glob from 'tiny-glob';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
+import File from '@renderer/utils/file';
 import Utils from '@renderer/utils/utils';
 import watcher from '@renderer/utils/watcher';
 
@@ -33,11 +34,15 @@ class Notes extends Container<NotesState, MainCTX> {
 
   }
 
-  /* LYFECYCLE */
+  /* LIFECYCLE */
 
   refresh = async () => {
 
-    const filePaths = Utils.globbyNormalize ( await globby ( Config.notes.globs, { cwd: Config.notes.path, absolute: true } ) );
+    const notesPath = Config.notes.path;
+
+    if ( !notesPath || !await File.exists ( notesPath ) ) return;
+
+    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.notes.glob, { cwd: notesPath, absolute: true, filesOnly: true } ) );
 
     const notes = {};
 
