@@ -7,6 +7,7 @@ import {remote} from 'electron';
 import glob from 'tiny-glob';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
+import File from '@renderer/utils/file';
 import Utils from '@renderer/utils/utils';
 import watcher from '@renderer/utils/watcher';
 
@@ -39,7 +40,11 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
 
   refresh = async () => {
 
-    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.attachments.glob, { cwd: Config.attachments.path, absolute: true, filesOnly: true } ) );
+    const attachmentsPath = Config.attachments.path;
+
+    if ( !attachmentsPath || !await File.exists ( attachmentsPath ) ) return;
+
+    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.attachments.glob, { cwd: attachmentsPath, absolute: true, filesOnly: true } ) );
 
     const attachments = filePaths.reduce ( ( acc, filePath ) => {
 

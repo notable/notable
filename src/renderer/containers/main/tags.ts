@@ -141,7 +141,7 @@ class Tags extends Container<TagsState, MainCTX> {
 
   }
 
-  /* LYFECYCLE */
+  /* LIFECYCLE */
 
   refresh = () => {
 

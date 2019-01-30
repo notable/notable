@@ -6,6 +6,7 @@ import CallsBatch from 'calls-batch';
 import glob from 'tiny-glob';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
+import File from '@renderer/utils/file';
 import Utils from '@renderer/utils/utils';
 import watcher from '@renderer/utils/watcher';
 
@@ -33,11 +34,15 @@ class Notes extends Container<NotesState, MainCTX> {
 
   }
 
-  /* LYFECYCLE */
+  /* LIFECYCLE */
 
   refresh = async () => {
 
-    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.notes.glob, { cwd: Config.notes.path, absolute: true, filesOnly: true } ) );
+    const notesPath = Config.notes.path;
+
+    if ( !notesPath || !await File.exists ( notesPath ) ) return;
+
+    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.notes.glob, { cwd: notesPath, absolute: true, filesOnly: true } ) );
 
     const notes = {};
 
