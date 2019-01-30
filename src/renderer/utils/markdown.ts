@@ -31,16 +31,13 @@ const Markdown = {
 
   extensions: {
 
-    code: { // Detecting code ranges early on and once, so that we can skip future plugins
+    utilities: {
 
-      ranges: [] as [number, number][], // [startIndex, endIndex][]
+      anchorOutputRe: /<a[^>]*>(.*?)<\/a>/g,
+      codeLanguageRe: /(^|[^\\])(`+)([^\r]*?[^`])\2(?!`)/gm,
+      codeOutputRe: /<code[^>]*?>([^]*?)<\/code>/g,
 
-      languageRe: /(^|[^\\])(`+)([^\r]*?[^`])\2(?!`)/gm,
-      outputRe: /<code[^>]*?>([^]*?)<\/code>/g,
-
-      includes ( str: string, index: number, language: boolean ) {
-
-        const re = language ? Markdown.extensions.code.languageRe : Markdown.extensions.code.outputRe;
+      isInside ( re: RegExp, str: string, index: number ) { // Checks if the index is inside the ranges matched by the regex in the string
 
         re.lastIndex = 0;
 
@@ -55,6 +52,20 @@ const Markdown = {
         }
 
         return false;
+
+      },
+
+      isInsideAnchor ( str: string, index: number ) {
+
+        return Markdown.extensions.utilities.isInside ( Markdown.extensions.utilities.anchorOutputRe, str, index );
+
+      },
+
+      isInsideCode ( str: string, index: number, language: boolean = false ) {
+
+        const re = language ? Markdown.extensions.utilities.codeLanguageRe : Markdown.extensions.utilities.codeOutputRe;
+
+        return Markdown.extensions.utilities.isInside ( re, str, index );
 
       }
 
@@ -95,7 +106,8 @@ const Markdown = {
         type: 'output',
         regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:&&(?!<)(\S.*?\S)&&(?!\d))|(?:&amp;(?!<)&amp;(?!<)(\S.*?\S)&amp;(?!<)&amp;(?!\d))|(?:&(?!<|amp;)(\S.*?\S)&(?!\d))|(?:&amp;(?!<)(\S.*?\S)&amp;(?!\d))/g,
         replace ( match, $1, $2, $3, $4, $5, index, content ) {
-          if ( Markdown.extensions.code.includes ( content, index, false ) ) return match;
+          if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
+          if ( Markdown.extensions.utilities.isInsideAnchor ( content, index ) ) return match; // In order to better support encoded emails
           const asciimath = $1 || $2 || $3 || $4 || $5;
           try {
             let tex = AsciiMath.toTeX ( entities.decode ( asciimath ) );
@@ -115,7 +127,7 @@ const Markdown = {
         type: 'output',
         regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(?!<)(\S.*?\S)\$\$(?!\d))|(?:\$(?!<)(\S.*?\S)\$(?!\d))/g,
         replace ( match, $1, $2, $3, index, content ) {
-          if ( Markdown.extensions.code.includes ( content, index, false ) ) return match;
+          if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
           const tex = $1 || $2 || $3;
           try {
             Config.katex.displayMode = !$3;
@@ -207,7 +219,7 @@ const Markdown = {
           type: 'language',
           regex: /\[([^\]]*)\]\((\.[^\)]*)\)/g,
           replace ( match, $1, $2, index, content ) {
-            if ( Markdown.extensions.code.includes ( content, index, true ) ) return match;
+            if ( Markdown.extensions.utilities.isInsideCode ( content, index, true ) ) return match;
             const filePath = path.resolve ( notesPath, $2 );
             if ( filePath.startsWith ( attachmentsPath ) ) {
               return `[${$1}](${attachmentsToken}/${filePath.slice ( attachmentsPath.length )})`;
@@ -242,7 +254,7 @@ const Markdown = {
         type: 'language',
         regex: `\\[([^\\]]*)\\]\\(((?:${Config.attachments.token}|${Config.notes.token}|${Config.tags.token})/[^\\)]*)\\)`,
         replace ( match, $1, $2, index, content ) {
-          if ( Markdown.extensions.code.includes ( content, index, true ) ) return match;
+          if ( Markdown.extensions.utilities.isInsideCode ( content, index, true ) ) return match;
           return `[${$1}](${encodeFilePath ( $2 )})`;
         }
       }];
@@ -351,7 +363,7 @@ const Markdown = {
         type: 'language',
         regex: /\[\[([^|\]]+?)(?:\|([^\]]+?))?\]\]/g,
         replace ( match, $1, $2, index, content ) {
-          if ( Markdown.extensions.code.includes ( content, index, true ) ) return match;
+          if ( Markdown.extensions.utilities.isInsideCode ( content, index, true ) ) return match;
           const title = $2 ? $1 : '';
           const note = $2 || $1;
           const {name, ext} = path.parse ( note );
