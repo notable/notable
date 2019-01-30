@@ -49,13 +49,13 @@ class Note extends Container<NoteState, MainCTX> {
 
   _inferTitleFromFilePath ( filePath: string ): string {
 
-    return path.basename ( filePath, path.extname ( filePath ) ).replace ( /∕/g, '/' ); // Substituting back dash-like characters
+    return path.basename ( filePath, path.extname ( filePath ) ).replace ( /\∕/g, '/' ).replace ( /\s{2,}/g, ' ' ); // Substituting back dash-like characters
 
   }
 
   _inferTitleFromLine ( line: string | null, fallback: string = 'Untitled' ): string {
 
-    return line ? Markdown.strip ( line.trim () ) || fallback : fallback;
+    return line ? Markdown.strip ( line.trim () ).replace ( /\s{2,}/g, ' ' ) || fallback : fallback;
 
   }
 
