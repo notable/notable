@@ -388,6 +388,11 @@ const Markdown = {
 
       converter.setFlavor ( 'github' );
 
+      converter.setOption ( 'disableForced4SpacesIndentedSublists', true );
+      converter.setOption ( 'ghMentions', false );
+      converter.setOption ( 'smartIndentationFix', true );
+      converter.setOption ( 'smoothLivePreview', true );
+
       return converter;
 
     }),
