@@ -399,7 +399,8 @@ class Main extends Route {
           },
           { type: 'separator' },
           {
-            role: 'toggledevtools'
+            role: 'toggledevtools',
+            accelerator: ''
           }
         ]
       }
