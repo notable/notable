@@ -278,6 +278,10 @@
   min-width: 7.5em !important;
 }
 
+.layout > .layout {
+  overflow: hidden !important; /* Fixes a weird bug where the mainbar could actually be scrolled */
+}
+
 .layout .layout-header {
   -webkit-app-region: drag;
   height: 38px;
