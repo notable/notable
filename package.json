@@ -141,7 +141,7 @@
     "electron-store": "^2.0.0",
     "electron-updater": "^4.0.6",
     "electron-window-state": "^4.1.1",
-    "enex-dump": "^1.4.0",
+    "enex-dump": "^1.4.1",
     "extract-zip": "^1.6.7",
     "filenamify": "^2.1.0",
     "gray-matter": "^4.0.1",
