@@ -31,6 +31,7 @@ class Search extends React.Component<any, undefined> {
     this.props.clearQuery()
 
     this.ref.current.value = ""
+
   }
 
   render () {
@@ -39,8 +40,8 @@ class Search extends React.Component<any, undefined> {
     return (
       <div className="multiple joined no-separators grow search">
         <input ref={this.ref} autoFocus type="search" className="bordered grow small" placeholder="Search notes..." defaultValue={this.props.query} onChange={this.onChange} />
-        <div className="label bordered xsmall" title="Search">
-          {isSearching && <i className="icon" onClick={this.onClearSearch}>close</i>}
+        <div className="label bordered xsmall" title={isSearching ? "Clear search" : "Search"}>
+          {isSearching && <i className="icon actionable" onClick={this.onClearSearch}>close</i>}
           {!isSearching && <i className="icon">magnify</i>}
         </div>
       </div>
