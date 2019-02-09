@@ -431,7 +431,7 @@ const Markdown = {
         regex: /\[\[([^|\]]+?)(?:\|([^\]]+?))?\]\]/g,
         replace ( match, $1, $2, index, content ) {
           if ( Markdown.extensions.utilities.isInsideCode ( content, index, true ) ) return match;
-          const title = $2 ? $1 : '';
+          const title = $1;
           const note = $2 || $1;
           const {name, ext} = path.parse ( note );
           return `<a href="${token}/${name}${ext || '.md'}">${title}</a>`;
