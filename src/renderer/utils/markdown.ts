@@ -150,42 +150,65 @@ const Markdown = {
 
     asciimath2tex () {
 
-      return [{
-        type: 'output',
-        regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:&&(?!<)(\S(?:.*?\S)?)&&(?!\d))|(?:&amp;(?!<)&amp;(?!<)(\S(?:.*?\S)?)&amp;(?!<)&amp;(?!\d))|(?:&(?!<|\w+;)(\S(?:.*?\S)?)&(?!\d))|(?:&amp;(?!<)(\S(?:.*?\S)?)&amp;(?!\d))/g,
-        replace ( match, $1, $2, $3, $4, $5, index, content ) {
-          if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
-          if ( Markdown.extensions.utilities.isInsideAnchor ( content, index ) ) return match; // In order to better support encoded emails
-          const asciimath = $1 || $2 || $3 || $4 || $5;
-          try {
-            let tex = AsciiMath.toTeX ( entities.decode ( asciimath ) );
-            return !!$4 || !!$5 ? `$${tex}$` : `$$${tex}$$`;
-          } catch ( e ) {
-            console.error ( `[asciimath] ${e.message}` );
-            return match;
+      return [
+        { // AsciiMath 2 TeX
+          type: 'output',
+          regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:(?<!\\)&&(?!<)(\S(?:.*?\S)?)(?<!\\)&&(?!\d))|(?:(?<!\\)&amp;(?!<)&amp;(?!<)(\S(?:.*?\S)?)(?<!\\)&amp;(?!<)&amp;(?!\d))|(?:(?<!\\)&(?!<|\w+;)(\S(?:.*?\S)?)(?<!\\)&(?!\d))|(?:(?<!\\)&amp;(?!<)(\S(?:.*?\S)?)(?<!\\)&amp;(?!\d))/g,
+          replace ( match, $1, $2, $3, $4, $5, index, content ) {
+            if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
+            if ( Markdown.extensions.utilities.isInsideAnchor ( content, index ) ) return match; // In order to better support encoded emails
+            const asciimath = $1 || $2 || $3 || $4 || $5;
+            try {
+              let tex = AsciiMath.toTeX ( entities.decode ( asciimath ) );
+              return !!$4 || !!$5 ? `$${tex}$` : `$$${tex}$$`;
+            } catch ( e ) {
+              console.error ( `[asciimath] ${e.message}` );
+              return match;
+            }
           }
+        },
+        { // Escaping cleanup
+          type: 'output',
+          regex: /\\&(?:amp;)?/g,
+          replace ( match, index, content ) {
+            if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
+            if ( Markdown.extensions.utilities.isInsideAnchor ( content, index ) ) return match; // In order to better support encoded emails
+            return match.slice ( 1 );
+          }
+
         }
-      }];
+      ];
 
     },
 
     katex () {
 
-      return [{
-        type: 'output',
-        regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:\$\$(?!<)(\S(?:.*?\S)?)\$\$(?!\d))|(?:\$(?!<)(\S(?:.*?\S)?)\$(?!\d))/g,
-        replace ( match, $1, $2, $3, index, content ) {
-          if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
-          const tex = $1 || $2 || $3;
-          try {
-            Config.katex.displayMode = !$3;
-            return katex.renderToString ( entities.decode ( tex ), Config.katex );
-          } catch ( e ) {
-            console.error ( `[katex] ${e.message}` );
-            return match;
+      return [
+        { // KaTeX rendering
+          type: 'output',
+          regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:(?<!\\)\$\$(?!<)(\S(?:.*?\S)?)(?<!\\)\$\$(?!\d))|(?:(?<!\\)\$(?!<)(\S(?:.*?\S)?)(?<!\\)\$(?!\d))/g,
+          replace ( match, $1, $2, $3, index, content ) {
+            if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
+            const tex = $1 || $2 || $3;
+            try {
+              Config.katex.displayMode = !$3;
+              return katex.renderToString ( entities.decode ( tex ), Config.katex );
+            } catch ( e ) {
+              console.error ( `[katex] ${e.message}` );
+              return match;
+            }
+          }
+        },
+        { // Escaping cleanup
+          type: 'output',
+          regex: /\\\$/g,
+          replace ( match, index, content ) {
+            if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
+            if ( Markdown.extensions.utilities.isInsideAnchor ( content, index ) ) return match; // In order to better support encoded emails
+            return match.slice ( 1 );
           }
         }
-      }];
+      ];
 
     },
 
