@@ -586,7 +586,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  save = async ( note: NoteObj | undefined = this.state.note, plainContent: string, modified?: Date ) => {
+  save = async ( note: NoteObj | undefined = this.state.note, plainContent: string, modified: Date = new Date () ) => {
 
     if ( !note ) return;
 
@@ -600,8 +600,9 @@ class Note extends Container<NoteState, MainCTX> {
           title = ( titleLinePrev !== titleLineNext ) ? this._inferTitleFromLine ( titleLineNext ) : note.metadata.title,
           didTitleChange = ( title !== note.metadata.title );
 
-    nextNote.metadata.title = title;
     nextNote.plainContent = plainContent;
+    nextNote.metadata.modified = modified;
+    nextNote.metadata.title = title;
 
     if ( didTitleChange ) {
 
@@ -640,8 +641,6 @@ class Note extends Container<NoteState, MainCTX> {
     const notePrev = this.get ( note.filePath );
 
     if ( notePrev && notePrev !== note ) {
-
-      note.metadata.modified = new Date ();
 
       await this.replace ( notePrev, note );
 

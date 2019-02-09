@@ -28,7 +28,7 @@ class EditorEditing extends React.Component<any, undefined> {
 
   shouldComponentUpdate ( nextProps ) {
 
-    return nextProps.checksum !== this.props.checksum && nextProps.content !== this._currentContent;
+    return nextProps.content !== this._currentContent;
 
   }
 
@@ -88,7 +88,6 @@ export default connect ({
   container: Main,
   selector: ({ container, onChange }) => ({
     onChange,
-    checksum: container.note.getChecksum (),
     content: container.note.getPlainContent (),
     modified: container.note.getModified (),
     autosave: container.note.autosave,
