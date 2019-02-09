@@ -18,6 +18,8 @@ class EditorEditing extends React.Component<any, undefined> {
     this.__initCodeMirrorData ();
     this.__reset ();
 
+    this.props.focus ();
+
   }
 
   componentDidUpdate () {
@@ -56,7 +58,6 @@ class EditorEditing extends React.Component<any, undefined> {
     this._currentContent = this.props.content;
     this._currentModified = this.props.modified.getTime ();
 
-    this.props.focus ();
     this.props.reset ();
 
   }
