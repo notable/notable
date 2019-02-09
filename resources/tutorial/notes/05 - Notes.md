@@ -25,7 +25,7 @@ $$f{x} = \int_{-\infty}^\infty \hat f\xi\,e^{2 \pi i \xi x} \,d\xi$$
 
 Wrap it in `$` to display it inline: $e^{iπ} + 1 = 0$.
 
-> **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a formula, and the ending `$` character musn't be followed by a digit.
+> **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a formula, and the ending `$` character musn't be followed by a digit. If you need to you can escape the `$` character with a backslash.
 
 #### AsciiMath
 
@@ -35,7 +35,7 @@ Wrap a formula in `&&` to display it as a block:
 
 Wrap it in `&` to display it inline: &e = mc^2&.
 
-> **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a formula, and the ending `&` character musn't be followed by a digit.
+> **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a formula, and the ending `&` character musn't be followed by a digit. If you need to you can escape the `&` character with a backslash.
 
 #### mermaid
 
