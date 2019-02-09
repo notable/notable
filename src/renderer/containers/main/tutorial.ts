@@ -6,6 +6,7 @@ import Dialog from 'electron-dialog';
 import * as unzip from 'extract-zip';
 import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
+import * as pify from 'pify';
 import pkg from '@root/package.json';
 import Config from '@common/config';
 
@@ -25,7 +26,7 @@ class Tutorial extends Container<TutorialState, MainCTX> {
 
   /* API */
 
-  import = () => {
+  import = async () => {
 
     const cwd = Config.cwd;
 
@@ -33,10 +34,15 @@ class Tutorial extends Container<TutorialState, MainCTX> {
 
     const tutorialPath = path.join ( __static, 'tutorial.zip' );
 
-    unzip ( tutorialPath, { dir: cwd }, err => {
-      if ( !err ) return;
+    try {
+
+      await pify ( unzip )( tutorialPath, { dir: cwd } );
+
+    } catch ( e ) {
+
       Dialog.alert ( 'Failed to import the tutorial notes, please report the issue' );
-    });
+
+    }
 
   }
 
