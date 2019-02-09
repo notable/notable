@@ -27,6 +27,7 @@ const Config = {
     },
     glob: '**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,txt}',
     re: /\.(?:md|mkd|mdwn|mdown|markdown|markdn|mdtxt|mdtext|txt)$/,
+    ext: '.md',
     token: '@note' // Usable in urls
   },
   tags: {

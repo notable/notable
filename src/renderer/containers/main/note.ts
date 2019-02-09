@@ -63,11 +63,11 @@ class Note extends Container<NoteState, MainCTX> {
 
   new = async () => {
 
-    const notesPath = Config.notes.path;
+    const {ext, path: notesPath} = Config.notes;
 
     if ( !notesPath ) return;
 
-    const {filePath, fileName} = await Path.getAllowedPath ( notesPath, 'Untitled.md' ),
+    const {filePath, fileName} = await Path.getAllowedPath ( notesPath, `Untitled${ext}` ),
           searchQuery = this.ctx.search.getQuery (),
           searchNotes = this.ctx.search.getNotes (),
           name = searchQuery && !searchNotes.length ? searchQuery : path.parse ( fileName ).name,
@@ -608,7 +608,7 @@ class Note extends Container<NoteState, MainCTX> {
 
       await this.replace ( note, nextNote ); // In order to immediately update the structures, this avoids some problems when editing a file very quickly
 
-      const ext = path.extname ( note.filePath ) || '.md',
+      const ext = path.extname ( note.filePath ) || Config.notes.ext,
             {filePath} = await Path.getAllowedPath ( path.dirname ( nextNote.filePath ), `${title}${ext}` );
 
       nextNote.filePath = filePath;
