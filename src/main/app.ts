@@ -1,13 +1,15 @@
 
 /* IMPORT */
 
-import {app, ipcMain as ipc, Event} from 'electron';
+import {app, ipcMain as ipc, Event, Menu, MenuItemConstructorOptions} from 'electron';
 import {autoUpdater as updater} from 'electron-updater';
 import * as is from 'electron-is';
 import * as fs from 'fs';
+import pkg from '@root/package.json';
 import Config from '@common/config';
 import Environment from '@common/environment';
 import Notification from '@main/utils/notification';
+import UMenu from '@main/utils/menu';
 import CWD from './windows/cwd';
 import Main from './windows/main';
 import Window from './windows/window';
@@ -34,10 +36,33 @@ class App {
   init () {
 
     this.initContextMenu ();
+    this.initMenu ();
 
   }
 
   initContextMenu () {}
+
+  initMenu () {
+
+    const template: MenuItemConstructorOptions[] = UMenu.filterTemplate ([
+      {
+        label: pkg.productName,
+        submenu: [
+          {
+            label: 'Open',
+            accelerator: 'CmdOrCtrl+O',
+            click: this.load.bind ( this )
+          },
+          { role: 'quit' }
+        ]
+      }
+    ]);
+
+    const menu = Menu.buildFromTemplate ( template );
+
+    Menu.setApplicationMenu ( menu );
+
+  }
 
   async initDebug () {
 
@@ -71,7 +96,7 @@ class App {
 
   __windowAllClosed = () => {
 
-    if ( is.macOS () ) return;
+    if ( is.macOS () ) return this.initMenu ();
 
     this.quit ();
 
