@@ -12,6 +12,12 @@ const Highlighter = {
 
   languageRe: /language-([^\s"']*)/i,
 
+  languagesAliases: { // language => language to use instead
+    sh: 'bash',
+    shell: 'bash',
+    zsh: 'bash'
+  },
+
   inferLanguage ( str: string ): string | undefined {
 
     if ( !str ) return;
@@ -42,7 +48,11 @@ const Highlighter = {
 
   highlight ( str: string, language?: string ): string {
 
-    if ( !language || !Highlighter.initLanguage ( language ) ) return str;
+    if ( !language ) return str;
+
+    language = Highlighter.languagesAliases[language] || language;
+
+    if ( !Highlighter.initLanguage ( language as string ) ) return str; //TSC
 
     return Prism.highlight ( entities.decode ( str ), Prism.languages[language], language );
 
