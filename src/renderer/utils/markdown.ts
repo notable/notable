@@ -424,7 +424,7 @@ const Markdown = {
 
     wikilink () {
 
-      const {ext, token} = Config.notes;
+      const {ext, re, token} = Config.notes;
 
       return [{
         type: 'language',
@@ -433,8 +433,8 @@ const Markdown = {
           if ( Markdown.extensions.utilities.isInsideCode ( content, index, true ) ) return match;
           const title = $1;
           const note = $2 || $1;
-          const {name, ext: pathExt} = path.parse ( note );
-          return `<a href="${token}/${name}${pathExt || ext}">${title}</a>`;
+          const isNotePath = re.test ( note );
+          return `<a href="${token}/${note}${isNotePath ? '' : ext}">${title}</a>`;
         }
       }];
 
