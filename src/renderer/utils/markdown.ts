@@ -152,7 +152,7 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:&&(?!<)(\S(?:.*?\S)?)&&(?!\d))|(?:&amp;(?!<)&amp;(?!<)(\S(?:.*?\S)?)&amp;(?!<)&amp;(?!\d))|(?:&(?!<|amp;)(\S(?:.*?\S)?)&(?!\d))|(?:&amp;(?!<)(\S(?:.*?\S)?)&amp;(?!\d))/g,
+        regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:&&(?!<)(\S(?:.*?\S)?)&&(?!\d))|(?:&amp;(?!<)&amp;(?!<)(\S(?:.*?\S)?)&amp;(?!<)&amp;(?!\d))|(?:&(?!<|\w+;)(\S(?:.*?\S)?)&(?!\d))|(?:&amp;(?!<)(\S(?:.*?\S)?)&amp;(?!\d))/g,
         replace ( match, $1, $2, $3, $4, $5, index, content ) {
           if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
           if ( Markdown.extensions.utilities.isInsideAnchor ( content, index ) ) return match; // In order to better support encoded emails
