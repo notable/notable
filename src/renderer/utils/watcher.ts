@@ -17,8 +17,9 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
   /* VARIABLES */
 
-  let stats = {}, // filePath => fs.Stats //TODO: Maybe make this a weak map
-      locks = {}, // id => releaseFn
+  let stats = {}, // filePath => fs.Stats //TODO: If these values aren't accessed within X seconds they should be removed, for cleaning up some memory
+      locksAdd = {}, // id => releaseFn
+      locksUnlink = {}, // id => releaseFn
       renameTimeout = 150; // Amount of time to wait for the complementary add/unlink event
 
   /* HELPERS */
@@ -43,37 +44,39 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
     stats[filePath] = stat; // Caching for future use
 
+    if ( !stat.ino ) return;
+
     return `${stat.ino}`; //TODO: Switch to BigInt (https://github.com/nodejs/node/issues/12115)
 
   }
 
-  function getLock ( id: string | undefined, timeout: number, handlers: { free: Function, override: Function, overridden: Function } ) { //TODO: Find a more appropriate name
+  function getLock ( id: string | undefined, timeout: number, options: { locks: { read: {}, write: {} }, callbacks: { free: Function, override: Function, overridden: Function } } ) { //TODO: Find a more appropriate name
 
-    if ( !id ) return handlers.free (); // Free
+    if ( !id ) return options.callbacks.free (); // Free
 
-    const release = locks[id];
+    const release = options.locks.read[id];
 
     if ( release ) { // Override
 
-      handlers.override ( release () );
+      options.callbacks.override ( release () );
 
     } else {
 
       const timeoutId = setTimeout ( () => { // Free
 
-        delete locks[id];
+        delete options.locks.write[id];
 
-        handlers.free ();
+        options.callbacks.free ();
 
       }, timeout );
 
-      locks[id] = () => { // Overridden // Function for releasing the lock
+      options.locks.write[id] = () => { // Overridden // Function for releasing the lock
 
         clearTimeout ( timeoutId );
 
-        delete locks[id];
+        delete options.locks.write[id];
 
-        return handlers.overridden ();
+        return options.callbacks.overridden ();
 
       };
 
@@ -102,9 +105,15 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
     const id = getId ( filePath, stats );
 
     getLock ( id, renameTimeout, {
-      free: () => emit ( 'add', [filePath, stats] ),
-      override: prevPath => emit ( 'rename', [prevPath, filePath, stats] ),
-      overridden: () => filePath
+      locks: {
+        read: locksUnlink,
+        write: locksAdd
+      },
+      callbacks: {
+        free: () => emit ( 'add', [filePath, stats] ),
+        override: prevPath => emit ( 'rename', [prevPath, filePath, stats] ),
+        overridden: () => filePath
+      }
     });
 
   }
@@ -114,9 +123,15 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
     const id = getId ( filePath );
 
     getLock ( id, renameTimeout, {
-      free: () => emit ( 'unlink', [filePath] ),
-      override: newPath => emit ( 'rename', [filePath, newPath] ),
-      overridden: () => filePath
+      locks: {
+        read: locksAdd,
+        write: locksUnlink
+      },
+      callbacks: {
+        free: () => emit ( 'unlink', [filePath] ),
+        override: newPath => emit ( 'rename', [filePath, newPath] ),
+        overridden: () => filePath
+      }
     });
 
   }
