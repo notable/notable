@@ -21,7 +21,7 @@ class EditPlugins extends Component<{ container: IMain }, undefined> {
     $.$window.on ( 'resize', this.__update );
     $.$document.on ( 'layoutresizable:resize', this.__update );
 
-    this._autosaveInterval = setInterval ( this.__autosave, 5000 );
+    this._autosaveInterval = setInterval ( this.__autosave, 10000 );
 
   }
 
