@@ -123,6 +123,12 @@ class Editor extends Container<EditorState, MainCTX> {
 
     },
 
+    forget: () => {
+
+      delete this.editingState.state;
+
+    },
+
     focus: () => {
 
       const cm = this.getCodeMirror ();
@@ -184,6 +190,12 @@ class Editor extends Container<EditorState, MainCTX> {
       this.previewingState.set ({
         scrollTop: 0
       });
+
+    },
+
+    forget: () => {
+
+      delete this.previewingState.state;
 
     }
 

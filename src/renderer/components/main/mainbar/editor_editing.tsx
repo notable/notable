@@ -1,6 +1,7 @@
 
 /* IMPORT */
 
+import {ipcRenderer as ipc} from 'electron';
 import * as React from 'react';
 import {connect} from 'overstated';
 import Main from '@renderer/containers/main';
@@ -10,6 +11,7 @@ import Code from './code';
 
 class EditorEditing extends React.Component<any, undefined> {
 
+  _wasWindowBlurred: boolean = false;
   _currentContent: string;
   _currentModified: number;
 
@@ -20,6 +22,8 @@ class EditorEditing extends React.Component<any, undefined> {
 
     this.props.focus ();
 
+    ipc.addListener ( 'window-blur', this.__windowBlur );
+
   }
 
   componentDidUpdate () {
@@ -28,9 +32,21 @@ class EditorEditing extends React.Component<any, undefined> {
 
   }
 
+  componentWillUnmount () {
+
+    ipc.removeListener ( 'window-blur', this.__windowBlur );
+
+  }
+
   shouldComponentUpdate ( nextProps ) {
 
     return nextProps.content !== this._currentContent;
+
+  }
+
+  __windowBlur = () => {
+
+    this._wasWindowBlurred = true;
 
   }
 
@@ -73,11 +89,31 @@ class EditorEditing extends React.Component<any, undefined> {
 
   }
 
+  __focus = () => {
+
+    if ( !this._wasWindowBlurred ) return;
+
+    this._wasWindowBlurred = false;
+
+    this.props.restore ();
+
+  }
+
+  __scroll = () => {
+
+    const cm = this.props.getCodeMirror ();
+
+    if ( !cm || ( !this._wasWindowBlurred && cm.hasFocus () ) ) return;
+
+    this.props.forget ();
+
+  }
+
   render () {
 
-    const {content, autosave, save, restore} = this.props;
+    const {content, autosave, save} = this.props;
 
-    return <Code className="layout-content editor editing" value={content} onBlur={() => { save (); autosave () }} onFocus={restore} onChange={this.__change} />;
+    return <Code className="layout-content editor editing" value={content} onBlur={() => { save (); autosave () }} onFocus={this.__focus} onChange={this.__change} onScroll={this.__scroll} />;
 
   }
 
@@ -93,6 +129,7 @@ export default connect ({
     modified: container.note.getModified (),
     autosave: container.note.autosave,
     getCodeMirror: container.editor.getCodeMirror,
+    forget: container.editor.editingState.forget,
     focus: container.editor.editingState.focus,
     save: container.editor.editingState.save,
     restore: container.editor.editingState.restore,

@@ -416,7 +416,9 @@ class Main extends Route {
 
     super.events ();
 
+    this.___blur ();
     this.___close ();
+    this.___focus ();
     this.___forceClose ();
     this.___fullscreenEnter ();
     this.___fullscreenLeave ();
@@ -435,6 +437,21 @@ class Main extends Route {
     ipc.removeListener ( 'print-pdf', this.__printPDF );
 
   }
+
+  /* BLUR */
+
+  ___blur = () => {
+
+    this.win.on ( 'blur', this.__blur );
+
+  }
+
+  __blur = () => {
+
+    this.win.webContents.send ( 'window-blur' );
+
+  }
+
 
   /* CLOSE */
 
@@ -457,6 +474,20 @@ class Main extends Route {
     event.preventDefault ();
 
     this.win.webContents.send ( 'window-close' );
+
+  }
+
+  /* FOCUS */
+
+  ___focus = () => {
+
+    this.win.on ( 'focus', this.__focus );
+
+  }
+
+  __focus = () => {
+
+    this.win.webContents.send ( 'window-focus' );
 
   }
 

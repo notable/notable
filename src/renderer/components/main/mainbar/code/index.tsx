@@ -52,11 +52,11 @@ const options: any = { //TSC
 
 /* CODE */
 
-const Code = ({ className, value, onBlur = _.noop, onFocus = _.noop, onChange = _.noop }) => {
+const Code = ({ className, value, onBlur = _.noop, onFocus = _.noop, onChange = _.noop, onScroll= _.noop }) => {
 
   Utils.initOptions ( options );
 
-  return <CodeMirror className={className} value={value} options={options} onBlur={onBlur} onFocus={onFocus} onChange={onChange} />;
+  return <CodeMirror className={className} value={value} options={options} onBlur={onBlur} onFocus={onFocus} onChange={onChange} onScroll={onScroll} />;
 
 };
 
