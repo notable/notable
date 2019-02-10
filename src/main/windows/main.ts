@@ -302,11 +302,19 @@ class Main extends Route {
             click: () => this.win.webContents.send ( 'window-focus-toggle' )
           },
           {
+            label: 'Toggle Full Screen',
+            role: 'togglefullscreen'
+          },
+          {
+            label: 'Toggle Sidebar',
+            accelerator: 'CmdOrCtrl+Alt+Shift+S',
+            click: () => this.win.webContents.send ( 'window-sidebar-toggle' )
+          },
+          {
             label: 'Toggle Split View Mode',
             accelerator: 'CmdOrCtrl+Alt+S',
             click: () => this.win.webContents.send ( 'editor-split-toggle' )
-          },
-          { role: 'togglefullscreen' }
+          }
         ]
       },
       {

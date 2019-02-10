@@ -12,7 +12,8 @@ class Window extends Container<WindowState, MainCTX> {
 
   state = {
     focus: false,
-    fullscreen: remote.getCurrentWindow ().isFullScreen ()
+    fullscreen: remote.getCurrentWindow ().isFullScreen (),
+    sidebar: true
   };
 
   /* CONSTRUCTOR */
@@ -48,6 +49,18 @@ class Window extends Container<WindowState, MainCTX> {
   toggleFocus = ( focus: boolean = !this.state.focus ) => {
 
     return this.setState ({ focus });
+
+  }
+
+  hasSidebar = (): boolean => {
+
+    return this.state.sidebar;
+
+  }
+
+  toggleSidebar = ( sidebar: boolean = !this.state.sidebar ) => {
+
+    return this.setState ({ sidebar });
 
   }
 

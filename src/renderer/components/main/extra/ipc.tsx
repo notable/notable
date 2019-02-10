@@ -41,6 +41,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.on ( 'window-close', this.__windowClose );
     ipc.on ( 'window-focus-toggle', this.__windowFocusToggle );
     ipc.on ( 'window-fullscreen-set', this.__windowFullscreenSet );
+    ipc.on ( 'window-sidebar-toggle', this.__windowSidebarToggle );
     ipc.on ( 'editor-split-toggle', this.__editorSplitToggle );
     ipc.on ( 'multi-editor-select-all', this.__multiEditorSelectAll );
     ipc.on ( 'multi-editor-select-invert', this.__multiEditorSelectInvert );
@@ -80,6 +81,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.removeListener ( 'window-close', this.__windowClose );
     ipc.removeListener ( 'window-focus-toggle', this.__windowFocusToggle );
     ipc.removeListener ( 'window-fullscreen-set', this.__windowFullscreenSet );
+    ipc.removeListener ( 'window-sidebar-toggle', this.__windowSidebarToggle );
     ipc.removeListener ( 'editor-split-toggle', this.__editorSplitToggle );
     ipc.removeListener ( 'multi-editor-select-all', this.__multiEditorSelectAll );
     ipc.removeListener ( 'multi-editor-select-invert', this.__multiEditorSelectInvert );
@@ -170,6 +172,12 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   __windowFullscreenSet = ( event, isFullscreen? ) => {
 
     this.main.window.toggleFullscreen ( isFullscreen );
+
+  }
+
+  __windowSidebarToggle = () => {
+
+    this.main.window.toggleSidebar ();
 
   }
 

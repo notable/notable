@@ -69,4 +69,5 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 - <kbd>Esc</kbd> - Close the multi-editor or switch to preview mode, when editing.
 - <kbd>Cmd+F</kbd> - Focus to search bar.
 - <kbd>Cmd+Alt+F</kbd> - Toggle focus mode.
+- <kbd>Cmd+Alt+Shift+S</kbd> - Toggle sidebar.
 - <kbd>Cmd+Alt+S</kbd> - Toggle split view mode.

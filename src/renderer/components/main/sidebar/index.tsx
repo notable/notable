@@ -9,9 +9,9 @@ import Toolbar from './toolbar';
 
 /* SIDEBAR */
 
-const Sidebar = ({ isFocus }) => {
+const Sidebar = ({ isFocus, hasSidebar }) => {
 
-  if ( isFocus ) return null;
+  if ( isFocus || !hasSidebar ) return null;
 
   return (
     <div id="sidebar" className="layout">
@@ -27,6 +27,7 @@ const Sidebar = ({ isFocus }) => {
 export default connect ({
   container: Main,
   selector: ({ container }) => ({
-    isFocus: container.window.isFocus ()
+    isFocus: container.window.isFocus (),
+    hasSidebar: container.window.hasSidebar ()
   })
 })( Sidebar );

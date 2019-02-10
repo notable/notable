@@ -45,7 +45,7 @@ class Main extends React.Component<any, undefined> {
         <IPC />
         <PreviewPlugins />
         <Shortcuts />
-        <Layout id="main" className="app-wrapper" direction="horizontal" resizable={true} isFocus={this.props.isFocus}>
+        <Layout id="main" className="app-wrapper" direction="horizontal" resizable={true} isFocus={this.props.isFocus} hasSidebar={this.props.hasSidebar}>
           <Sidebar />
           <Middlebar />
           <Mainbar />
@@ -65,6 +65,7 @@ export default connect ({
     listen: container.listen,
     refresh: container.refresh,
     loading: container.loading.get (),
-    isFocus: container.window.isFocus ()
+    isFocus: container.window.isFocus (),
+    hasSidebar: container.window.hasSidebar ()
   })
 })( Main );
