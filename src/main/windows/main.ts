@@ -189,7 +189,6 @@ class Main extends Route {
           },
           {
             label: flags && flags.hasNote && flags.isNotePinned ? 'Unpin' : 'Pin',
-            accelerator: 'CmdOrCtrl+P',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-pin-toggle' )
           },

@@ -35,7 +35,6 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
     this.shortcuts = {
       'ctmd+shift+e': [this.__editorToggle, true],
-      'ctmd+shift+p': [this.__editorToggle, true],
       'ctrl+shift+p': [this.__editorToggle, true],
       'ctmd+s': [this.__editorSave, true],
       'ctmd+a': [this.__editorSelectAll, false],
