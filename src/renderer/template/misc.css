@@ -210,6 +210,19 @@
   background-color: #fdfdfd;
 }
 
+.zen #mainbar .editor.preview,
+.zen #mainbar .editor.editing .CodeMirror-lines {
+  padding-top: 38px !important;
+}
+
+.zen #mainbar-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+}
+
 #mainbar .editor input {
   display: inline-block;
   margin-left: 0 !important;

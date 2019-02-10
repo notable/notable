@@ -314,6 +314,11 @@ class Main extends Route {
             label: 'Toggle Split View Mode',
             accelerator: 'CmdOrCtrl+Alt+S',
             click: () => this.win.webContents.send ( 'editor-split-toggle' )
+          },
+          {
+            label: 'Toggle Zen Mode',
+            accelerator: 'CmdOrCtrl+Alt+Z',
+            click: () => this.win.webContents.send ( 'window-zen-toggle' )
           }
         ]
       },

@@ -71,3 +71,4 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 - <kbd>Cmd+Alt+F</kbd> - Toggle focus mode.
 - <kbd>Cmd+Alt+Shift+S</kbd> - Toggle sidebar.
 - <kbd>Cmd+Alt+S</kbd> - Toggle split view mode.
+- <kbd>Cmd+Alt+Z</kbd> - Toggle zen mode.

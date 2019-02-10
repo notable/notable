@@ -17,30 +17,36 @@ import TrashPermanentlyButton from './toolbar_button_trash_permanently';
 
 /* TOOLBAR */
 
-const Toolbar = ({ hasNote, isFocus, isFullscreen, isSplit }) => (
-  <div id="mainbar-toolbar" className="layout-header centerer">
-    <div className={`${!hasNote ? 'disabled' : ''} multiple grow`}>
-      {!isFocus || isFullscreen || !is.macOS () ? null : (
-        <div className="toolbar-semaphore-spacer"></div>
-      )}
-      <div className="multiple joined">
-        {isSplit ? <SplitEditorButton /> : <EditorButton />}
-        <TagsButton />
-        <AttachmentsButton />
+const Toolbar = ({ hasNote, isFocus, isFullscreen, isZen, isSplit }) => {
+
+  if ( isZen ) return <div id="mainbar-toolbar" className="layout-header"></div>;
+
+  return (
+    <div id="mainbar-toolbar" className="layout-header centerer">
+      <div className={`${!hasNote ? 'disabled' : ''} multiple grow`}>
+        {!isFocus || isFullscreen || !is.macOS () ? null : (
+          <div className="toolbar-semaphore-spacer"></div>
+        )}
+        <div className="multiple joined">
+          {isSplit ? <SplitEditorButton /> : <EditorButton />}
+          <TagsButton />
+          <AttachmentsButton />
+        </div>
+        <div className="multiple joined">
+          <FavoriteButton />
+          <PinButton />
+        </div>
+        <div className="multiple joined">
+          <TrashButton />
+          <TrashPermanentlyButton />
+        </div>
+        <div className="spacer"></div>
+        <OpenButton />
       </div>
-      <div className="multiple joined">
-        <FavoriteButton />
-        <PinButton />
-      </div>
-      <div className="multiple joined">
-        <TrashButton />
-        <TrashPermanentlyButton />
-      </div>
-      <div className="spacer"></div>
-      <OpenButton />
     </div>
-  </div>
-);
+  );
+
+};
 
 /* EXPORT */
 
@@ -50,6 +56,7 @@ export default connect ({
     hasNote: !!container.note.get (),
     isFocus: container.window.isFocus (),
     isFullscreen: container.window.isFullscreen (),
-    isSplit: container.editor.isSplit (),
+    isZen: container.window.isZen (),
+    isSplit: container.editor.isSplit ()
   })
 })( Toolbar );

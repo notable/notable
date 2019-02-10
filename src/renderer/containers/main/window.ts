@@ -13,7 +13,8 @@ class Window extends Container<WindowState, MainCTX> {
   state = {
     focus: false,
     fullscreen: remote.getCurrentWindow ().isFullScreen (),
-    sidebar: true
+    sidebar: true,
+    zen: false
   };
 
   /* CONSTRUCTOR */
@@ -49,6 +50,18 @@ class Window extends Container<WindowState, MainCTX> {
   toggleFocus = ( focus: boolean = !this.state.focus ) => {
 
     return this.setState ({ focus });
+
+  }
+
+  isZen = (): boolean => {
+
+    return this.state.zen;
+
+  }
+
+  toggleZen = ( zen: boolean = !this.state.zen ) => {
+
+    return this.setState ({ zen });
 
   }
 

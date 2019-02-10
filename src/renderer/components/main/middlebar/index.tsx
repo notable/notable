@@ -10,9 +10,9 @@ import Toolbar from './toolbar';
 
 /* MIDDLEBAR */
 
-const Middlebar = ({ isFocus }) => {
+const Middlebar = ({ isFocus, isZen }) => {
 
-  if ( isFocus ) return null;
+  if ( isFocus || isZen ) return null;
 
   return (
     <div id="middlebar" className="layout">
@@ -29,6 +29,7 @@ const Middlebar = ({ isFocus }) => {
 export default connect ({
   container: Main,
   selector: ({ container }) => ({
-    isFocus: container.window.isFocus ()
+    isFocus: container.window.isFocus (),
+    isZen: container.window.isZen ()
   })
 })( Middlebar );

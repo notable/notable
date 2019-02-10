@@ -37,6 +37,8 @@ class Main extends React.Component<any, undefined> {
 
   render () {
 
+    const {isFocus, isZen, hasSidebar} = this.props;
+
     return (
       <>
         <ContextMenu />
@@ -45,7 +47,7 @@ class Main extends React.Component<any, undefined> {
         <IPC />
         <PreviewPlugins />
         <Shortcuts />
-        <Layout id="main" className="app-wrapper" direction="horizontal" resizable={true} isFocus={this.props.isFocus} hasSidebar={this.props.hasSidebar}>
+        <Layout id="main" className={`app-wrapper ${hasSidebar ? 'focus' : ''} ${isZen ? 'zen' : ''}`} direction="horizontal" resizable={true} isFocus={isFocus} isZen={isZen} hasSidebar={hasSidebar}>
           <Sidebar />
           <Middlebar />
           <Mainbar />
@@ -66,6 +68,7 @@ export default connect ({
     refresh: container.refresh,
     loading: container.loading.get (),
     isFocus: container.window.isFocus (),
+    isZen: container.window.isZen (),
     hasSidebar: container.window.hasSidebar ()
   })
 })( Main );

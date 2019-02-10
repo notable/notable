@@ -26,14 +26,14 @@ class SplitEditor extends React.PureComponent<any, any> {
 
   render () {
 
-    const {hasNote, isLoading, isFocus, hasSidebar} = this.props;
+    const {hasNote, isLoading, isFocus, isZen, hasSidebar} = this.props;
 
     if ( isLoading || !hasNote ) return <SplitEditorEmpty />;
 
     const content = _.isString ( this.state.content ) ? this.state.content : this.props.content;
 
     return (
-      <Layout id="split-editor" className="split-editor" direction="horizontal" resizable={true} isFocus={isFocus} hasSidebar={hasSidebar}>
+      <Layout id="split-editor" className="split-editor" direction="horizontal" resizable={true} isFocus={isFocus} isZen={isZen} hasSidebar={hasSidebar}>
         <EditorEditing onChange={this.__change} />
         <EditorPreview content={content} />
       </Layout>
@@ -52,6 +52,7 @@ export default connect ({
     hasNote: !!container.note.get (),
     isLoading: container.loading.get (),
     isFocus: container.window.isFocus (),
+    isZen: container.window.isZen (),
     hasSidebar: container.window.hasSidebar ()
   })
 })( SplitEditor );

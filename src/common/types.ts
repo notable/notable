@@ -126,7 +126,8 @@ type TutorialState = {};
 type WindowState = {
   focus: boolean,
   fullscreen: boolean,
-  sidebar: boolean
+  sidebar: boolean,
+  zen: boolean
 };
 
 /* MAIN */
