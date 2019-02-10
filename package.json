@@ -101,7 +101,7 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "fabiospampinato",
+      "owner": "notable",
       "releaseType": "release",
       "publishAutoUpdate": true
     }
@@ -111,16 +111,16 @@
     "name": "Fabio Spampinato",
     "email": "spampinabio@gmail.com"
   },
-  "homepage": "https://github.com/fabiospampinato/notable",
+  "homepage": "https://github.com/notable/notable",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fabiospampinato/notable.git"
+    "url": "https://github.com/notable/notable.git"
   },
   "bugs": {
-    "url": "https://github.com/fabiospampinato/notable/issues"
+    "url": "https://github.com/notable/notable/issues"
   },
   "tutorial": {
-    "url": "https://github.com/fabiospampinato/notable/tree/master/resources/tutorial/notes"
+    "url": "https://github.com/notable/notable/tree/master/resources/tutorial/notes"
   },
   "keywords": [
     "note",

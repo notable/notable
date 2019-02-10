@@ -121,8 +121,23 @@ class Main extends Route {
         ]
       },
       {
-        label: 'Note',
+        label: 'File',
         submenu: [
+          {
+            label: 'Open in Default App',
+            accelerator: 'CmdOrCtrl+O',
+            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            click: () => this.win.webContents.send ( 'note-open-in-app' )
+          },
+          {
+            label: `Reveal in ${is.macOS () ? 'Finder' : 'Folder'}`,
+            accelerator: 'CmdOrCtrl+Alt+R',
+            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            click: () => this.win.webContents.send ( 'note-reveal' )
+          },
+          {
+            type: 'separator'
+          },
           {
             label: 'New',
             accelerator: 'CmdOrCtrl+N',
@@ -141,21 +156,6 @@ class Main extends Route {
             accelerator: 'CmdOrCtrl+Shift+N',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-duplicate' )
-          },
-          {
-            type: 'separator'
-          },
-          {
-            label: 'Open in Default App',
-            accelerator: 'CmdOrCtrl+O',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
-            click: () => this.win.webContents.send ( 'note-open-in-app' )
-          },
-          {
-            label: `Reveal in ${is.macOS () ? 'Finder' : 'Folder'}`,
-            accelerator: 'CmdOrCtrl+Alt+R',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
-            click: () => this.win.webContents.send ( 'note-reveal' )
           },
           {
             type: 'separator'
