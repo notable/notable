@@ -3,6 +3,7 @@
 
 import * as _ from 'lodash';
 import CallsBatch from 'calls-batch';
+import Dialog from 'electron-dialog';
 import glob from 'tiny-glob';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
@@ -138,6 +139,13 @@ class Notes extends Container<NotesState, MainCTX> {
       const currentNote = this.ctx.note.get ();
       const editorData = this.ctx.editor.getData ();
       if ( editorData && this.ctx.note.is ( nextNote, currentNote ) && editorData.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
+      if ( currentNote && this.ctx.editor.isEditing () && this.ctx.note.is ( nextNote, currentNote, true ) ) { // Changes to the current note
+        const data = this.ctx.editor.getData ();
+        if ( data && data.content !== currentNote.plainContent ) { // The current content has not been saved
+          const choice = Dialog.choice ( 'This note has been updated on disk, do you want to overwrite your current changes or keep them?', ['Overwrite Changes', 'Keep Changes'] );
+          if ( choice === 1 ) return await this.ctx.note.autosave ();
+        }
+      }
       await this.ctx.note.replace ( note, nextNote, _refresh );
     };
 
