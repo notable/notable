@@ -210,8 +210,8 @@
   background-color: #fdfdfd;
 }
 
-.zen #mainbar .editor.preview,
-.zen #mainbar .editor.editing .CodeMirror-lines {
+html.mac #main.zen:not(.fullscreen) #mainbar .editor.preview,
+html.mac #main.zen:not(.fullscreen) #mainbar .editor.editing .CodeMirror-lines {
   padding-top: 38px !important;
 }
 
@@ -221,6 +221,14 @@
   left: 0;
   right: 0;
   opacity: 0;
+}
+
+.zen .popover.open {
+  margin-top: 28px !important;
+}
+
+.zen .popover:after {
+  display: none !important;
 }
 
 #mainbar .editor input {
@@ -476,4 +484,47 @@ kbd {
 
 body.markdown-body {
   padding: 20px;
+}
+
+#quick-panel {
+  transform: translateX(-50%);
+  top: 20px;
+  width: 500px;
+  max-width: 85%;
+}
+
+#quick-panel .card-block {
+  max-height: 400px;
+  padding: 0;
+}
+
+#quick-panel .empty,
+#quick-panel .item {
+  margin: 0;
+  padding: 2px 5px;
+  height: 28px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#quick-panel .empty {
+  text-align: center;
+}
+
+#quick-panel .item {
+  cursor: pointer;
+}
+
+#quick-panel .item:hover,
+#quick-panel .item.active {
+  background-color: #f3f3f3;
+}
+
+#quick-panel .item:active {
+  background-color: #eeeeee;
+}
+
+#quick-panel .item i.icon {
+  margin: -3.5px 5px 0 0;
 }

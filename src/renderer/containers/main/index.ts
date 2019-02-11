@@ -13,6 +13,7 @@ import Loading from './loading';
 import MultiEditor from './multi_editor';
 import Note from './note';
 import Notes from './notes';
+import QuickPanel from './quick_panel';
 import Search from './search';
 import Sorting from './sorting';
 import Tag from './tag';
@@ -170,6 +171,7 @@ export default compose ({
   multiEditor: MultiEditor,
   note: Note,
   notes: Notes,
+  quickPanel: QuickPanel,
   search: Search,
   sorting: Sorting,
   tag: Tag,

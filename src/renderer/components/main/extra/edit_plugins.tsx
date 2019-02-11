@@ -40,7 +40,7 @@ class EditPlugins extends Component<{ container: IMain }, undefined> {
 
     this.props.container.editor.update ();
 
-  }, 50 )
+  }, 25 )
 
   __autosave = () => {
 

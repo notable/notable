@@ -34,14 +34,17 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
   initShortcuts = () => {
 
     this.shortcuts = {
+      'ctmd+p': [this.__quickPanelOpen, true],
       'ctmd+shift+e': [this.__editorToggle, true],
-      'ctrl+shift+p': [this.__editorToggle, true],
       'ctmd+s': [this.__editorSave, true],
       'ctmd+a': [this.__editorSelectAll, false],
       'esc': [this.__editorsEscape, true],
       'delete': [this.__noteMoveToTrash, false],
       'shift+delete': [this.__noteRestoreFromTrash, true],
       'ctrl+delete': [this.__noteDelete, true],
+      'enter': [this.__quickPanelOpenItem, true],
+      'up': [this.__quickPanelPrevItem, true],
+      'down': [this.__quickPanelNextItem, true],
       'up, left': [this.__searchPrevious, false],
       'down, right': [this.__searchNext, false],
       'ctrl+page_down': [this.__searchNext, true],
@@ -153,6 +156,38 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
     if ( this.props.container.editor.isEditing () || this.props.container.multiEditor.isEditing () ) return null;
 
     return this.props.container.note.delete ();
+
+  }
+
+  __quickPanelOpen = () => {
+
+    this.props.container.quickPanel.toggleOpen ( true );
+
+  }
+
+  __quickPanelOpenItem = () => {
+
+    if ( !this.props.container.quickPanel.isOpen () ) return null;
+
+    const nth = this.props.container.quickPanel.getItemIndex ();
+
+    this.props.container.quickPanel.openNth ( nth );
+
+  }
+
+  __quickPanelPrevItem = () => {
+
+    if ( !this.props.container.quickPanel.isOpen () ) return null;
+
+    this.props.container.quickPanel.prevItem ();
+
+  }
+
+  __quickPanelNextItem = () => {
+
+    if ( !this.props.container.quickPanel.isOpen () ) return null;
+
+    this.props.container.quickPanel.nextItem ();
 
   }
 

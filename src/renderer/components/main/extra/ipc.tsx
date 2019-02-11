@@ -60,6 +60,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.on ( 'note-pin-toggle', this.__notePinToggle );
     ipc.on ( 'note-restore', this.__noteRestore );
     ipc.on ( 'note-reveal', this.__noteReveal );
+    ipc.on ( 'quick-panel-toggle', this.__quickPanelToggle );
     ipc.on ( 'search-focus', this.__searchFocus );
     ipc.on ( 'search-next', this.__searchNext );
     ipc.on ( 'search-previous', this.__searchPrevious );
@@ -101,6 +102,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
     ipc.removeListener ( 'note-pin-toggle', this.__notePinToggle );
     ipc.removeListener ( 'note-restore', this.__noteRestore );
     ipc.removeListener ( 'note-reveal', this.__noteReveal );
+    ipc.removeListener ( 'quick-panel-toggle', this.__quickPanelToggle );
     ipc.removeListener ( 'search-focus', this.__searchFocus );
     ipc.removeListener ( 'search-next', this.__searchNext );
     ipc.removeListener ( 'search-previous', this.__searchPrevious );
@@ -288,6 +290,12 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   __noteReveal = () => {
 
     this.main.note.reveal ();
+
+  }
+
+  __quickPanelToggle = ( event, force?: boolean ) => {
+
+    this.main.quickPanel.toggleOpen ( force );
 
   }
 

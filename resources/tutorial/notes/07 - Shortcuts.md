@@ -13,11 +13,12 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 - <kbd>Cmd+N</kbd> - New.
 - <kbd>Cmd+Alt+Shift+N</kbd> - New from Template.
 - <kbd>Cmd+Shift+N</kbd> - Duplicate.
-- <kbd>Cmd+O</kbd> - Open in default app.
+- <kbd>Cmd+O</kbd> - Quick open.
+- <kbd>Cmd+P</kbd> - Quick open.
+- <kbd>Cmd+Alt+O</kbd> - Open in default app.
 - <kbd>Cmd+Alt+R</kbd> - Reveal in Finder/Folder.
 - <kbd>Cmd+E</kbd> - Toggle editing.
 - <kbd>Cmd+Shift+E</kbd> - Toggle editing.
-- <kbd>Ctrl+Shift+P</kbd> - Toggle editing.
 - <kbd>Cmd+Shift+T</kbd> - Toggle tags editing.
 - <kbd>Cmd+Shift+A</kbd> - Toggle attachments editing.
 - <kbd>Cmd+D</kbd> - Toggle favorite.

@@ -44,7 +44,7 @@
       "label/tag": false,
       "lazy": false,
       "liker": false,
-      "modal": false,
+      "modal": true,
       "numbox": false,
       "overlay": false,
       "pagination": false,

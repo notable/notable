@@ -11,33 +11,25 @@ import Note from './note';
 
 class Content extends React.Component<any, { height: number }> {
 
-  listRef;
+  listRef = React.createRef () as any; //TSC
 
   state = {
     height: 0
   };
-
-  constructor ( props ) {
-
-    super ( props );
-
-    this.listRef = React.createRef ();
-
-  }
 
   componentDidMount () {
 
     this.updateHeight ();
 
     $.$window.on ( 'notes-scroll-to-item', this.scrollToItem );
-    $.$window.on ( 'resize', this.updateHeight );
+    $.$window.on ( 'resize:height', this.updateHeight );
 
   }
 
   componentWillUnmount () {
 
     $.$window.off ( 'notes-scroll-to-item', this.scrollToItem );
-    $.$window.off ( 'resize', this.updateHeight );
+    $.$window.off ( 'resize:height', this.updateHeight );
 
   }
 
@@ -52,6 +44,8 @@ class Content extends React.Component<any, { height: number }> {
   updateHeight = () => {
 
     const height = window.innerHeight - 65; //UGLY: But it gets the job done, quickly
+
+    if ( height === this.state.height ) return;
 
     this.setState ({ height });
 

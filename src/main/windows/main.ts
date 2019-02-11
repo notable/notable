@@ -124,8 +124,13 @@ class Main extends Route {
         label: 'File',
         submenu: [
           {
-            label: 'Open in Default App',
+            label: 'Open...',
             accelerator: 'CmdOrCtrl+O',
+            click: () => this.win.webContents.send ( 'quick-panel-toggle', true )
+          },
+          {
+            label: 'Open in Default App',
+            accelerator: 'CmdOrCtrl+Alt+O',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-open-in-app' )
           },

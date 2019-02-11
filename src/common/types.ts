@@ -40,6 +40,25 @@ type NotesObj = {
   [filePath: string]: NoteObj
 };
 
+type QuickPanelResultsRawItem = {
+  title: string,
+  description?: string
+};
+
+type QuickPanelResultsNoteItem = NoteObj;
+
+type QuickPanelResultsAttachmentItem = AttachmentObj;
+
+type QuickPanelResultsItem = QuickPanelResultsRawItem | QuickPanelResultsNoteItem | QuickPanelResultsAttachmentItem;
+
+type QuickPanelResults = {
+  empty: {
+    is: boolean,
+    message: string
+  },
+  items: QuickPanelResultsItem[]
+};
+
 type TagObj = {
   collapsed: boolean,
   name: string,
@@ -100,6 +119,13 @@ type NotesState = {
   notes: NotesObj
 };
 
+type QuickPanelState = {
+  open: boolean,
+  query: string,
+  itemIndex: number,
+  results: QuickPanelResults
+};
+
 type SearchState = {
   query: string,
   notes: NoteObj[]
@@ -142,6 +168,7 @@ type MainState = {
   multiEditor: MultiEditorState,
   note: NoteState,
   notes: NotesState,
+  quickPanel: QuickPanelState,
   search: SearchState,
   sorting: SortingState,
   tag: TagState,
@@ -169,6 +196,7 @@ type MainCTX = {
   multiEditor: import ( '@renderer/containers/main/multi_editor' ).default,
   note: import ( '@renderer/containers/main/note' ).default,
   notes: import ( '@renderer/containers/main/notes' ).default,
+  quickPanel: import ( '@renderer/containers/main/quick_panel' ).default,
   search: import ( '@renderer/containers/main/search' ).default,
   sorting: import ( '@renderer/containers/main/sorting' ).default,
   tag: import ( '@renderer/containers/main/tag' ).default,

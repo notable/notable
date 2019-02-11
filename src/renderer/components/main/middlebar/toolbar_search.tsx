@@ -16,7 +16,7 @@ class Search extends React.Component<any, undefined> {
 
     this.props.setQuery ( this.ref.current.value );
 
-  }, 50 );
+  }, 25 );
 
   render () {
 
