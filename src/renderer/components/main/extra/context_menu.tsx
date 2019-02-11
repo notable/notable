@@ -94,23 +94,23 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
     this._makeMenu ( '.note-button, .editor .note', [
       {
-        label: 'New from Template',
-        click: () => this.props.container.note.duplicate ( this.note, true )
-      },
-      {
-        label: 'Duplicate',
-        click: () => this.props.container.note.duplicate ( this.note )
-      },
-      {
-        type: 'separator'
-      },
-      {
         label: 'Open in Default App',
         click: () => this.props.container.note.openInApp ( this.note )
       },
       {
         label: `Reveal in ${is.macOS () ? 'Finder' : 'Folder'}`,
         click: () => this.props.container.note.reveal ( this.note )
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'New from Template',
+        click: () => this.props.container.note.duplicate ( this.note, true )
+      },
+      {
+        label: 'Duplicate',
+        click: () => this.props.container.note.duplicate ( this.note )
       },
       {
         type: 'separator'
@@ -205,7 +205,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
           isDeleted = this.props.container.note.isDeleted ( this.note ),
           isTemplate = !!this.props.container.note.getTags ( this.note, TagSpecials.TEMPLATES ).length;
 
-    items[0].visible = !!isTemplate;
+    items[3].visible = !!isTemplate;
     items[6].visible = !isFavorited;
     items[7].visible = !!isFavorited;
     items[9].visible = !isDeleted;
