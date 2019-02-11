@@ -4,7 +4,6 @@
 import * as _ from 'lodash';
 import {Container, autosuspend} from 'overstated';
 import {TagSpecials} from '@renderer/utils/tags';
-import Utils from '@renderer/utils/utils';
 
 /* QUICK PANEL */
 

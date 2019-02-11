@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import {clipboard} from 'electron';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
@@ -17,6 +18,7 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
     $.$document.on ( 'click', '.editor.preview a.note', this.__noteClick );
     $.$document.on ( 'click', '.editor.preview a.tag', this.__tagClick );
     $.$document.on ( 'click', '.editor.preview input[type="checkbox"]', this.__checkboxClick );
+    $.$document.on ( 'click', '.editor.preview pre .copy', this.__copyClick );
 
   }
 
@@ -25,6 +27,7 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
     $.$document.off ( 'click', this.__noteClick );
     $.$document.off ( 'click', this.__tagClick );
     $.$document.off ( 'click', this.__checkboxClick );
+    $.$document.off ( 'click', this.__copyClick );
 
   }
 
@@ -60,6 +63,17 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
     if ( !_.isNumber ( nth ) ) return;
 
     this.props.container.note.toggleCheckboxNth ( undefined, nth, checked );
+
+  }
+
+  __copyClick = ( event ) => {
+
+    const $btn = $(event.currentTarget),
+          $code = $btn.next ( 'code' );
+
+    if ( !$code.length ) return;
+
+    clipboard.writeText ( $code.text () );
 
   }
 

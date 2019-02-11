@@ -138,7 +138,8 @@ const Markdown = {
           try {
             const language = Highlighter.inferLanguage ( $1 );
             const highlighted = Highlighter.highlight ( $2, language );
-            return `<pre><code ${$1 || ''}>${highlighted}</code></pre>`;
+            const copy = '<div class="copy" title="Copy code to clipboard"><i class="icon small">content_copy</i></div>';
+            return `<pre>${copy}<code ${$1 || ''}>${highlighted}</code></pre>`;
           } catch ( e ) {
             console.error ( `[highlight] ${e.message}` );
             return match;

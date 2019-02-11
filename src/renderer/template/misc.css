@@ -528,3 +528,25 @@ body.markdown-body {
 #quick-panel .item i.icon {
   margin: -3.5px 5px 0 0;
 }
+
+pre .copy {
+  position: absolute;
+  cursor: pointer;
+  z-index: 0;
+  top: 10px;
+  right: 10px;
+  opacity: 0;
+  transition: opacity .15s;
+}
+
+pre:hover .copy {
+  opacity: .5;
+}
+
+pre:hover .copy:hover {
+  opacity: .75;
+}
+
+pre:hover .copy:active {
+  opacity: 1;
+}
