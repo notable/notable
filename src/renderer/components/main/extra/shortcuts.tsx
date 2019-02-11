@@ -34,7 +34,6 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
   initShortcuts = () => {
 
     this.shortcuts = {
-      'ctmd+p': [this.__quickPanelOpen, true],
       'ctmd+shift+e': [this.__editorToggle, true],
       'ctmd+s': [this.__editorSave, true],
       'ctmd+a': [this.__editorSelectAll, false],
@@ -42,6 +41,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
       'delete': [this.__noteMoveToTrash, false],
       'shift+delete': [this.__noteRestoreFromTrash, true],
       'ctrl+delete': [this.__noteDelete, true],
+      'ctmd+p': [this.__quickPanelOpen, true],
       'enter': [this.__quickPanelOpenItem, true],
       'up': [this.__quickPanelPrevItem, true],
       'down': [this.__quickPanelNextItem, true],
@@ -75,12 +75,12 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
         if ( !Svelto.Keyboard.keystroke.match ( event, shortcut ) ) continue;
 
-        if ( handler.call ( this, event ) !== null ) {
+        const result = handler.call ( this, event );
 
-          event.preventDefault ();
-          event.stopImmediatePropagation ();
+        if ( result === null ) continue; // Not actually handled
 
-        }
+        event.preventDefault ();
+        event.stopImmediatePropagation ();
 
         return;
 
@@ -126,7 +126,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   __editorsEscape = () => {
 
-    if ( this.props.container.attachments.isEditing () || this.props.container.tags.isEditing () ) return null;
+    if ( this.props.container.attachments.isEditing () || this.props.container.tags.isEditing () || this.props.container.quickPanel.isOpen () ) return null;
 
     if ( this.props.container.multiEditor.isEditing () ) return this.props.container.multiEditor.selectClear ();
 
