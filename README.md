@@ -52,6 +52,10 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 
 <img src="resources/demo/multi_editor.png" alt="Multi-Note Editor" width="750">
 
+### Split-Editor + Zen Mode + Quick Open
+
+<img src="resources/demo/zen_mode-split_editor-quick_open.png" alt="Split-Editor + Zen Mode + Quick Open" width="750">
+
 ## Contributing
 
 There are multiple ways to contribute to this project, read about them [here](https://github.com/fabiospampinato/notable/blob/master/.github/CONTRIBUTING.md).
