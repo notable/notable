@@ -187,12 +187,12 @@ const Markdown = {
       return [
         { // KaTeX rendering
           type: 'output',
-          regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:(?<!\\)\$\$(?!<)(\S(?:.*?\S)?)(?<!\\)\$\$(?!\d))|(?:(?<!\\)\$(?!<)(\S(?:.*?\S)?)(?<!\\)\$(?!\d))/g,
-          replace ( match, $1, $2, $3, index, content ) {
+          regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)/g,
+          replace ( match, $1, index, content ) {
             if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
-            const tex = $1 || $2 || $3;
+            const tex = $1;
             try {
-              Config.katex.displayMode = !$3;
+              Config.katex.displayMode = true;
               return katex.renderToString ( entities.decode ( tex ), Config.katex );
             } catch ( e ) {
               console.error ( `[katex] ${e.message}` );
@@ -491,6 +491,20 @@ const Markdown = {
   render: ( str: string ): string => {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
+
+    str = str.replace(
+      /(?:(?<!\\)\$\$(?!<)(\S(?:[\s\S]*?\S)?)(?<!\\)\$\$(?!\d))|(?:(?<!\\)\$(?!<)(\S(?:[\s\S]*?\S)?)(?<!\\)\$(?!\d))/g,
+      function ( match, $1, $2, index, content ) {
+        if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
+        try {
+          Config.katex.displayMode = !$2;
+          return katex.renderToString ( $1 || $2 , Config.katex );
+        } catch ( e ) {
+          console.error ( `[katex] ${e.message}` );
+          return match;
+        }
+      }
+    );
 
     return Markdown.converters.preview ().makeHtml ( str );
 
