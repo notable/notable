@@ -8,13 +8,11 @@ import * as ReactDOM from 'react-dom';
 
 class Popover extends React.Component<any, any> {
 
-  $anchor; $popover;
+  $popover;
 
   componentDidMount () {
 
-    this.$anchor = $(this.props.anchor);
     this.$popover = $(ReactDOM.findDOMNode ( this ));
-
     this.$popover.widgetize ();
 
     if ( this.props.onBeforeOpen ) this.$popover.on ( 'popover:beforeopen', this.props.onBeforeOpen );
@@ -34,7 +32,7 @@ class Popover extends React.Component<any, any> {
 
   update () {
 
-    this.$popover.popover ( 'toggle', this.props.open, this.$anchor[0] ).trigger ( 'change' );
+    this.$popover.popover ( 'toggle', this.props.open, $(this.props.anchor)[0] ).trigger ( 'change' );
 
   }
 
