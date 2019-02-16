@@ -105,22 +105,22 @@ const Markdown = {
     strip () {
 
       return [
-        { // Standalone syntax
+        { // Standalone syntax => Removing all of it
           type: 'language',
-          regex: /--+|==+|```+|~~~+/gm,
+          regex: /--+|==+|```+|~~~+|:\w+?:/gm,
           replace: () => ''
         },
-        { // Wrap syntax
+        { // Wrap syntax => Removing only the wrapping syntax
           type: 'language',
           regex: /_.*?_|\*.*?\*|~.*?~|`.*?`|\[.*?\]/gm,
           replace: match => match.slice ( 1, -1 )
         },
-        { // Start syntax
+        { // Start syntax => Removing the special syntax
           type: 'language',
           regex: /^(\s*)(?:>(?:\s*?>)*|#+|\d+\.|[*+-](?=\s))/gm, //TODO: If multiple of these get chained together this regex will fail
           replace: ( match, $1 ) => $1
         },
-        { // HTML
+        { // HTML => Removing all of it
           type: 'output',
           regex: /<[^>]*?>/g,
           replace: () => ''
