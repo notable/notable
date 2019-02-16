@@ -131,6 +131,8 @@ type SearchState = {
   notes: NoteObj[]
 };
 
+type SkeletonState = {};
+
 type SortingState = {
   by: import ( '@renderer/utils/sorting' ).SortingBys,
   type: import ( '@renderer/utils/sorting' ).SortingTypes
@@ -170,6 +172,7 @@ type MainState = {
   notes: NotesState,
   quickPanel: QuickPanelState,
   search: SearchState,
+  skeleton: SkeletonState,
   sorting: SortingState,
   tag: TagState,
   tags: TagsState,
@@ -198,6 +201,7 @@ type MainCTX = {
   notes: import ( '@renderer/containers/main/notes' ).default,
   quickPanel: import ( '@renderer/containers/main/quick_panel' ).default,
   search: import ( '@renderer/containers/main/search' ).default,
+  skeleton: import ( '@renderer/containers/main/skeleton' ).default,
   sorting: import ( '@renderer/containers/main/sorting' ).default,
   tag: import ( '@renderer/containers/main/tag' ).default,
   tags: import ( '@renderer/containers/main/tags' ).default,

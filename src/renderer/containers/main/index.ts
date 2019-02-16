@@ -15,6 +15,7 @@ import Note from './note';
 import Notes from './notes';
 import QuickPanel from './quick_panel';
 import Search from './search';
+import Skeleton from './skeleton';
 import Sorting from './sorting';
 import Tag from './tag';
 import Tags from './tags';
@@ -192,6 +193,7 @@ export default compose ({
   notes: Notes,
   quickPanel: QuickPanel,
   search: Search,
+  skeleton: Skeleton,
   sorting: Sorting,
   tag: Tag,
   tags: Tags,
