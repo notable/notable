@@ -47,6 +47,7 @@ class Main extends Container<MainState, MainCTX> {
 
     this.addMiddleware ( this.middlewareClosePopoversOthers );
     this.addMiddleware ( this.middlewareClosePopoversQuickPanel );
+    this.addMiddleware ( this.middlewareCloseQuickPanelPopovers );
     this.addMiddleware ( this.middlewareNoNote );
     this.addMiddleware ( this.middlewareResetEditor );
     this.addMiddleware ( this.middlewareSaveEditor );
@@ -78,6 +79,14 @@ class Main extends Container<MainState, MainCTX> {
 
     if ( this.ctx.attachments.isEditing () ) this.ctx.attachments.toggleEditing ( false );
     if ( this.ctx.tags.isEditing () ) this.ctx.tags.toggleEditing ( false );
+
+  }
+
+  middlewareCloseQuickPanelPopovers ( prev: MainState ) {
+
+    if ( !( ( ( !prev.attachments.editing && this.state.attachments.editing ) || ( !prev.tags.editing && this.state.tags.editing ) ) && this.state.quickPanel.open ) ) return;
+
+    this.ctx.quickPanel.toggleOpen ( false );
 
   }
 
