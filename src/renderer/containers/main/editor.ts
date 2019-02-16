@@ -245,6 +245,14 @@ class Editor extends Container<EditorState, MainCTX> {
 
   }
 
+  hasFocus = (): boolean => {
+
+    const cm = this.getCodeMirror ();
+
+    return !!cm && cm.hasFocus ();
+
+  }
+
   getCodeMirror = () => { // Getting the instance in a reliable way
 
     const ele = $('.CodeMirror')[0];

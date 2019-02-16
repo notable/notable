@@ -45,9 +45,9 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
       'enter': [this.__quickPanelOpenItem, true],
       'up': [this.__quickPanelPrevItem, true],
       'down': [this.__quickPanelNextItem, true],
-      'up ': [this.__searchPrevious, true],
+      'up ': [this.__searchPreviousStrict, true],
       'left': [this.__searchPrevious, false],
-      'down ': [this.__searchNext, true],
+      'down ': [this.__searchNextStrict, true],
       'right': [this.__searchNext, false],
       'ctrl+page_down': [this.__searchNext, true],
       'ctrl+page_up': [this.__searchPrevious, true],
@@ -193,9 +193,25 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   }
 
+  __searchPreviousStrict = () => {
+
+    if ( $.isEditable ( document.activeElement ) && !this.props.container.search.hasFocus () ) return null;
+
+    return this.__searchPrevious ();
+
+  }
+
   __searchPrevious = () => {
 
     this.props.container.search.previous ();
+
+  }
+
+  __searchNextStrict = () => {
+
+    if ( $.isEditable ( document.activeElement ) && !this.props.container.search.hasFocus () ) return null;
+
+    return this.__searchNext ();
 
   }
 

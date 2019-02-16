@@ -128,6 +128,12 @@ class Search extends Container<SearchState, MainCTX> {
 
   }
 
+  hasFocus = (): boolean => {
+
+    return document.activeElement === $('#middlebar input[type="search"]')[0];
+
+  }
+
   clear = () => {
 
     return this.setQuery ( '' );
