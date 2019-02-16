@@ -494,20 +494,42 @@ const Markdown = {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
-    // render KaTeX in str
+    // render KaTeX/AsciiMath in str
     {
       let doc = '';
-      let data = [{type: "text", data: str, rawData: str, display: false}];
+      let data = [{type: "text", data: str, rawData: str, display: {display: false, ascii: false}}];
       const delimiters = Config.katex.delimiters || [];
-      for (let i = 0; i < delimiters.length; i++)
-        data = KatexSplit(data, delimiters[i].left, delimiters[i].right, delimiters[i].display || false);
+      for (let i = 0; i < delimiters.length; i++) {
+        // KatexSplit (= splitAtDelimiters) expects a boolean as 4th parameter,
+        // but only copies the argument into data[i].display, so we give it an
+        // object with { .display, .ascii } from the delimiter
+        const display = {
+          display: delimiters[i].display || false,
+          ascii: delimiters[i].asciimath || false
+        };
+
+        data = KatexSplit(data, delimiters[i].left, delimiters[i].right, display);
+      }
       for (let i = 0; i < data.length; i++) {
         if (data[i].type === "text") {
           doc += data[i].data;
         } else {
+          let math = data[i].data;
+
+          // convert AsciiMath to TeX if necessary
+          if(data[i].display.ascii) {
+            try {
+              math = AsciiMath.toTeX ( math );
+            } catch ( e ) {
+              console.error ( `[asciimath] ${e.message}` );
+              doc += data[i].rawData;
+              continue
+            }
+          }
+
           try {
-            Config.katex.displayMode = data[i].display;
-            doc += katex.renderToString ( data[i].data , Config.katex );
+            Config.katex.displayMode = data[i].display.display;
+            doc += katex.renderToString ( math , Config.katex );
           } catch ( e ) {
             console.error ( `[katex] ${e.message}` );
             doc += data[i].rawData;

@@ -45,8 +45,11 @@ const Config = {
     displayMode: false,
     errorColor: '#f44336',
     delimiters: [
-      { left: '$$', right: '$$', display: true },
-      { left: '$', right: '$', display: false },
+      { left: "$$", right: "$$", display: true }, // katex default
+      { left: "\\[", right: "\\]", display: true }, // katex default
+      { left: "\\(", right: "\\)", display: false }, // katex default
+      { left: '~', right: '~', display: false, asciimath: true },
+      { left: '&&', right: '&&', display: true, asciimath: true },
     ]
   },
   mermaid: { //URL: https://github.com/knsv/mermaid/blob/7d3578b31aeea3bc9bbc618dcda57d82574eaffb/src/mermaidAPI.js#L51
