@@ -106,7 +106,7 @@
       "publishAutoUpdate": true
     }
   },
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "author": {
     "name": "Fabio Spampinato",
     "email": "spampinabio@gmail.com"

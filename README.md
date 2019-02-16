@@ -69,4 +69,4 @@ There are multiple ways to contribute to this project, read about them [here](ht
 
 ## License
 
-MIT © Fabio Spampinato
+AGPLv3 © Fabio Spampinato
