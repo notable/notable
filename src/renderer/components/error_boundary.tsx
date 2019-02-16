@@ -3,6 +3,8 @@
 
 import {shell} from 'electron';
 import * as is from 'electron-is';
+import githubIssueUrl from 'new-github-issue-url';
+import * as os from 'os';
 import * as React from 'react';
 import pkg from '@root/package.json';
 
@@ -28,7 +30,17 @@ class ErrorBoundary extends React.Component<any, { error?: Error }> {
 
   report = () => {
 
-    shell.openExternal ( pkg.bugs.url );
+    const {error} = this.state;
+
+    if ( !error ) return;
+
+    const url = githubIssueUrl ({
+      repoUrl: pkg.homepage,
+      title: `An error occurred: ${error.message}`,
+      body: `- **OS Version**: ${os.platform} ${os.release}\n- **Notable Version**: v${pkg.version}\n\n\`\`\`\n${error.stack}\n\`\`\``
+    });
+
+    shell.openExternal ( url );
 
   }
 
