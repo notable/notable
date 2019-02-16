@@ -154,8 +154,9 @@ const Markdown = {
       return [
         { // AsciiMath 2 TeX
           type: 'output',
-          regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:(?<!\\)&&(?!<)(\S(?:.*?\S)?)(?<!\\)&&(?!\d))|(?:(?<!\\)&amp;(?!<)&amp;(?!<)(\S(?:.*?\S)?)(?<!\\)&amp;(?!<)&amp;(?!\d))|(?:(?<!\\)&(?!<|\w+;)(\S(?:.*?\S)?)(?<!\\)&(?!\d))|(?:(?<!\\)&amp;(?!<)(\S(?:.*?\S)?)(?<!\\)&amp;(?!\d))/g,
+          regex: /(?:<pre><code\s[^>]*language-asciimath[^>]*>([^]+?)<\/code><\/pre>)|(?:(?:\\)?&&(?!<)(\S(?:.*?\S)?)(?:\\)?&&(?!\d))|(?:(?:\\)?&amp;(?!<)&amp;(?!<)(\S(?:.*?\S)?)(?:\\)?&amp;(?!<)&amp;(?!\d))|(?:(?:\\)?&(?!<|\w+;)(\S(?:.*?\S)?)(?:\\)?&(?!\d))|(?:(?:\\)?&amp;(?!<)(\S(?:.*?\S)?)(?:\\)?&amp;(?!\d))/g,
           replace ( match, $1, $2, $3, $4, $5, index, content ) {
+            if ( match.startsWith ( '\\' ) ) return match;
             if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
             if ( Markdown.extensions.utilities.isInsideAnchor ( content, index ) ) return match; // In order to better support encoded emails
             const asciimath = $1 || $2 || $3 || $4 || $5;
@@ -187,8 +188,9 @@ const Markdown = {
       return [
         { // KaTeX rendering
           type: 'output',
-          regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:(?<!\\)\$\$(?!<)(\S(?:.*?\S)?)(?<!\\)\$\$(?!\d))|(?:(?<!\\)\$(?!<)(\S(?:.*?\S)?)(?<!\\)\$(?!\d))/g,
+          regex: /(?:<pre><code\s[^>]*language-(?:tex|latex|katex)[^>]*>([^]+?)<\/code><\/pre>)|(?:(?:\\)?\$\$(?!<)(\S(?:.*?\S)?)(?:\\)?\$\$(?!\d))|(?:(?:\\)?\$(?!<)(\S(?:.*?\S)?)(?:\\)?\$(?!\d))/g,
           replace ( match, $1, $2, $3, index, content ) {
+            if ( match.startsWith ( '\\' ) ) return match;
             if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
             const tex = $1 || $2 || $3;
             try {
