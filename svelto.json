@@ -1,4 +1,5 @@
 {
+  "browsers": ["chrome >= 69"],
   "components": {
     "core": {
       "jquery/helpers/diff": false,
@@ -64,6 +65,7 @@
       "switch": false,
       "tabs": false,
       "typography/kbd": false,
+      "toolbar": false,
       "tooltip": false,
       "zoomable": false
     }
