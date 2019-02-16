@@ -14,6 +14,8 @@ import AsciiMath from './asciimath';
 import Highlighter from './highlighter';
 import Utils from './utils';
 
+import KatexSplit from 'katex/contrib/auto-render/splitAtDelimiters';
+
 const {encodeFilePath} = Utils;
 
 /* IMPORT LAZY */
@@ -492,19 +494,28 @@ const Markdown = {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
-    str = str.replace(
-      /(?:(?<!\\)\$\$(?!<)(\S(?:[\s\S]*?\S)?)(?<!\\)\$\$(?!\d))|(?:(?<!\\)\$(?!<)(\S(?:[\s\S]*?\S)?)(?<!\\)\$(?!\d))/g,
-      function ( match, $1, $2, index, content ) {
-        if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
-        try {
-          Config.katex.displayMode = !$2;
-          return katex.renderToString ( $1 || $2 , Config.katex );
-        } catch ( e ) {
-          console.error ( `[katex] ${e.message}` );
-          return match;
+    // render KaTeX in str
+    {
+      let doc = '';
+      let data = [{type: "text", data: str, rawData: str, display: false}];
+      const delimiters = Config.katex.delimiters || [];
+      for (let i = 0; i < delimiters.length; i++)
+        data = KatexSplit(data, delimiters[i].left, delimiters[i].right, delimiters[i].display || false);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].type === "text") {
+          doc += data[i].data;
+        } else {
+          try {
+            Config.katex.displayMode = data[i].display;
+            doc += katex.renderToString ( data[i].data , Config.katex );
+          } catch ( e ) {
+            console.error ( `[katex] ${e.message}` );
+            doc += data[i].rawData;
+          }
         }
+        str = doc;
       }
-    );
+    }
 
     return Markdown.converters.preview ().makeHtml ( str );
 
