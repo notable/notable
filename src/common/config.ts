@@ -17,7 +17,7 @@ const Config = {
       return cwd ? path.join ( cwd, 'attachments' ) : undefined;
     },
     glob: '**/*',
-    re: /./,
+    re: /^(?!.*(?:\._.*|\.cache|\.DS_Store|Thumbs\.db)$)/,
     token: '@attachment' // Usable in urls
   },
   notes: {
