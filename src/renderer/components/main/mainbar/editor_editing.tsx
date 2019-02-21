@@ -113,7 +113,7 @@ class EditorEditing extends React.Component<any, undefined> {
 
     const {content, autosave, save} = this.props;
 
-    return <Code className="layout-content editor editing" value={content} onBlur={() => { save (); autosave () }} onFocus={this.__focus} onChange={this.__change} onScroll={this.__scroll} />;
+    return <Code className="layout-content editor" value={content} onBlur={() => { save (); autosave () }} onFocus={this.__focus} onChange={this.__change} onScroll={this.__scroll} />;
 
   }
 

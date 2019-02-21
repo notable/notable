@@ -10,7 +10,6 @@ import Middlebar from './middlebar';
 import Sidebar from './sidebar';
 import ContextMenu from './extra/context_menu';
 import EditPlugins from './extra/edit_plugins';
-import Events from './extra/events';
 import GlobalPlugins from './extra/global_plugins';
 import IPC from './extra/ipc';
 import PreviewPlugins from './extra/preview_plugins';
@@ -45,7 +44,6 @@ class Main extends React.Component<any, undefined> {
       <>
         <ContextMenu />
         <EditPlugins />
-        <Events />
         <GlobalPlugins />
         <IPC />
         <PreviewPlugins />

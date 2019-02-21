@@ -57,8 +57,8 @@ class ErrorBoundary extends React.Component<any, { error?: Error }> {
     return (
       <div id="error-boundary" className="app-wrapper layout">
         {!isMacOS ? null : (
-          <div className="layout-header centerer">
-            <div className="title small">An Error Occurred!</div>
+          <div className="layout-header titlebar">
+            <span className="title">An Error Occurred!</span>
           </div>
         )}
         <div className="layout-content container">
@@ -67,8 +67,8 @@ class ErrorBoundary extends React.Component<any, { error?: Error }> {
           )}
           <pre className="error-stack">{error.stack}</pre>
         </div>
-        <div className="layout-footer container centerer">
-          <div className="button red" onClick={this.report}>Report It</div>
+        <div className="layout-footer toolbar">
+          <div className="button warning" onClick={this.report}>Report It</div>
         </div>
       </div>
     );

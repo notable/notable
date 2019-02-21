@@ -1,0 +1,55 @@
+
+.preview {
+
+  user-select: text !important;
+  padding: $preview-spacing !important;
+  font-size: $preview-font-size !important;
+  line-height: $preview-line-height !important;
+
+  input[type="checkbox"] {
+    appearance: checkbox !important;
+    -webkit-appearance: checkbox !important;
+    display: inline-block;
+    margin: 0 0.35em 0.25em 0 !important;
+    opacity: 1;
+  }
+
+  .task-list-item {
+
+    margin-left: -1.3em;
+
+    > p {
+      margin: 0;
+    }
+
+  }
+
+  p code,
+  li code,
+  table code {
+    padding: .2em !important;
+  }
+
+  a.button {
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+
+  a:not(.button) > i.icon {
+    margin-right: $gutter-half;
+    margin-top: -3px;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  kbd {
+    font-family: inherit;
+  }
+
+  pre {
+    display: block;
+  }
+
+}

@@ -149,7 +149,7 @@ class Window {
 
     options = _.merge ( dimensions, {
       frame: !is.macOS (),
-      backgroundColor: '#fdfdfd',
+      backgroundColor: '#F4F4F4',
       icon: path.join ( __static, 'images', `icon.${is.windows () ? 'ico' : 'png'}` ),
       show: false,
       title: pkg.productName,

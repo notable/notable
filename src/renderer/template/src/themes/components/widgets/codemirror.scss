@@ -1,0 +1,17 @@
+
+@mixin theme-widget-codemirror ( $theme ) {
+
+  .editor {
+
+    .CodeMirror {
+      background-color: map-get( $theme, 'editor.background' );
+      color: map-get( $theme, 'editor.color' );
+    }
+
+    .CodeMirror-selected {
+      background-color: map-get( $theme, 'selection.background' );
+    }
+
+  }
+
+}

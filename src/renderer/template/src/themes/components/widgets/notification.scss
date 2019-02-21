@@ -1,0 +1,16 @@
+
+// @require themes/components/colors/abstract.scss
+
+@mixin theme-widget-notification ( $theme ) {
+
+  $bg: map-get( $theme, 'notification.background' );
+  $bg-hover: map-get( $theme, 'notification.backgroundHover' );
+  $bg-active: map-get( $theme, 'notification.backgroundActive' );
+
+  .toast {
+    @include theme-background-color ( $bg, $bg-hover, $bg-active );
+    border-color: map-get( $theme, 'notification.border' );
+    color: map-get( $theme, 'notification.color' );
+  }
+
+}

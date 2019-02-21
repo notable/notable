@@ -1,0 +1,69 @@
+
+.list-item {
+
+  @include text-truncate ();
+  height: $list-item-height;
+  padding: $list-item-padding-y $list-item-padding-x;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden !important;
+  justify-content: left;
+  z-index: 0;
+
+  > * {
+    margin: 0 $gutter-half 0 0;
+  }
+
+  > .title {
+    @include text-truncate ();
+    margin: 0;
+    font-weight: normal;
+    text-align: left;
+    flex-grow: 1;
+  }
+
+  > .title ~ * {
+    margin: 0 0 0 $gutter-half;
+  }
+
+  > .description {
+    font-weight: normal;
+    margin-left: $gutter-half;
+    opacity: .5;
+  }
+
+  &.empty {
+
+    pointer-events: none !important;
+    text-align: center;
+    font-weight: normal;
+
+    > :only-child {
+      margin: 0 auto;
+      text-align: center !important;
+    }
+
+  }
+
+  .on-hover {
+    opacity: 0;
+    transition: none;
+  }
+
+  &:hover .on-hover {
+    opacity: 1;
+  }
+
+  @for $i from 1 through length( $list-item-level-spacings ) {
+
+    $spacing: nth( $list-item-level-spacings, $i );
+
+    &.level-#{$i - 1} {
+      padding-left: $spacing;
+    }
+
+  }
+
+}

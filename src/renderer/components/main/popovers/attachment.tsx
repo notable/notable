@@ -9,9 +9,9 @@ import Main from '@renderer/containers/main';
 /* ATTACHMENT */
 
 const Attachment = ({ removeAttachment, attachment, name, openInApp }) => (
-  <div className="attachment button circular gray xsmall" data-filename={name} onClick={() => openInApp ( attachment )}>
-    <span>{name}</span>
-    <i className="icon actionable small" onClick={e => { e.stopPropagation (); removeAttachment ( undefined, attachment || {fileName: name} ); }}>close</i>
+  <div className="attachment button list-item" data-filename={name} onClick={() => openInApp ( attachment )}>
+    <span className="title small">{name}</span>
+    <i className="icon xxsmall actionable on-hover" onClick={e => { e.stopPropagation (); removeAttachment ( undefined, attachment || {fileName: name} ); }}>close</i>
   </div>
 );
 
@@ -19,10 +19,10 @@ const Attachment = ({ removeAttachment, attachment, name, openInApp }) => (
 
 export default connect ({
   container: Main,
-  selector: ({ container, name }) => ({
-    name,
+  selector: ({ container, item }) => ({
+    name: item,
     openInApp: container.attachment.openInApp,
-    attachment: container.attachment.get ( name ),
+    attachment: container.attachment.get ( item ),
     removeAttachment: container.note.removeAttachment
   })
 })( Attachment );

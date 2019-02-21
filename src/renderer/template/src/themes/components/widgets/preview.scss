@@ -1,0 +1,33 @@
+
+// @require themes/components/colors/abstract.scss
+
+@mixin theme-widget-preview ( $theme ) {
+
+  .preview {
+
+    background-color: map-get( $theme, 'preview.background' );
+    border-color: map-get( $theme, 'preview.border' );
+
+    p code,
+    li code,
+    table code {
+      background-color: map-get( $theme, 'preview.code.background' ) !important;
+    }
+
+    p a,
+    li a,
+    th a,
+    td a,
+    address a {
+
+      $color: map-get( $theme, 'preview.link.color' );
+      $color-hover: map-get( $theme, 'preview.link.colorHover' );
+      $color-active: map-get( $theme, 'preview.link.colorActive' );
+
+      @include theme-color ( $color, $color-hover, $color-active );
+
+    }
+
+  }
+
+}

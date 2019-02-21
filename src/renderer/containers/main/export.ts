@@ -56,8 +56,6 @@ class Export extends Container<ExportState, MainCTX> {
 
     html: async ( note: NoteObj, notePath: string, options = { base64: true, icons: false, metadata: true } ) => {
 
-      //TODO: Remove the inline style once `misc.css` gets integrated with Svelto
-
       const css = await this._getResources ([
         'node_modules/codemirror/lib/codemirror.css',
         'node_modules/codemirror-github-light/lib/codemirror-github-light-theme.css',
@@ -105,9 +103,8 @@ class Export extends Container<ExportState, MainCTX> {
     ${metadata.join ( '\n    ' )}
     <title>${note.metadata.title}</title>
     <style>${css}</style>
-    <style>body.markdown-body {padding: 20px;}</style>
   </head>
-  <body class="markdown-body">
+  <body class="preview markdown-body">
 
 ${content}
 

@@ -1,0 +1,17 @@
+
+.split-editor {
+
+  height: 100% !important;
+
+  & > .editor,
+  & > .preview {
+    height: auto;
+    width: 50%;
+  }
+
+  & > .editor ~ .preview {
+    border-left-width: 1px;
+    border-left-style: solid;
+  }
+
+}

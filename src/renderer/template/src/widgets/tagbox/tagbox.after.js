@@ -11,8 +11,9 @@ _.merge ( Svelto.Widgets.Tagbox.config, {
   options: {
     tag: {
       minLength: 1,
+      color: 'highlight',
       size: 'xsmall',
-      css: 'circular'
+      css: 'rounded'
     },
     addOnBlur: false,
     sort: false

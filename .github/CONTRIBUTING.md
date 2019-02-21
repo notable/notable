@@ -41,5 +41,6 @@ npm install
 npm run svelto:dev
 npm run iconfont
 npm run tutorial
-npm run dev
+npm run dev # Terminal 1
+npm run svelto:dev:watch # Terminal 2
 ```

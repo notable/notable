@@ -1,0 +1,43 @@
+
+.multi-editor {
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: $multi-editor-spacing;
+  width: $multi-editor-width;
+  max-width: $multi-editor-max-width;
+
+  h1 {
+    margin-bottom: $multi-editor-spacing;
+    text-align: center;
+  }
+
+  .button {
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+
+  .actions-favorite,
+  .actions-pin {
+    flex-grow: 2;
+  }
+
+  .actions-delete {
+    flex-grow: 3;
+  }
+
+  .tagbox {
+
+    padding: $gutter !important;
+
+    &-partial {
+      padding: 0 !important;
+      margin: 0 $gutter-half $gutter !important;
+      min-width: 7.5em !important;
+    }
+
+  }
+
+}

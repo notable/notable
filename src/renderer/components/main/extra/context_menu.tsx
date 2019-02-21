@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import * as contextMenu from 'electron-context-menu';
+import contextMenu from 'electron-context-menu';
 import Dialog from 'electron-dialog';
 import * as is from 'electron-is';
 import {connect} from 'overstated';
@@ -92,7 +92,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   initNoteMenu = () => {
 
-    this._makeMenu ( '.note-button, .editor .note', [
+    this._makeMenu ( '.note', [
       {
         label: 'Open in Default App',
         click: () => this.props.container.note.openInApp ( this.note )
@@ -147,7 +147,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
     this._makeMenu ( '.tag:not([data-has-children]):not(a)', [
       {
         label: 'Remove',
-        click: () => this.props.container.note.removeTag ( undefined, $(this.ele).text () )
+        click: () => this.props.container.note.removeTag ( undefined, $(this.ele).attr ( 'data-tag' ) )
       }
     ]);
 
@@ -155,7 +155,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   initTagMenu = () => {
 
-    this._makeMenu ( '.tag[data-has-children="true"]', [
+    this._makeMenu ( '.tag[data-has-children="true"], .tag[data-collapsed="true"]', [
       {
         label: 'Collapse',
         click: () => this.props.container.tag.toggleCollapse ( this.tag, true )
@@ -181,7 +181,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   initFallbackMenu = () => {
 
-    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .note-button, .editor .note, .tag:not([data-has-children]), .tag[data-has-children="true"], .tag[title="Trash"]' ) );
+    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .note, .tag:not([data-has-children]), .tag[data-has-children="true"], .tag[data-collapsed="true"], .tag[title="Trash"]' ) );
 
   }
 
@@ -215,7 +215,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   updateTagMenu = ( items ) => {
 
-    this.tag = $(this.ele).data ( 'tag' );
+    this.tag = $(this.ele).attr ( 'data-tag' );
 
     const isCollapsed = this.props.container.tag.isCollapsed ( this.tag );
 

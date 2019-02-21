@@ -1,0 +1,11 @@
+
+.list-header {
+  @include center-flex ();
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  height: $list-header-height;
+  max-height: $list-header-height;
+  flex-grow: 0;
+  padding: $list-header-padding-y $list-header-padding-x;
+  overflow: hidden !important;
+}

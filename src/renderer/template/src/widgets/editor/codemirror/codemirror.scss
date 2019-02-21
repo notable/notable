@@ -1,0 +1,34 @@
+
+.react-codemirror2 {
+
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+
+  .CodeMirror {
+    flex-grow: 1;
+    padding: 0 $editor-spacing !important;
+  }
+
+  .CodeMirror,
+  .CodeMirror-lines,
+  .CodeMirror code {
+    font-size: $editor-font-size !important;
+    line-height: $editor-line-height !important;
+  }
+
+  .CodeMirror-lines {
+    padding: $editor-spacing 0 !important;
+  }
+
+  .cm-header,
+  .cm-strong,
+  strong {
+    font-weight: 600 !important;
+  }
+
+  pre {
+    display: block; /* Fixes cursor for wrapped text */
+  }
+
+}

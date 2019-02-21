@@ -10,10 +10,10 @@ import NewButton from './toolbar_button_new';
 
 /* TOOLBAR */
 
-const Toolbar = ({ hasSidebar }) => (
-  <div id="middlebar-toolbar" className="layout-header centerer">
+const Toolbar = ({ isFullscreen, hasSidebar }) => (
+  <div className="layout-header toolbar">
     <div className="multiple grow">
-      {hasSidebar || !is.macOS () ? null : (
+      {isFullscreen || hasSidebar || !is.macOS () ? null : (
         <div className="toolbar-semaphore-spacer"></div>
       )}
       <Search />
@@ -27,6 +27,7 @@ const Toolbar = ({ hasSidebar }) => (
 export default connect ({
   container: Main,
   selector: ({ container }) => ({
+    isFullscreen: container.window.isFullscreen (),
     hasSidebar: container.window.hasSidebar ()
   })
 })( Toolbar );

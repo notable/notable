@@ -1,5 +1,5 @@
 ---
-title: 'Wrapping up :tada:'
+title: 'Wrapping up'
 pinned: false
 tags: [Notebooks/Tutorial]
 ---

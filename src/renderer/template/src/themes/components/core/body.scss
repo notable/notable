@@ -1,0 +1,9 @@
+
+@mixin theme-core-body ( $theme ) {
+
+  body {
+    background-color: map-get( $theme, 'body.background' );
+    color: map-get( $theme, 'body.color' );
+  }
+
+}

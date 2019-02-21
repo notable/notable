@@ -1,0 +1,9 @@
+
+@mixin theme-widget-editor ( $theme ) {
+
+  .editor {
+    background-color: map-get( $theme, 'editor.background' );
+    border-color: map-get( $theme, 'editor.border' );
+  }
+
+}

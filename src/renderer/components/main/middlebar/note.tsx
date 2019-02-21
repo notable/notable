@@ -3,28 +3,25 @@
 
 import * as React from 'react';
 import {connect} from 'overstated';
-import Markdown from '@renderer/utils/markdown';
 import Main from '@renderer/containers/main';
-import NoteBadge from './note_badge';
 
 /* NOTE */
 
-const Note = ({ note, style, title, hasAttachments, isActive, isSelected, isDeleted, isFavorited, isPinned, isMultiEditorEditing, set, toggleNote, toggleNoteRange }) => {
+const Note = ({ note, style, title, hasAttachments, isActive, isDeleted, isFavorited, isPinned, isSelected, isMultiEditorEditing, set, toggleNote, toggleNoteRange }) => {
 
-  const html = Markdown.render ( title ),
-        onClick = event => Svelto.Keyboard.keystroke.hasCtrlOrCmd ( event ) ? toggleNote ( note ) : ( event.shiftKey ? toggleNoteRange ( note ) : set ( note, true ) );
+  const onClick = event => Svelto.Keyboard.keystroke.hasCtrlOrCmd ( event ) ? toggleNote ( note ) : ( event.shiftKey ? toggleNoteRange ( note ) : set ( note, true ) );
 
   return (
-    <div style={style} className={`note-button ${!isMultiEditorEditing && isActive ? 'label' : 'button'} ${( isMultiEditorEditing ? isSelected : isActive ) ? 'active' : ''} small fluid compact circular`} data-checksum={note.checksum} data-filepath={note.filePath} data-deleted={isDeleted} data-favorited={isFavorited} onClick={onClick} tabIndex={0}> {/* tabIndex is need in order to have the notes focusable, we use that for navigating with arrow */}
-      <span className="title" dangerouslySetInnerHTML={{ __html: html }}></span>
+    <div style={style} className={`note ${!isMultiEditorEditing && isActive ? 'label' : 'button'} ${( isMultiEditorEditing ? isSelected : isActive ) ? 'active' : ''} list-item`} data-checksum={note.checksum} data-filepath={note.filePath} data-deleted={isDeleted} data-favorited={isFavorited} onClick={onClick}>
+      <span className="title small">{title}</span>
       {!hasAttachments ? null : (
-        <NoteBadge icon="paperclip" />
+        <i className="icon xxsmall">paperclip</i>
       )}
       {!isFavorited ? null : (
-        <NoteBadge icon="star" />
+        <i className="icon xxsmall">star</i>
       )}
       {!isPinned ? null : (
-        <NoteBadge icon="pin" />
+        <i className="icon xxsmall">pin</i>
       )}
     </div>
   );
@@ -35,18 +32,24 @@ const Note = ({ note, style, title, hasAttachments, isActive, isSelected, isDele
 
 export default connect ({
   container: Main,
-  selector: ({ container, note, style }) => ({
-    note, style,
-    title: container.note.getTitle ( note ),
-    hasAttachments: !!container.note.getAttachments ( note ).length,
-    isActive: ( container.note.get () === note ),
-    isSelected: container.multiEditor.isNoteSelected ( note ),
-    isDeleted: container.note.isDeleted ( note ),
-    isFavorited: container.note.isFavorited ( note ),
-    isPinned: container.note.isPinned ( note ),
-    isMultiEditorEditing: container.multiEditor.isEditing (),
-    set: container.note.set,
-    toggleNote: container.multiEditor.toggleNote,
-    toggleNoteRange: container.multiEditor.toggleNoteRange
-  })
+  selector: ({ container, style, itemKey }) => {
+
+    const note = container.note.get ( itemKey );
+
+    return ({
+      note, style,
+      title: container.note.getTitle ( note ),
+      hasAttachments: !!container.note.getAttachments ( note ).length,
+      isActive: container.note.get () === note,
+      isDeleted: container.note.isDeleted ( note ),
+      isFavorited: container.note.isFavorited ( note ),
+      isPinned: container.note.isPinned ( note ),
+      isSelected: container.multiEditor.isNoteSelected ( note ),
+      isMultiEditorEditing: container.multiEditor.isEditing (),
+      set: container.note.set,
+      toggleNote: container.multiEditor.toggleNote,
+      toggleNoteRange: container.multiEditor.toggleNoteRange
+    });
+
+  }
 })( Note );

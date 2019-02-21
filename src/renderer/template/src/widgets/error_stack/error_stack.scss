@@ -1,0 +1,5 @@
+
+.error-stack {
+  overflow: auto;
+  max-width: calc( 100vw - #{$gutter * 2});
+}

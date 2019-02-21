@@ -52,10 +52,7 @@ type QuickPanelResultsAttachmentItem = AttachmentObj;
 type QuickPanelResultsItem = QuickPanelResultsRawItem | QuickPanelResultsNoteItem | QuickPanelResultsAttachmentItem;
 
 type QuickPanelResults = {
-  empty: {
-    is: boolean,
-    message: string
-  },
+  empty: string,
   items: QuickPanelResultsItem[]
 };
 
@@ -64,6 +61,8 @@ type TagObj = {
   name: string,
   notes: NoteObj[],
   path: string,
+  icon?: string,
+  iconCollapsed?: string,
   tags: {
     [name: string]: TagObj
   }

@@ -1,0 +1,19 @@
+
+#about {
+
+  background-color: $color-about-background;
+  color: $color-about-color;
+
+  > *:not(:last-child) {
+    margin-bottom: $gutter-half !important;
+  }
+
+  .title {
+    font-weight: bold;
+  }
+
+  .description {
+    font-size: .5946142301em;
+  }
+
+}

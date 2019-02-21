@@ -1,0 +1,20 @@
+
+#cwd {
+
+  .layout-content {
+    height: auto;
+  }
+
+  &.details {
+    padding: $gutter #{$gutter * 2};
+  }
+
+  .button.default {
+    @include theme-background-color ( transparent, rgba( #000000, .1 ), rgba( #000000, .2 ) ); /* UGLY */
+  }
+
+  .button.giant {
+    font-size: 75px;
+  }
+
+}

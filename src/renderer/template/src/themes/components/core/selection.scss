@@ -1,0 +1,8 @@
+
+@mixin theme-core-selection ( $theme ) {
+
+  ::selection {
+    background-color: map-get( $theme, 'selection.background' );
+  }
+
+}

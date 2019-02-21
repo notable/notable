@@ -41,7 +41,11 @@
       "datatables": false,
       "datepicker": false,
       "divider": false,
-      "editor": false,
+      "editor/fullscreen": false,
+      "editor/preview": false,
+      "editor/unpreview": false,
+      "editor/vendor": false,
+      "editor/editor.js": false,
       "emoji": false,
       "expander": false,
       "figure": false,
@@ -86,7 +90,7 @@
       "textarea/sender": false,
       "time_ago": false,
       "typography/kbd": false,
-      "toolbar": false,
+      "toolbar/vertical": false,
       "tooltip": false,
       "zoomable": false
     }

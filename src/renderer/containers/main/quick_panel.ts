@@ -16,10 +16,7 @@ class QuickPanel extends Container<QuickPanelState, MainCTX> {
     query: '',
     itemIndex: 0,
     results: {
-      empty: {
-        is: true,
-        message: 'No results found'
-      },
+      empty: 'No results found',
       items: [] as QuickPanelResultsItem[]
     }
   };
@@ -29,13 +26,10 @@ class QuickPanel extends Container<QuickPanelState, MainCTX> {
   _searchBy = ( query: string ): QuickPanelResults => {
 
     const notes = this.ctx.search._searchBy ( TagSpecials.ALL, false, query, 'quick-panel' ),
-          attachments = this.ctx.search._filterAttachmentsByQuery ( Object.values ( this.ctx.attachments.get () ), query ); //TODO: Optimize attachments search like we are optimizing notes searches
+          attachments = this.ctx.search._filterAttachmentsByQuery ( Object.values ( this.ctx.attachments.get () ), query ); //OPTIMIZE: Optimize attachments search like we are optimizing notes searches
 
     return {
-      empty: {
-        is: !notes.length && !attachments.length,
-        message: 'No results found'
-      },
+      empty: 'No results found',
       items: [...notes, ...attachments]
     };
 
@@ -99,7 +93,7 @@ class QuickPanel extends Container<QuickPanelState, MainCTX> {
 
     if ( index < 0 || index > results.items.length ) return;
 
-    $.$window.trigger ( 'quick-panel-scroll-to-item', index );
+    $('#list-quick-panel').trigger ( 'scroll-to-item', index );
 
   }
 

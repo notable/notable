@@ -12,7 +12,7 @@ const TrashPermanentlyButton = ({ isDeleted, del }) => {
 
   if ( !isDeleted ) return null;
 
-  return <ToolbarButton icon="delete_forever" title="Permanently Delete" color="red inverted" onClick={() => del ()} />;
+  return <ToolbarButton icon="delete_forever" title="Permanently Delete" color="text-warning" onClick={() => del ()} />;
 
 };
 

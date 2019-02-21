@@ -1,0 +1,14 @@
+
+// @require ./abstract.scss
+
+@mixin theme-color-highlight ( $theme ) {
+
+  $bg: map-get( $theme, 'highlight.background' );
+  $bg-hover: map-get( $theme, 'highlight.backgroundHover' );
+  $bg-active: map-get( $theme, 'highlight.backgroundActive' );
+  $border: map-get( $theme, 'highlight.border' );
+  $color: map-get( $theme, 'highlight.color' );
+
+  @include theme-color-full( 'highlight', $bg, $bg-hover, $bg-active, $border, $color );
+
+}

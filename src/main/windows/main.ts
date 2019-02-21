@@ -126,7 +126,7 @@ class Main extends Route {
           {
             label: 'Open...',
             accelerator: 'CmdOrCtrl+O',
-            click: () => this.win.webContents.send ( 'quick-panel-toggle', true )
+            click: () => this.win.webContents.send ( 'quick-panel-toggle' )
           },
           {
             label: 'Open in Default App',

@@ -11,8 +11,8 @@ const Header = () => {
   if ( !is.macOS () ) return null;
 
   return (
-    <div className="layout-header centerer">
-      <div className="title small">Select Data Directory</div>
+    <div className="layout-header titlebar">
+      <span className="title">Select Data Directory</span>
     </div>
   );
 

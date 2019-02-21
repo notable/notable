@@ -34,9 +34,9 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
   initShortcuts = () => {
 
     this.shortcuts = {
+      'ctmd+a': [this.__selectAll, false],
       'ctmd+shift+e': [this.__editorToggle, true],
       'ctmd+s': [this.__editorSave, true],
-      'ctmd+a': [this.__editorSelectAll, false],
       'esc': [this.__editorsEscape, true],
       'delete': [this.__noteMoveToTrash, false],
       'shift+delete': [this.__noteRestoreFromTrash, true],
@@ -94,6 +94,20 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   /* HANDLERS */
 
+  __selectAll = () => {
+
+    if ( this.props.container.multiEditor.isEditing () ) return null;
+
+    if ( this.props.container.editor.hasFocus () ) return null;
+
+    const $target = $('#mainbar .editor, #mainbar .preview');
+
+    if ( !$target.length ) return null;
+
+    window.getSelection ().selectAllChildren ( $target[0] );
+
+  }
+
   __editorToggle = () => {
 
     if ( this.props.container.editor.isSplit () ) return null;
@@ -110,29 +124,15 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   }
 
-  __editorSelectAll = () => {
-
-    if ( this.props.container.multiEditor.isEditing () ) return null;
-
-    const $editorEditing = $('#mainbar .editor.editing');
-
-    if ( $editorEditing.length && $editorEditing[0].contains ( document.activeElement ) ) return null;
-
-    const $editorPreview = $('#mainbar .editor.preview');
-
-    if ( !$editorPreview.length ) return null;
-
-    window.getSelection ().selectAllChildren ( $editorPreview[0] );
-
-  }
-
   __editorsEscape = () => {
 
     if ( this.props.container.attachments.isEditing () || this.props.container.tags.isEditing () || this.props.container.quickPanel.isOpen () ) return null;
 
     if ( this.props.container.multiEditor.isEditing () ) return this.props.container.multiEditor.selectClear ();
 
-    if ( this.props.container.editor.isEditing () && !this.props.container.editor.isSplit () ) return this.props.container.editor.toggleEditing ( false );
+    if ( this.props.container.editor.isSplit () ) return this.props.container.editor.toggleSplit ( false );
+
+    if ( this.props.container.editor.isEditing () ) return this.props.container.editor.toggleEditing ( false );
 
     return null;
 

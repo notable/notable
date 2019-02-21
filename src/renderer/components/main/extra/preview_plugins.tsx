@@ -15,10 +15,10 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
 
   componentDidMount () {
 
-    $.$document.on ( 'click', '.editor.preview a.note', this.__noteClick );
-    $.$document.on ( 'click', '.editor.preview a.tag', this.__tagClick );
-    $.$document.on ( 'click', '.editor.preview input[type="checkbox"]', this.__checkboxClick );
-    $.$document.on ( 'click', '.editor.preview pre .copy', this.__copyClick );
+    $.$document.on ( 'click', '.preview a.note', this.__noteClick );
+    $.$document.on ( 'click', '.preview a.tag', this.__tagClick );
+    $.$document.on ( 'click', '.preview input[type="checkbox"]', this.__checkboxClick );
+    $.$document.on ( 'click', '.preview .copy', this.__copyClick );
 
   }
 
@@ -46,7 +46,7 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
 
   __tagClick = ( event ) => {
 
-    const tag = $(event.currentTarget).data ( 'tag' );
+    const tag = $(event.currentTarget).attr ( 'data-tag' );
 
     this.props.container.tag.set ( tag );
 
@@ -69,7 +69,7 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
   __copyClick = ( event ) => {
 
     const $btn = $(event.currentTarget),
-          $code = $btn.next ( 'code' );
+          $code = $btn.next ( 'pre' ).find ( 'code' );
 
     if ( !$code.length ) return;
 

@@ -1,0 +1,10 @@
+
+@mixin theme-widget-toolbar ( $theme ) {
+
+  .toolbar {
+    background: map-get( $theme, 'toolbar.background' );
+    border-color: map-get( $theme, 'toolbar.border' );
+    color: map-get( $theme, 'toolbar.color' );
+  }
+
+}

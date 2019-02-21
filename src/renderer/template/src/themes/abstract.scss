@@ -1,0 +1,41 @@
+
+// @require ./components/core/body.scss
+// @require ./components/core/selection.scss
+// @require ./components/colors/base.scss
+// @require ./components/colors/accent.scss
+// @require ./components/colors/warning.scss
+// @require ./components/colors/highlight.scss
+// @require ./components/widgets/codemirror.scss
+// @require ./components/widgets/column.scss
+// @require ./components/widgets/editor.scss
+// @require ./components/widgets/list.scss
+// @require ./components/widgets/notification.scss
+// @require ./components/widgets/preview.scss
+// @require ./components/widgets/toolbar.scss
+// @require ./components/windows/main/main.scss
+
+@mixin theme ( $name, $theme ) {
+
+  .theme-#{$name} {
+
+    @include theme-core-body ( $theme );
+    @include theme-core-selection ( $theme );
+
+    @include theme-color-base ( $theme );
+    @include theme-color-accent ( $theme );
+    @include theme-color-highlight ( $theme );
+    @include theme-color-warning ( $theme );
+
+    @include theme-widget-codemirror ( $theme );
+    @include theme-widget-column ( $theme );
+    @include theme-widget-editor ( $theme );
+    @include theme-widget-list ( $theme );
+    @include theme-widget-notification ( $theme );
+    @include theme-widget-preview ( $theme );
+    @include theme-widget-toolbar ( $theme );
+
+    @include theme-window-main ( $theme );
+
+  }
+
+}

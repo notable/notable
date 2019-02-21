@@ -28,7 +28,7 @@ const MultiEditor = ({ notesNr, favorite, unfavorite, pin, unpin, trash, untrash
           <div className="multiple fluid joined actions-delete">
             <Button icon="delete" title="Move to Trash" onClick={trash} />
             <Button icon="delete_restore" title="Restore" onClick={untrash} />
-            <Button icon="delete_forever" color="red inverted" title="Permanently Delete" onClick={del} />
+            <Button icon="delete_forever" color="text-warning" title="Permanently Delete" onClick={del} />
           </div>
           <Button icon="open_in_new" title="Open in Default App" onClick={openInApp} />
         </div>

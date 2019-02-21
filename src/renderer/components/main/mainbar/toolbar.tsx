@@ -19,10 +19,10 @@ import TrashPermanentlyButton from './toolbar_button_trash_permanently';
 
 const Toolbar = ({ hasNote, isFocus, isFullscreen, isZen, isSplit }) => {
 
-  if ( isZen ) return is.macOS () ? <div id="mainbar-toolbar" className="layout-header"></div> : null;
+  if ( isZen ) return is.macOS () ? <div className="layout-header toolbar"></div> : null;
 
   return (
-    <div id="mainbar-toolbar" className="layout-header centerer">
+    <div className="layout-header toolbar">
       <div className={`${!hasNote ? 'disabled' : ''} multiple grow`}>
         {!isFocus || isFullscreen || !is.macOS () ? null : (
           <div className="toolbar-semaphore-spacer"></div>

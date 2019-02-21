@@ -1,0 +1,8 @@
+
+@mixin theme-widget-column ( $theme ) {
+
+  .layout.column {
+    border-color: map-get( $theme, 'column.border' );
+  }
+
+}

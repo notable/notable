@@ -1,0 +1,14 @@
+
+// @require ./abstract.scss
+
+@mixin theme-color-accent ( $theme ) {
+
+  $bg: map-get( $theme, 'accent.background' );
+  $bg-hover: map-get( $theme, 'accent.backgroundHover' );
+  $bg-active: map-get( $theme, 'accent.backgroundActive' );
+  $border: map-get( $theme, 'accent.border' );
+  $color: map-get( $theme, 'accent.color' );
+
+  @include theme-color-full( 'accent', $bg, $bg-hover, $bg-active, $border, $color );
+
+}

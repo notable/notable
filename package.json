@@ -14,6 +14,7 @@
     "build:linux": "npm run compile && electron-builder --linux",
     "build:all": "npm run clean:releases && npm run compile && electron-builder -mwl",
     "svelto:dev": "svelto build --env development",
+    "svelto:dev:watch": "npm run svelto:dev && svelto watch --env development",
     "svelto:prod": "svelto build",
     "iconfont": "icon-font-buildr",
     "comparison": "wkhtmltoimage --quiet --quality 30 --encoding 'UTF-8' --zoom 2 ./resources/comparison/table.html ./resources/comparison/table.png",

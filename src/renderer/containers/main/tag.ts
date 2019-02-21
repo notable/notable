@@ -4,7 +4,6 @@
 import * as _ from 'lodash';
 import {Container, autosuspend} from 'overstated';
 import Tags, {TagSpecials} from '@renderer/utils/tags';
-import Utils from '@renderer/utils/utils';
 
 const {SEPARATOR} = Tags;
 const {DEFAULT, ALL, FAVORITES, NOTEBOOKS, TAGS, TEMPLATES, UNTAGGED, TRASH} = TagSpecials;
@@ -122,11 +121,13 @@ class Tag extends Container<TagState, MainCTX> {
 
   }
 
-  scrollTo = ( tag: string = this.state.tag ) => {
+  scrollTo = ( tag: string | TagObj = this.state.tag ) => {
 
     if ( !tag ) return;
 
-    Utils.scrollTo ( `.tag[data-tag="${tag}"]`, '.layout-content > .multiple > .tag, .layout-content > .multiple > .tag-group' );
+    if ( _.isString ( tag ) ) return this.scrollTo ( this.get ( tag ) );
+
+    $('#list-tags').trigger ( 'scroll-to-item', tag );
 
   }
 
@@ -198,7 +199,7 @@ class Tag extends Container<TagState, MainCTX> {
 
     const index = $tags.index ( '.tag.active' ) + modifier,
           indexWrapped = wrap ? ( $tags.length + index ) % $tags.length : index,
-          tagNext = $tags.eq ( indexWrapped ).data ( 'tag' );
+          tagNext = $tags.eq ( indexWrapped ).attr ( 'data-tag' );
 
     if ( tagNext ) return this.ctx.tag.set ( tagNext );
 

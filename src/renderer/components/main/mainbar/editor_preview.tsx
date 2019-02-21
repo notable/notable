@@ -12,7 +12,7 @@ const EditorPreview = ({ content }) => {
 
   const html = Markdown.render ( content );
 
-  return <div className="layout-content editor preview markdown-body" dangerouslySetInnerHTML={{ __html: html }}></div>;
+  return <div className="layout-content preview markdown-body" dangerouslySetInnerHTML={{ __html: html }}></div>;
 
 };
 

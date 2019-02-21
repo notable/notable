@@ -147,13 +147,13 @@ class Tags extends Container<TagsState, MainCTX> {
 
     let tags = {};
 
-    tags[ALL] = { path: ALL, name: TagSpecialsNames.ALL, notes: [], tags: {} };
-    tags[FAVORITES] = { path: FAVORITES, name: TagSpecialsNames.FAVORITES, notes: [], tags: {} };
-    tags[NOTEBOOKS] = { path: NOTEBOOKS, name: TagSpecialsNames.NOTEBOOKS, notes: [], tags: {} };
+    tags[ALL] = { icon: 'note', path: ALL, name: TagSpecialsNames.ALL, notes: [], tags: {} };
+    tags[FAVORITES] = { icon: 'star', path: FAVORITES, name: TagSpecialsNames.FAVORITES, notes: [], tags: {} };
+    tags[NOTEBOOKS] = { icon: 'notebook', iconCollapsed: 'notebook_multiple', path: NOTEBOOKS, name: TagSpecialsNames.NOTEBOOKS, notes: [], tags: {} };
     tags[TAGS] = { path: TAGS, name: TagSpecialsNames.TAGS, notes: [], tags: {} };
-    tags[TEMPLATES] = { path: TEMPLATES, name: TagSpecialsNames.TEMPLATES, notes: [], tags: {} };
-    tags[UNTAGGED] = { path: UNTAGGED, name: TagSpecialsNames.UNTAGGED, notes: [], tags: {} };
-    tags[TRASH] = { path: TRASH, name: TagSpecialsNames.TRASH, notes: [], tags: {} };
+    tags[TEMPLATES] = { icon: 'tag_outline', iconCollapsed: 'tag_outline_multiple', path: TEMPLATES, name: TagSpecialsNames.TEMPLATES, notes: [], tags: {} };
+    tags[UNTAGGED] = { icon: 'tag_crossed', path: UNTAGGED, name: TagSpecialsNames.UNTAGGED, notes: [], tags: {} };
+    tags[TRASH] = { icon: 'delete', path: TRASH, name: TagSpecialsNames.TRASH, notes: [], tags: {} };
 
     Object.values ( this.ctx.notes.get () ).forEach ( note => this._toggleNote ( tags, note, true ) );
 

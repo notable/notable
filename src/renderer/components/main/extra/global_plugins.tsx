@@ -27,12 +27,16 @@ class GlobalPlugins extends Component<{ container: IMain }, undefined> {
 
     }
 
+    $.$document.on ( 'click', '#quick-panel .list-item', this.__quickPanelClick );
+
   }
 
   componentWillUnmount () {
 
     clearTimeout ( this._updaterTimeout );
     clearInterval ( this._updaterInterval );
+
+    $.$document.off ( 'click', this.__quickPanelClick );
 
   }
 
@@ -41,6 +45,14 @@ class GlobalPlugins extends Component<{ container: IMain }, undefined> {
   __updaterCheck = () => {
 
     ipc.send ( 'updater-check' );
+
+  }
+
+  __quickPanelClick = ( event ) => {
+
+    const nth = $(event.currentTarget).data ( 'nth' );
+
+    this.props.container.quickPanel.openNth ( nth );
 
   }
 

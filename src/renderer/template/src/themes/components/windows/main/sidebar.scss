@@ -1,0 +1,31 @@
+
+// @require themes/components/colors/abstract.scss
+
+@mixin theme-window-main-sidebar ( $theme ) {
+
+  #sidebar {
+
+    background-color: map-get( $theme, 'sidebar.background' );
+    color: map-get( $theme, 'sidebar.color' );
+
+    .list-item {
+
+      $bg: map-get( $theme, 'sidebar.list.item.background' );
+      $bg-hover: map-get( $theme, 'sidebar.list.item.backgroundHover' );
+      $bg-active: map-get( $theme, 'sidebar.list.item.backgroundActive' );
+
+      @include theme-background-color ( $bg, $bg-hover, $bg-active );
+      color: map-get( $theme, 'sidebar.list.item.color' );
+      border-color: map-get( $theme, 'sidebar.list.item.border' );
+
+    }
+
+    @if is-light( map-get( $theme, 'sidebar.background' ) ) != is-light( map-get( $theme, 'middlebar.background' ) ) {
+      & + .layout.column {
+        border-left-width: 0;
+      }
+    }
+
+  }
+
+}

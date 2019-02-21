@@ -14,7 +14,7 @@ const Header = ({ sortBy, sortType, setBy, toggleType }) => {
         sortTypeName = ( sortType === SortingTypes.ASC ) ? 'Ascending' : 'Descending';
 
   return (
-    <div className="layout-content header xsmall">
+    <div className="layout-header list-header xsmall">
       <div className="multiple joined fluid center-y">
         <div className="sort-by select fluid" title={`Sorting by: ${sortByName}`}>
           <span>{sortByName}</span>

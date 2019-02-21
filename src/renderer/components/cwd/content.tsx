@@ -10,7 +10,7 @@ import CWD from '@renderer/containers/cwd';
 const Content = ({ select }) => (
   <>
     <div className="layout-content container sharp centerer">
-      <div className="button centered compact circular giant secondary z-depth-3" title="Select..." onClick={select}>
+      <div className="button centered compact circular giant accent z-depth-3" title="Select..." onClick={select}>
         <i className="icon">folder_search</i>
       </div>
     </div>

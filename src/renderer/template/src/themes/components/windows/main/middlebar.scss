@@ -1,0 +1,17 @@
+
+@mixin theme-window-main-middlebar ( $theme ) {
+
+  #middlebar {
+
+    background-color: map-get( $theme, 'middlebar.background' );
+    color: map-get( $theme, 'middlebar.color' );
+
+    @if is-light( map-get( $theme, 'middlebar.background' ) ) != is-light( map-get( $theme, 'mainbar.background' ) ) {
+      & + .layout.column {
+        border-left-width: 0;
+      }
+    }
+
+  }
+
+}

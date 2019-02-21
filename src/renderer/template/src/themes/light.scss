@@ -1,0 +1,151 @@
+
+// @require ./abstract.scss
+
+@function theme-light () {
+
+  $base-background: #FFFFFF;
+  $base-background-hover: darken( $base-background, 3 );
+  $base-background-active: darken( $base-background, 6 );
+  $base-border: darken( $base-background, 14.5 );
+  $base-color: #1F1F1F;
+
+  $accent-background: #EF6C00;
+  $accent-background-hover: darken( $accent-background, 3 );
+  $accent-background-active: darken( $accent-background, 6 );
+  $accent-border: darken( $accent-background, 14.5 );
+  $accent-color: #FFFFFF;
+
+  $highlight-background: darken( $base-background, 6 );
+  $highlight-background-hover: darken( $highlight-background, 9 );
+  $highlight-background-active: darken( $highlight-background, 12 );
+  $highlight-border: darken( $highlight-background, 20.5 );
+  $highlight-color: $base-color;
+
+  $warning-background: #F44336;
+  $warning-background-hover: darken( $warning-background, 3 );
+  $warning-background-active: darken( $warning-background, 6 );
+  $warning-border: darken( $warning-background, 14.5 );
+  $warning-color: #FFFFFF;
+
+  $body-background: darken( $base-background, 3 );
+  $body-color: $base-color;
+
+  $selection-background: rgba( $accent-background, .15 );
+
+  $sidebar-background: #20272C;
+  $sidebar-color: #FFFFFF;
+
+  $middlebar-background: $base-background;
+  $middlebar-color: $base-color;
+
+  $mainbar-background: $body-background;
+  $mainbar-color: inherit;
+
+  $toolbar-background: darken( $base-background, 4 );
+  $toolbar-border: darken( $toolbar-background, 12 );
+  $toolbar-color: #505050;
+
+  $list-header-background: lighten( $toolbar-background, 1.5 );
+  $list-header-border: lighten( $toolbar-border, 3 );
+  $list-header-color: lighten( $base-color, 30 );
+
+  $list-item-background: transparent;
+  $list-item-background-hover: rgba( #000000, .04 );
+  $list-item-background-active: rgba( #000000, .08 );
+  $list-item-border: rgba( #000000, .12 );
+  $list-item-color: inherit;
+
+  $notification-background: $sidebar-background;
+  $notification-background-hover: darken( $notification-background, 3 );
+  $notification-background-active: darken( $notification-background, 6 );
+  $notification-border: darken( $notification-background, 12 );
+  $notification-color: $sidebar-color;
+
+  $sidebar-list-item-background: transparent;
+  $sidebar-list-item-background-hover: rgba( #000000, .2 );
+  $sidebar-list-item-background-active: rgba( #000000, .4 );
+  $sidebar-list-item-border: rgba( #000000, .6 );
+  $sidebar-list-item-color: inherit;
+
+  $column-border: $list-header-border;
+
+  $editor-background: $middlebar-background;
+  $editor-border: lighten( $column-border, 3 );
+  $editor-color: $body-color;
+
+  $preview-background: $middlebar-background;
+  $preview-border: lighten( $column-border, 3 );
+  $preview-color: $body-color;
+
+  $preview-code-background: #F1F2F2;
+  $preview-link-color: #1565C0;
+  $preview-link-color-hover: darken( $preview-link-color, 3 );
+  $preview-link-color-active: darken( $preview-link-color, 6 );
+
+  @return (
+    'body.background': $body-background,
+    'body.color': $body-color,
+    'selection.background': $selection-background,
+    'base.background': $base-background,
+    'base.backgroundHover': $base-background-hover,
+    'base.backgroundActive': $base-background-active,
+    'base.border': $base-border,
+    'base.color': $base-color,
+    'accent.background': $accent-background,
+    'accent.backgroundHover': $accent-background-hover,
+    'accent.backgroundActive': $accent-background-active,
+    'accent.border': $accent-border,
+    'accent.color': $accent-color,
+    'highlight.background': $highlight-background,
+    'highlight.backgroundHover': $highlight-background-hover,
+    'highlight.backgroundActive': $highlight-background-active,
+    'highlight.border': $highlight-border,
+    'highlight.color': $highlight-color,
+    'warning.background': $warning-background,
+    'warning.backgroundHover': $warning-background-hover,
+    'warning.backgroundActive': $warning-background-active,
+    'warning.border': $warning-border,
+    'warning.color': $warning-color,
+    'column.border': $column-border,
+    'sidebar.background': $sidebar-background,
+    'sidebar.color': $sidebar-color,
+    'sidebar.list.item.background': $sidebar-list-item-background,
+    'sidebar.list.item.backgroundHover': $sidebar-list-item-background-hover,
+    'sidebar.list.item.backgroundActive': $sidebar-list-item-background-active,
+    'sidebar.list.item.border': $sidebar-list-item-border,
+    'sidebar.list.item.color': $sidebar-list-item-color,
+    'middlebar.background': $middlebar-background,
+    'middlebar.color': $middlebar-color,
+    'mainbar.background': $mainbar-background,
+    'mainbar.color': $mainbar-color,
+    'list.header.background': $list-header-background,
+    'list.header.border': $list-header-border,
+    'list.header.color': $list-header-color,
+    'list.item.background': $list-item-background,
+    'list.item.backgroundHover': $list-item-background-hover,
+    'list.item.backgroundActive': $list-item-background-active,
+    'list.item.border': $list-item-border,
+    'list.item.color': $list-item-color,
+    'toolbar.background': $toolbar-background,
+    'toolbar.border': $toolbar-border,
+    'toolbar.color': $toolbar-color,
+    'notification.background': $notification-background,
+    'notification.backgroundHover': $notification-background-hover,
+    'notification.backgroundActive': $notification-background-active,
+    'notification.border': $notification-border,
+    'notification.color': $notification-color,
+    'editor.background': $editor-background,
+    'editor.border': $editor-border,
+    'editor.color': $editor-color,
+    'preview.background': $preview-background,
+    'preview.border': $preview-border,
+    'preview.color': $preview-color,
+    'preview.code.background': $preview-code-background,
+    'preview.link.color': $preview-link-color,
+    'preview.link.colorHover': $preview-link-color-hover,
+    'preview.link.colorActive': $preview-link-color-active
+  );
+
+}
+
+@include theme ( 'light', theme-light() );

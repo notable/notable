@@ -6,8 +6,8 @@ import ItemRaw from './item_raw';
 
 /* ITEM ATTACHMENT */
 
-const ItemAttachment = ({ nth, style, item, isActive }) => (
-  <ItemRaw nth={nth} style={style} item={{ icon: 'paperclip', title: item.fileName }} isActive={isActive} />
+const ItemAttachment = ({ index, style, item }) => (
+  <ItemRaw index={index} style={style} item={{ icon: 'paperclip', title: item.fileName }} />
 );
 
 /* EXPORT */

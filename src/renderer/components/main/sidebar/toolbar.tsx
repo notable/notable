@@ -12,7 +12,7 @@ const Toolbar = ({ isFullscreen }) => {
 
   if ( !is.macOS () || isFullscreen ) return null;
 
-  return <div className="layout-header"></div>;
+  return <div className="layout-header toolbar"></div>;
 
 };
 

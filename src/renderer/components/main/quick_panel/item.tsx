@@ -8,15 +8,15 @@ import ItemRaw from './item_raw';
 
 /* ITEM */
 
-const Item = ({ nth, style, item, isActive }) => {
+const Item = ({ index, style, item }) => {
   if ( item.filePath ) {
     if ( item.metadata ) {
-      return <ItemNote nth={nth} style={style} item={item} isActive={isActive} />;
+      return <ItemNote index={index} style={style} item={item} />;
     } else {
-      return <ItemAttachment nth={nth} style={style} item={item} isActive={isActive} />;
+      return <ItemAttachment index={index} style={style} item={item} />;
     }
   }
-  return <ItemRaw nth={nth} style={style} item={item} isActive={isActive} />;
+  return <ItemRaw index={index} style={style} item={item} />;
 };
 
 /* EXPORT */

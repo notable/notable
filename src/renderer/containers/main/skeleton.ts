@@ -21,7 +21,7 @@ class Skeleton extends Container<SkeletonState, MainCTX> {
       $html.find ( '#sidebar' ).children ().remove ();
       $html.find ( '.layout-header, .layout-content' ).children ().remove ();
       $html.find ( '#mainbar' ).children ().not ( '.layout-header, .layout-content' ).remove ();
-      $html.find ( '.editor' ).remove ();
+      $html.find ( '.editor, .preview' ).remove ();
       $html.find ( '*' ).removeAttr ( 'style' );
       $html.find ( '*' ).removeClass ( 'centerer xsmall resizable' );
       $html.find ( 'head' ).children ().not ( 'meta[charset]' ).remove ();

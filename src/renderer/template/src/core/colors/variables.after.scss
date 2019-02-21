@@ -1,2 +1,2 @@
 
-$colors: map-remove( $colors, 'tertiary', 'quaternary', 'blue', 'brown', 'olive', 'orange', 'pink', 'purple', 'teal', 'violet', 'error', 'success', 'warning' );
+$colors: map-remove( $colors, 'primary', 'secondary', 'tertiary', 'quaternary', 'black', 'blue', 'brown', 'gray', 'green', 'olive', 'orange', 'pink', 'purple', 'red', 'teal', 'violet', 'white', 'yellow', 'error', 'success', 'warning', 'base' );

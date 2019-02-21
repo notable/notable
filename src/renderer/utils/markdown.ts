@@ -138,12 +138,23 @@ const Markdown = {
           try {
             const language = Highlighter.inferLanguage ( $1 );
             const highlighted = Highlighter.highlight ( $2, language );
-            const copy = '<div class="copy" title="Copy code to clipboard"><i class="icon small">content_copy</i></div>';
-            return `<pre>${copy}<code ${$1 || ''}>${highlighted}</code></pre>`;
+            return `<pre><code ${$1 || ''}>${highlighted}</code></pre>`;
           } catch ( e ) {
             console.error ( `[highlight] ${e.message}` );
             return match;
           }
+        }
+      }];
+
+    },
+
+    copy () {
+
+      return [{
+        type: 'output',
+        regex: /<pre><code([^>]*)>([^]+?)<\/code><\/pre>/g,
+        replace ( match ) {
+          return `<div class="copy-wrapper"><div class="copy" title="Copy code to clipboard"><i class="icon small">content_copy</i></div>${match}</div>`;
         }
       }];
 
@@ -230,7 +241,7 @@ const Markdown = {
           } catch ( e ) {
             console.error ( `[mermaid] ${e.message}` );
             $(`#${id}`).remove ();
-            return `<p class="text-red">[mermaid error: ${e.message}]</p>`;
+            return `<p class="text-warning">[mermaid error: ${e.message}]</p>`;
           }
         }
       }];
@@ -354,7 +365,7 @@ const Markdown = {
             $2 = decodeURI ( $2 );
             const basename = path.basename ( $2 );
             const filePath = path.join ( attachmentsPath, $2 );
-            return `<a${$1}href="file://${encodeFilePath ( filePath )}" class="attachment button gray" data-filename="${$2}"${$3}><i class="icon small">paperclip</i><span>${basename}</span></a>`;
+            return `<a${$1}href="file://${encodeFilePath ( filePath )}" class="attachment button highlight" data-filename="${$2}"${$3}><i class="icon small">paperclip</i><span>${basename}</span></a>`;
           }
         },
         { // Link
@@ -384,7 +395,7 @@ const Markdown = {
             $2 = decodeURI ( $2 );
             const basename = path.basename ( $2 );
             const filePath = path.join ( notesPath, $2 );
-            return `<a${$1}href="file://${encodeFilePath ( filePath )}" class="note button gray" data-filepath="${filePath}"${$3}><i class="icon small">note</i><span>${basename}</span></a>`;
+            return `<a${$1}href="file://${encodeFilePath ( filePath )}" class="note button highlight" data-filepath="${filePath}"${$3}><i class="icon small">note</i><span>${basename}</span></a>`;
           }
         },
         { // Link
@@ -410,7 +421,7 @@ const Markdown = {
           regex: `<a(.*?)href="${token}/([^"]+)"(.*?)></a>`,
           replace ( match, $1, $2, $3 ) {
             $2 = decodeURI ( $2 );
-            return `<a${$1}href="#" class="tag button gray" data-tag="${$2}"${$3}><i class="icon small">tag</i><span>${$2}</span></a>`;
+            return `<a${$1}href="#" class="tag button highlight" data-tag="${$2}"${$3}><i class="icon small">tag</i><span>${$2}</span></a>`;
           }
         },
         { // Link
@@ -449,11 +460,11 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {asciimath2tex, katex, mermaid, highlight, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, wikilink} = Markdown.extensions;
+      const {asciimath2tex, katex, mermaid, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, wikilink} = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag ()]
+        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag ()]
       });
 
       converter.setFlavor ( 'github' );

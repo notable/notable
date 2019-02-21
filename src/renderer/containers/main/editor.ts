@@ -147,7 +147,7 @@ class Editor extends Container<EditorState, MainCTX> {
 
     get: () => {
 
-      const $preview = $('.editor.preview'),
+      const $preview = $('.preview'),
             note = this.ctx.note.get ();
 
       if ( !$preview.length || !note ) return;
@@ -161,7 +161,7 @@ class Editor extends Container<EditorState, MainCTX> {
 
     set: async ( state ) => {
 
-      const $preview = await Utils.qsaWait ( '.editor.preview' );
+      const $preview = await Utils.qsaWait ( '.preview' );
 
       if ( !$preview ) return;
 

@@ -14,7 +14,7 @@ import Toolbar from './toolbar';
 /* MAINBAR */
 
 const Mainbar = ({ isMultiEditing, isSplit }) => (
-  <div id="mainbar" className="layout">
+  <div id="mainbar" className="layout column">
     { isMultiEditing ? (
       <MultiEditor />
     ) : (

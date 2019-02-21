@@ -1,0 +1,24 @@
+
+// @require themes/components/colors/abstract.scss
+
+@mixin theme-widget-list ( $theme ) {
+
+  .list-header {
+    background-color: map-get( $theme, 'list.header.background' );
+    border-color: map-get( $theme, 'list.header.border' );
+    color: map-get( $theme, 'list.header.color' );
+  }
+
+  .list-item {
+
+    $bg: map-get( $theme, 'list.item.background' );
+    $bg-hover: map-get( $theme, 'list.item.backgroundHover' );
+    $bg-active: map-get( $theme, 'list.item.backgroundActive' );
+
+    @include theme-background-color ( $bg, $bg-hover, $bg-active );
+    color: map-get( $theme, 'list.item.color' );
+    border-color: map-get( $theme, 'list.item.border' );
+
+  }
+
+}
