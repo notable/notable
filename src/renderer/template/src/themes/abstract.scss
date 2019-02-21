@@ -1,5 +1,6 @@
 
 // @require ./components/core/body.scss
+// @require ./components/core/input.scss
 // @require ./components/core/selection.scss
 // @require ./components/colors/base.scss
 // @require ./components/colors/accent.scss
@@ -10,7 +11,9 @@
 // @require ./components/widgets/editor.scss
 // @require ./components/widgets/list.scss
 // @require ./components/widgets/notification.scss
+// @require ./components/widgets/popover.scss
 // @require ./components/widgets/preview.scss
+// @require ./components/widgets/quick_panel.scss
 // @require ./components/widgets/toolbar.scss
 // @require ./components/windows/main/main.scss
 
@@ -20,6 +23,7 @@
 
     @include theme-core-body ( $theme );
     @include theme-core-selection ( $theme );
+    @include theme-core-input ( $theme );
 
     @include theme-color-base ( $theme );
     @include theme-color-accent ( $theme );
@@ -31,7 +35,9 @@
     @include theme-widget-editor ( $theme );
     @include theme-widget-list ( $theme );
     @include theme-widget-notification ( $theme );
+    @include theme-widget-popover ( $theme );
     @include theme-widget-preview ( $theme );
+    @include theme-widget-quick-panel ( $theme );
     @include theme-widget-toolbar ( $theme );
 
     @include theme-window-main ( $theme );

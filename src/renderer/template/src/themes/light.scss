@@ -53,12 +53,6 @@
   $list-item-background-hover: rgba( #000000, .04 );
   $list-item-background-active: rgba( #000000, .08 );
   $list-item-border: rgba( #000000, .12 );
-
-  $notification-background: $sidebar-background;
-  $notification-background-hover: darken( $notification-background, 3 );
-  $notification-background-active: darken( $notification-background, 6 );
-  $notification-border: darken( $notification-background, 12 );
-  $notification-color: $sidebar-color;
   $list-item-foreground: inherit;
 
   $sidebar-list-item-background: transparent;
@@ -66,6 +60,30 @@
   $sidebar-list-item-background-active: rgba( #000000, .4 );
   $sidebar-list-item-border: rgba( #000000, .6 );
   $sidebar-list-item-foreground: inherit;
+
+  $middlebar-list-item-background: $list-item-background;
+  $middlebar-list-item-background-hover: $list-item-background-hover;
+  $middlebar-list-item-background-active: $list-item-background-active;
+  $middlebar-list-item-border: $list-item-border;
+  $middlebar-list-item-foreground: $list-item-foreground;
+
+  $popover-list-item-background: $list-item-background;
+  $popover-list-item-background-hover: $list-item-background-hover;
+  $popover-list-item-background-active: $list-item-background-active;
+  $popover-list-item-border: $list-item-border;
+  $popover-list-item-foreground: $list-item-foreground;
+
+  $quick-panel-list-item-background: $list-item-background;
+  $quick-panel-list-item-background-hover: $list-item-background-hover;
+  $quick-panel-list-item-background-active: $list-item-background-active;
+  $quick-panel-list-item-border: $list-item-border;
+  $quick-panel-list-item-foreground: $list-item-foreground;
+
+  $notification-background: $sidebar-background;
+  $notification-background-hover: darken( $notification-background, 3 );
+  $notification-background-active: darken( $notification-background, 6 );
+  $notification-border: darken( $notification-background, 12 );
+  $notification-foreground: $sidebar-foreground;
 
   $column-border: $list-header-border;
 
@@ -115,9 +133,24 @@
     'sidebar.list.item.border': $sidebar-list-item-border,
     'sidebar.list.item.foreground': $sidebar-list-item-foreground,
     'middlebar.background': $middlebar-background,
-    'middlebar.color': $middlebar-color,
+    'middlebar.foreground': $middlebar-foreground,
+    'middlebar.list.item.background': $middlebar-list-item-background,
+    'middlebar.list.item.backgroundHover': $middlebar-list-item-background-hover,
+    'middlebar.list.item.backgroundActive': $middlebar-list-item-background-active,
+    'middlebar.list.item.border': $middlebar-list-item-border,
+    'middlebar.list.item.foreground': $middlebar-list-item-foreground,
     'mainbar.background': $mainbar-background,
-    'mainbar.color': $mainbar-color,
+    'mainbar.foreground': $mainbar-foreground,
+    'popover.list.item.background': $popover-list-item-background,
+    'popover.list.item.backgroundHover': $popover-list-item-background-hover,
+    'popover.list.item.backgroundActive': $popover-list-item-background-active,
+    'popover.list.item.border': $popover-list-item-border,
+    'popover.list.item.foreground': $popover-list-item-foreground,
+    'quickPanel.list.item.background': $quick-panel-list-item-background,
+    'quickPanel.list.item.backgroundHover': $quick-panel-list-item-background-hover,
+    'quickPanel.list.item.backgroundActive': $quick-panel-list-item-background-active,
+    'quickPanel.list.item.border': $quick-panel-list-item-border,
+    'quickPanel.list.item.foreground': $quick-panel-list-item-foreground,
     'list.header.background': $list-header-background,
     'list.header.border': $list-header-border,
     'list.header.foreground': $list-header-foreground,

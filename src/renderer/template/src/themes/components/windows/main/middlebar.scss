@@ -1,10 +1,24 @@
 
+// @require themes/components/colors/abstract.scss
+
 @mixin theme-window-main-middlebar ( $theme ) {
 
   #middlebar {
 
     background-color: map-get( $theme, 'middlebar.background' );
     color: map-get( $theme, 'middlebar.foreground' );
+
+    .list-item {
+
+      $bg: map-get( $theme, 'middlebar.list.item.background' );
+      $bg-hover: map-get( $theme, 'middlebar.list.item.backgroundHover' );
+      $bg-active: map-get( $theme, 'middlebar.list.item.backgroundActive' );
+
+      @include theme-background-color ( $bg, $bg-hover, $bg-active );
+      color: map-get( $theme, 'middlebar.list.item.foreground' );
+      border-color: map-get( $theme, 'middlebar.list.item.border' );
+
+    }
 
     @if is-light( map-get( $theme, 'middlebar.background' ) ) != is-light( map-get( $theme, 'mainbar.background' ) ) {
       & + .layout.column {
