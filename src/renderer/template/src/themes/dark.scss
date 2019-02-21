@@ -1,0 +1,184 @@
+
+// @require ./abstract.scss
+
+@function theme-dark () {
+
+  $base-background: #363636;
+  $base-background-hover: lighten( $base-background, 3 );
+  $base-background-active: darken( $base-background, 3 );
+  $base-border: darken( $base-background, 9 );
+  $base-foreground: #eeeeee;
+
+  $accent-background: #EF6C00;
+  $accent-background-hover: lighten( $accent-background, 3 );
+  $accent-background-active: darken( $accent-background, 3 );
+  $accent-border: darken( $accent-background, 9 );
+  $accent-foreground: #eeeeee;
+
+  $highlight-background: lighten( $base-background, 3 );
+  $highlight-background-hover: lighten( $highlight-background, 3 );
+  $highlight-background-active: darken( $highlight-background, 3 );
+  $highlight-border: darken( $highlight-background, 9 );
+  $highlight-foreground: $base-foreground;
+
+  $warning-background: #f44336;
+  $warning-background-hover: lighten( $warning-background, 3 );
+  $warning-background-active: darken( $warning-background, 3 );
+  $warning-border: darken( $warning-background, 9 );
+  $warning-foreground: #eeeeee;
+
+  $body-background: darken( $base-background, 3 );
+  $body-foreground: $base-foreground;
+
+  $selection-background: rgba( $accent-background, .15 );
+
+  $sidebar-background: #0f0f0f;
+  $sidebar-foreground: $base-foreground;
+
+  $middlebar-background: #161616;
+  $middlebar-foreground: $base-foreground;
+
+  $mainbar-background: #0f0f0f;
+  $mainbar-foreground: $base-foreground;
+
+  $toolbar-background: #262626;
+  $toolbar-border: #000000;
+  $toolbar-foreground: #909090;
+
+  $list-header-background: #1f1f1f;
+  $list-header-border: $toolbar-border;
+  $list-header-foreground: $toolbar-foreground;
+
+  $list-item-background: transparent;
+  $list-item-background-hover: rgba( #ffffff, .04 );
+  $list-item-background-active: rgba( #ffffff, .08 );
+  $list-item-border: rgba( #ffffff, .12 );
+  $list-item-foreground: inherit;
+
+  $sidebar-list-item-background: $list-item-background;
+  $sidebar-list-item-background-hover: $list-item-background-hover;
+  $sidebar-list-item-background-active: $list-item-background-active;
+  $sidebar-list-item-border: $list-item-border;
+  $sidebar-list-item-foreground: $list-item-foreground;
+
+  $middlebar-list-item-background: $list-item-background;
+  $middlebar-list-item-background-hover: $list-item-background-hover;
+  $middlebar-list-item-background-active: $list-item-background-active;
+  $middlebar-list-item-border: $list-item-border;
+  $middlebar-list-item-foreground: $list-item-foreground;
+
+  $popover-list-item-background: $base-background;
+  $popover-list-item-background-hover: $base-background-hover;
+  $popover-list-item-background-active: $base-background-active;
+  $popover-list-item-border: $base-border;
+  $popover-list-item-foreground: $base-foreground;
+
+  $quick-panel-list-item-background: $base-background;
+  $quick-panel-list-item-background-hover: $base-background-hover;
+  $quick-panel-list-item-background-active: $base-background-active;
+  $quick-panel-list-item-border: $base-border;
+  $quick-panel-list-item-foreground: $base-foreground;
+
+  $notification-background: $base-background;
+  $notification-background-hover: $base-background-hover;
+  $notification-background-active: $base-background-active;
+  $notification-border: $base-border;
+  $notification-foreground: $base-foreground;
+
+  $column-border: $list-header-border;
+
+  $editor-background: #1f1f1f;
+  $editor-border: $column-border;
+  $editor-foreground: $body-foreground;
+
+  $preview-background: #1f1f1f;
+  $preview-border: $column-border;
+  $preview-foreground: $body-foreground;
+
+  $preview-code-background: #F1F2F2;
+  $preview-link-foreground: #1565C0;
+  $preview-link-foreground-hover: darken( $preview-link-foreground, 3 );
+  $preview-link-foreground-active: darken( $preview-link-foreground, 6 );
+
+  @return (
+    'body.background': $body-background,
+    'body.foreground': $body-foreground,
+    'selection.background': $selection-background,
+    'base.background': $base-background,
+    'base.backgroundHover': $base-background-hover,
+    'base.backgroundActive': $base-background-active,
+    'base.border': $base-border,
+    'base.foreground': $base-foreground,
+    'accent.background': $accent-background,
+    'accent.backgroundHover': $accent-background-hover,
+    'accent.backgroundActive': $accent-background-active,
+    'accent.border': $accent-border,
+    'accent.foreground': $accent-foreground,
+    'highlight.background': $highlight-background,
+    'highlight.backgroundHover': $highlight-background-hover,
+    'highlight.backgroundActive': $highlight-background-active,
+    'highlight.border': $highlight-border,
+    'highlight.foreground': $highlight-foreground,
+    'warning.background': $warning-background,
+    'warning.backgroundHover': $warning-background-hover,
+    'warning.backgroundActive': $warning-background-active,
+    'warning.border': $warning-border,
+    'warning.foreground': $warning-foreground,
+    'column.border': $column-border,
+    'sidebar.background': $sidebar-background,
+    'sidebar.foreground': $sidebar-foreground,
+    'sidebar.list.item.background': $sidebar-list-item-background,
+    'sidebar.list.item.backgroundHover': $sidebar-list-item-background-hover,
+    'sidebar.list.item.backgroundActive': $sidebar-list-item-background-active,
+    'sidebar.list.item.border': $sidebar-list-item-border,
+    'sidebar.list.item.foreground': $sidebar-list-item-foreground,
+    'middlebar.background': $middlebar-background,
+    'middlebar.foreground': $middlebar-foreground,
+    'middlebar.list.item.background': $middlebar-list-item-background,
+    'middlebar.list.item.backgroundHover': $middlebar-list-item-background-hover,
+    'middlebar.list.item.backgroundActive': $middlebar-list-item-background-active,
+    'middlebar.list.item.border': $middlebar-list-item-border,
+    'middlebar.list.item.foreground': $middlebar-list-item-foreground,
+    'mainbar.background': $mainbar-background,
+    'mainbar.foreground': $mainbar-foreground,
+    'popover.list.item.background': $popover-list-item-background,
+    'popover.list.item.backgroundHover': $popover-list-item-background-hover,
+    'popover.list.item.backgroundActive': $popover-list-item-background-active,
+    'popover.list.item.border': $popover-list-item-border,
+    'popover.list.item.foreground': $popover-list-item-foreground,
+    'quickPanel.list.item.background': $quick-panel-list-item-background,
+    'quickPanel.list.item.backgroundHover': $quick-panel-list-item-background-hover,
+    'quickPanel.list.item.backgroundActive': $quick-panel-list-item-background-active,
+    'quickPanel.list.item.border': $quick-panel-list-item-border,
+    'quickPanel.list.item.foreground': $quick-panel-list-item-foreground,
+    'list.header.background': $list-header-background,
+    'list.header.border': $list-header-border,
+    'list.header.foreground': $list-header-foreground,
+    'list.item.background': $list-item-background,
+    'list.item.backgroundHover': $list-item-background-hover,
+    'list.item.backgroundActive': $list-item-background-active,
+    'list.item.border': $list-item-border,
+    'list.item.foreground': $list-item-foreground,
+    'toolbar.background': $toolbar-background,
+    'toolbar.border': $toolbar-border,
+    'toolbar.foreground': $toolbar-foreground,
+    'notification.background': $notification-background,
+    'notification.backgroundHover': $notification-background-hover,
+    'notification.backgroundActive': $notification-background-active,
+    'notification.border': $notification-border,
+    'notification.foreground': $notification-foreground,
+    'editor.background': $editor-background,
+    'editor.border': $editor-border,
+    'editor.foreg round': $editor-foreground,
+    'preview.background': $preview-background,
+    'preview.border': $preview-border,
+    'preview.foreground': $preview-foreground,
+    'preview.code.background': $preview-code-background,
+    'preview.link.foreground': $preview-link-foreground,
+    'preview.link.foregroundHover': $preview-link-foreground-hover,
+    'preview.link.foregroundActive': $preview-link-foreground-active
+  );
+
+}
+
+@include theme ( 'dark', theme-dark() );
