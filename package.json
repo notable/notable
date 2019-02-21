@@ -191,7 +191,7 @@
     "react-hot-loader": "^4.6.5",
     "react-log-updates": "^1.0.7",
     "sass-loader": "^7.1.0",
-    "svelto": "^1.1.4",
+    "svelto": "^1.1.6",
     "terser-webpack-plugin": "^1.2.2",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.3.3",
