@@ -7,7 +7,7 @@
   $bg-hover: map-get( $theme, 'warning.backgroundHover' );
   $bg-active: map-get( $theme, 'warning.backgroundActive' );
   $border: map-get( $theme, 'warning.border' );
-  $color: map-get( $theme, 'warning.color' );
+  $color: map-get( $theme, 'warning.foreground' );
 
   @include theme-color-full( 'warning', $bg, $bg-hover, $bg-active, $border, $color );
 

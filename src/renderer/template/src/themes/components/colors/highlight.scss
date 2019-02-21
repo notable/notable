@@ -7,7 +7,7 @@
   $bg-hover: map-get( $theme, 'highlight.backgroundHover' );
   $bg-active: map-get( $theme, 'highlight.backgroundActive' );
   $border: map-get( $theme, 'highlight.border' );
-  $color: map-get( $theme, 'highlight.color' );
+  $color: map-get( $theme, 'highlight.foreground' );
 
   @include theme-color-full( 'highlight', $bg, $bg-hover, $bg-active, $border, $color );
 

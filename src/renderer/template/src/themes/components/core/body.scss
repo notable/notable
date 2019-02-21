@@ -3,7 +3,7 @@
 
   body {
     background-color: map-get( $theme, 'body.background' );
-    color: map-get( $theme, 'body.color' );
+    color: map-get( $theme, 'body.foreground' );
   }
 
 }

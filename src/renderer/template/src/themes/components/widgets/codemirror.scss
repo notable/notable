@@ -5,7 +5,7 @@
 
     .CodeMirror {
       background-color: map-get( $theme, 'editor.background' );
-      color: map-get( $theme, 'editor.color' );
+      color: map-get( $theme, 'editor.foreground' );
     }
 
     .CodeMirror-selected {

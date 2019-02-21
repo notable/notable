@@ -6,7 +6,7 @@
   .list-header {
     background-color: map-get( $theme, 'list.header.background' );
     border-color: map-get( $theme, 'list.header.border' );
-    color: map-get( $theme, 'list.header.color' );
+    color: map-get( $theme, 'list.header.foreground' );
   }
 
   .list-item {
@@ -16,7 +16,7 @@
     $bg-active: map-get( $theme, 'list.item.backgroundActive' );
 
     @include theme-background-color ( $bg, $bg-hover, $bg-active );
-    color: map-get( $theme, 'list.item.color' );
+    color: map-get( $theme, 'list.item.foreground' );
     border-color: map-get( $theme, 'list.item.border' );
 
   }

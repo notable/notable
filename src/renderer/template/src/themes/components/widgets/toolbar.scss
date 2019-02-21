@@ -4,7 +4,7 @@
   .toolbar {
     background: map-get( $theme, 'toolbar.background' );
     border-color: map-get( $theme, 'toolbar.border' );
-    color: map-get( $theme, 'toolbar.color' );
+    color: map-get( $theme, 'toolbar.foreground' );
   }
 
 }

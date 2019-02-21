@@ -3,7 +3,7 @@
 
   #mainbar {
     background-color: map-get( $theme, 'mainbar.background' );
-    color: map-get( $theme, 'mainbar.color' );
+    color: map-get( $theme, 'mainbar.foreground' );
   }
 
 }
