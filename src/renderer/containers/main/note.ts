@@ -331,7 +331,7 @@ class Note extends Container<NoteState, MainCTX> {
 
       let attachment = this.ctx.attachment.get ( srcPath );
 
-      if ( !attachment ) { // Not an existing attachment
+      if ( !attachment || attachment.filePath !== srcPath ) { // Not an existing attachment
 
         attachment = this.ctx.attachment.read ( srcPath );
 
