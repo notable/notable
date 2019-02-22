@@ -12,7 +12,7 @@ class About extends Route {
 
   /* CONSTRUCTOR */
 
-  constructor ( name = 'about', options = { frame: true, autoHideMenuBar: true, minimizable: false, maximizable: false, resizable: false, backgroundColor: '#ececec', title: 'About', titleBarStyle: 'default', minWidth: 284, minHeight: 160 }, stateOptions = { defaultWidth: 284, defaultHeight: 160 } ) {
+  constructor ( name = 'about', options = { frame: true, autoHideMenuBar: true, fullscreenable: false, minimizable: false, maximizable: false, resizable: false, backgroundColor: '#ececec', title: 'About', titleBarStyle: 'default', minWidth: 284, minHeight: 160 }, stateOptions = { defaultWidth: 284, defaultHeight: 160 } ) {
 
     super ( name, options, stateOptions );
 
