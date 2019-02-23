@@ -152,8 +152,6 @@ class App {
 
   __forceQuit = () => {
 
-    this.___beforeQuit_off ();
-
     this.quit ();
 
   }
@@ -245,6 +243,8 @@ class App {
   quit () {
 
     app['isQuitting'] = true;
+
+    this.___beforeQuit_off ();
 
     app.quit ();
 
