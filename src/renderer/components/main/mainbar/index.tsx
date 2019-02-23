@@ -2,39 +2,16 @@
 /* IMPORT */
 
 import * as React from 'react';
-import {connect} from 'overstated';
-import Main from '@renderer/containers/main';
-import PopoverNoteAttachments from '@renderer/components/main/popovers/popover_note_attachments';
-import PopoverTagsAttachments from '@renderer/components/main/popovers/popover_note_tags';
-import Editor from './editor';
-import MultiEditor from './multi_editor';
-import SplitEditor from './split_editor';
-import Toolbar from './toolbar';
+import Content from './content';
 
 /* MAINBAR */
 
-const Mainbar = ({ isMultiEditing, isSplit }) => (
+const Mainbar = () => (
   <div id="mainbar" className="layout column">
-    { isMultiEditing ? (
-      <MultiEditor />
-    ) : (
-      <>
-        <PopoverNoteAttachments />
-        <PopoverTagsAttachments />
-        <Toolbar />
-        {isSplit ? <SplitEditor /> : <Editor />}
-      </>
-    )}
+    <Content />
   </div>
 );
 
 /* EXPORT */
 
-export default connect ({
-  container: Main,
-  selector: ({ container }) => ({
-    isMultiEditing: container.multiEditor.isEditing (),
-    isSplit: container.editor.isSplit ()
-  })
-})( Mainbar );
-
+export default Mainbar;

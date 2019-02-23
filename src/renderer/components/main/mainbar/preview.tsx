@@ -6,9 +6,9 @@ import {connect} from 'overstated';
 import Markdown from '@renderer/utils/markdown';
 import Main from '@renderer/containers/main';
 
-/* EDITOR PREVIEW */
+/* PREVIEW */
 
-const EditorPreview = ({ content }) => {
+const Preview = ({ content }) => {
 
   const html = Markdown.render ( content );
 
@@ -23,4 +23,4 @@ export default connect ({
   selector: ({ container, content }) => ({
     content: content || container.note.getPlainContent ()
   })
-})( EditorPreview );
+})( Preview );
