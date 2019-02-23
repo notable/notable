@@ -1,7 +1,7 @@
 
 /* CRITICAL */
 
-//TODO: Publish it as `browser-critical-css` or something
+//TODO: Publish as `browser-critical-css` or something
 
 const Critical = { // Extract the critical CSS from the current page, *SO MUCH* smaller and faster than `critical`, which downloads a whole browser for this, but it may output slightly larger strings
 

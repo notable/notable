@@ -38,8 +38,6 @@ export default connect ({
 
     const tag = container.tag.get ( itemKey );
 
-    if ( !tag ) debugger;
-
     return ({
       tag, style, level, isLeaf,
       isActive: container.tag.get () === tag,

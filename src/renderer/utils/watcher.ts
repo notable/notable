@@ -11,6 +11,7 @@ const laxy = require ( 'laxy' ),
 
 /* WATCHER */
 
+//TODO: Publish as `graceful-chokidar` or something
 //TODO: Maybe switch to `https://github.com/Axosoft/nsfw`
 
 function watcher ( root: string, options = {}, callbacks = {} ) {
