@@ -74,13 +74,9 @@ class Note extends Container<NoteState, MainCTX> {
           tag = this.ctx.tag.get (),
           metadata: Partial<NoteMetadataObj> = { title: name };
 
-    if ( tag && tag.path !== ALL && tag.path !== TAGS && tag.path !== UNTAGGED ) { // Trying to put the new note in the current tag
+    if ( tag && tag.path !== ALL && tag.path !== TAGS && tag.path !== UNTAGGED && tag.path !== TRASH ) { // Trying to put the new note in the current tag
 
-      if ( tag.path === TRASH ) {
-
-        metadata.deleted = true;
-
-      } else if ( tag.path === FAVORITES ) {
+      if ( tag.path === FAVORITES ) {
 
         metadata.favorited = true;
 
