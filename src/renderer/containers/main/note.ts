@@ -608,6 +608,7 @@ class Note extends Container<NoteState, MainCTX> {
             {filePath} = await Path.getAllowedPath ( path.dirname ( nextNote.filePath ), `${title}${ext}` );
 
       nextNote.filePath = filePath;
+      nextNote.checksum = CRC32.str ( filePath );
 
       await this.replace ( note, nextNote );
 
