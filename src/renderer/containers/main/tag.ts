@@ -67,6 +67,12 @@ class Tag extends Container<TagState, MainCTX> {
 
   }
 
+  hasNotes = ( tag: string = this.state.tag ): boolean => {
+
+    return !!this.getNotes ( tag ).length;
+
+  }
+
   isCollapsed = ( tag: string = this.state.tag ): boolean => {
 
     const obj = this.get ( tag );
@@ -133,7 +139,7 @@ class Tag extends Container<TagState, MainCTX> {
 
   set = async ( tag: string ) => {
 
-    if ( !this.get ( tag ) ) tag = DEFAULT;
+    if ( !this.hasNotes ( tag ) ) tag = DEFAULT;
 
     await this.setState ({ tag });
 
@@ -181,7 +187,7 @@ class Tag extends Container<TagState, MainCTX> {
 
   update = async () => {
 
-    if ( this.get ( this.state.tag ) ) return;
+    if ( this.hasNotes ( this.state.tag ) ) return;
 
     const tag = DEFAULT;
 
