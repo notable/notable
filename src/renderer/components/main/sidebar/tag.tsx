@@ -10,6 +10,8 @@ import Main from '@renderer/containers/main';
 
 const Tag = ({ style, tag, level, isLeaf, isActive, set, toggleCollapse }) => {
 
+  if ( !tag ) return null;
+
   const {name, path, collapsed, notes, icon, iconCollapsed} = tag,
         isRoot = ( level === 0 ),
         onClick = isActive ? _.noop : () => set ( path ),
@@ -37,6 +39,8 @@ export default connect ({
   selector: ({ container, style, itemKey, level, isLeaf }) => {
 
     const tag = container.tag.get ( itemKey );
+
+    if ( !tag ) return {};
 
     return ({
       tag, style, level, isLeaf,

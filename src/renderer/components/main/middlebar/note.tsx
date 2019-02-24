@@ -9,6 +9,8 @@ import Main from '@renderer/containers/main';
 
 const Note = ({ note, style, title, hasAttachments, isActive, isDeleted, isFavorited, isPinned, isSelected, isMultiEditorEditing, set, toggleNote, toggleNoteRange }) => {
 
+  if ( !note ) return null;
+
   const onClick = event => Svelto.Keyboard.keystroke.hasCtrlOrCmd ( event ) ? toggleNote ( note ) : ( event.shiftKey ? toggleNoteRange ( note ) : set ( note, true ) );
 
   return (
@@ -35,6 +37,8 @@ export default connect ({
   selector: ({ container, style, itemKey }) => {
 
     const note = container.note.get ( itemKey );
+
+    if ( !note ) return {};
 
     return ({
       note, style,
