@@ -116,8 +116,6 @@ class Main extends Container<MainState, MainCTX> {
 
     if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( prev.editor.editing && !prev.editor.split && this.state.editor.split ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length > 1 ) ) ) ) return;
 
-    if ( !( prev.note.note && note && ( prev.note.note.plainContent === note.plainContent || prev.note.note.metadata.modified.getTime () >= note.metadata.modified.getTime () ) ) ) return;
-
     const data = this.ctx.editor.getData ();
 
     if ( !data ) return;
