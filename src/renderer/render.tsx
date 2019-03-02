@@ -20,7 +20,6 @@ async function render () {
   const AppContainer = Environment.isDevelopment ? ( await import ( 'react-hot-loader' ) ).AppContainer : Identity;
 
 global.vars = { foo: {}};
-console.log(4444, global.vars);
 
   renderDOM (
     <AppContainer>
