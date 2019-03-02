@@ -195,6 +195,7 @@ const Markdown = {
     },
 
     katex () {
+
       return [
         { // KaTeX rendering
           type: 'output',
@@ -478,10 +479,11 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {asciimath2tex, katex, mermaid, highlight, copy, checkbox,
+      const {
+        asciimath2tex, katex, mermaid, highlight, copy, checkbox,
         targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks,
-        attachment, note, tag, wikilink,
-      basicMath} = Markdown.extensions;
+        attachment, note, tag, wikilink, basicMath
+      } = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
