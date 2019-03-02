@@ -276,7 +276,7 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /\${(.*)\}/g,  // ${ code }
+        regex: /\${([^\${]*)\}/g,  // ${ code }
         replace ( match, $1, $2, $3) {
           let result = null;
           try {
