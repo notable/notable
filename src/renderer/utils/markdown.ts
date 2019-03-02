@@ -195,7 +195,7 @@ const Markdown = {
     },
 
     katex () {
-
+  console.log('katex rendering')
       return [
         { // KaTeX rendering
           type: 'output',
@@ -271,6 +271,78 @@ const Markdown = {
       ];
 
     },
+
+
+        basicMath () {
+
+            var context;
+            var contextName;
+
+          return [
+            { // Resetting the counter
+              type: 'language',
+              regex: /^/g,
+              replace () {
+                context = {};
+                contextName = '';
+                console.log('basic math - lang ----', contextName, context)
+                return '';
+              }
+            },{
+            type: 'output',
+            regex: /\{:scope\s+(.*?)\}/g,
+            replace ( match, $1, $2, $3) {
+              // context = (1,eval)(`global.${$1}`);
+              contextName = null;
+              $1.split(/\s+/).forEach(scope => {
+                if (!scope.trim()) return;
+                context = global.vars[scope] || {name: scope};
+                global.vars[scope] = context;
+                console.log('basic math :scope', $1, scope, context)
+                contextName = contextName || scope; // first one is the local context
+              })
+
+              return '';
+            }
+          },{
+            type: 'output',
+            regex: /\{:var\s+(.*)\}/g,
+            replace ( match, $1, $2, $3) {
+              console.log('basic math :var', match, $1, $2)
+              $1.split(/\s|,/).forEach(token => {
+                if (!token.trim()) return;
+                console.log('>>', token)
+                global.vars[contextName][`${token}`] = null;
+              });
+              // context = (1,eval)(`global.${$1}`);
+              // context = global.vars[$1] = {name: $1, foo: null};
+              return '';
+            }
+          },{
+            type: 'output',
+            regex: /\{=(.*?)\}/g,
+            replace ( match, $1, $2, $3) {
+
+              console.log('basic match - replace', $1,  context)
+
+              let result = null;
+              // try { result = (1,eval)(`with (${context}){`+$1+'}') } catch(e) {
+              try {
+
+                // TODO resolve scope!!
+                
+                result = (1,eval)(`with (global.vars["${contextName}"]){`+$1+'}')
+                // result = (1,eval)($1);
+              } catch(e) {
+                console.error(`[basicMath] Error evaluating ${$1} at ${$2}:`, e);
+                return `<p class="text-warning">[basicMath error: ${e.message}]</p>`;
+              }
+
+              return `<code>${result}</code>`;
+            }
+          }];
+
+        },
 
     targetBlankLinks () {
 
@@ -460,11 +532,16 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {asciimath2tex, katex, mermaid, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, wikilink} = Markdown.extensions;
+      const {asciimath2tex, katex, mermaid, highlight, copy, checkbox,
+        targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks,
+        attachment, note, tag, wikilink,
+      basicMath} = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag ()]
+        extensions: [
+          basicMath(),  // <<<<<<<<<<<<
+          asciimath2tex (), katex (), mermaid (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag ()]
       });
 
       converter.setFlavor ( 'github' );
