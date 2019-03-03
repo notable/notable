@@ -7,6 +7,7 @@ import 'katex/dist/katex.min.css';
 import * as _ from 'lodash';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
 import {AllHtmlEntities as entities} from 'html-entities';
+import * as isAbsoluteUrl from 'is-absolute-url';
 import * as path from 'path';
 import * as showdown from 'showdown';
 import Config from '@common/config';
@@ -276,12 +277,12 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /<a(.*?)href="(.)(.*?)>/g,
-        replace ( match, $1, $2, $3 ) {
-          if ( $2 === '#' ) { // URL fragment
+        regex: /<a(.*?)href="(.*?)>/g,
+        replace ( match, $1, $2 ) {
+          if ( $2.startsWith ( '#' ) ) { // URL fragment
             return match;
           } else {
-            return `<a${$1}target="_blank" href="${$2}${$3}>`;
+            return `<a${$1}target="_blank" href="${$2}>`;
           }
         }
       }];
@@ -436,6 +437,22 @@ const Markdown = {
 
     },
 
+    noProtocolLinks () {
+
+      return [{
+        type: 'output',
+        regex: /<a(.*?)href="(.*?)>/g,
+        replace ( match, $1, $2 ) {
+          if ( $2.startsWith ( '#' ) || isAbsoluteUrl ( $2 ) ) { // URL fragment or absolute URL
+            return match;
+          } else {
+            return `<a${$1}href="https://${$2}>`;
+          }
+        }
+      }];
+
+    },
+
     wikilink () {
 
       const {ext, re, token} = Config.notes;
@@ -460,11 +477,11 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {asciimath2tex, katex, mermaid, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, wikilink} = Markdown.extensions;
+      const {asciimath2tex, katex, mermaid, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, noProtocolLinks, wikilink} = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag ()]
+        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag (), noProtocolLinks ()]
       });
 
       converter.setFlavor ( 'github' );
