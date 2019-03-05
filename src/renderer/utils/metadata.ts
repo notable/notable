@@ -12,7 +12,7 @@ const Parser = {
   options: {
     flowLevel: 1,
     indent: 2,
-    lineWidth: 8000
+    lineWidth: 1000000
   },
 
   parse ( str ) {
@@ -49,18 +49,6 @@ const Metadata = {
     }
   },
 
-  _addSurroundingEmptyLines ( str: string ): string {
-
-    return str.replace ( /^\s*/, '\n' ).replace ( /\s*$/, '\n' );
-
-  },
-
-  _removeSurroundingEmptyLines ( str: string ): string {
-
-    return str.replace ( /^\s*/, '' ).replace ( /\s*$/, '' );
-
-  },
-
   get ( content: string ): object {
 
     return matter ( content, Metadata.options ).data;
@@ -69,7 +57,7 @@ const Metadata = {
 
   set ( content: string, metadata: object ): string {
 
-    content = Metadata._addSurroundingEmptyLines ( Metadata.remove ( content ) );
+    content = Metadata.remove ( content );
 
     if ( !_.isEmpty ( metadata ) ) {
 
@@ -83,7 +71,7 @@ const Metadata = {
 
   remove ( content: string ): string {
 
-    return Metadata._removeSurroundingEmptyLines ( matter ( content, Metadata.options ).content );
+    return matter ( content, Metadata.options ).content;
 
   }
 

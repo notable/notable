@@ -559,7 +559,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     const checksum = CRC32.str ( filePath ),
           metadata = Metadata.get ( content ),
-          plainContent = Metadata.remove ( content ),
+          plainContent = Metadata.remove ( content ).replace ( /^\n(?=[^\n])/, '' ), //TODO: Removing the previously added initial newline, this shouldn't be necessary, remove this after a while or normalize existing notes permanently
           note = await this.sanitize ({ content, filePath, checksum, plainContent, metadata });
 
     return note;
