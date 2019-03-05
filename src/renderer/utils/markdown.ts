@@ -522,7 +522,7 @@ const Markdown = {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
-    return Markdown.converters.preview ().makeHtml ( str );
+    return Markdown.converters.preview ().makeHtml ( str.trim () ); //FIXME: Strings starting with multiple empty lines aren't rendered properly
 
   },
 
