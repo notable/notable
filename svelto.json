@@ -4,7 +4,8 @@
     "core": {
       "grid": false,
       "jquery/helpers/diff": false,
-      "jquery/vendor/cash": true
+      "jquery/vendor/cash": true,
+      "print": false
     },
     "decorators": {
       "attached": false,

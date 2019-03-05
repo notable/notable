@@ -615,8 +615,12 @@ class Main extends Route {
 
     }
 
+    const optionsPDF = {
+      printBackground: true
+    };
+
     win.webContents.on ( 'did-finish-load', () => {
-      win.webContents.printToPDF ( {}, ( err, data ) => {
+      win.webContents.printToPDF ( optionsPDF, ( err, data ) => {
         if ( err ) return console.error ( err );
         fs.writeFile ( options.dst, data, err => {
           if ( err ) {

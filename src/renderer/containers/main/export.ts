@@ -30,47 +30,43 @@ class Export extends Container<ExportState, MainCTX> {
 
   /* HELPERS */
 
-  _getResources = _.memoize ( async ( resources: string[], options = { minify: true } ) => {
+  _getResource = _.memoize ( async ( resource: string, options = { minify: true } ) => {
 
-    const contents = await Promise.all ( resources.map ( async resource => {
+    const resourcePath = path.resolve ( '', resource );
 
-      const absolutePath = path.resolve ( '', resource );
-
-      return await File.read ( absolutePath );
-
-    }));
-
-    let content = contents.join ( '\n' );
+    let content = await File.read ( resourcePath ) || '';
 
     if ( options.minify ) {
+
       content = content.replace ( / *\n+ */gm, '' );
+
     }
 
     return content;
 
-  }, _.join )
+  })
+
+  _getResources = async ( resources: string[], options = { minify: true } ) => {
+
+    const contents = await Promise.all ( resources.map ( resource => this._getResource ( resource, options ) ) );
+
+    return contents.join ( '\n' );
+
+  }
 
   /* RENDERERS */
 
   renderers = {
 
-    html: async ( note: NoteObj, notePath: string, options = { base64: true, icons: false, metadata: true } ) => {
+    html: async ( note: NoteObj, notePath: string, options = { base64: true, metadata: true } ) => {
 
-      const css = await this._getResources ([
-        'node_modules/codemirror/lib/codemirror.css',
-        'node_modules/codemirror-github-light/lib/codemirror-github-light-theme.css',
-        'node_modules/prism-github/prism-github.css',
+      let css = await this._getResources ([
         'node_modules/katex/dist/katex.min.css',
-        'node_modules/primer-markdown/build/build.css',
         `${__static}/css/notable.min.css`
       ]);
 
       let content = Markdown.render ( note.plainContent ),
           metadata: string[] = [];
-
-      if ( !options.icons ) {
-        content = content.replace ( /<i class="icon[^"]*?">([^<]*?)<\/i>/gi, '' ); // Removing icons, as they won't get renderer
-      }
 
       if ( options.metadata ) {
         metadata.push (
@@ -84,7 +80,7 @@ class Export extends Container<ExportState, MainCTX> {
         );
       }
 
-      if ( options.base64 ) {
+      if ( options.base64 ) { // Images
         const re = /<img([^>]*?)src="file:\/\/([^"]*)"/gi;
         const matches = stringMatches ( content, re );
         for ( let match of matches ) {
@@ -96,6 +92,36 @@ class Export extends Container<ExportState, MainCTX> {
         }
       }
 
+      if ( options.base64 ) { // Fonts
+
+        if ( content.includes ( '<i class="icon' ) ) { // Icon font
+          const re = /url\(([^)]*?IconFont[^)]*?\.woff2[^)]*?)\)/gi;
+          const matches = stringMatches ( css, re );
+          for ( let match of matches ) {
+            const type = mime.lookup ( match[1] );
+            const filePath = `${__static}/fonts/IconFont.woff2`;
+            const base64 = await File.read ( filePath, 'base64' );
+            if ( base64 ) {
+              css = css.replace ( match[0], `url(data:${type};base64,${base64})` );
+            }
+          }
+        }
+
+        if ( content.includes ( '<span class="katex' ) ) { // KaTeX fonts
+          const re = /url\(([^)]*?KaTeX[^)]*?\.woff2[^)]*?)\)/gi;
+          const matches = stringMatches ( css, re );
+          for ( let match of matches ) {
+            const type = mime.lookup ( match[1] );
+            const filePath = require.resolve ( `katex/dist/${match[1]}` );
+            const base64 = await File.read ( filePath, 'base64' );
+            if ( base64 ) {
+              css = css.replace ( match[0], `url(data:${type};base64,${base64})` );
+            }
+          }
+        }
+
+      }
+
       return `
 <html>
   <head>
@@ -104,10 +130,12 @@ class Export extends Container<ExportState, MainCTX> {
     <title>${note.metadata.title}</title>
     <style>${css}</style>
   </head>
-  <body class="preview markdown-body">
+  <body class="theme-light">
+    <div class="preview">
 
 ${content}
 
+    </div>
   </body>
 </html>
       `;
@@ -122,7 +150,7 @@ ${content}
 
     pdf: async ( note: NoteObj, dst: string ) => {
 
-      const html = await this.renderers.html ( note, dst, { base64: false, icons: false, metadata: false } );
+      const html = await this.renderers.html ( note, dst );
 
       ipc.send ( 'print-pdf', { html, dst } );
 
