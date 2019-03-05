@@ -138,7 +138,7 @@ class Notes extends Container<NotesState, MainCTX> {
       if ( !nextNote.content.length && ( Math.abs ( note.metadata.modified.getTime () - nextNote.metadata.modified.getTime () ) < 1000 ) ) return; //FIXME: For some reason some times the note gets read as an empty string, maybe we are reading and writing at "the same" time and the file gets cleared?
       const currentNote = this.ctx.note.get ();
       const editorData = this.ctx.editor.getData ();
-      if ( editorData && this.ctx.note.is ( nextNote, currentNote ) && editorData.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
+      if ( editorData && this.ctx.note.is ( nextNote, currentNote ) && editorData.modified && editorData.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
       if ( currentNote && this.ctx.editor.isEditing () && this.ctx.note.is ( nextNote, currentNote, true ) ) { // Changes to the current note
         const data = this.ctx.editor.getData ();
         if ( data && data.content !== currentNote.plainContent ) { // The current content has not been saved

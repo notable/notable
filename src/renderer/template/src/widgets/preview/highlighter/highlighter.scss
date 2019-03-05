@@ -1,0 +1,61 @@
+
+.preview {
+
+  code,
+  pre {
+    border-radius: 3px;
+    cursor: text;
+    direction: ltr;
+    font-family: $highlighter-font-family;
+    font-size: $highlighter-font-size;
+    hyphens: none;
+    line-height: $highlighter-line-height;
+    margin: 1em 0;
+    overflow: auto;
+    padding: 1.2em;
+    tab-size: 2;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+  }
+
+  p code,
+  li code,
+  table code {
+    margin: 0;
+    border-radius: 3px;
+    padding: 0.2em 0;
+    font-size: $highlighter-font-size;
+  }
+
+  p code:before, p code:after,
+  li code:before,
+  li code:after,
+  table code:before,
+  table code:after {
+    letter-spacing: -0.2em;
+    content: '\00a0';
+  }
+
+  :not(pre) > code[class*='language-'] {
+    padding: 0.1em;
+    border-radius: 0.3em;
+  }
+
+  .token.entity {
+    cursor: help;
+  }
+
+  .token.italic {
+    font-style: italic;
+  }
+
+  .token.bold {
+    font-weight: 600;
+  }
+
+  .namespace {
+    opacity: 0.7;
+  }
+
+}

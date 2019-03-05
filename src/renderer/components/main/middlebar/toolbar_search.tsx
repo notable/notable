@@ -32,7 +32,7 @@ class Search extends React.Component<any, undefined> {
 
     return (
       <div className="multiple joined no-separators grow search">
-        <input ref={this.ref} autoFocus type="search" className="bordered grow small" placeholder="Search..." defaultValue={this.props.query} onChange={this.onChange} />
+        <input ref={this.ref} type="search" className="bordered grow small" placeholder="Search..." defaultValue={this.props.query} onChange={this.onChange} />
         <div className="label bordered compact xsmall" title={isSearching ? 'Clear' : 'Search'}>
           {isSearching ? (
             <i className="icon" onClick={this.props.clear}>close_circle</i>

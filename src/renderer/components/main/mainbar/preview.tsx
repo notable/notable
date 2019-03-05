@@ -13,7 +13,7 @@ const Preview = ({ content }) => (
   <Idle timeout={150}>
     {() => {
       const html = Markdown.render ( content );
-      return <div className="layout-content preview markdown-body" dangerouslySetInnerHTML={{ __html: html }}></div>;
+      return <div className="layout-content preview" dangerouslySetInnerHTML={{ __html: html }}></div>;
     }}
   </Idle>
 );

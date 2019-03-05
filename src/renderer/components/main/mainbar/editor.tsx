@@ -5,30 +5,20 @@ import {ipcRenderer as ipc} from 'electron';
 import * as React from 'react';
 import {connect} from 'overstated';
 import Main from '@renderer/containers/main';
-import Code from './code';
+import Monaco from './monaco';
 
 /* EDITOR */
 
 class Editor extends React.Component<any, undefined> {
 
   _wasWindowBlurred: boolean = false;
-  _currentContent: string;
-  _currentModified: number;
 
   componentDidMount () {
 
-    this.__initCodeMirrorData ();
-    this.__reset ();
-
+    this.props.reset ();
     this.props.focus ();
 
     ipc.addListener ( 'window-blur', this.__windowBlur );
-
-  }
-
-  componentDidUpdate () {
-
-    this.__reset ();
 
   }
 
@@ -38,54 +28,17 @@ class Editor extends React.Component<any, undefined> {
 
   }
 
-  shouldComponentUpdate ( nextProps ) {
-
-    return nextProps.content !== this._currentContent;
-
-  }
-
   __windowBlur = () => {
 
     this._wasWindowBlurred = true;
 
   }
 
-  __initCodeMirrorData = () => { //UGLY
-
-    const cm = this.props.getCodeMirror ();
-
-    if ( !cm ) return;
-
-    Object.defineProperties ( cm, {
-      __modified_date__: {
-        configurable: true,
-        get: () => new Date ( this._currentModified )
-      },
-      __content__: {
-        configurable: true,
-        get: () => this._currentContent
-      }
-    });
-
-  }
-
-  __reset = () => {
-
-    this._currentContent = this.props.content;
-    this._currentModified = this.props.modified.getTime ();
-
-    this.props.reset ();
-
-  }
-
-  __change = ( cm, pos, content ) => {
-
-    this._currentContent = content;
-    this._currentModified = Date.now ();
+  __change = ( content ) => {
 
     if ( !this.props.onChange ) return;
 
-    this.props.onChange ( cm, pos, content );
+    this.props.onChange ( content );
 
   }
 
@@ -101,11 +54,15 @@ class Editor extends React.Component<any, undefined> {
 
   __scroll = () => {
 
-    const cm = this.props.getCodeMirror ();
-
-    if ( !cm || ( !this._wasWindowBlurred && cm.hasFocus () ) ) return;
+    if ( !this.props.getMonaco () || ( !this._wasWindowBlurred && this.props.hasFocus () ) ) return;
 
     this.props.forget ();
+
+  }
+
+  __update = () => {
+
+    this.props.reset ();
 
   }
 
@@ -113,7 +70,7 @@ class Editor extends React.Component<any, undefined> {
 
     const {content, autosave, save} = this.props;
 
-    return <Code className="layout-content editor" value={content} onBlur={() => { save (); autosave () }} onFocus={this.__focus} onChange={this.__change} onScroll={this.__scroll} />;
+    return <Monaco className="layout-content editor" language="markdown" theme="light" value={content} onBlur={() => { save (); autosave () }} onFocus={this.__focus} onChange={this.__change} onUpdate={this.__update} onScroll={this.__scroll} />;
 
   }
 
@@ -126,9 +83,9 @@ export default connect ({
   selector: ({ container, onChange }) => ({
     onChange,
     content: container.note.getPlainContent (),
-    modified: container.note.getModified (),
     autosave: container.note.autosave,
-    getCodeMirror: container.editor.getCodeMirror,
+    getMonaco: container.editor.getMonaco,
+    hasFocus: container.editor.hasFocus,
     forget: container.editor.editingState.forget,
     focus: container.editor.editingState.focus,
     save: container.editor.editingState.save,

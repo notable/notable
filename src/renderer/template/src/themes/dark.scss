@@ -7,13 +7,13 @@
   $base-background-hover: lighten( $base-background, 3 );
   $base-background-active: darken( $base-background, 3 );
   $base-border: darken( $base-background, 9 );
-  $base-foreground: #eeeeee;
+  $base-foreground: #EEEEEE;
 
   $accent-background: #EF6C00;
   $accent-background-hover: lighten( $accent-background, 3 );
   $accent-background-active: darken( $accent-background, 3 );
   $accent-border: darken( $accent-background, 9 );
-  $accent-foreground: #eeeeee;
+  $accent-foreground: #EEEEEE;
 
   $highlight-background: lighten( $base-background, 3 );
   $highlight-background-hover: lighten( $highlight-background, 3 );
@@ -21,31 +21,31 @@
   $highlight-border: darken( $highlight-background, 9 );
   $highlight-foreground: $base-foreground;
 
-  $warning-background: #f44336;
+  $warning-background: #F44336;
   $warning-background-hover: lighten( $warning-background, 3 );
   $warning-background-active: darken( $warning-background, 3 );
   $warning-border: darken( $warning-background, 9 );
-  $warning-foreground: #eeeeee;
+  $warning-foreground: #EEEEEE;
 
   $body-background: darken( $base-background, 3 );
   $body-foreground: $base-foreground;
 
   $selection-background: rgba( $accent-background, .15 );
 
-  $sidebar-background: #0f0f0f;
+  $sidebar-background: #0F0F0F;
   $sidebar-foreground: $base-foreground;
 
   $middlebar-background: #161616;
   $middlebar-foreground: $base-foreground;
 
-  $mainbar-background: #0f0f0f;
+  $mainbar-background: #0F0F0F;
   $mainbar-foreground: $base-foreground;
 
   $toolbar-background: #262626;
   $toolbar-border: #000000;
   $toolbar-foreground: #909090;
 
-  $list-header-background: #1f1f1f;
+  $list-header-background: #1F1F1F;
   $list-header-border: $toolbar-border;
   $list-header-foreground: $toolbar-foreground;
 
@@ -87,18 +87,74 @@
 
   $column-border: $list-header-border;
 
-  $editor-background: #1f1f1f;
+  $editor-background: #1F1F1F;
   $editor-border: $column-border;
   $editor-foreground: $body-foreground;
 
-  $preview-background: #1f1f1f;
+  $preview-background: #1F1F1F;
   $preview-border: $column-border;
   $preview-foreground: $body-foreground;
 
+  //TODO: Update preview colors
+  $preview-heading-border: #EAECEF;
+  $preview-h1-foreground: inherit;
+  $preview-h2-foreground: inherit;
+  $preview-h3-foreground: inherit;
+  $preview-h4-foreground: inherit;
+  $preview-h5-foreground: inherit;
+  $preview-h6-foreground: #6A737D;
   $preview-code-background: #F1F2F2;
+  $preview-code-foreground: $preview-foreground;
   $preview-link-foreground: #1565C0;
   $preview-link-foreground-hover: darken( $preview-link-foreground, 3 );
   $preview-link-foreground-active: darken( $preview-link-foreground, 6 );
+  $preview-table-border: #DFE2E5;
+  $preview-table-row-odd-background: #FFFFFF;
+  $preview-table-row-even-background: #F6F8FA;
+  $preview-blockquote-foreground: #6A737D;
+  $preview-blockquote-border: #DFE2E5;
+  $preview-kbd-background: #FAFBFC;
+  $preview-kbd-border: #959DA5;
+  $preview-kbd-shadow: #959DA5;
+  $preview-kbd-foreground: #444D56;
+  $preview-hr-background: #E1E4E8;
+
+  $katex-fbox-border: $preview-foreground;
+
+  //TODO: Update the highlighter colors
+  $highlighter-background: #F7F7F7;
+  $highlighter-foreground: #333333;
+  $highlighter-token-comment: #969896;
+  $highlighter-token-prolog: #969896;
+  $highlighter-token-doctype: #969896;
+  $highlighter-token-cdata: #969896;
+  $highlighter-token-punctuation: #183691;
+  $highlighter-token-string: #183691;
+  $highlighter-token-atrule: #183691;
+  $highlighter-token-attr-value: #183691;
+  $highlighter-token-property: #63A35C;
+  $highlighter-token-tag: #63A35C;
+  $highlighter-token-boolean: #0086B3;
+  $highlighter-token-number: #0086B3;
+  $highlighter-token-code: #005CC5;
+  $highlighter-token-selector: #A71D5D;
+  $highlighter-token-attr-name: #A71D5D;
+  $highlighter-token-attr-equal: #A71D5D;
+  $highlighter-token-function: #6F42C1;
+  $highlighter-token-keyword: #A71D5D;
+  $highlighter-token-regex: #A71D5D;
+  $highlighter-token-important: #A71D5D;
+  $highlighter-token-operator: #A71D5D;
+  $highlighter-token-entity: #A71D5D;
+  $highlighter-token-title: #005CC5;
+  $highlighter-token-url: #A71D5D;
+  $highlighter-token-list-punctuation: #D73A49;
+  $highlighter-token-blockquote-punctuation: #D73A49;
+  $highlighter-token-title-punctuation: #D73A49;
+
+  //TODO: Update monaco colors
+  $monaco-selected-foreground: rgba( $accent-background, .08 );
+  $monaco-selected-focused-foreground: rgba( $accent-background, .15 );
 
   @return (
     'body.background': $body-background,
@@ -173,10 +229,60 @@
     'preview.background': $preview-background,
     'preview.border': $preview-border,
     'preview.foreground': $preview-foreground,
+    'preview.heading.border': $preview-heading-border,
+    'preview.h1.foreground': $preview-h1-foreground,
+    'preview.h2.foreground': $preview-h2-foreground,
+    'preview.h3.foreground': $preview-h3-foreground,
+    'preview.h4.foreground': $preview-h4-foreground,
+    'preview.h5.foreground': $preview-h5-foreground,
+    'preview.h6.foreground': $preview-h6-foreground,
     'preview.code.background': $preview-code-background,
+    'preview.code.foreground': $preview-code-foreground,
     'preview.link.foreground': $preview-link-foreground,
     'preview.link.foregroundHover': $preview-link-foreground-hover,
-    'preview.link.foregroundActive': $preview-link-foreground-active
+    'preview.link.foregroundActive': $preview-link-foreground-active,
+    'preview.table.border': $preview-table-border,
+    'preview.table.row.odd.background': $preview-table-row-odd-background,
+    'preview.table.row.even.background': $preview-table-row-even-background,
+    'preview.blockquote.foreground': $preview-blockquote-foreground,
+    'preview.blockquote.border': $preview-blockquote-border,
+    'preview.kbd.background': $preview-kbd-background,
+    'preview.kbd.border': $preview-kbd-border,
+    'preview.kbd.shadow': $preview-kbd-shadow,
+    'preview.kbd.foreground': $preview-kbd-foreground,
+    'preview.hr.background': $preview-hr-background,
+    'katex.fbox.border': $katex-fbox-border,
+    'highlighter.background': $highlighter-background,
+    'highlighter.foreground': $highlighter-foreground,
+    'highlighter.token.comment': $highlighter-token-comment,
+    'highlighter.token.prolog': $highlighter-token-prolog,
+    'highlighter.token.doctype': $highlighter-token-doctype,
+    'highlighter.token.cdata': $highlighter-token-cdata,
+    'highlighter.token.punctuation': $highlighter-token-punctuation,
+    'highlighter.token.string': $highlighter-token-string,
+    'highlighter.token.atrule': $highlighter-token-atrule,
+    'highlighter.token.attrValue': $highlighter-token-attr-value,
+    'highlighter.token.property': $highlighter-token-property,
+    'highlighter.token.tag': $highlighter-token-tag,
+    'highlighter.token.boolean': $highlighter-token-boolean,
+    'highlighter.token.number': $highlighter-token-number,
+    'highlighter.token.code': $highlighter-token-code,
+    'highlighter.token.selector': $highlighter-token-selector,
+    'highlighter.token.attrName': $highlighter-token-attr-name,
+    'highlighter.token.attrEqual': $highlighter-token-attr-equal,
+    'highlighter.token.function': $highlighter-token-function,
+    'highlighter.token.keyword': $highlighter-token-keyword,
+    'highlighter.token.regex': $highlighter-token-regex,
+    'highlighter.token.important': $highlighter-token-important,
+    'highlighter.token.operator': $highlighter-token-operator,
+    'highlighter.token.entity': $highlighter-token-entity,
+    'highlighter.token.title': $highlighter-token-title,
+    'highlighter.token.url': $highlighter-token-url,
+    'highlighter.token.list.punctuation': $highlighter-token-list-punctuation,
+    'highlighter.token.blockquote.punctuation': $highlighter-token-blockquote-punctuation,
+    'highlighter.token.title.punctuation': $highlighter-token-title-punctuation,
+    'monaco.selected.foreground': $monaco-selected-foreground,
+    'monaco.selected.focused.foreground': $monaco-selected-focused-foreground
   );
 
 }

@@ -7,17 +7,94 @@
 
     background-color: map-get( $theme, 'preview.background' );
     border-color: map-get( $theme, 'preview.border' );
+    color: map-get( $theme, 'preview.foreground' );
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      border-color: map-get( $theme, 'preview.heading.border' );
+    }
+
+    h1 {
+      color: map-get( $theme, 'preview.h1.foreground' );
+    }
+
+    h2 {
+      color: map-get( $theme, 'preview.h2.foreground' );
+    }
+
+    h3 {
+      color: map-get( $theme, 'preview.h3.foreground' );
+    }
+
+    h4 {
+      color: map-get( $theme, 'preview.h4.foreground' );
+    }
+
+    h5 {
+      color: map-get( $theme, 'preview.h5.foreground' );
+    }
+
+    h6 {
+      color: map-get( $theme, 'preview.h6.foreground' );
+    }
+
+    code {
+      background-color: map-get( $theme, 'preview.code.background' );
+    }
+
+    table th,
+    table td {
+      border-color: map-get( $theme, 'preview.table.border' );
+    }
+
+    table tr {
+      background-color: map-get( $theme, 'preview.table.row.odd.background' );
+    }
+
+    table tr:nth-child(2n) {
+      background-color: map-get( $theme, 'preview.table.row.even.background' );
+    }
 
     p code,
     li code,
     table code {
       background-color: map-get( $theme, 'preview.code.background' ) !important;
+      color: map-get( $theme, 'preview.code.foreground' ) !important;
     }
 
+    blockquote {
+      color: map-get( $theme, 'preview.blockquote.foreground' );
+      border-color: map-get( $theme, 'preview.blockquote.border' );
+    }
+
+    kbd {
+      background-color: map-get( $theme, 'preview.kbd.background' );
+      border-color: map-get( $theme, 'preview.kbd.border' );
+      color: map-get( $theme, 'preview.kbd.foreground' );
+      box-shadow: inset 0 -1px 0 map-get( $theme, 'preview.kbd.shadow' );
+      border-bottom-color: map-get( $theme, 'preview.kbd.shadow' );
+    }
+
+    hr {
+      background-color: map-get( $theme, 'preview.hr.background' );
+    }
+
+    h1 a,
+    h2 a,
+    h3 a,
+    h4 a,
+    h5 a,
+    h6 a,
     p a,
     li a,
     th a,
     td a,
+    dt a,
+    dd a,
     address a {
 
       $color: map-get( $theme, 'preview.link.foreground' );

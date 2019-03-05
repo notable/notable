@@ -1,6 +1,7 @@
 
 /* IMPORT */
 
+import * as _ from 'lodash';
 import {Container, autosuspend} from 'overstated';
 import Utils from '@renderer/utils/utils';
 
@@ -15,6 +16,7 @@ class Editor extends Container<EditorState, MainCTX> {
   /* STATE */
 
   state = {
+    monaco: undefined as MonacoEditor | undefined,
     editing: false,
     split: false
   };
@@ -29,59 +31,41 @@ class Editor extends Container<EditorState, MainCTX> {
 
   }
 
-  /* HELPERS */
-
-  _getDocHeight ( cm ): number {
-
-    return cm.cursorCoords ( { line: Infinity, ch: Infinity }, 'local' ).top;
-
-  }
-
   /* VIEW STATE */
 
   editingState = {
 
-    state: undefined as EditorEditingState,
+    state: undefined as EditorEditingState | undefined,
 
-    get: () => {
+    get: (): EditorEditingState | undefined => {
 
-      const cm = this.getCodeMirror (),
+      const {monaco} = this.state,
             note = this.ctx.note.get ();
 
-      if ( !cm || !note ) return;
+      if ( !monaco || !note ) return;
+
+      const view = monaco.saveViewState ();
+
+      if ( view && view.viewState.firstPositionDeltaTop === 0 ) {
+        view.viewState.firstPositionDeltaTop = Infinity; // Ensuring we are scrolling to the very top, important in zen mode
+      }
 
       return {
         filePath: note.filePath,
-        scrollTop: $('.CodeMirror-scroll')[0].scrollTop,
-        docHeight: this._getDocHeight ( cm ),
-        selections: cm.listSelections ()
+        view
       };
 
     },
 
-    set: async ( state ) => {
+    set: async ( state: EditorEditingState ) => {
 
-      const $scroll = await Utils.qsaWait ( '.CodeMirror-scroll' );
+      if ( !state.view ) return;
 
-      if ( !$scroll ) return;
+      const {monaco} = this.state;
 
-      $scroll[0].scrollTop = state.scrollTop;
+      if ( !monaco ) return;
 
-      const cm = this.getCodeMirror ();
-
-      if ( !cm ) return;
-
-      if ( state.history ) {
-
-        cm.doc.setHistory ( state.history );
-
-      }
-
-      if ( !state.selections.length || ( state.selections.length === 1 && state.selections[0].anchor.ch === 0 && state.selections[0].anchor.line === 0 ) || state.docHeight === this._getDocHeight ( cm ) ) {
-
-        cm.setSelections ( state.selections );
-
-      }
+      monaco.restoreViewState ( state.view );
 
     },
 
@@ -91,7 +75,7 @@ class Editor extends Container<EditorState, MainCTX> {
 
     },
 
-    restore: () => {
+    restore: ( _defer = true ) => {
 
       const note = this.ctx.note.get ();
 
@@ -99,26 +83,36 @@ class Editor extends Container<EditorState, MainCTX> {
 
       this.editingState.set ( this.editingState.state );
 
+      if ( _defer ) _.defer ( () => this.editingState.restore ( false ) ); // Deferring because otherwise this won't work
+
     },
 
     reset: () => {
 
       this.editingState.set ({
-        scrollTop: 0,
-        history: {
-          done: [],
-          undone: []
-        },
-        selections: [{
-          anchor: {
-            ch: 0,
-            line: 0
-          },
-          head: {
-            ch: 0,
-            line: 0
+        filePath: '',
+        view: {
+          contributionsState: {},
+          cursorState: [{
+            inSelectionMode: false,
+            selectionStart: {
+              lineNumber: 0,
+              column: 0
+            },
+            position: {
+              lineNumber: 0,
+              column: 0
+            }
+          }],
+          viewState: {
+            scrollLeft: 0,
+            firstPosition: {
+              lineNumber: 0,
+              column: 0
+            },
+            firstPositionDeltaTop: Infinity // Ensuring we are scrolling to the very top, important in zen mode
           }
-        }]
+        }
       });
 
     },
@@ -131,11 +125,11 @@ class Editor extends Container<EditorState, MainCTX> {
 
     focus: () => {
 
-      const cm = this.getCodeMirror ();
+      const {monaco} = this.state;
 
-      if ( !cm ) return;
+      if ( !monaco ) return;
 
-      cm.focus ();
+      monaco.focus ();
 
     }
 
@@ -143,9 +137,9 @@ class Editor extends Container<EditorState, MainCTX> {
 
   previewingState = {
 
-    state: undefined as EditorPreviewingState,
+    state: undefined as EditorPreviewingState | undefined,
 
-    get: () => {
+    get: (): EditorPreviewingState | undefined => {
 
       const $preview = $('.preview'),
             note = this.ctx.note.get ();
@@ -159,7 +153,7 @@ class Editor extends Container<EditorState, MainCTX> {
 
     },
 
-    set: async ( state ) => {
+    set: async ( state: EditorPreviewingState ) => {
 
       const $preview = await Utils.qsaWait ( '.preview' );
 
@@ -188,6 +182,7 @@ class Editor extends Container<EditorState, MainCTX> {
     reset: () => {
 
       this.previewingState.set ({
+        filePath: '',
         scrollTop: 0
       });
 
@@ -247,40 +242,34 @@ class Editor extends Container<EditorState, MainCTX> {
 
   hasFocus = (): boolean => {
 
-    const cm = this.getCodeMirror ();
+    const {monaco} = this.state;
 
-    return !!cm && cm.hasFocus ();
-
-  }
-
-  getCodeMirror = () => { // Getting the instance in a reliable way
-
-    const ele = $('.CodeMirror')[0];
-
-    return ele && ele.CodeMirror;
+    return !!monaco && ( monaco.hasTextFocus () || monaco.hasWidgetFocus () );
 
   }
 
-  getData = (): { content: string, modified: Date } | undefined => {
+  getMonaco = (): MonacoEditor | undefined => {
 
-    const cm = this.getCodeMirror ();
+    return this.state.monaco;
 
-    if ( !cm ) return;
+  }
+
+  setMonaco = ( monaco?: MonacoEditor ) => {
+
+    return this.setState ({ monaco });
+
+  }
+
+  getData = (): { content: string, modified?: Date } | undefined => {
+
+    const {monaco} = this.state;
+
+    if ( !monaco || !monaco.getModel () ) return;
 
     return {
-      content: cm.__content__, //UGLY
-      modified: cm.__modified_date__ //UGLY
+      content: monaco.getValue (),
+      modified: monaco.getChangeDate ()
     };
-
-  }
-
-  update = () => {
-
-    const cm = this.getCodeMirror ();
-
-    if ( !cm ) return;
-
-    cm.refresh ();
 
   }
 

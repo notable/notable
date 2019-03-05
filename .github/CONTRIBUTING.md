@@ -39,6 +39,7 @@ git clone https://github.com/fabiospampinato/notable.git
 cd notable
 npm install
 npm run svelto:dev
+npm run monaco
 npm run iconfont
 npm run tutorial
 npm run dev # Terminal 1

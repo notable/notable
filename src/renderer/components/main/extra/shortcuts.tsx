@@ -1,6 +1,7 @@
 
 /* IMPORT */
 
+import {Range} from 'monaco-editor/esm/vs/editor/editor.api.js';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
@@ -100,11 +101,22 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
     if ( this.props.container.editor.hasFocus () ) return null;
 
-    const $target = $('#mainbar .editor, #mainbar .preview');
+    const $preview = $('#mainbar .preview');
 
-    if ( !$target.length ) return null;
+    if ( $preview.length ) { // Select preview
 
-    window.getSelection ().selectAllChildren ( $target[0] );
+      window.getSelection ().selectAllChildren ( $preview[0] );
+
+    } else { // Select editor
+
+      const monaco = this.props.container.editor.getMonaco ();
+
+      if ( !monaco ) return null;
+
+      monaco.focus ();
+      monaco.setSelection ( new Range ( 0, 0, Infinity, Infinity ) );
+
+    }
 
   }
 

@@ -11,11 +11,6 @@ const Settings = new Store ({
   cwd: os.homedir (),
   defaults: {
     cwd: undefined,
-    codemirror: {
-      options: {
-        lineWrapping: true
-      }
-    },
     sorting: {
       by: 'title',
       type: 'ascending'

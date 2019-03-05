@@ -18,29 +18,17 @@ class EditPlugins extends Component<{ container: IMain }, undefined> {
 
   componentDidMount () {
 
-    $.$window.on ( 'resize', this.__update );
-    $.$document.on ( 'layoutresizable:resize', this.__update );
-
     this._autosaveInterval = setInterval ( this.__autosave, 10000 );
 
   }
 
   componentWillUnmount () {
 
-    $.$window.off ( 'resize', this.__update );
-    $.$document.off ( 'layoutresizable:resize', this.__update );
-
     clearInterval ( this._autosaveInterval );
 
   }
 
   /* HANDLERS */
-
-  __update = _.debounce ( () => {
-
-    this.props.container.editor.update ();
-
-  }, 25 )
 
   __autosave = () => {
 

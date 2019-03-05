@@ -16,6 +16,10 @@ type AttachmentsObj = {
   [fileName: string]: AttachmentObj
 };
 
+type MonacoEditor = import ( 'monaco-editor/esm/vs/editor/editor.api.js' ).editor.ICodeEditor & {
+  getChangeDate: () => Date | undefined
+}
+
 type NoteMetadataObj = {
   attachments: string[],
   created: Date,
@@ -82,17 +86,17 @@ type AttachmentsState = {
 };
 
 type EditorState = {
+  monaco?: MonacoEditor,
   editing: boolean,
   split: boolean
 };
 
-type EditorEditingState = undefined | {
+type EditorEditingState = {
   filePath: string,
-  scrollTop: number,
-  selections: any[]
+  view: import ( 'monaco-editor/esm/vs/editor/editor.api.js' ).editor.ICodeEditorViewState | null
 };
 
-type EditorPreviewingState = undefined | {
+type EditorPreviewingState = {
   filePath: string,
   scrollTop: number
 };
@@ -216,12 +220,12 @@ type IMain = MainCTX & { ctx: MainCTX };
 type CWDState = {};
 
 type CWDCTX = {
-  get ();
-  set ();
-  select ();
-  selectDefault ();
-  openInApp ();
-  dialog ();
+  get (),
+  set (),
+  select (),
+  selectDefault (),
+  openInApp (),
+  dialog (),
   tutorial: import ( '@renderer/containers/main/tutorial' ).default
 };
 

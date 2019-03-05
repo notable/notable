@@ -1,9 +1,6 @@
 
 /* IMPORT */
 
-import 'prism-github/prism-github.css';
-import 'katex/dist/katex.min.css';
-
 import * as _ from 'lodash';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
 import {AllHtmlEntities as entities} from 'html-entities';

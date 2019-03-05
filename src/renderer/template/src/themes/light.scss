@@ -95,10 +95,63 @@
   $preview-border: lighten( $column-border, 3 );
   $preview-foreground: $body-foreground;
 
-  $preview-code-background: #F1F2F2;
-  $preview-link-foreground: #1565C0;
+  $preview-heading-border: #EAECEF;
+  $preview-h1-foreground: inherit;
+  $preview-h2-foreground: inherit;
+  $preview-h3-foreground: inherit;
+  $preview-h4-foreground: inherit;
+  $preview-h5-foreground: inherit;
+  $preview-h6-foreground: #6A737D;
+  $preview-code-background: rgba( 27, 31, 35, .05 );
+  $preview-code-foreground: $preview-foreground;
+  $preview-link-foreground: #0366D6;
   $preview-link-foreground-hover: darken( $preview-link-foreground, 3 );
   $preview-link-foreground-active: darken( $preview-link-foreground, 6 );
+  $preview-table-border: #DFE2E5;
+  $preview-table-row-odd-background: #FFFFFF;
+  $preview-table-row-even-background: #F6F8FA;
+  $preview-blockquote-foreground: #6A737D;
+  $preview-blockquote-border: #DFE2E5;
+  $preview-kbd-background: #FAFBFC;
+  $preview-kbd-border: #DFE2E5;
+  $preview-kbd-shadow: #959DA5;
+  $preview-kbd-foreground: #444D56;
+  $preview-hr-background: #E1E4E8;
+
+  $katex-fbox-border: $preview-foreground;
+
+  $highlighter-background: #F6F8FA;
+  $highlighter-foreground: $preview-foreground;
+  $highlighter-token-comment: #6A737D;
+  $highlighter-token-prolog: #6A737D;
+  $highlighter-token-doctype: #6A737D;
+  $highlighter-token-cdata: #6A737D;
+  $highlighter-token-punctuation: $preview-foreground;
+  $highlighter-token-string: $preview-foreground;
+  $highlighter-token-atrule: #E36208;
+  $highlighter-token-attr-value: $preview-foreground;
+  $highlighter-token-property: #005CC5;
+  $highlighter-token-tag: #218639;
+  $highlighter-token-boolean: #005CC5;
+  $highlighter-token-number: #005CC5;
+  $highlighter-token-code: #005CC5;
+  $highlighter-token-selector: #6F42C1;
+  $highlighter-token-attr-name: #6F42C1;
+  $highlighter-token-attr-equal: $preview-foreground;
+  $highlighter-token-function: #6F42C1;
+  $highlighter-token-keyword: #D73A49;
+  $highlighter-token-regex: #218639;
+  $highlighter-token-important: #D73A49;
+  $highlighter-token-operator: #D73A49;
+  $highlighter-token-entity: #005CC5;
+  $highlighter-token-title: $preview-foreground;
+  $highlighter-token-url: #6F42C1;
+  $highlighter-token-list-punctuation: #D73A49;
+  $highlighter-token-blockquote-punctuation: #D73A49;
+  $highlighter-token-title-punctuation: #D73A49;
+
+  $monaco-selected-foreground: rgba( $accent-background, .08 );
+  $monaco-selected-focused-foreground: rgba( $accent-background, .15 );
 
   @return (
     'body.background': $body-background,
@@ -173,10 +226,60 @@
     'preview.background': $preview-background,
     'preview.border': $preview-border,
     'preview.foreground': $preview-foreground,
+    'preview.heading.border': $preview-heading-border,
+    'preview.h1.foreground': $preview-h1-foreground,
+    'preview.h2.foreground': $preview-h2-foreground,
+    'preview.h3.foreground': $preview-h3-foreground,
+    'preview.h4.foreground': $preview-h4-foreground,
+    'preview.h5.foreground': $preview-h5-foreground,
+    'preview.h6.foreground': $preview-h6-foreground,
     'preview.code.background': $preview-code-background,
+    'preview.code.foreground': $preview-code-foreground,
     'preview.link.foreground': $preview-link-foreground,
     'preview.link.foregroundHover': $preview-link-foreground-hover,
-    'preview.link.foregroundActive': $preview-link-foreground-active
+    'preview.link.foregroundActive': $preview-link-foreground-active,
+    'preview.table.border': $preview-table-border,
+    'preview.table.row.odd.background': $preview-table-row-odd-background,
+    'preview.table.row.even.background': $preview-table-row-even-background,
+    'preview.blockquote.foreground': $preview-blockquote-foreground,
+    'preview.blockquote.border': $preview-blockquote-border,
+    'preview.kbd.background': $preview-kbd-background,
+    'preview.kbd.border': $preview-kbd-border,
+    'preview.kbd.shadow': $preview-kbd-shadow,
+    'preview.kbd.foreground': $preview-kbd-foreground,
+    'preview.hr.background': $preview-hr-background,
+    'katex.fbox.border': $katex-fbox-border,
+    'highlighter.background': $highlighter-background,
+    'highlighter.foreground': $highlighter-foreground,
+    'highlighter.token.comment': $highlighter-token-comment,
+    'highlighter.token.prolog': $highlighter-token-prolog,
+    'highlighter.token.doctype': $highlighter-token-doctype,
+    'highlighter.token.cdata': $highlighter-token-cdata,
+    'highlighter.token.punctuation': $highlighter-token-punctuation,
+    'highlighter.token.string': $highlighter-token-string,
+    'highlighter.token.atrule': $highlighter-token-atrule,
+    'highlighter.token.attrValue': $highlighter-token-attr-value,
+    'highlighter.token.property': $highlighter-token-property,
+    'highlighter.token.tag': $highlighter-token-tag,
+    'highlighter.token.boolean': $highlighter-token-boolean,
+    'highlighter.token.number': $highlighter-token-number,
+    'highlighter.token.code': $highlighter-token-code,
+    'highlighter.token.selector': $highlighter-token-selector,
+    'highlighter.token.attrName': $highlighter-token-attr-name,
+    'highlighter.token.attrEqual': $highlighter-token-attr-equal,
+    'highlighter.token.function': $highlighter-token-function,
+    'highlighter.token.keyword': $highlighter-token-keyword,
+    'highlighter.token.regex': $highlighter-token-regex,
+    'highlighter.token.important': $highlighter-token-important,
+    'highlighter.token.operator': $highlighter-token-operator,
+    'highlighter.token.entity': $highlighter-token-entity,
+    'highlighter.token.title': $highlighter-token-title,
+    'highlighter.token.url': $highlighter-token-url,
+    'highlighter.token.list.punctuation': $highlighter-token-list-punctuation,
+    'highlighter.token.blockquote.punctuation': $highlighter-token-blockquote-punctuation,
+    'highlighter.token.title.punctuation': $highlighter-token-title-punctuation,
+    'monaco.selected.foreground': $monaco-selected-foreground,
+    'monaco.selected.focused.foreground': $monaco-selected-focused-foreground
   );
 
 }

@@ -17,7 +17,7 @@ class SplitEditor extends React.PureComponent<any, any> {
     content: undefined as string | undefined
   };
 
-  __change = _.debounce ( ( cm, pos, content ) => {
+  __change = _.debounce ( content => {
 
     this.setState ({ content });
 

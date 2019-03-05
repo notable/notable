@@ -1,0 +1,18 @@
+
+@mixin theme-widget-monaco ( $theme ) {
+
+  .monaco-editor {
+
+    .selected-text {
+
+      background-color: map-get( $theme, 'monaco.selected.foreground' );
+
+      &.focused {
+        background-color: map-get( $theme, 'monaco.selected.focused.foreground' );
+      }
+
+    }
+
+  }
+
+}

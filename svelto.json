@@ -90,6 +90,7 @@
       "textarea/autogrow": false,
       "textarea/sender": false,
       "time_ago": false,
+      "typography/blockquote": false,
       "typography/kbd": false,
       "toolbar/vertical": false,
       "tooltip": false,

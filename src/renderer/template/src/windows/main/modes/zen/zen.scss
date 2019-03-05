@@ -1,8 +1,7 @@
 
 .zen {
 
-  html.mac &:not(.fullscreen) .preview,
-  html.mac &:not(.fullscreen) .editor .CodeMirror-lines {
+  html.mac &:not(.fullscreen) .preview {
     padding-top: $toolbar-height !important;
   }
 
