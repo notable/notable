@@ -192,6 +192,7 @@ const Markdown = {
 
       const init = _.once ( () => { // Lazy init for performance
         katex = require ( 'katex' );
+        require ( 'katex/dist/contrib/mhchem.min.js' );
       });
 
       return [

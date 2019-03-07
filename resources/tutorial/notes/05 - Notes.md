@@ -25,6 +25,10 @@ $$f{x} = \int_{-\infty}^\infty \hat f\xi\,e^{2 \pi i \xi x} \,d\xi$$
 
 Wrap it in `$` to display it inline: $e^{iπ} + 1 = 0$.
 
+The [mhchem](https://docs.moodle.org/36/en/Chemistry_notation_using_mhchem) syntax for writing chemical expressions is supported too:
+
+$$\ce{ SO4^2- + Ba^2+ -> BaSO4 v }$$
+
 > **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a formula, and the ending `$` character musn't be followed by a digit. If you need to you can escape the `$` character with a backslash.
 
 #### AsciiMath
