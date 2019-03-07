@@ -1,6 +1,7 @@
 
 /* IMPORT */
 
+import * as _ from 'lodash';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
 import * as LanguageMarkdown from 'monaco-editor/esm/vs/basic-languages/markdown/markdown.js';
 import * as path from 'path';
@@ -16,12 +17,13 @@ const Monaco = {
 
   } as { [name: string]: monaco.editor.IStandaloneThemeData },
 
-  init () {
+  init: _.once ( () => {
 
     Monaco.initEnvironment ();
     Monaco.initThemes ();
     Monaco.initTokenizers ();
 
+  }),
   },
 
   initEnvironment () {

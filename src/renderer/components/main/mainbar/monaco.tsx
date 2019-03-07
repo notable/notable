@@ -60,8 +60,6 @@ import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js';
 
 /* INIT */
 
-UMonaco.init ();
-
 /* MONACO */
 
 class Monaco extends React.Component<{ language: string, theme: string, value: string, editorOptions?: monaco.editor.IEditorOptions, modelOptions?: monaco.editor.ITextModelUpdateOptions, className?: string, editorWillMount?: Function, editorDidMount?: Function, editorWillUnmount?: Function, editorDidUnmount?: Function, onBlur?: Function, onFocus?: Function, onChange?: Function, onUpdate?: Function, onScroll?: Function }, {}> {
@@ -127,6 +125,8 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
   /* LIFECYCLE */
 
   componentWillMount () {
+
+    UMonaco.init ();
 
     if ( this.props.onChange ) {
       this._onChangeDebounced = _.debounce ( this.props.onChange as any, 25 ); //TSC
