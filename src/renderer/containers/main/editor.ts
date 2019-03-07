@@ -44,7 +44,8 @@ class Editor extends Container<EditorState, MainCTX> {
 
       if ( !monaco || !note ) return;
 
-      const view = monaco.saveViewState ();
+      const model = monaco.getModel (),
+            view = monaco.saveViewState ();
 
       if ( view && view.viewState.firstPositionDeltaTop === 0 ) {
         view.viewState.firstPositionDeltaTop = Infinity; // Ensuring we are scrolling to the very top, important in zen mode
@@ -52,6 +53,7 @@ class Editor extends Container<EditorState, MainCTX> {
 
       return {
         filePath: note.filePath,
+        model,
         view
       };
 
@@ -65,6 +67,12 @@ class Editor extends Container<EditorState, MainCTX> {
 
       if ( !monaco ) return;
 
+      if ( state.model && state.model !== monaco.getModel () ) {
+
+        monaco.setModel ( state.model );
+
+      }
+
       monaco.restoreViewState ( state.view );
 
     },
@@ -75,15 +83,15 @@ class Editor extends Container<EditorState, MainCTX> {
 
     },
 
-    restore: ( _defer = true ) => {
+    restore: () => {
 
       const note = this.ctx.note.get ();
 
       if ( !note || !this.editingState.state || note.filePath !== this.editingState.state.filePath ) return;
 
-      this.editingState.set ( this.editingState.state );
+      if ( this.editingState.state.model && note.plainContent !== this.editingState.state.model.getValue () ) this.editingState.state.model = null;
 
-      if ( _defer ) _.defer ( () => this.editingState.restore ( false ) ); // Deferring because otherwise this won't work
+      this.editingState.set ( this.editingState.state );
 
     },
 
@@ -91,6 +99,7 @@ class Editor extends Container<EditorState, MainCTX> {
 
       this.editingState.set ({
         filePath: '',
+        model: null,
         view: {
           contributionsState: {},
           cursorState: [{

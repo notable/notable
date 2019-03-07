@@ -15,7 +15,6 @@ class Editor extends React.Component<any, undefined> {
 
   componentDidMount () {
 
-    this.props.reset ();
     this.props.focus ();
 
     ipc.addListener ( 'window-blur', this.__windowBlur );
@@ -31,6 +30,19 @@ class Editor extends React.Component<any, undefined> {
   __windowBlur = () => {
 
     this._wasWindowBlurred = true;
+
+  }
+
+  __mount = ( editor ) => {
+
+    this.props.setMonaco ( editor );
+    this.props.restore ();
+
+  }
+
+  __unmount = () => {
+
+    this.props.setMonaco ();
 
   }
 
@@ -70,7 +82,7 @@ class Editor extends React.Component<any, undefined> {
 
     const {content, autosave, save} = this.props;
 
-    return <Monaco className="layout-content editor" language="markdown" theme="light" value={content} onBlur={() => { save (); autosave () }} onFocus={this.__focus} onChange={this.__change} onUpdate={this.__update} onScroll={this.__scroll} />;
+    return <Monaco className="layout-content editor" language="markdown" theme="light" value={content} editorDidMount={this.__mount} editorWillUnmount={this.__unmount} onBlur={() => { save (); autosave () }} onFocus={this.__focus} onChange={this.__change} onUpdate={this.__update} onScroll={this.__scroll} />;
 
   }
 
@@ -85,6 +97,7 @@ export default connect ({
     content: container.note.getPlainContent (),
     autosave: container.note.autosave,
     getMonaco: container.editor.getMonaco,
+    setMonaco: container.editor.setMonaco,
     hasFocus: container.editor.hasFocus,
     forget: container.editor.editingState.forget,
     focus: container.editor.editingState.focus,

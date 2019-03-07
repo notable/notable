@@ -93,6 +93,7 @@ type EditorState = {
 
 type EditorEditingState = {
   filePath: string,
+  model: import ( 'monaco-editor/esm/vs/editor/editor.api.js' ).editor.ITextModel | null,
   view: import ( 'monaco-editor/esm/vs/editor/editor.api.js' ).editor.ICodeEditorViewState | null
 };
 
