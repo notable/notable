@@ -14,12 +14,6 @@ import Utils from './utils';
 
 const {encodeFilePath} = Utils;
 
-/* IMPORT LAZY */
-
-const laxy = require ( 'laxy' ),
-      mermaid = laxy ( () => require ( 'mermaid' ) )(),
-      katex = laxy ( () => require ( 'katex' ) )();
-
 /* MARKDOWN */
 
 const Markdown = {
@@ -194,6 +188,12 @@ const Markdown = {
 
     katex () {
 
+      let katex;
+
+      const init = _.once ( () => { // Lazy init for performance
+        katex = require ( 'katex' );
+      });
+
       return [
         { // KaTeX rendering
           type: 'output',
@@ -201,6 +201,7 @@ const Markdown = {
           replace ( match, $1, $2, $3, index, content ) {
             if ( match.startsWith ( '\\' ) ) return match;
             if ( Markdown.extensions.utilities.isInsideCode ( content, index, false ) ) return match;
+            init ();
             const tex = $1 || $2 || $3;
             try {
               Config.katex.displayMode = !$3;
@@ -226,12 +227,18 @@ const Markdown = {
 
     mermaid () {
 
-      mermaid.initialize ( Config.mermaid );
+      let mermaid;
+
+      const init = _.once ( () => { // Lazy init for performance
+        mermaid = require ( 'mermaid' );
+        mermaid.initialize ( Config.mermaid );
+      });
 
       return [{
         type: 'output',
         regex: /<pre><code\s[^>]*language-mermaid[^>]*>([^]+?)<\/code><\/pre>/g,
         replace ( match, $1 ) {
+          init ();
           const id = `mermaid-${CRC32.str ( $1 )}`;
           try {
             const svg = mermaid.render ( id, entities.decode ( $1 ) );
