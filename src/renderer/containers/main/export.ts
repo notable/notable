@@ -32,9 +32,7 @@ class Export extends Container<ExportState, MainCTX> {
 
   _getResource = _.memoize ( async ( resource: string, options = { minify: true } ) => {
 
-    const resourcePath = path.resolve ( '', resource );
-
-    let content = await File.read ( resourcePath ) || '';
+    let content = await File.read ( resource ) || '';
 
     if ( options.minify ) {
 
@@ -61,7 +59,7 @@ class Export extends Container<ExportState, MainCTX> {
     html: async ( note: NoteObj, notePath: string, options = { base64: true, metadata: true } ) => {
 
       let css = await this._getResources ([
-        'node_modules/katex/dist/katex.min.css',
+        require.resolve ( 'katex/dist/katex.min.css' ),
         `${__static}/css/notable.min.css`
       ]);
 
@@ -112,7 +110,7 @@ class Export extends Container<ExportState, MainCTX> {
           const matches = stringMatches ( css, re );
           for ( let match of matches ) {
             const type = mime.lookup ( match[1] );
-            const filePath = require.resolve ( `katex/dist/${match[1]}` );
+            const filePath = require.resolve ( `katex/dist/fonts/${match[1].replace ( /^fonts\//, '' )}` );
             const base64 = await File.read ( filePath, 'base64' );
             if ( base64 ) {
               css = css.replace ( match[0], `url(data:${type};base64,${base64})` );
