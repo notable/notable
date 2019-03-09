@@ -12,6 +12,55 @@ import ThemeLight from './monaco_light';
 
 const Monaco = {
 
+  editorOptions: <monaco.editor.IEditorOptions> {
+    accessibilitySupport: 'off',
+    colorDecorators: false,
+    contextmenu: false,
+    copyWithSyntaxHighlighting: false,
+    dragAndDrop: true,
+    folding: false,
+    fontSize: 16 * .875,
+    hideCursorInOverviewRuler: true,
+    highlightActiveIndentGuide: false,
+    hover: {
+      enabled: false
+    },
+    iconsInSuggestions: false,
+    lightbulb: {
+      enabled: false
+    },
+    lineDecorationsWidth: 5,
+    lineHeight: 16 * .875 * 1.5,
+    lineNumbers: 'off',
+    minimap: {
+      enabled: false
+    },
+    model: null,
+    occurrencesHighlight: false,
+    overviewRulerBorder: false,
+    overviewRulerLanes: 0,
+    renderIndentGuides: false,
+    roundedSelection: false,
+    scrollbar: {
+      useShadows: false,
+      horizontalScrollbarSize: 12,
+      verticalScrollbarSize: 12
+    },
+    scrollBeyondLastColumn: 0,
+    scrollBeyondLastLine: false,
+    snippetSuggestions: 'none',
+    wordWrap: 'bounded',
+    wordWrapColumn: 1000000,
+    wordWrapMinified: false,
+    wrappingIndent: 'same'
+  },
+
+  modelOptions: <monaco.editor.ITextModelUpdateOptions> {
+    insertSpaces: true,
+    tabSize: 2,
+    trimAutoWhitespace: true
+  },
+
   keybindingsPatched: {
 
     'actions.find': false,

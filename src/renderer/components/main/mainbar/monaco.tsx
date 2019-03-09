@@ -80,54 +80,6 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
   _preventOnChangeEvent: boolean = false;
   _zoneTopId: number;
 
-  defaultEditorOptions: monaco.editor.IEditorOptions = {
-    accessibilitySupport: 'off',
-    colorDecorators: false,
-    contextmenu: false,
-    copyWithSyntaxHighlighting: false,
-    dragAndDrop: true,
-    folding: false,
-    fontSize: 16 * .875,
-    hideCursorInOverviewRuler: true,
-    highlightActiveIndentGuide: false,
-    hover: {
-      enabled: false
-    },
-    iconsInSuggestions: false,
-    lightbulb: {
-      enabled: false
-    },
-    lineDecorationsWidth: 5,
-    lineHeight: 16 * .875 * 1.5,
-    lineNumbers: 'off',
-    minimap: {
-      enabled: false
-    },
-    occurrencesHighlight: false,
-    overviewRulerBorder: false,
-    overviewRulerLanes: 0,
-    renderIndentGuides: false,
-    roundedSelection: false,
-    scrollbar: {
-      useShadows: false,
-      horizontalScrollbarSize: 12,
-      verticalScrollbarSize: 12
-    },
-    scrollBeyondLastColumn: 0,
-    scrollBeyondLastLine: false,
-    snippetSuggestions: 'none',
-    wordWrap: 'bounded',
-    wordWrapColumn: 1000000,
-    wordWrapMinified: false,
-    wrappingIndent: 'same'
-  };
-
-  defaultModelOptions: monaco.editor.ITextModelUpdateOptions = {
-    insertSpaces: true,
-    tabSize: 2,
-    trimAutoWhitespace: true
-  };
-
   /* LIFECYCLE */
 
   componentWillMount () {
@@ -343,9 +295,10 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
   initMonaco () {
 
     const {language, theme, value, editorOptions, modelOptions} = this.props,
-          dynamicOptions = this.editorWillMount ();
+          dynamicOptions = this.editorWillMount (),
+          finalEditorOptions = editorOptions || dynamicOptions ? _.merge ( {}, UMonaco.editorOptions, editorOptions || {}, dynamicOptions || {}, { model: null } ) : UMonaco.editorOptions;
 
-    this.editor = monaco.editor.create ( this.ref.current, { ...this.defaultEditorOptions, ...( editorOptions || {} ), ...( dynamicOptions || {} ), model: null } ) as any; //TSC //UGLY
+    this.editor = monaco.editor.create ( this.ref.current, finalEditorOptions ) as any; //TSC //UGLY
 
     this.editor.getChangeDate = () => this._currentChangeDate; //UGlY
 
@@ -359,7 +312,9 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
     if ( model ) {
 
-      model.updateOptions ({ ...this.defaultModelOptions, ...( modelOptions || {} ) });
+      const finalModelOptions = modelOptions ? _.merge ( {}, UMonaco.modelOptions, modelOptions || {} ) : UMonaco.modelOptions;
+
+      model.updateOptions ( finalModelOptions );
 
     }
 
