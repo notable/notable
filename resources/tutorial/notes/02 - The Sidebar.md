@@ -6,7 +6,7 @@ tags: [Basics, Notebooks/Tutorial]
 
 # 02 - The Sidebar
 
-The sidebar is where where all your notes are categorized.
+The sidebar is where all your notes are categorized.
 
 ## Categories
 
