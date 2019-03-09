@@ -7,6 +7,7 @@ import {Command, EditorCommand} from 'monaco-editor/esm/vs/editor/browser/editor
 import {EditorContextKeys} from 'monaco-editor/esm/vs/editor/common/editorContextKeys.js';
 import * as LanguageMarkdown from 'monaco-editor/esm/vs/basic-languages/markdown/markdown.js';
 import * as path from 'path';
+import Settings from '@common/settings';
 import ThemeLight from './monaco_light';
 
 /* MONACO */
@@ -50,7 +51,7 @@ const Monaco = {
     scrollBeyondLastColumn: 0,
     scrollBeyondLastLine: false,
     snippetSuggestions: 'none',
-    wordWrap: 'bounded',
+    wordWrap: Settings.get ( 'monaco.editorOptions.wordWrap' ),
     wordWrapColumn: 1000000,
     wordWrapMinified: false,
     wrappingIndent: 'same'
@@ -64,6 +65,25 @@ const Monaco = {
 
   keybindings: {
 
+    'editor.toggleWordWrap': {
+      options: {
+        precondition: EditorContextKeys.writable,
+        kbOpts: {
+          kbExpr: EditorContextKeys.editorTextFocus,
+          primary: monaco.KeyMod.Alt | monaco.KeyCode.KEY_Z,
+          weight: 100
+        }
+      },
+      handler ( accessor, editor: MonacoEditor ) {
+
+        Monaco.editorOptions.wordWrap = Monaco.editorOptions.wordWrap === 'bounded' ? 'off' : 'bounded';
+
+        Settings.set ( 'monaco.editorOptions.wordWrap', Monaco.editorOptions.wordWrap );
+
+        editor.updateOptions ( Monaco.editorOptions );
+
+      }
+    }
 
   },
 

@@ -43,6 +43,7 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 - <kbd>Cmd+Ctrl+Down</kbd> - Move current line below.
 - <kbd>Cmd+D</kbd> - Select the next match.
 - <kbd>Cmd+Shift+L</kbd> - Select all matches.
+- <kbd>Alt-Z</kbd> - Toggle word wrapping.
 
 ## Multi-Editor
 

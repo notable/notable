@@ -11,6 +11,11 @@ const Settings = new Store ({
   cwd: os.homedir (),
   defaults: {
     cwd: undefined,
+    monaco: {
+      editorOptions: {
+        wordWrap: 'bounded'
+      }
+    },
     sorting: {
       by: 'title',
       type: 'ascending'
