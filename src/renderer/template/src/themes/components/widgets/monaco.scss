@@ -3,17 +3,18 @@
 
   .monaco-editor {
 
-    .monaco-scrollable-element > .scrollbar > .slider {
+    .monaco-scrollable-element > .scrollbar > .slider,
+    .minimap-slider .minimap-slider-horizontal {
 
-      background: map-get( $theme, 'monaco.slider.background' );
+      background: map-get( $theme, 'monaco.slider.background' ) !important;
 
       &:hover {
-        background: map-get( $theme, 'monaco.slider.backgroundHover' );
+        background: map-get( $theme, 'monaco.slider.backgroundHover' ) !important;
       }
 
       &:active,
       .active {
-        background: map-get( $theme, 'monaco.slider.backgroundActive' );
+        background: map-get( $theme, 'monaco.slider.backgroundActive' ) !important;
       }
 
     }
@@ -26,6 +27,18 @@
         background-color: map-get( $theme, 'monaco.selected.focused.foreground' );
       }
 
+    }
+
+    .margin {
+      background-color: map-get( $theme, 'monaco.margin.background' );
+    }
+
+    .line-numbers {
+      color: map-get( $theme, 'monaco.lineNumber.foreground' );
+    }
+
+    .current-line ~ .line-numbers {
+      color: map-get( $theme, 'monaco.currentLineNumber.foreground' );
     }
 
   }

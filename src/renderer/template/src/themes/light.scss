@@ -155,6 +155,9 @@
   $monaco-slider-background: rgba( #000000, .15 );
   $monaco-slider-backgroundHover: rgba( #000000, .2 );
   $monaco-slider-backgroundActive: rgba( #000000, .25 );
+  $monaco-margin-background: $editor-background;
+  $monaco-lineNumber-foreground: #6A737D;
+  $monaco-currentLineNumber-foreground: $monaco-lineNumber-foreground;
 
   @return (
     'body.background': $body-background,
@@ -285,7 +288,10 @@
     'monaco.selected.focused.foreground': $monaco-selected-focused-foreground,
     'monaco.slider.background': $monaco-slider-background,
     'monaco.slider.backgroundHover': $monaco-slider-backgroundHover,
-    'monaco.slider.backgroundActive': $monaco-slider-backgroundActive
+    'monaco.slider.backgroundActive': $monaco-slider-backgroundActive,
+    'monaco.margin.background': $monaco-margin-background,
+    'monaco.lineNumber.foreground': $monaco-lineNumber-foreground,
+    'monaco.currentLineNumber.foreground': $monaco-currentLineNumber-foreground
   );
 
 }

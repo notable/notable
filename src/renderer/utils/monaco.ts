@@ -31,7 +31,7 @@ const Monaco = {
     lightbulb: {
       enabled: false
     },
-    lineDecorationsWidth: 5,
+    lineDecorationsWidth: 3,
     lineHeight: 16 * .875 * 1.5,
     lineNumbers: 'off',
     minimap: {

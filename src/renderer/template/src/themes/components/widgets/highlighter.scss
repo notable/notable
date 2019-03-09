@@ -2,7 +2,7 @@
 @mixin theme-widget-highlighter ( $theme ) {
 
   pre {
-    background: map-get( $theme, 'highlighter.background' );
+    background-color: map-get( $theme, 'highlighter.background' );
     color: map-get( $theme, 'highlighter.foreground' );
   }
 
