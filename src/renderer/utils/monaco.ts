@@ -3,7 +3,8 @@
 
 import * as _ from 'lodash';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
-import {Command} from 'monaco-editor/esm/vs/editor/browser/editorExtensions.js';
+import {Command, EditorCommand} from 'monaco-editor/esm/vs/editor/browser/editorExtensions.js';
+import {EditorContextKeys} from 'monaco-editor/esm/vs/editor/common/editorContextKeys.js';
 import * as LanguageMarkdown from 'monaco-editor/esm/vs/basic-languages/markdown/markdown.js';
 import * as path from 'path';
 import ThemeLight from './monaco_light';
@@ -59,6 +60,11 @@ const Monaco = {
     insertSpaces: true,
     tabSize: 2,
     trimAutoWhitespace: true
+  },
+
+  keybindings: {
+
+
   },
 
   keybindingsPatched: {
@@ -143,6 +149,33 @@ const Monaco = {
 
   },
 
+  initKeybindings () {
+
+    Object.keys ( Monaco.keybindings ).forEach ( id => {
+
+      const {options, handler} = Monaco.keybindings[id];
+
+      options.id = id;
+      options.label = options.label || options.id;
+
+      class CustomCommand extends EditorCommand {
+
+        constructor () {
+          super ( options );
+        }
+
+        runEditorCommand ( accessor, editor ) {
+          return handler ( accessor, editor );
+        }
+
+      }
+
+      new CustomCommand ()['register']();
+
+    });
+
+  },
+
   initThemes () {
 
     Object.keys ( Monaco.themes ).forEach ( name => {
@@ -177,6 +210,7 @@ const Monaco = {
 };
 
 Monaco.patchKeybindings ();
+Monaco.initKeybindings ();
 
 /* EXPORT */
 
