@@ -32,14 +32,17 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 
 ## Editor
 
-- <kbd>Tab</kbd> - Indent current line.
-- <kbd>Shift+Tab</kbd> - Outdent current line.
-- <kbd>Cmd+Ctrl+Up</kbd> - Move current line up.
-- <kbd>Cmd+Ctrl+Down</kbd> - Move current line down.
-- <kbd>Alt+Click</kbd> - Add a new cursor.
-- <kbd>Alt-Z</kbd> - Toggle line wrapping.
-- <kbd>Cmd+Enter</kbd> - Toggle a todo's box.
-- <kbd>Alt+D</kbd> - Toggle a todo's check mark.
+- <kbd>Cmd+Z</kbd> - Undo.
+- <kbd>Cmd+Shift+Z</kbd> - Redo.
+- <kbd>Alt+Click</kbd> - Insert a new cursor.
+- <kbd>Cmd+Enter</kbd> - Insert a new line below the current one.
+- <kbd>Cmd+Shift+Enter</kbd> - Insert a new line above the current one.
+- <kbd>Cmd+Alt+Up</kbd> - Insert a new cursor above.
+- <kbd>Cmd+Alt+Down</kbd> - Insert a new cursor below.
+- <kbd>Cmd+Ctrl+Up</kbd> - Move current line above.
+- <kbd>Cmd+Ctrl+Down</kbd> - Move current line below.
+- <kbd>Cmd+D</kbd> - Select the next match.
+- <kbd>Cmd+Shift+L</kbd> - Select all matches.
 
 ## Multi-Editor
 
