@@ -527,7 +527,7 @@ const Markdown = {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
-    return Markdown.converters.preview ().makeHtml ( str.trim () ); //FIXME: Strings starting with multiple empty lines aren't rendered properly
+    return Markdown.converters.preview ().makeHtml ( Markdown.limiter ( str ).trim () ); //FIXME: Strings starting with multiple empty lines aren't rendered properly
 
   },
 
@@ -535,8 +535,15 @@ const Markdown = {
 
     if ( !str || !Markdown.is ( str ) ) return str;
 
-    return Markdown.converters.strip ().makeHtml ( str ).trim ().replace ( Markdown.wrapperRe, '$1' );
+    return Markdown.converters.strip ().makeHtml ( Markdown.limiter ( str ) ).trim ().replace ( Markdown.wrapperRe, '$1' );
 
+  },
+
+  limiter: ( str: string, limit: number = 25000 ): string => { //FIXME: Limiting the maximum size of rendable Markdown in order to avoid crashing the app //URL: https://github.com/notable/notable/issues/531
+
+    if ( str.length <= limit ) return str;
+
+    return `${str.slice ( 0, limit )}\n\n<p class="text-warning">[markdown error: output capped to ${limit} characters for performance]</p>`;
   }
 
 };
