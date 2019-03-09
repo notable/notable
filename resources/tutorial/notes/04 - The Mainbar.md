@@ -5,7 +5,7 @@ tags: [Basics, Notebooks/Tutorial]
 
 # 04 - The Mainbar
 
-The mainbar is where is where you can preview and edit the currently active note.
+The mainbar is where you can preview and edit the currently active note.
 
 ## Toolbar
 
