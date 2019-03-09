@@ -13,6 +13,9 @@ const Settings = new Store ({
     cwd: undefined,
     monaco: {
       editorOptions: {
+        minimap: {
+          enabled: false
+        },
         wordWrap: 'bounded'
       }
     },

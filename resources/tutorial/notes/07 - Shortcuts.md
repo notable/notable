@@ -44,6 +44,7 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 - <kbd>Cmd+D</kbd> - Select the next match.
 - <kbd>Cmd+Shift+L</kbd> - Select all matches.
 - <kbd>Alt-Z</kbd> - Toggle word wrapping.
+- <kbd>Alt-M</kbd> - Toggle the minimap.
 
 ## Multi-Editor
 

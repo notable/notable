@@ -35,7 +35,7 @@ const Monaco = {
     lineHeight: 16 * .875 * 1.5,
     lineNumbers: 'off',
     minimap: {
-      enabled: false
+      enabled: Settings.get ( 'monaco.editorOptions.minimap.enabled' )
     },
     model: null,
     occurrencesHighlight: false,
@@ -64,6 +64,27 @@ const Monaco = {
   },
 
   keybindings: {
+
+    'editor.toggleMinimap': {
+      options: {
+        kbOpts: {
+          kbExpr: EditorContextKeys.editorTextFocus,
+          primary: monaco.KeyMod.Alt | monaco.KeyCode.KEY_M,
+          weight: 100
+        }
+      },
+      handler ( accessor, editor: MonacoEditor ) {
+
+        if ( !Monaco.editorOptions.minimap ) Monaco.editorOptions.minimap = {}; //TSC
+
+        Monaco.editorOptions.minimap.enabled = !Monaco.editorOptions.minimap.enabled;
+
+        Settings.set ( 'monaco.editorOptions.minimap.enabled', Monaco.editorOptions.minimap.enabled );
+
+        editor.updateOptions ( Monaco.editorOptions );
+
+      }
+    },
 
     'editor.toggleWordWrap': {
       options: {
