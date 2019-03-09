@@ -155,6 +155,9 @@
   //TODO: Update monaco colors
   $monaco-selected-foreground: rgba( $accent-background, .08 );
   $monaco-selected-focused-foreground: rgba( $accent-background, .15 );
+  $monaco-slider-background: rgba( #000000, .15 );
+  $monaco-slider-backgroundHover: rgba( #000000, .2 );
+  $monaco-slider-backgroundActive: rgba( #000000, .25 );
 
   @return (
     'body.background': $body-background,
@@ -282,7 +285,10 @@
     'highlighter.token.blockquote.punctuation': $highlighter-token-blockquote-punctuation,
     'highlighter.token.title.punctuation': $highlighter-token-title-punctuation,
     'monaco.selected.foreground': $monaco-selected-foreground,
-    'monaco.selected.focused.foreground': $monaco-selected-focused-foreground
+    'monaco.selected.focused.foreground': $monaco-selected-focused-foreground,
+    'monaco.slider.background': $monaco-slider-background,
+    'monaco.slider.backgroundHover': $monaco-slider-backgroundHover,
+    'monaco.slider.backgroundActive': $monaco-slider-backgroundActive
   );
 
 }

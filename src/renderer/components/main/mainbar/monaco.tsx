@@ -110,8 +110,8 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
     roundedSelection: false,
     scrollbar: {
       useShadows: false,
-      horizontalScrollbarSize: 10,
-      verticalScrollbarSize: 10
+      horizontalScrollbarSize: 12,
+      verticalScrollbarSize: 12
     },
     scrollBeyondLastColumn: 0,
     scrollBeyondLastLine: false,

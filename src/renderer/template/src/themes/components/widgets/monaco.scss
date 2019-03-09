@@ -3,6 +3,21 @@
 
   .monaco-editor {
 
+    .monaco-scrollable-element > .scrollbar > .slider {
+
+      background: map-get( $theme, 'monaco.slider.background' );
+
+      &:hover {
+        background: map-get( $theme, 'monaco.slider.backgroundHover' );
+      }
+
+      &:active,
+      .active {
+        background: map-get( $theme, 'monaco.slider.backgroundActive' );
+      }
+
+    }
+
     .selected-text {
 
       background-color: map-get( $theme, 'monaco.selected.foreground' );
