@@ -9,6 +9,7 @@ import * as LanguageMarkdown from 'monaco-editor/esm/vs/basic-languages/markdown
 import * as path from 'path';
 import Settings from '@common/settings';
 import ThemeLight from './monaco_light';
+import Todo from './monaco_todo';
 
 /* MONACO */
 
@@ -103,6 +104,34 @@ const Monaco = {
 
         editor.updateOptions ( Monaco.editorOptions );
 
+      }
+    },
+
+    'editor.toggleTodo': {
+      options: {
+        precondition: EditorContextKeys.writable,
+        kbOpts: {
+          kbExpr: EditorContextKeys.editorTextFocus,
+          primary: monaco.KeyMod.Alt | monaco.KeyCode.Enter,
+          weight: 100
+        }
+      },
+      handler ( accessor, editor: MonacoEditor ) {
+        Todo.toggleTodo ( editor );
+      }
+    },
+
+    'editor.toggleTodoDone': {
+      options: {
+        precondition: EditorContextKeys.writable,
+        kbOpts: {
+          kbExpr: EditorContextKeys.editorTextFocus,
+          primary: monaco.KeyMod.Alt | monaco.KeyCode.KEY_D,
+          weight: 100
+        }
+      },
+      handler ( accessor, editor: MonacoEditor ) {
+        Todo.toggleTodoDone ( editor );
       }
     }
 

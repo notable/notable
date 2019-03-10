@@ -135,6 +135,7 @@
     "calls-batch": "^1.1.1",
     "chokidar": "^2.1.2",
     "crc-32": "^1.2.0",
+    "diff": "^4.0.1",
     "electron-context-menu": "^0.11.0",
     "electron-dialog": "^1.0.0",
     "electron-is": "^3.0.0",
