@@ -66,6 +66,36 @@ const Monaco = {
 
   keybindings: {
 
+    'cursorTop': {
+      options: {
+        kbOpts: {
+          kbExpr: EditorContextKeys.editorTextFocus,
+          primary: monaco.KeyMod.CtrlCmd | monaco.KeyCode.Home,
+          mac: { primary: monaco.KeyMod.CtrlCmd | monaco.KeyCode.UpArrow },
+          weight: 0
+        }
+      },
+      handler ( accessor, editor: MonacoEditor ) {
+        const position0 = {
+          lineNumber: 0,
+          column: 0
+        };
+        editor.restoreViewState ({
+          contributionsState: {},
+          cursorState: [{
+            inSelectionMode: false,
+            selectionStart: position0,
+            position: position0
+          }],
+          viewState: {
+            scrollLeft: 0,
+            firstPosition: position0,
+            firstPositionDeltaTop: Infinity // Ensuring we are scrolling to the very top, important in zen mode
+          }
+        });
+      }
+    },
+
     'editor.toggleMinimap': {
       options: {
         kbOpts: {

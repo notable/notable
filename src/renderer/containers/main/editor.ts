@@ -103,25 +103,21 @@ class Editor extends Container<EditorState, MainCTX> {
 
       if ( !monaco ) return false;
 
+      const position0 = {
+        lineNumber: 0,
+        column: 0
+      };
+
       const view = {
         contributionsState: {},
         cursorState: [{
           inSelectionMode: false,
-          selectionStart: {
-            lineNumber: 0,
-            column: 0
-          },
-          position: {
-            lineNumber: 0,
-            column: 0
-          }
+          selectionStart: position0,
+          position: position0
         }],
         viewState: {
           scrollLeft: 0,
-          firstPosition: {
-            lineNumber: 0,
-            column: 0
-          },
+          firstPosition: position0,
           firstPositionDeltaTop: Infinity // Ensuring we are scrolling to the very top, important in zen mode
         }
       };
