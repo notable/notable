@@ -202,6 +202,12 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
     const {editorDidMount, editorDidUnmount, onBlur, onFocus, onChange, onScroll} = this.props;
 
+    editor.onDidChangeModel ( () => {
+
+      delete this._zoneTopId; // Zones are reset when changing the model
+
+    });
+
     if ( editorDidMount ) {
 
       editorDidMount ( editor, monaco );
