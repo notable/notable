@@ -106,11 +106,11 @@ class Main extends Container<MainState, MainCTX> {
 
     if ( !( ( ( !prev.editor.editing && !this.state.editor.editing ) || this.state.editor.split ) && !this.ctx.note.is ( prev.note.note, this.state.note.note, true ) ) ) return;
 
-    return this.ctx.editor.previewingState.reset ();
+    this.ctx.editor.previewingState.reset ();
 
   }
 
-  middlewareSaveEditor ( prev: MainState ) {
+  async middlewareSaveEditor ( prev: MainState ) {
 
     const note = this.ctx.note.get ();
 
@@ -120,7 +120,7 @@ class Main extends Container<MainState, MainCTX> {
 
     if ( !data ) return;
 
-    return this.ctx.note.save ( prev.note.note, data.content, data.modified );
+    await this.ctx.note.save ( prev.note.note, data.content, data.modified );
 
   }
 
