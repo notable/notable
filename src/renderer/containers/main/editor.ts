@@ -59,13 +59,13 @@ class Editor extends Container<EditorState, MainCTX> {
 
     },
 
-    set: async ( state: EditorEditingState ) => {
+    set: ( state: EditorEditingState ): boolean => {
 
-      if ( !state.view ) return;
+      if ( !state.view ) return false;
 
       const {monaco} = this.state;
 
-      if ( !monaco ) return;
+      if ( !monaco ) return false;
 
       if ( state.model && state.model !== monaco.getModel () ) {
 
@@ -75,6 +75,8 @@ class Editor extends Container<EditorState, MainCTX> {
 
       monaco.restoreViewState ( state.view );
 
+      return true;
+
     },
 
     save: () => {
@@ -83,45 +85,75 @@ class Editor extends Container<EditorState, MainCTX> {
 
     },
 
-    restore: () => {
+    restore: (): boolean => {
 
       const note = this.ctx.note.get ();
 
-      if ( !note || !this.editingState.state || note.filePath !== this.editingState.state.filePath ) return;
+      if ( !note || !this.editingState.state || note.filePath !== this.editingState.state.filePath ) return false;
 
       if ( this.editingState.state.model && note.plainContent !== this.editingState.state.model.getValue () ) this.editingState.state.model = null;
 
-      this.editingState.set ( this.editingState.state );
+      return this.editingState.set ( this.editingState.state );
 
     },
 
-    reset: () => {
+    reset: (): boolean => {
 
-      this.editingState.set ({
+      const {monaco} = this.state;
+
+      if ( !monaco ) return false;
+
+      const view = {
+        contributionsState: {},
+        cursorState: [{
+          inSelectionMode: false,
+          selectionStart: {
+            lineNumber: 0,
+            column: 0
+          },
+          position: {
+            lineNumber: 0,
+            column: 0
+          }
+        }],
+        viewState: {
+          scrollLeft: 0,
+          firstPosition: {
+            lineNumber: 0,
+            column: 0
+          },
+          firstPositionDeltaTop: Infinity // Ensuring we are scrolling to the very top, important in zen mode
+        }
+      };
+
+      const model = monaco.getModel ()
+
+      if ( model ) { // Selecting the title on empty/new notes
+
+        const content = monaco.getValue (),
+              match = content.match ( /^(\s*#*\s)(.*)(\s*)$/ );
+
+        if ( match ) {
+
+          const start = model.getPositionAt ( match[1].length ),
+                end = model.getPositionAt ( match[1].length + match[2].length );
+
+          view.viewState.firstPosition = start;
+
+          view.cursorState = [{
+            inSelectionMode: true,
+            selectionStart: start,
+            position: end
+          }];
+
+        }
+
+      }
+
+      return this.editingState.set ({
         filePath: '',
         model: null,
-        view: {
-          contributionsState: {},
-          cursorState: [{
-            inSelectionMode: false,
-            selectionStart: {
-              lineNumber: 0,
-              column: 0
-            },
-            position: {
-              lineNumber: 0,
-              column: 0
-            }
-          }],
-          viewState: {
-            scrollLeft: 0,
-            firstPosition: {
-              lineNumber: 0,
-              column: 0
-            },
-            firstPositionDeltaTop: Infinity // Ensuring we are scrolling to the very top, important in zen mode
-          }
-        }
+        view
       });
 
     },
@@ -132,13 +164,15 @@ class Editor extends Container<EditorState, MainCTX> {
 
     },
 
-    focus: () => {
+    focus: (): boolean => {
 
       const {monaco} = this.state;
 
-      if ( !monaco ) return;
+      if ( !monaco ) return false;
 
       monaco.focus ();
+
+      return true;
 
     }
 
@@ -162,13 +196,15 @@ class Editor extends Container<EditorState, MainCTX> {
 
     },
 
-    set: async ( state: EditorPreviewingState ) => {
+    set: async ( state: EditorPreviewingState ): Promise<boolean> => {
 
       const $preview = await Utils.qsaWait ( '.preview' );
 
-      if ( !$preview ) return;
+      if ( !$preview ) return false;
 
       $preview[0].scrollTop = state.scrollTop;
+
+      return true;
 
     },
 
@@ -178,19 +214,19 @@ class Editor extends Container<EditorState, MainCTX> {
 
     },
 
-    restore: () => {
+    restore: (): Promise<boolean> => {
 
       const note = this.ctx.note.get ();
 
-      if ( !note || !this.previewingState.state || note.filePath !== this.previewingState.state.filePath ) return;
+      if ( !note || !this.previewingState.state || note.filePath !== this.previewingState.state.filePath ) return Promise.resolve ( false );
 
-      this.previewingState.set ( this.previewingState.state );
+      return this.previewingState.set ( this.previewingState.state );
 
     },
 
-    reset: () => {
+    reset: (): Promise<boolean> => {
 
-      this.previewingState.set ({
+      return this.previewingState.set ({
         filePath: '',
         scrollTop: 0
       });

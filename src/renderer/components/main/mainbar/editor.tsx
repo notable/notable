@@ -36,7 +36,8 @@ class Editor extends React.Component<any, undefined> {
   __mount = ( editor ) => {
 
     this.props.setMonaco ( editor );
-    this.props.restore ();
+
+    if ( !this.props.restore () ) this.props.reset ();
 
   }
 
