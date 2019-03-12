@@ -21,7 +21,7 @@ Rendered notes are displayed here.
 
 #### Editor
 
-When editing you'll use [CodeMirror](https://codemirror.net), a nice embeddable editor which comes with features like multi-cursor built-in. Read about the shortcuts this editor supports in the [Shortcuts](@note/07 - Shortcuts.md) tutorial note.
+When editing you'll use [Monaco Editor](https://github.com/Microsoft/monaco-editor), the same editor VS Code uses, which comes with features like multi-cursor built-in. Read about the shortcuts this editor supports in the [Shortcuts](@note/07 - Shortcuts.md) tutorial note.
 
 In case the built-in editor doesn't cut it  there's also a button in the toolbar for opening the current note in the default Markdown editor. We just can't include into Notable all features and nice plugins you might have in your default editor.
 
