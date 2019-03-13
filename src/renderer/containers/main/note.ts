@@ -780,7 +780,19 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( !isSameFile ) {
 
-      if ( await File.exists ( note.filePath ) ) File.unlink ( note.filePath );
+      if ( await File.exists ( note.filePath ) ) {
+
+        if ( !await File.exists ( nextNote.filePath ) ) { // Avoiding unlinking the file in order to prevent data losses
+
+          File.rename ( note.filePath, nextNote.filePath );
+
+        } else {
+
+          File.unlink ( note.filePath );
+
+        }
+
+      }
 
     }
 
