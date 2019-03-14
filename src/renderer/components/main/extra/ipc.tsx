@@ -154,6 +154,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   __appQuit = async () => {
 
     await this.main.note.autosave ();
+    await this.main.waitIdle ();
 
     ipc.send ( 'force-quit' );
 
@@ -162,6 +163,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
   __windowClose = async () => {
 
     await this.main.note.autosave ();
+    await this.main.waitIdle ();
 
     ipc.send ( 'force-close' );
 

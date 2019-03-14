@@ -22,6 +22,7 @@ import Tags from './tags';
 import Trash from './trash';
 import Tutorial from './tutorial';
 import Window from './window';
+import File from '@renderer/utils/file';
 import {TagSpecials} from '@renderer/utils/tags';
 
 /* MAIN */
@@ -29,6 +30,10 @@ import {TagSpecials} from '@renderer/utils/tags';
 class Main extends Container<MainState, MainCTX> {
 
   /* VARIABLES */
+
+  autosuspend = {
+    methods: /^(?!_|middleware|(?:(?:get|is|has)(?![a-z0-9]))|waitIdle)/
+  };
 
   _prevFlags;
 
@@ -172,6 +177,24 @@ class Main extends Container<MainState, MainCTX> {
 
     this.ctx.attachments.listen ();
     this.ctx.notes.listen ();
+
+  }
+
+  waitIdle = (): Promise<void> => { // Waiting until there are no pending API calls or IO operations
+
+    return new Promise ( res => {
+
+      const check = () => {
+
+        if ( !this['_updateSuspended'] && File.storage.isIdle () ) return res ();
+
+        requestAnimationFrame ( check );
+
+      };
+
+      check ();
+
+    });
 
   }
 

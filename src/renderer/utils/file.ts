@@ -6,13 +6,48 @@ import * as mkdirp from 'mkdirp';
 import * as path from 'path';
 import * as pify from 'pify';
 
+/* STORAGE */
+
+const Storage = { //TODO: This shouldn't be here
+
+  /* VARIABLES */
+
+  operations: 0, // Number of currently pending operations
+
+  /* HELPERS */
+
+  _wrapAction ( action ) {
+
+    return async function wrappedAction ( ...args ) {
+      Storage.operations++;
+      const res = await action.apply ( this, args );
+      Storage.operations--;
+      return res;
+    };
+
+  },
+
+  /* API */
+
+  isIdle () {
+
+    return !Storage.operations;
+
+  }
+
+};
+
 /* FILE */
 
 const File = {
 
+  /* VARIABLES */
+
+  storage: Storage,
+
   /* HELPERS */
 
-  async _handleError ( e, filePath, method, args ) {
+  _handleError: async ( e, filePath, method, args ) => {
 
     if ( e.code === 'ENOENT' ) {
 
@@ -26,7 +61,7 @@ const File = {
 
   /* API */
 
-  async exists ( filePath: string ): Promise<boolean> {
+  exists: Storage._wrapAction ( async ( filePath: string ): Promise<boolean> => {
 
     try {
 
@@ -40,37 +75,29 @@ const File = {
 
     }
 
-  },
+  }),
 
-  async stat ( filePath: string ): Promise<fs.Stats | undefined> {
+  stat: Storage._wrapAction ( async ( filePath: string ): Promise<fs.Stats | undefined> => {
 
     try {
 
       return await pify ( fs.stat )( filePath );
 
-    } catch ( e ) {
+    } catch ( e ) {}
 
-      return;
+  }),
 
-    }
-
-  },
-
-  async read ( filePath: string, encoding: string = 'utf8' ): Promise<string | undefined> {
+  read: Storage._wrapAction ( async ( filePath: string, encoding: string = 'utf8' ): Promise<string | undefined> => {
 
     try {
 
       return ( await pify ( fs.readFile )( filePath, {encoding} ) ).toString ();
 
-    } catch ( e ) {
+    } catch ( e ) {}
 
-      return;
+  }),
 
-    }
-
-  },
-
-  async copy ( srcPath: string, dstPath: string ) {
+  copy: Storage._wrapAction ( async ( srcPath: string, dstPath: string ) => {
 
     try {
 
@@ -78,13 +105,13 @@ const File = {
 
     } catch ( e ) {
 
-      return File._handleError ( e, dstPath, File.copy, [srcPath, dstPath] );
+      return await File._handleError ( e, dstPath, File.copy, [srcPath, dstPath] );
 
     }
 
-  },
+  }),
 
-  async rename ( oldPath: string, newPath: string ) {
+  rename: Storage._wrapAction ( async ( oldPath: string, newPath: string ) => {
 
     try {
 
@@ -92,13 +119,13 @@ const File = {
 
     } catch ( e ) {
 
-      return File._handleError ( e, newPath, File.rename, [oldPath, newPath] );
+      return await File._handleError ( e, newPath, File.rename, [oldPath, newPath] );
 
     }
 
-  },
+  }),
 
-  async write ( filePath: string, content: string ) {
+  write: Storage._wrapAction ( async ( filePath: string, content: string ) => {
 
     try {
 
@@ -106,13 +133,13 @@ const File = {
 
     } catch ( e ) {
 
-      return File._handleError ( e, filePath, File.write, [filePath, content] );
+      return await File._handleError ( e, filePath, File.write, [filePath, content] );
 
     }
 
-  },
+  }),
 
-  async unlink ( filePath: string ) {
+  unlink: Storage._wrapAction ( async ( filePath: string ) => {
 
     try {
 
@@ -120,7 +147,7 @@ const File = {
 
     } catch ( e ) {}
 
-  }
+  })
 
 };
 

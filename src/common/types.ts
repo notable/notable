@@ -194,6 +194,7 @@ type MainCTX = {
   unsuspendMiddlewares (),
   refresh (),
   listen (),
+  waitIdle (),
   attachment: import ( '@renderer/containers/main/attachment' ).default,
   attachments: import ( '@renderer/containers/main/attachments' ).default,
   editor: import ( '@renderer/containers/main/editor' ).default,
