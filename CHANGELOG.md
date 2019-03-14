@@ -1,3 +1,48 @@
+### Version 1.4.0
+
+##### New Features
+- Switched to the AGPL license
+- Added a “Toggle Sidebar” menu entry
+- Added a Zen mode
+- Added a “Quick Open” panel
+- Added a button for copying codeblocks to the clipboard
+- Search: added a button for clearing the input
+- KaTeX: added support for mhchem
+- Replaced CodeMirror with Monaco
+  - Added a shortcut for toggling the minimap
+  - Check all the updated shortcuts [here](https://github.com/notable/notable/blob/master/resources%2Ftutorial%2Fnotes%2F07%20-%20Shortcuts.md#editor)
+
+##### Improvements
+- Wiki-style links: always treat them as inline links
+- Syntax highlighting: improved support for some shell languages
+- Prompting the user before overwriting unsaved changes
+- Error boundary: creating a pre-filled bug report when reporting an error
+- Search: ensuring the notes list is navigable with arrow keys
+- Minor UI update — Major UI-related code refactoring
+- Export: ensuring all test notes are exported perfectly under all supported formats
+- Automatically selecting the title when editing empty notes
+
+##### Bug Fixes
+- AsciiMath/KaTeX: ensuring the special characters can be escaped with a backslash
+- Ensuring 1-character KaTex and AsciiMath expressions are supported
+- Ensuring HTML entities don’t cause unnecessary AsciiMath renders
+- Ensuring the editor gets updated when the content changes
+- Updating the app menu when there are no windows open
+- Wiki-style links: more reliable extension detection
+- Filesystem watcher: more reliable
+- Editor: force focusing only on mount
+- Markdown: improved emoji detection
+- Attachments: ensuring some special system files are not considered
+- Ensuring the about window is not fullscreenable
+- Ensuring multiple attachments with the same name can be used
+- Ensuring the app quits properly under Windows/Linux when closing the window
+- Ensuring new notes aren’t created inside the trash
+- Ensuring tags (except for the default one) without notes are not selected
+- Markdown: ensuring links without a protocol are supported
+- Renaming + overwriting notes instead of deleting + creating notes
+- Writing/renaming notes less asynchronously
+- Waiting for any pending API or IO operations before closing the app
+
 ### Version 1.3.0
 
 ##### New Features
