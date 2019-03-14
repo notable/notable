@@ -59,7 +59,7 @@ class Export extends Container<ExportState, MainCTX> {
     html: async ( note: NoteObj, notePath: string, options = { base64: true, metadata: true } ) => {
 
       let css = await this._getResources ([
-        require.resolve ( 'katex/dist/katex.min.css' ),
+        __non_webpack_require__.resolve ( 'katex/dist/katex.min.css' ), // Simply using `require` won't work with WebPack
         `${__static}/css/notable.min.css`
       ]);
 
@@ -110,7 +110,7 @@ class Export extends Container<ExportState, MainCTX> {
           const matches = stringMatches ( css, re );
           for ( let match of matches ) {
             const type = mime.lookup ( match[1] );
-            const filePath = require.resolve ( `katex/dist/fonts/${match[1].replace ( /^fonts\//, '' )}` );
+            const filePath = __non_webpack_require__.resolve ( `katex/dist/fonts/${match[1].replace ( /^fonts\//, '' )}` ); // Simply using `require` won't work with WebPack
             const base64 = await File.read ( filePath, 'base64' );
             if ( base64 ) {
               css = css.replace ( match[0], `url(data:${type};base64,${base64})` );
