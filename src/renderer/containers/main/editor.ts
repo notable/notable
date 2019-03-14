@@ -87,11 +87,15 @@ class Editor extends Container<EditorState, MainCTX> {
 
     restore: (): boolean => {
 
+      if ( !this.editingState.state ) return false;
+
       const note = this.ctx.note.get ();
 
-      if ( !note || !this.editingState.state || note.filePath !== this.editingState.state.filePath ) return false;
+      if ( !note ) return false;
 
       if ( this.editingState.state.model && note.plainContent !== this.editingState.state.model.getValue () ) this.editingState.state.model = null;
+
+      if ( note.filePath !== this.editingState.state.filePath && ( !this.editingState.state.model || note.plainContent !== this.editingState.state.model.getValue () ) ) return false;
 
       return this.editingState.set ( this.editingState.state );
 
