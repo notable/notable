@@ -643,7 +643,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     }
 
-    File.write ( note.filePath, note.content );
+    await File.write ( note.filePath, note.content );
 
   }
 
@@ -784,7 +784,7 @@ class Note extends Container<NoteState, MainCTX> {
 
         if ( !await File.exists ( nextNote.filePath ) ) { // Avoiding unlinking the file in order to prevent data losses
 
-          File.rename ( note.filePath, nextNote.filePath );
+          await File.rename ( note.filePath, nextNote.filePath );
 
         } else {
 
