@@ -1,4 +1,4 @@
-# Notable ([DOWNLOAD](https://github.com/fabiospampinato/notable/releases))
+# Notable ([DOWNLOAD](https://github.com/notable/notable/releases))
 
 <p align="center">
   <img src="resources/demo/main.png" alt="Notable" width="750">
@@ -30,7 +30,7 @@ So I built my own.
 
 - **Indefinitely nestable tags**: Pretty much all the other note-taking apps differentiate between notebooks, tags and templates. IMHO this unnecessarily complicates things. In Notable you can have root tags (`foo`), indefinitely nestable tags (`foo/bar`, `foo/.../qux`) and it still supports notebooks and templates, they are just special tags with a different icon (`Notebooks/foo`, `Templates/foo/bar`).
 
-Upon first instantiation, some tutorial notes will be added to the app, check them out for more in-depth details about the app and how to use it. You can also find the raw version [here](https://github.com/fabiospampinato/notable/tree/master/resources/tutorial/notes).
+Upon first instantiation, some tutorial notes will be added to the app, check them out for more in-depth details about the app and how to use it. You can also find the raw version [here](https://github.com/notable/notable/tree/master/resources/tutorial/notes).
 
 ## [Comparison](resources/comparison/table.png?raw=true)
 
@@ -58,7 +58,7 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 
 ## Contributing
 
-There are multiple ways to contribute to this project, read about them [here](https://github.com/fabiospampinato/notable/blob/master/.github/CONTRIBUTING.md).
+There are multiple ways to contribute to this project, read about them [here](https://github.com/notable/notable/blob/master/.github/CONTRIBUTING.md).
 
 ## Related
 
