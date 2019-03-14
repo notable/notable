@@ -345,7 +345,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     }
 
-    await this.ctx.note.write ( nextNote );
+    await this.write ( nextNote );
 
   }
 
@@ -357,7 +357,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     nextNote.metadata.attachments = _.without ( nextNote.metadata.attachments, attachment.fileName );
 
-    return this.ctx.note.write ( nextNote );
+    return this.write ( nextNote );
 
   }
 
