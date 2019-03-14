@@ -73,9 +73,13 @@ class Editor extends React.Component<any, undefined> {
 
   }
 
-  __update = () => {
+  __update = ( content ) => {
 
     this.props.reset ();
+
+    if ( !this.props.onUpdate ) return;
+
+    this.props.onUpdate ( content );
 
   }
 
@@ -93,8 +97,9 @@ class Editor extends React.Component<any, undefined> {
 
 export default connect ({
   container: Main,
-  selector: ({ container, onChange }) => ({
+  selector: ({ container, onChange, onUpdate }) => ({
     onChange,
+    onUpdate,
     content: container.note.getPlainContent (),
     autosave: container.note.autosave,
     getMonaco: container.editor.getMonaco,

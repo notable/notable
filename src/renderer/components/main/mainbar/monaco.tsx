@@ -121,7 +121,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
         if ( this.props.onUpdate ) {
 
-          this.props.onUpdate ();
+          this.props.onUpdate ( this._currentValue );
 
         }
 

@@ -30,7 +30,7 @@ class SplitEditor extends React.PureComponent<any, any> {
 
     return (
       <Layout id="split-editor" className="split-editor" direction="horizontal" resizable={true} isFocus={isFocus} isZen={isZen} hasSidebar={hasSidebar}>
-        <Editor onChange={this.__change} />
+        <Editor onChange={this.__change} onUpdate={this.__change} />
         <Preview content={content} />
       </Layout>
     );
