@@ -68,7 +68,7 @@ import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js';
 
 /* MONACO */
 
-class Monaco extends React.Component<{ language: string, theme: string, value: string, editorOptions?: monaco.editor.IEditorOptions, modelOptions?: monaco.editor.ITextModelUpdateOptions, className?: string, editorWillMount?: Function, editorDidMount?: Function, editorWillUnmount?: Function, editorDidUnmount?: Function, onBlur?: Function, onFocus?: Function, onChange?: Function, onUpdate?: Function, onScroll?: Function }, {}> {
+class Monaco extends React.Component<{ language: string, theme: string, value: string, editorOptions?: monaco.editor.IEditorOptions, modelOptions?: monaco.editor.ITextModelUpdateOptions, className?: string, editorWillMount?: Function, editorDidMount?: Function, editorWillUnmount?: Function, editorDidUnmount?: Function, onBlur?: Function, onFocus?: Function, onChange?: Function, onUpdate?: Function, onScroll?: Function, container: IMain }, {}> {
 
   /* VARIABLES */
 
@@ -92,8 +92,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
     this._currentChangeDate = undefined;
 
-    $.$window.on ( 'resize', this.editorUpdateDebounced );
-    $.$document.on ( 'layoutresizable:resize', this.editorUpdateDebounced );
+    $.$window.on ( 'monaco:update', this.editorUpdateDebounced );
 
   }
 
@@ -171,8 +170,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
   componentWillUnmount () {
 
-    $.$window.off ( 'resize', this.editorUpdateDebounced );
-    $.$document.off ( 'layoutresizable:resize', this.editorUpdateDebounced );
+    $.$window.off ( 'monaco:update', this.editorUpdateDebounced );
 
     this.destroyMonaco ();
 
@@ -180,7 +178,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
   shouldComponentUpdate ( nextProps ) {
 
-    this.editorUpdate ( nextProps );
+    this.editorUpdate ();
 
     return nextProps.value !== this._currentValue;
 
@@ -255,20 +253,20 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
   }
 
-  editorUpdate = ( props = this.props ) => {
+  editorUpdate = () => {
 
     if ( !this.editor ) return;
 
     this.editor.layout ();
-    this.editorUpdateZones ( props );
+    this.editorUpdateZones ();
 
   }
 
-  editorUpdateDebounced = _.debounce ( () => this.editorUpdate (), 25 )
+  editorUpdateDebounced = _.debounce ( this.editorUpdate, 25 )
 
-  editorUpdateZones = ( props = this.props ) => {
+  editorUpdateZones = () => {
 
-    const needTopZone = is.macOS () && props['isZen'] && !props['isFullscreen']; //UGLY
+    const needTopZone = is.macOS () && this.props.container.window.isZen () && !this.props.container.window.isFullscreen (); //UGLY
 
     if ( needTopZone ) {
 
@@ -364,12 +362,5 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
 export default connect ({
   container: Main,
-  selector: ({ container, ...others }) => ({
-    ...others,
-    isFocus: container.window.isFocus (),
-    isFullscreen: container.window.isFullscreen (),
-    isSplit: container.editor.isSplit (),
-    isZen: container.window.isZen (),
-    hasSidebar: container.window.hasSidebar ()
-  })
+  selector: ({ containers, container, ...others }) => ({ container, ...others }) //UGLY: We have to filter out `containers`, because otherwise the component will re-render as the previous and new `containers` won't technically be the same object
 })( Monaco );

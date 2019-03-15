@@ -9,6 +9,7 @@ import Mainbar from './mainbar';
 import Middlebar from './middlebar';
 import Sidebar from './sidebar';
 import ContextMenu from './extra/context_menu';
+import EditorPlugins from './extra/editor_plugins';
 import GlobalPlugins from './extra/global_plugins';
 import IPC from './extra/ipc';
 import PreviewPlugins from './extra/preview_plugins';
@@ -42,6 +43,7 @@ class Main extends React.Component<any, undefined> {
     return (
       <>
         <ContextMenu />
+        <EditorPlugins />
         <GlobalPlugins />
         <IPC />
         <PreviewPlugins />
