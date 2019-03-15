@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import * as _ from 'lodash';
+import {orderBy} from 'natural-orderby';
 
 /* ENUMS */
 
@@ -34,7 +34,7 @@ const Tags = {
 
   sort ( tags: (TagObj | string)[] ) {
 
-    return _.sortBy ( tags, tag => ( tag.hasOwnProperty ( 'name' ) ? tag['name'] : tag ).toLowerCase ()  );
+    return orderBy ( tags, tag => ( tag.hasOwnProperty ( 'name' ) ? tag['name'] : tag ).toLowerCase ()  );
 
   }
 
