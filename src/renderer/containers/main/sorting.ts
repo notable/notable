@@ -6,6 +6,7 @@ import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import Settings from '@common/settings';
 import {SortingBys, SortingTypes} from '@renderer/utils/sorting';
+import {orderBy} from 'natural-orderby';
 
 /* SORTING */
 
@@ -80,8 +81,8 @@ class Sorting extends Container<SortingState, MainCTX> {
 
     const iteratee = iteratees[by],
           [pinned, unpinned] = _.partition ( notes, this.ctx.note.isPinned ),
-          pinnedSortedBy = _.sortBy ( pinned, iteratee ),
-          unpinnedSortedBy = _.sortBy ( unpinned, iteratee ),
+          pinnedSortedBy = orderBy ( pinned, iteratee ),
+          unpinnedSortedBy = orderBy ( unpinned, iteratee ),
           pinnedSortedByType = ( type === SortingTypes.ASC ) ? pinnedSortedBy : pinnedSortedBy.reverse (),
           unpinnedSortedByType = ( type === SortingTypes.ASC ) ? unpinnedSortedBy : unpinnedSortedBy.reverse ();
 
