@@ -204,6 +204,8 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
       delete this._zoneTopId; // Zones are reset when changing the model
 
+      this.editorUpdate ();
+
     });
 
     if ( editorDidMount ) {
