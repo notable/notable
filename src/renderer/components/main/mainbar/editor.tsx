@@ -55,6 +55,13 @@ class Editor extends React.Component<any, undefined> {
 
   }
 
+  __blur = () => {
+
+    this.props.save ();
+    this.props.autosave ();
+
+  }
+
   __focus = () => {
 
     if ( !this._wasWindowBlurred ) return;
@@ -85,9 +92,7 @@ class Editor extends React.Component<any, undefined> {
 
   render () {
 
-    const {content, autosave, save} = this.props;
-
-    return <Monaco className="layout-content editor" language="markdown" theme="light" value={content} editorDidMount={this.__mount} editorWillUnmount={this.__unmount} onBlur={() => { save (); autosave () }} onFocus={this.__focus} onChange={this.__change} onUpdate={this.__update} onScroll={this.__scroll} />;
+    return <Monaco className="layout-content editor" language="markdown" theme="light" value={this.props.content} editorDidMount={this.__mount} editorWillUnmount={this.__unmount} onBlur={this.__blur} onFocus={this.__focus} onChange={this.__change} onUpdate={this.__update} onScroll={this.__scroll} />;
 
   }
 
