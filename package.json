@@ -178,6 +178,7 @@
     "@types/node": "^11.10.5",
     "@types/react": "^16.8.7",
     "@types/react-dom": "^16.8.2",
+    "cash-dom": "^3.0.0",
     "del-cli": "^1.1.0",
     "electron": "^4.0.5",
     "electron-builder": "^20.38.5",
