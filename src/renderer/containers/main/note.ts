@@ -6,6 +6,7 @@ import {shell} from 'electron';
 import Dialog from 'electron-dialog';
 import * as CRC32 from 'crc-32'; // Not a cryptographic hash function, but it's good enough (and fast!) for our purposes
 import * as fs from 'fs';
+import { AllHtmlEntities as entities } from 'html-entities';
 import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
 import Config from '@common/config';
@@ -16,7 +17,6 @@ import Metadata from '@renderer/utils/metadata';
 import Path from '@renderer/utils/path';
 import Tags, {TagSpecials} from '@renderer/utils/tags';
 import Utils from '@renderer/utils/utils';
-import { AllHtmlEntities as entities } from 'html-entities';
 
 const {ALL, FAVORITES, TAGS, TEMPLATES, UNTAGGED, TRASH} = TagSpecials;
 
