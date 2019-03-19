@@ -16,6 +16,7 @@ import Metadata from '@renderer/utils/metadata';
 import Path from '@renderer/utils/path';
 import Tags, {TagSpecials} from '@renderer/utils/tags';
 import Utils from '@renderer/utils/utils';
+import { AllHtmlEntities as entities } from 'html-entities';
 
 const {ALL, FAVORITES, TAGS, TEMPLATES, UNTAGGED, TRASH} = TagSpecials;
 
@@ -295,7 +296,7 @@ class Note extends Container<NoteState, MainCTX> {
 
   getTitle = ( note: NoteObj | undefined = this.state.note ): string => {
 
-    return note ? note.metadata.title : '';
+    return note ? entities.decode(note.metadata.title) : '';
 
   }
 

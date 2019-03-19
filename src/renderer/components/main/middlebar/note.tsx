@@ -15,7 +15,7 @@ const Note = ({ note, style, title, hasAttachments, isActive, isDeleted, isFavor
 
   return (
     <div style={style} className={`note ${!isMultiEditorEditing && isActive ? 'label' : 'button'} ${( isMultiEditorEditing ? isSelected : isActive ) ? 'active' : ''} list-item`} data-checksum={note.checksum} data-filepath={note.filePath} data-deleted={isDeleted} data-favorited={isFavorited} onClick={onClick}>
-      <span className="title small" dangerouslySetInnerHTML={{ __html: title }} />
+      <span className="title small">{title}</span>
       {!hasAttachments ? null : (
         <i className="icon xxsmall">paperclip</i>
       )}
