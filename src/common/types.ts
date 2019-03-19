@@ -3,7 +3,17 @@
 
 declare const __static: string;
 declare const Svelto: any;
-declare const $: any;
+
+/* CASH */
+
+type cash = typeof import ( 'cash-dom' ).default;
+type Cash = ReturnType<cash>;
+
+declare const $: cash & {
+  [index: string]: any,
+  $document: Cash,
+  $window: Cash
+};
 
 /* BASE OBJECTS */
 
