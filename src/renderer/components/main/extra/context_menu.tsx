@@ -28,6 +28,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
     this.initTagMenu ();
     this.initTrashMenu ();
     this.initFallbackMenu ();
+    this.initEditorMenu();
 
   }
 
@@ -181,8 +182,31 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   initFallbackMenu = () => {
 
-    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .note, .tag:not([data-has-children]), .tag[data-has-children="true"], .tag[data-collapsed="true"], .tag[title="Trash"]' ) );
+    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.view-line, .attachment, .note, .tag:not([data-has-children]), .tag[data-has-children="true"], .tag[data-collapsed="true"], .tag[title="Trash"]' ) );
 
+  }
+
+  initEditorMenu = () => {
+
+    this._makeMenu('.view-line', [
+      {
+        label: 'Copy',
+        click: this.props.container.editor.copyText
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Cut',
+        click: this.props.container.editor.cutText
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Paste',
+        click: this.props.container.editor.pasteText
+      }], this.updateEditorMenu)
   }
 
   /* UPDATE */
@@ -227,6 +251,17 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
   updateTrashMenu = ( items ) => {
 
     items[0].enabled = !this.props.container.trash.isEmpty ();
+
+  }
+
+  updateEditorMenu = (items) => {
+
+    let isSelected = this.props.container.editor.hasSelection();
+    let isCopied = this.props.container.editor.canPaste();
+
+    items[0].visible = isSelected;
+    items[2].visible = isSelected;
+    items[4].visible = isCopied;
 
   }
 
