@@ -4,6 +4,8 @@
 import * as _ from 'lodash';
 import {Container, autosuspend} from 'overstated';
 import Utils from '@renderer/utils/utils';
+import { clipboard } from 'electron';
+import { Range } from 'monaco-editor/esm/vs/editor/editor.api.js';
 
 /* EDITOR */
 
@@ -241,6 +243,63 @@ class Editor extends Container<EditorState, MainCTX> {
 
   }
 
+/* HELPERS */
+
+  _getCopiedText = (): string => {
+
+    if (!clipboard.readText()) return '';
+
+    return clipboard.readText();
+
+  }
+
+  _getSelectedText = (): string => {
+
+    const { monaco } = this.state;
+
+    if (!monaco) return '';
+
+    const model = monaco.getModel(),
+      selection = monaco.getSelection();
+
+    if (!model || !selection) return '';
+
+    const text = model.getValueInRange(selection);
+
+    return text;
+
+  }
+
+  _replaceSelectedText = (newText: string): void => {
+
+    const { monaco } = this.state;
+
+    if (!monaco) return;
+
+    const model = monaco.getModel(),
+      selection = monaco.getSelection();
+
+    if (!model || !selection) return;
+
+    const range = new Range(selection.startLineNumber, selection.startColumn, selection.endLineNumber,
+      selection.endColumn);
+
+    const id = { major: 1, minor: 1 },
+      text = newText,
+      op = { identifier: id, range: range, text: text, forceMoveMarkers: true };
+
+    monaco.executeEdits(text, [op]);
+
+    return;
+
+  }
+
+  _writeToClipboard = (text: string): void => {
+
+    clipboard.writeText(text);
+
+  }
+
   /* API */
 
   isEditing = (): boolean => {
@@ -318,6 +377,56 @@ class Editor extends Container<EditorState, MainCTX> {
       content: monaco.getValue (),
       modified: monaco.getChangeDate ()
     };
+
+  }
+
+  hasSelection = (): boolean => {
+
+    const { monaco } = this.state;
+
+    if (!monaco) return false;
+
+    const selection = monaco.getSelection();
+
+    if (!selection) return false;
+
+    return selection.startColumn !== selection.endColumn;
+
+  }
+
+  canPaste = (): boolean => {
+
+    if (!this._getCopiedText()) return false;
+
+    return true;
+
+  }
+
+  copyText = (): void => {
+
+    const selectedText = this._getSelectedText();
+
+    this._writeToClipboard(selectedText);
+
+    return;
+
+  }
+
+  cutText = (): void => {
+
+    const selectedText = this._getSelectedText();
+
+    this._writeToClipboard(selectedText);
+
+    this._replaceSelectedText('');
+
+  }
+
+  pasteText = (): void => {
+
+    const text = this._getCopiedText();
+
+    this._replaceSelectedText(text);
 
   }
 
