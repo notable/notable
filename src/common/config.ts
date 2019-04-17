@@ -34,7 +34,8 @@ const Config = {
     token: '@tag' // Usable in urls
   },
   search: {
-    tokenizer: /\s+/g
+    tokenizer: /\s+/g,
+    tagPrefix: "@"
   },
   sorting: {
     by: Settings.get ( 'sorting.by' ),

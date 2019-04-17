@@ -56,11 +56,25 @@ class Search extends Container<SearchState, MainCTX> {
 
   }
 
+  _isTagMatch = ( note: NoteObj, filterTags: String[] ): boolean => {
+
+    const noteTags = this.ctx.note.getTags ( note );
+      if (filterTags.length==0) { return true;} else {return noteTags.filter(token => filterTags.indexOf(token) > -1).length>0;}
+  };
+
+
   _filterNotesByQuery = ( notes: NoteObj[], filterContent: boolean, query: string ): NoteObj[] => {
 
-    const tokensRe = _.escapeRegExp ( query ).split ( Config.search.tokenizer ).map ( token => new RegExp ( token, 'i' ) );
+    const filterTags =  query.split ( Config.search.tokenizer )
+     .filter( token => token.startsWith(Config.search.tagPrefix))
+      .map( token => token.slice(1) );
+    const tokensRe = _.escapeRegExp ( query ).split ( Config.search.tokenizer )
+      .filter( token => !token.startsWith(Config.search.tagPrefix))
+      .map ( token => new RegExp ( token, 'i' ) );
 
-    return notes.filter ( note => this._isNoteMatch ( note, filterContent, query, tokensRe ) );
+    return notes.filter ( note => this._isNoteMatch ( note, filterContent, query, tokensRe ) )
+      .filter ( note => this._isTagMatch ( note, filterTags ))
+      ;
 
   }
 
