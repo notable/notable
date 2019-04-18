@@ -9,6 +9,7 @@ import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
 import {TagSpecials} from '@renderer/utils/tags';
+import {clipboard} from 'electron';
 
 /* CONTEXT MENU */
 
@@ -148,6 +149,10 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
       {
         label: 'Remove',
         click: () => this.props.container.note.removeTag ( undefined, $(this.ele).attr ( 'data-tag' ) )
+      },
+      {
+        label: 'Copy',
+        click: () => clipboard.writeText (  $(this.ele).attr ( 'data-tag' ) )
       }
     ]);
 
