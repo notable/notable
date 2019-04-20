@@ -80,6 +80,10 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
         type: 'separator'
       },
       {
+        label: 'Copy file name',
+        click: () => clipboard.writeText ( this.attachment.fileName )
+      },
+      {
         label: 'Rename',
         click: () => Dialog.alert ( 'Simply rename the actual attachment file while Notable is open' )
       },
