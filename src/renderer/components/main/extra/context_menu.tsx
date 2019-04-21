@@ -189,7 +189,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   updateAttachmentMenu = ( items ) => {
 
-    const fileName = $(this.ele).data ( 'filename' );
+    const fileName = this.ele.dataset.filename;
 
     this.attachment = this.props.container.attachment.get ( fileName );
 
