@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import * as isShallowEqual from 'is-shallow-equal';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
+import {TagSpecials} from "@renderer/utils/tags";
 
 /* SEARCH */
 
@@ -18,7 +19,8 @@ class Search extends Container<SearchState, MainCTX> {
 
   state = {
     query: '',
-    notes: [] as NoteObj[]
+    notes: [] as NoteObj[],
+    tagFullMatch: Config.sorting.tagFullMatch
   };
 
   /* CONSTRUCTOR */
@@ -32,6 +34,14 @@ class Search extends Container<SearchState, MainCTX> {
   }
 
   /* HELPERS */
+
+
+  _filterTagMatch = (noteList: NoteObj[], tag: string): NoteObj[] => {
+
+    if (!this.state.tagFullMatch) {return noteList}
+      const specialTagList = Object.values(TagSpecials)
+      return noteList.filter(note => note.metadata.tags.includes(tag) || specialTagList.includes(tag))
+}
 
   _isAttachmentMatch = ( attachment: AttachmentObj, query: string ): boolean => {
 
@@ -81,11 +91,11 @@ class Search extends Container<SearchState, MainCTX> {
 
       if ( query === prevQuery && prevState.notes === state.notes && prevState.tags === state.tags && prevState.tag === state.tag ) { // Simple reordering
 
-        return this.ctx.sorting.sort ( this.state.notes );
+        return this._filterTagMatch(this.ctx.sorting.sort ( this.state.notes ), tag);
 
       } else if ( query.startsWith ( prevQuery ) && isShallowEqual ( prevState, state ) ) { // Sub-search
 
-        return this._filterNotesByQuery ( this.state.notes, filterContent, query );
+        return this._filterTagMatch(this._filterNotesByQuery ( this.state.notes, filterContent, query ), tag);
 
       }
 
@@ -98,7 +108,7 @@ class Search extends Container<SearchState, MainCTX> {
           notesSorted = this.ctx.sorting.sort ( notesByQuery ),
           notesUnique = _.uniq ( notesSorted ) as NoteObj[]; // If a note is in 2 sub-tags and we select a parent tag of both we will get duplicates
 
-    return notesUnique;
+    return this._filterTagMatch(notesUnique, tag);
 
   }
 

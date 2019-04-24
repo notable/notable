@@ -38,7 +38,8 @@ const Config = {
   },
   sorting: {
     by: Settings.get ( 'sorting.by' ),
-    type: Settings.get ( 'sorting.type' )
+    type: Settings.get ( 'sorting.type' ),
+    tagFullMatch: Settings.get('sorting.tagFullMatch')
   },
   katex: {
     throwOnError: true,
