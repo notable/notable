@@ -765,6 +765,10 @@ class Note extends Container<NoteState, MainCTX> {
 
       await this.ctx.multiEditor.selectClear ();
 
+    } else {
+
+      await this.ctx.multiEditor.update ();
+
     }
 
     this.scrollTo ( note );
