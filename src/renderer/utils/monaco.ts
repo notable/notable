@@ -20,6 +20,7 @@ const Monaco = {
     colorDecorators: false,
     contextmenu: false,
     copyWithSyntaxHighlighting: false,
+    disableLayerHinting: true,
     dragAndDrop: true,
     folding: false,
     fontSize: 16 * .875,
