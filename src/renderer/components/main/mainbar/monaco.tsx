@@ -68,7 +68,7 @@ import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js';
 
 /* MONACO */
 
-class Monaco extends React.Component<{ language: string, theme: string, value: string, editorOptions?: monaco.editor.IEditorOptions, modelOptions?: monaco.editor.ITextModelUpdateOptions, className?: string, editorWillMount?: Function, editorDidMount?: Function, editorWillUnmount?: Function, editorDidUnmount?: Function, onBlur?: Function, onFocus?: Function, onChange?: Function, onUpdate?: Function, onScroll?: Function, container: IMain }, {}> {
+class Monaco extends React.Component<{ filePath: string, language: string, theme: string, value: string, editorOptions?: monaco.editor.IEditorOptions, modelOptions?: monaco.editor.ITextModelUpdateOptions, className?: string, editorWillMount?: Function, editorDidMount?: Function, editorWillUnmount?: Function, editorDidUnmount?: Function, editorWillChange?: Function, onBlur?: Function, onFocus?: Function, onChange?: Function, onUpdate?: Function, onScroll?: Function, container: IMain }, {}> {
 
   /* VARIABLES */
 
@@ -180,6 +180,8 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
     this.editorUpdate ();
 
+    if ( nextProps.filePath !== this.props.filePath ) this.editorWillChange ();
+
     return nextProps.value !== this._currentValue;
 
   }
@@ -255,6 +257,26 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
   }
 
+  editorWillUnmount = () => {
+
+    if ( this.props.editorWillUnmount ) {
+
+      this.props.editorWillUnmount ();
+
+    }
+
+  }
+
+  editorWillChange = () => {
+
+    if ( this.props.editorWillChange ) {
+
+      this.props.editorWillChange ();
+
+    }
+
+  }
+
   editorUpdate = () => {
 
     if ( !this.editor ) return;
@@ -306,6 +328,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
     this.editor = monaco.editor.create ( this.ref.current, finalEditorOptions ) as any; //TSC //UGLY
 
+    this.editor.getFilePath = () => this.props.filePath; //UGlY
     this.editor.getChangeDate = () => this._currentChangeDate; //UGlY
 
     if ( theme ) {
@@ -334,11 +357,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
   destroyMonaco () {
 
-    if ( this.props.editorWillUnmount ) {
-
-      this.props.editorWillUnmount ();
-
-    }
+    this.editorWillUnmount ();
 
     if ( !this.editor ) return;
 

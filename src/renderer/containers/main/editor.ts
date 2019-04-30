@@ -263,6 +263,8 @@ class Editor extends Container<EditorState, MainCTX> {
       this.editingState.save ();
       this.previewingState.restore ();
 
+      this.ctx.note.autosave ();
+
     }
 
     return this.setState ({ editing });
@@ -283,6 +285,8 @@ class Editor extends Container<EditorState, MainCTX> {
 
     this.editingState.save ();
     this.previewingState.save ();
+
+    if ( !split ) this.ctx.note.autosave ();
 
     return this.setState ({ editing, split });
 
@@ -308,13 +312,14 @@ class Editor extends Container<EditorState, MainCTX> {
 
   }
 
-  getData = (): { content: string, modified?: Date } | undefined => {
+  getData = (): { filePath: string, content: string, modified?: Date } | undefined => {
 
     const {monaco} = this.state;
 
     if ( !monaco || !monaco.getModel () ) return;
 
     return {
+      filePath: monaco.getFilePath (),
       content: monaco.getValue (),
       modified: monaco.getChangeDate ()
     };

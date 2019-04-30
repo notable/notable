@@ -27,8 +27,9 @@ type AttachmentsObj = {
 };
 
 type MonacoEditor = import ( 'monaco-editor/esm/vs/editor/editor.api.js' ).editor.ICodeEditor & {
-  getChangeDate: () => Date | undefined
-}
+  getChangeDate: () => Date | undefined,
+  getFilePath: () => string
+};
 
 type NoteMetadataObj = {
   attachments: string[],

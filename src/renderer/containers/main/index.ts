@@ -56,7 +56,6 @@ class Main extends Container<MainState, MainCTX> {
     this.addMiddleware ( this.middlewareCloseQuickPanelPopovers );
     this.addMiddleware ( this.middlewareNoNote );
     this.addMiddleware ( this.middlewareResetEditor );
-    this.addMiddleware ( this.middlewareSaveEditor );
     this.addMiddleware ( this.middlewareFlagsUpdateIPC );
 
   }
@@ -112,20 +111,6 @@ class Main extends Container<MainState, MainCTX> {
     if ( !( ( ( !prev.editor.editing && !this.state.editor.editing ) || this.state.editor.split ) && !this.ctx.note.is ( prev.note.note, this.state.note.note, true ) ) ) return;
 
     this.ctx.editor.previewingState.reset ();
-
-  }
-
-  async middlewareSaveEditor ( prev: MainState ) {
-
-    const note = this.ctx.note.get ();
-
-    if ( !( prev.note.note && ( ( prev.editor.editing && !this.state.editor.editing ) || ( prev.editor.editing && prev.editor.split !== this.state.editor.split ) || ( this.state.editor.editing && !this.ctx.note.is ( prev.note.note, note ) ) || ( prev.editor.editing && prev.multiEditor.notes.length <= 1 && this.state.multiEditor.notes.length > 1 ) ) ) ) return;
-
-    const data = this.ctx.editor.getData ();
-
-    if ( !data ) return;
-
-    await this.ctx.note.save ( prev.note.note, data.content, data.modified );
 
   }
 

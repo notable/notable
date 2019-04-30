@@ -566,27 +566,25 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
-  autosave = () => {
-
-    if ( !this.ctx.editor.isEditing () ) return;
-
-    const note = this.get ();
-
-    if ( !note ) return;
+  autosave = ( force: boolean = false ) => {
 
     const data = this.ctx.editor.getData ();
 
     if ( !data ) return;
 
-    return this.save ( note, data.content, data.modified );
-
-  }
-
-  save = async ( note: NoteObj | undefined = this.state.note, plainContent: string, modified: Date = new Date () ) => {
+    const note = this.get ( data.filePath );
 
     if ( !note ) return;
 
-    if ( note.plainContent === plainContent ) return;
+    return this.save ( note, data.content, data.modified, force );
+
+  }
+
+  save = async ( note: NoteObj | undefined = this.state.note, plainContent: string, modified: Date = new Date (), force: boolean = false ) => {
+
+    if ( !note ) return;
+
+    if ( !force && note.plainContent === plainContent ) return;
 
     if ( !this.get ( note.filePath ) ) return; // The note got deleted in the mean time
 
