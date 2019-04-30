@@ -4,6 +4,7 @@
     "baseUrl": "src",
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "inlineSourceMap": false,
     "jsx": "react",
     "lib": ["dom", "scripthost", "es2015", "es2016", "es2017", "es2018"],
     "noImplicitReturns": false,
