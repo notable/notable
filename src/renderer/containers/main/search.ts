@@ -22,98 +22,99 @@ class Search extends Container<SearchState, MainCTX> {
 
   /* CONSTRUCTOR */
 
-  constructor() {
+  constructor () {
 
-    super();
+    super ();
 
-    autosuspend(this);
+    autosuspend ( this );
 
   }
 
   /* HELPERS */
 
-  _isAttachmentMatch = (attachment: AttachmentObj, query: string): boolean => {
+  _isAttachmentMatch = ( attachment: AttachmentObj, query: string ): boolean => {
 
-    return Svelto.Fuzzy.match(attachment.fileName, query, false);
-
-  }
-
-  _filterAttachmentsByQuery = (attachments: AttachmentObj[], query: string): AttachmentObj[] => {
-
-    return attachments.filter(attachment => this._isAttachmentMatch(attachment, query));
+    return Svelto.Fuzzy.match ( attachment.fileName, query, false ) ;
 
   }
 
-  _isNoteMatch = (note: NoteObj, filterContent: boolean, query: string, tokensRe: RegExp[]): boolean => {
+  _filterAttachmentsByQuery = ( attachments: AttachmentObj[], query: string ): AttachmentObj[] => {
 
-    const content = this.ctx.note.getContent(note);
+    return attachments.filter ( attachment => this._isAttachmentMatch ( attachment, query ) );
+
+  }
+
+  _isNoteMatch = ( note: NoteObj, filterContent: boolean, query: string, tokensRe: RegExp[] ): boolean => {
+
+    const content = this.ctx.note.getContent ( note );
 
     return (
-      (filterContent && tokensRe.every(tokenRe => tokenRe.test(content))) ||
-      Svelto.Fuzzy.match(this.ctx.note.getTitle(note), query, false)
+      ( filterContent && tokensRe.every ( tokenRe => tokenRe.test ( content ) ) ) ||
+      Svelto.Fuzzy.match ( this.ctx.note.getTitle ( note ), query, false )
     );
 
   }
 
-  _isTagMatch = (note: NoteObj, filterTags: String[]): boolean => {
+  _isTagMatch = ( note: NoteObj, filterTags: String[] ): boolean => {
 
-    const noteTags = this.ctx.note.getTags(note);
-    if (filterTags.length == 0) {
+    const noteTags = this.ctx.note.getTags ( note );
+    if ( filterTags.length == 0 ) {
       return true;
     } else {
-      return noteTags.filter(token => filterTags.indexOf(token) > -1).length > 0;
+      return noteTags.filter ( token => filterTags.indexOf ( token ) > -1 ) .length > 0;
     }
   };
 
 
-  _filterNotesByQuery = (notes: NoteObj[], filterContent: boolean, query: string): NoteObj[] => {
+  _filterNotesByQuery = ( notes: NoteObj[], filterContent: boolean, query: string ): NoteObj[] => {
 
     let untaggedQuery = query;
-    let filterTags = Array();
+    let filterTags = Array ();
 
-    if (query.includes(Config.search.tagPrefix)) {
+    if ( query.includes ( Config.search.tagPrefix ) ) {
 
-      const tagRegexp = /@{([^}]+)}|@([^{ ]+)/g;
+      const tagRegexp = /@{ ( [^}]+ ) }|@ ( [^{ ]+ ) /g;
 
-      let match = tagRegexp.exec(query);
-      while (match != null) {
-        untaggedQuery = untaggedQuery.replace(match[0], ""); // Maybe replace with Config.search.tokenizer instead?
-        filterTags.push(match.slice(1)
-          .filter(token => token != undefined)[0]);
-        match = tagRegexp.exec(query);
+      let match = tagRegexp.exec ( query );
+      while ( match != null ) {
+        untaggedQuery = untaggedQuery.replace ( match[0], "" ); // Maybe replace with Config.search.tokenizer instead?
+        filterTags.push ( match.slice(1)
+          .filter ( token => token != undefined ) [0] );
+        match = tagRegexp.exec ( query );
       }
     }
 
-    const tokensRe = _.escapeRegExp(untaggedQuery).split(Config.search.tokenizer)
-      .map(token => new RegExp(token, 'i'));
+    const tokensRe = _.escapeRegExp ( untaggedQuery ).split ( Config.search.tokenizer )
+      .map ( token => new RegExp ( token, 'i' ) );
 
-    return notes.filter(note => this._isNoteMatch(note, filterContent, untaggedQuery, tokensRe))
-      .filter(note => this._isTagMatch(note, filterTags));
+    return notes.filter ( note => this._isNoteMatch ( note, filterContent, query, tokensRe ) )
+      .filter ( note => this._isTagMatch ( note, filterTags ))
+      ;
 
   }
 
-  _searchBy = (tag: string, filterContent: boolean, query: string, _prevId: string = 'search'): NoteObj[] => {
+  _searchBy = ( tag: string, filterContent: boolean, query: string, _prevId: string = 'search' ): NoteObj[] => {
 
     /* OPTIMIZED SEARCH */ // Filtering/Ordering only the previously filtered notes
 
-    if (!this._prev[_prevId]) this._prev[_prevId] = {};
+    if ( !this._prev[_prevId] ) this._prev[_prevId] = {};
 
     const prev = this._prev[_prevId],
-      prevQuery = prev.query,
-      prevState = prev.state;
+          prevQuery = prev.query,
+          prevState = prev.state;
 
     prev.query = query;
-    const state = prev.state = _.pick(this.ctx.state, ['notes', 'sorting', 'tags', 'tag']);
+    const state = prev.state = _.pick ( this.ctx.state, ['notes', 'sorting', 'tags', 'tag'] );
 
-    if (prevState) {
+    if ( prevState ) {
 
-      if (query === prevQuery && prevState.notes === state.notes && prevState.tags === state.tags && prevState.tag === state.tag) { // Simple reordering
+      if ( query === prevQuery && prevState.notes === state.notes && prevState.tags === state.tags && prevState.tag === state.tag ) { // Simple reordering
 
-        return this.ctx.sorting.sort(this.state.notes);
+        return this.ctx.sorting.sort ( this.state.notes );
 
-      } else if (query.startsWith(prevQuery) && isShallowEqual(prevState, state)) { // Sub-search
+      } else if ( query.startsWith ( prevQuery ) && isShallowEqual ( prevState, state ) ) { // Sub-search
 
-        return this._filterNotesByQuery(this.state.notes, filterContent, query);
+        return this._filterNotesByQuery ( this.state.notes, filterContent, query );
 
       }
 
@@ -121,10 +122,10 @@ class Search extends Container<SearchState, MainCTX> {
 
     /* UNOPTIMIZED SEARCH */
 
-    const notesByTag = this.ctx.tag.getNotes(tag),
-      notesByQuery = !query ? notesByTag : this._filterNotesByQuery(notesByTag, filterContent, query),
-      notesSorted = this.ctx.sorting.sort(notesByQuery),
-      notesUnique = _.uniq(notesSorted) as NoteObj[]; // If a note is in 2 sub-tags and we select a parent tag of both we will get duplicates
+    const notesByTag = this.ctx.tag.getNotes ( tag ),
+          notesByQuery = !query ? notesByTag : this._filterNotesByQuery ( notesByTag, filterContent, query ),
+          notesSorted = this.ctx.sorting.sort ( notesByQuery ),
+          notesUnique = _.uniq ( notesSorted ) as NoteObj[]; // If a note is in 2 sub-tags and we select a parent tag of both we will get duplicates
 
     return notesUnique;
 
@@ -138,11 +139,11 @@ class Search extends Container<SearchState, MainCTX> {
 
   }
 
-  setQuery = async (query: string) => {
+  setQuery = async ( query: string ) => {
 
-    await this.setState({query});
+    await this.setState ({ query });
 
-    return this.update();
+    return this.update ();
 
   }
 
@@ -150,9 +151,9 @@ class Search extends Container<SearchState, MainCTX> {
 
     const $input = $('#middlebar input[type="search"]');
 
-    if (!$input.length) return;
+    if ( !$input.length ) return;
 
-    $input[0].focus();
+    $input[0].focus ();
 
   }
 
@@ -164,13 +165,13 @@ class Search extends Container<SearchState, MainCTX> {
 
   clear = () => {
 
-    return this.setQuery('');
+    return this.setQuery ( '' );
 
   }
 
-  getNoteIndex = (note: NoteObj): number => {
+  getNoteIndex = ( note: NoteObj ): number => {
 
-    return this.state.notes.indexOf(note);
+    return this.state.notes.indexOf ( note );
 
   }
 
@@ -180,51 +181,51 @@ class Search extends Container<SearchState, MainCTX> {
 
   }
 
-  setNotes = (notes: NoteObj[]) => {
+  setNotes = ( notes: NoteObj[] ) => {
 
-    return this.setState({notes});
-
-  }
-
-  update = async (prevNoteIndex?: number) => {
-
-    const tag = this.ctx.tag.get();
-
-    if (!tag) return;
-
-    const notes = this._searchBy(tag.path, true, this.state.query);
-
-    if (isShallowEqual(this.state.notes, notes)) return; // Skipping unnecessary work
-
-    await this.setNotes(notes);
-
-    await this.ctx.note.update(prevNoteIndex);
-
-    await this.ctx.multiEditor.update();
+    return this.setState ({ notes });
 
   }
 
-  navigate = (modifier: number, wrap: boolean = true) => {
+  update = async ( prevNoteIndex?: number ) => {
+
+    const tag = this.ctx.tag.get ();
+
+    if ( !tag ) return;
+
+    const notes = this._searchBy ( tag.path, true, this.state.query );
+
+    if ( isShallowEqual ( this.state.notes, notes ) ) return; // Skipping unnecessary work
+
+    await this.setNotes ( notes );
+
+    await this.ctx.note.update ( prevNoteIndex );
+
+    await this.ctx.multiEditor.update ();
+
+  }
+
+  navigate = ( modifier: number, wrap: boolean = true ) => {
 
     const {notes} = this.state,
-      note = this.ctx.note.get(),
-      index = (note ? notes.indexOf(note) : -1) + modifier,
-      indexNext = wrap ? (notes.length + index) % notes.length : index,
-      noteNext = notes[indexNext];
+          note = this.ctx.note.get (),
+          index = ( note ? notes.indexOf ( note ) : -1 ) + modifier,
+          indexNext = wrap ? ( notes.length + index ) % notes.length : index,
+          noteNext = notes[indexNext];
 
-    if (noteNext) return this.ctx.note.set(noteNext, true);
+    if ( noteNext ) return this.ctx.note.set ( noteNext, true );
 
   }
 
   previous = () => {
 
-    return this.navigate(-1);
+    return this.navigate ( -1 );
 
   }
 
   next = () => {
 
-    return this.navigate(1);
+    return this.navigate ( 1 );
 
   }
 
