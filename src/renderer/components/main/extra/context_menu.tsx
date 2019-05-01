@@ -80,7 +80,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
         type: 'separator'
       },
       {
-        label: 'Copy file name',
+        label: 'Copy',
         click: () => clipboard.writeText ( this.attachment.fileName )
       },
       {
@@ -116,6 +116,10 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
       {
         label: 'Duplicate',
         click: () => this.props.container.note.duplicate ( this.note )
+      },
+      {
+        label: 'Copy',
+        click: () => clipboard.writeText ( this.note.metadata.title )
       },
       {
         type: 'separator'
@@ -172,7 +176,14 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
       {
         label: 'Expand',
         click: () => this.props.container.tag.toggleCollapse ( this.tag, false )
-      }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Copy',
+        click: () => clipboard.writeText ( this.tag )
+      },
     ], this.updateTagMenu );
 
   }
