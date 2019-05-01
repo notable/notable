@@ -105,7 +105,7 @@ class Search extends Container<SearchState, MainCTX> {
     prev.query = query;
     const state = prev.state = _.pick ( this.ctx.state, ['notes', 'sorting', 'tags', 'tag'] );
 
-    if ( prevState ) {
+    if ( prevState && !query.includes(Config.search.tagPrefix) ) {
 
       if ( query === prevQuery && prevState.notes === state.notes && prevState.tags === state.tags && prevState.tag === state.tag ) { // Simple reordering
 
