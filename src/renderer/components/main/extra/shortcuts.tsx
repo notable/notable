@@ -105,7 +105,9 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
     if ( $preview.length ) { // Select preview
 
-      window.getSelection ().selectAllChildren ( $preview[0] );
+      const selection = window.getSelection ();
+
+      if ( selection && selection.selectAllChildren ) selection.selectAllChildren ( $preview[0] ); //TSC
 
     } else { // Select editor
 

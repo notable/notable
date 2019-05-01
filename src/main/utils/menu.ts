@@ -13,7 +13,7 @@ const Menu = {
 
       if ( !_.isArray ( val ) ) return;
 
-      return val.filter ( ele => !_.isObject ( ele ) || !ele.hasOwnProperty ( 'visible' ) || ele.visible ).map ( Menu.filterTemplate );
+      return val.filter ( ele => ele && ( !ele.hasOwnProperty ( 'visible' ) || ele.visible ) ).map ( Menu.filterTemplate );
 
     });
 
