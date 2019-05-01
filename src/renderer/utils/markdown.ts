@@ -125,7 +125,7 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /<pre><code\s[^>]*(language-[^>]*)>([^]+?)<\/code><\/pre>/g,
+        regex: /<pre><code(\s[^>]*language-[^>]*)>([^]+?)<\/code><\/pre>/g,
         replace ( match, $1, $2 ) {
           try {
             const language = Highlighter.inferLanguage ( $1 );
