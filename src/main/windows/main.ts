@@ -57,31 +57,6 @@ class Main extends Route {
             type: 'separator'
           },
           {
-            label: 'Import...',
-            click: () => this.win.webContents.send ( 'import' )
-          },
-          {
-            label: 'Export',
-            enabled: flags && ( flags.hasNote || flags.isMultiEditorEditing ),
-            submenu: [
-              {
-                label: 'HTML',
-                click: () => this.win.webContents.send ( 'export-html' )
-              },
-              {
-                label: 'Markdown',
-                click: () => this.win.webContents.send ( 'export-markdown' )
-              },
-              {
-                label: 'PDF',
-                click: () => this.win.webContents.send ( 'export-pdf' )
-              }
-            ]
-          },
-          {
-            type: 'separator'
-          },
-          {
             label: 'Open Data Directory',
             click: () => this.win.webContents.send ( 'cwd-open-in-app' )
           },
@@ -123,6 +98,31 @@ class Main extends Route {
       {
         label: 'File',
         submenu: [
+          {
+            label: 'Import...',
+            click: () => this.win.webContents.send ( 'import' )
+          },
+          {
+            label: 'Export',
+            enabled: flags && ( flags.hasNote || flags.isMultiEditorEditing ),
+            submenu: [
+              {
+                label: 'HTML',
+                click: () => this.win.webContents.send ( 'export-html' )
+              },
+              {
+                label: 'Markdown',
+                click: () => this.win.webContents.send ( 'export-markdown' )
+              },
+              {
+                label: 'PDF',
+                click: () => this.win.webContents.send ( 'export-pdf' )
+              }
+            ]
+          },
+          {
+            type: 'separator'
+          },
           {
             label: 'Open...',
             accelerator: 'CmdOrCtrl+O',
