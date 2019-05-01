@@ -73,7 +73,7 @@ class Search extends Container<SearchState, MainCTX> {
 
     if ( query.includes ( Config.search.tagPrefix ) ) {
 
-      const tagRegexp = /@{ ( [^}]+ ) }|@ ( [^{ ]+ ) /g;
+      const tagRegexp = new RegExp(Config.search.tagPrefix+Config.search.tagOpen+"([^"+Config.search.tagClose+"]+)"+Config.search.tagClose+"|"+Config.search.tagPrefix+"([^"+Config.search.tagClose+" ]+)", "g");
 
       let match = tagRegexp.exec ( query );
       while ( match != null ) {
@@ -88,8 +88,7 @@ class Search extends Container<SearchState, MainCTX> {
       .map ( token => new RegExp ( token, 'i' ) );
 
     return notes.filter ( note => this._isNoteMatch ( note, filterContent, query, tokensRe ) )
-      .filter ( note => this._isTagMatch ( note, filterTags ))
-      ;
+      .filter ( note => this._isTagMatch ( note, filterTags ));
 
   }
 

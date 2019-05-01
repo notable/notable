@@ -35,7 +35,9 @@ const Config = {
   },
   search: {
     tokenizer: /\s+/g,
-    tagPrefix: "@"
+    tagPrefix: "#",
+    tagOpen: "\\[",
+    tagClose: "\\]"
   },
   sorting: {
     by: Settings.get ( 'sorting.by' ),
