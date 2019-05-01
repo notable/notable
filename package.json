@@ -190,7 +190,7 @@
     "icon-font-buildr": "^1.3.3",
     "react-hot-loader": "^4.8.4",
     "react-log-updates": "^1.0.7",
-    "svelto": "^1.1.6",
+    "svelto": "^1.1.9",
     "terser-webpack-plugin": "^1.2.3",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.4.5",
