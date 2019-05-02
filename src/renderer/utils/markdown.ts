@@ -14,6 +14,9 @@ import Utils from './utils';
 
 const {encodeFilePath} = Utils;
 
+delete showdown.helper.emojis['octocat']; // Special emoji, removing it
+delete showdown.helper.emojis['showdown']; // Special emoji, removing it
+
 /* MARKDOWN */
 
 const Markdown = {
