@@ -110,7 +110,7 @@ const Markdown = {
         { // Emoji => Removing it
           type: 'language',
           regex: /:(\S+?):/gm,
-          replace: ( match, $1 ) => emojis[$1] ? '' : match
+          replace: ( match, $1 ) => emojis[$1] || ''
         },
         { // Wrap syntax => Removing only the wrapping syntax
           type: 'language',
