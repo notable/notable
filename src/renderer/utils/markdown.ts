@@ -114,12 +114,27 @@ const Markdown = {
         },
         { // Wrap syntax => Removing only the wrapping syntax
           type: 'language',
-          regex: /_.*?_|\*.*?\*|~.*?~|`.*?`|\[.*?\]/gm,
+          regex: /_.*?_|\*.*?\*|~.*?~|`.*?`/gm,
           replace: match => match.slice ( 1, -1 )
+        },
+        { // Images => Removing all of it
+          type: 'language',
+          regex: /!\[[^\]]+?\]\([^)]+?\)/gm,
+          replace: () => ''
+        },
+        { // Links => Removing the url
+          type: 'language',
+          regex: /\[([^\]]+?)\](?:\([^)]+?\)|\[[^)]+?\])/gm,
+          replace: ( match, $1 ) => $1
+        },
+        { // Wikilinks => Preserving the title
+          type: 'language',
+          regex: /\[\[([^|\]]+?)(?:\|([^\]]+?))?\]\]/gm,
+          replace: ( match, $1 ) => $1
         },
         { // Start syntax => Removing the special syntax
           type: 'language',
-          regex: /^(\s*)(?:>(?:\s*?>)*|#+|\d+\.|[*+-](?=\s))/gm, //TODO: If multiple of these get chained together this regex will fail
+          regex: /^(\s*)(?:>(?:\s*?>)*|#+|\d+\.|[*+-](?=\s)(?:\s*\[[xX ]\]\s*)?|\[[^\]]+?\]:.*)/gm, //TODO: If multiple of these get chained together this regex will fail
           replace: ( match, $1 ) => $1
         },
         { // HTML => Removing all of it
