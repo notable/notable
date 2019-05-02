@@ -99,11 +99,18 @@ const Markdown = {
 
     strip () {
 
+      const {emojis} = showdown.helper;
+
       return [
         { // Standalone syntax => Removing all of it
           type: 'language',
-          regex: /--+|==+|```+|~~~+|:\w+?:/gm,
+          regex: /--+|==+|```+|~~~+/gm,
           replace: () => ''
+        },
+        { // Emoji => Removing it
+          type: 'language',
+          regex: /:(\S+?):/gm,
+          replace: ( match, $1 ) => emojis[$1] ? '' : match
         },
         { // Wrap syntax => Removing only the wrapping syntax
           type: 'language',
