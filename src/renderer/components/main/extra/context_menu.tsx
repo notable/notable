@@ -189,7 +189,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   updateAttachmentMenu = ( items ) => {
 
-    const fileName = $(this.ele).data ( 'filename' );
+    const fileName = $(this.ele).removeData ( 'filename' ).data ( 'filename' );
 
     this.attachment = this.props.container.attachment.get ( fileName );
 
@@ -197,7 +197,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   updateNoteMenu = ( items ) => {
 
-    const filePath = $(this.ele).data ( 'filepath' );
+    const filePath = $(this.ele).removeData ( 'filepath' ).data ( 'filepath' );
 
     this.note = this.props.container.note.get ( filePath );
 

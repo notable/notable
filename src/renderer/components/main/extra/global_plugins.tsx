@@ -50,7 +50,7 @@ class GlobalPlugins extends Component<{ container: IMain }, undefined> {
 
   __quickPanelClick = ( event ) => {
 
-    const nth = $(event.currentTarget).data ( 'nth' );
+    const nth = $(event.currentTarget).removeData ( 'nth' ).data ( 'nth' );
 
     this.props.container.quickPanel.openNth ( nth );
 
