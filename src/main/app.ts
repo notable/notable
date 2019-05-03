@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import {app, ipcMain as ipc, Event, Menu, MenuItemConstructorOptions} from 'electron';
+import {app, ipcMain as ipc, Event, Menu, MenuItemConstructorOptions, shell} from 'electron';
 import {autoUpdater as updater} from 'electron-updater';
 import * as is from 'electron-is';
 import * as fs from 'fs';
@@ -212,7 +212,11 @@ class App {
 
       updater.on ( 'update-available', () => Notification.show ( 'A new update is available', 'Downloading it right now...' ) );
       updater.on ( 'update-not-available', () => Notification.show ( 'No update is available', 'You\'re already using the latest version' ) );
-      updater.on ( 'error', err => Notification.show ( 'An error occurred', err.message ) );
+      updater.on ( 'error', err => {
+        Notification.show ( 'An error occurred', err.message );
+        Notification.show ( 'Update manually', 'Download the new version manually to update the app' );
+        shell.openExternal ( pkg['download'].url );
+      });
 
     }
 

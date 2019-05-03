@@ -124,6 +124,9 @@
   "tutorial": {
     "url": "https://github.com/notable/notable/tree/master/resources/tutorial/notes"
   },
+  "download": {
+    "url": "https://github.com/notable/notable/releases"
+  },
   "keywords": [
     "note",
     "markdown",
