@@ -548,19 +548,19 @@ const Markdown = {
 
   },
 
-  render: ( str: string ): string => {
+  render: ( str: string, limit: number ): string => {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
-    return Markdown.converters.preview ().makeHtml ( Markdown.limiter ( str ).trim () ); //FIXME: Strings starting with multiple empty lines aren't rendered properly
+    return Markdown.converters.preview ().makeHtml ( Markdown.limiter ( str, limit ).trim () ); //FIXME: Strings starting with multiple empty lines aren't rendered properly
 
   },
 
-  strip: ( str: string ): string => {
+  strip: ( str: string, limit: number ): string => {
 
     if ( !str || !Markdown.is ( str ) ) return str;
 
-    return Markdown.converters.strip ().makeHtml ( Markdown.limiter ( str ) ).trim ().replace ( Markdown.wrapperRe, '$1' );
+    return Markdown.converters.strip ().makeHtml ( Markdown.limiter ( str, limit ) ).trim ().replace ( Markdown.wrapperRe, '$1' );
 
   },
 
