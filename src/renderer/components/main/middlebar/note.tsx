@@ -7,14 +7,15 @@ import Main from '@renderer/containers/main';
 
 /* NOTE */
 
-const Note = ({ note, style, title, hasAttachments, isActive, isDeleted, isFavorited, isPinned, isSelected, isMultiEditorEditing, set, toggleNote, toggleNoteRange }) => {
+const Note = ({ note, style, title, hasAttachments, isActive, isDeleted, isFavorited, isPinned, isSelected, isMultiEditorEditing, set, toggleNote, toggleNoteRange, beginNoteDragging }) => {
 
   if ( !note ) return null;
 
   const onClick = event => Svelto.Keyboard.keystroke.hasCtrlOrCmd ( event ) ? toggleNote ( note ) : ( event.shiftKey ? toggleNoteRange ( note ) : set ( note, true ) );
+  const onDragStart = () => beginNoteDragging(note)
 
   return (
-    <div style={style} className={`note ${!isMultiEditorEditing && isActive ? 'label' : 'button'} ${( isMultiEditorEditing ? isSelected : isActive ) ? 'active' : ''} list-item`} data-checksum={note.checksum} data-filepath={note.filePath} data-deleted={isDeleted} data-favorited={isFavorited} onClick={onClick}>
+    <div style={style} className={`note ${!isMultiEditorEditing && isActive ? 'label' : 'button'} ${(isMultiEditorEditing ? isSelected : isActive) ? 'active' : ''} list-item`} data-checksum={note.checksum} data-filepath={note.filePath} data-deleted={isDeleted} data-favorited={isFavorited} onClick={onClick} draggable={true} onDragStart={onDragStart}>
       <span className="title small">{title}</span>
       {!hasAttachments ? null : (
         <i className="icon xxsmall">paperclip</i>
@@ -52,7 +53,8 @@ export default connect ({
       isMultiEditorEditing: container.multiEditor.isEditing (),
       set: container.note.set,
       toggleNote: container.multiEditor.toggleNote,
-      toggleNoteRange: container.multiEditor.toggleNoteRange
+      toggleNoteRange: container.multiEditor.toggleNoteRange,
+      beginNoteDragging: container.multiEditor.beginNoteDragging
     });
 
   }

@@ -8,7 +8,7 @@ import Main from '@renderer/containers/main';
 
 /* TAG */
 
-const Tag = ({ style, tag, level, isLeaf, isActive, set, toggleCollapse }) => {
+const Tag = ({ style, tag, level, isLeaf, isActive, set, toggleCollapse, drop }) => {
 
   if ( !tag ) return null;
 
@@ -18,10 +18,15 @@ const Tag = ({ style, tag, level, isLeaf, isActive, set, toggleCollapse }) => {
         onCollapserClick = e => {
           e.stopPropagation ();
           toggleCollapse ( path );
-        };
-
+        },
+        onDragOver = e => e.preventDefault(),
+        onDrop = e => {
+          drop(tag)
+          e.preventDefault()
+        }
+  
   return (
-    <div style={style} className={`tag ${isActive ? 'active' : ''} level-${level} button list-item`} data-tag={path} data-has-children={!isLeaf} data-collapsed={collapsed} onClick={onClick}>
+    <div style={style} className={`tag ${isActive ? 'active' : ''} level-${level} button list-item`} data-tag={path} data-has-children={!isLeaf} data-collapsed={collapsed} onClick={onClick} onDragOver={onDragOver} onDrop={onDrop}>
       {isRoot ? <i className="icon xsmall">{collapsed ? iconCollapsed || 'tag_multiple' : icon || 'tag'}</i> : null}
       {!isRoot && ( !isLeaf || collapsed ) ? <i className={`icon xsmall collapser ${collapsed ? 'rotate--90' : ''}`} onClick={onCollapserClick}>chevron_down</i> : null} {/* TODO: The collapser isn't animated because the whole list gets re-rendered */}
       {!isRoot && ( isLeaf && !collapsed ) ? <i className="icon xsmall">invisible</i> : null}
@@ -46,7 +51,8 @@ export default connect ({
       tag, style, level, isLeaf,
       isActive: container.tag.get () === tag,
       set: container.tag.set,
-      toggleCollapse: container.tag.toggleCollapse
+      toggleCollapse: container.tag.toggleCollapse,
+      drop: container.multiEditor.endDragging
     });
 
   }

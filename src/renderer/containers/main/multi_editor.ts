@@ -295,6 +295,17 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
 
   }
 
+  endDragging = ( tag: TagObj ) => {
+    return this._callAll( this.ctx.note.addTag, [tag.path] )
+  }
+
+  beginNoteDragging = async ( note: NoteObj ) => {
+    const notes = this.getNotes()
+    if (_.find(notes, anNote => anNote.filePath == note.filePath) === undefined) {
+      return this.setNotes([note])
+    }
+  }
+
 }
 
 /* EXPORT */
