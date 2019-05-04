@@ -1,6 +1,7 @@
 
 /* IMPORT */
 
+import CallsBatch from 'calls-batch';
 import * as os from 'os';
 
 /* UTILS */
@@ -9,9 +10,9 @@ const Utils = {
 
   pathSepRe: /(?:\/|\\)+/g,
 
-  batchify ( batch, fn ) {
+  batchify ( batch: CallsBatch.type, fn: Function ) {
 
-    return function ( ...args ) {
+    return function ( ...args: any[] ) {
       batch.add ( fn, args );
     };
 
@@ -39,7 +40,7 @@ const Utils = {
 
   },
 
-  qsaWait ( selector: string ): Promise<any> { // Return the found elements as soon as they appear in the DOM
+  qsaWait ( selector: string, context?: HTMLElement ): Promise<Cash | undefined> { // Return the found elements as soon as they appear in the DOM
 
     let iteration = 0;
 
@@ -49,7 +50,7 @@ const Utils = {
 
         if ( iteration++ >= 2500 ) return resolve (); // Something unexpected probably happened, stop checking
 
-        const $ele = $(selector);
+        const $ele = $(selector, context);
 
         if ( !$ele.length ) return requestAnimationFrame ( loop );
 

@@ -9,7 +9,7 @@ import Main from '@renderer/containers/main';
 
 /* PREVIEW PLUGINS */
 
-class PreviewPlugins extends Component<{ container: IMain }, undefined> {
+class PreviewPlugins extends Component<{ container: IMain }, {}> {
 
   /* SPECIAL */
 

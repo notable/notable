@@ -213,7 +213,7 @@ const Markdown = {
 
     katex () {
 
-      let katex;
+      let katex: typeof import ( 'katex' );
 
       const init = _.once ( () => { // Lazy init for performance
         katex = require ( 'katex' );

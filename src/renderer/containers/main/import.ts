@@ -41,7 +41,7 @@ class Import extends Container<ImportState, MainCTX> {
 
   }
 
-  _importEnex = async ( filePath: string ) => { //TODO: Run this on a separate process
+  _importEnex = async ( filePath: string ) => {
 
     const importTag = this._getImportTag ( filePath );
 

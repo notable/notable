@@ -14,9 +14,9 @@ const {ALL, FAVORITES, NOTEBOOKS, TAGS, TEMPLATES, UNTAGGED, TRASH} = TagSpecial
 /* HELPERS */
 
 const getHeight = () => is.macOS () ? window.innerHeight - 38 : window.innerHeight, //UGLY: But it gets the job done, quickly
-      getItemChildren = tag => !tag.collapsed ? Tags.sort ( Object.values ( tag.tags ) ) : [],
-      getItemKey = item => item.path,
-      filterItem = item => !!item.notes.length || item.path === ALL;
+      getItemChildren = ( tag: TagObj ) => !tag.collapsed ? Tags.sort ( Object.values ( tag.tags ) ) : [],
+      getItemKey = ( tag: TagObj ) => tag.path,
+      filterItem = ( tag: TagObj ) => !!tag.notes.length || tag.path === ALL;
 
 /* CONTENT */
 

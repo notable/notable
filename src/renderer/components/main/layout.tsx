@@ -7,10 +7,10 @@ import Utils from '@renderer/utils/utils';
 
 /* LAYOUT */
 
-class Layout extends React.Component<any, any> {
+class Layout extends React.Component<{ resizable: boolean, direction: string, className?: string, isFocus?: boolean, isZen?: boolean, hasSidebar?: boolean }, {}> {
 
   $layout;
-  dimensions: number[];
+  dimensions?: number[];
 
   update = async () => {
 
@@ -42,7 +42,7 @@ class Layout extends React.Component<any, any> {
 
   }
 
-  __resize = ( event ) => {
+  __resize = ( event: Event ) => {
 
     if ( event.target === this.$layout[0] ) return;
 

@@ -2,8 +2,9 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {app, ipcMain as ipc, BrowserWindow, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {BrowserWindowConstructorOptions, Event, ipcMain as ipc, BrowserWindow, Menu, MenuItemConstructorOptions, shell} from 'electron';
 import * as is from 'electron-is';
+import * as windowStateKeeper from 'electron-window-state';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
@@ -19,12 +20,12 @@ class Main extends Route {
 
   /* VARIABLES */
 
-  _prevStateFlags: StateFlags | false = false;
+  _prevContextFlags: ContextFlags | false = false;
   _prevUpdateCheckTimestamp: number = 0;
 
   /* CONSTRUCTOR */
 
-  constructor ( name = 'main', options = { minWidth: 685, minHeight: 425 }, stateOptions = { defaultWidth: 850, defaultHeight: 525 } ) {
+  constructor ( name = 'main', options: BrowserWindowConstructorOptions = { minWidth: 685, minHeight: 425 }, stateOptions: windowStateKeeper.Options = { defaultWidth: 850, defaultHeight: 525 } ) {
 
     super ( name, options, stateOptions );
 
@@ -34,9 +35,9 @@ class Main extends Route {
 
   initLocalShortcuts () {}
 
-  initMenu ( flags: StateFlags | false = this._prevStateFlags ) {
+  initMenu ( flags: ContextFlags | false = this._prevContextFlags ) {
 
-    this._prevStateFlags = flags; // Storing them because they are needed also when focusing to the window
+    this._prevContextFlags = flags; // Storing them because they are needed also when focusing to the window
 
     const updaterCanCheck = this._updaterCanCheck ();
 
@@ -484,9 +485,9 @@ class Main extends Route {
 
   }
 
-  __close = ( event ) => {
+  __close = ( event: Event ) => {
 
-    if ( app['isQuitting'] ) return;
+    if ( global.isQuitting ) return;
 
     event.preventDefault ();
 
@@ -560,7 +561,7 @@ class Main extends Route {
 
   }
 
-  __flagsUpdate = ( event, flags ) => {
+  __flagsUpdate = ( event: Event, flags: ContextFlags ) => {
 
     this.initMenu ( flags );
 
@@ -574,7 +575,7 @@ class Main extends Route {
 
   }
 
-  __navigateUrl = ( event, url ) => {
+  __navigateUrl = ( event: Event, url: string ) => {
 
     if ( url === this.win.webContents.getURL () ) return;
 
@@ -592,7 +593,7 @@ class Main extends Route {
 
   }
 
-  __printPDF = ( event, options ) => {
+  __printPDF = ( event: Event, options: PrintOptions ) => {
 
     const win = new BrowserWindow ({
       show: false,
@@ -625,7 +626,7 @@ class Main extends Route {
         fs.writeFile ( options.dst, data, err => {
           if ( err ) {
             if ( err.code === 'ENOENT' ) {
-              mkdirp ( path.dirname ( options.dst ), err => {
+              mkdirp ( path.dirname ( options.dst ), ( err: Error ) => {
                 if ( err ) return console.error ( err );
                 fs.writeFile ( options.dst, data, err => {
                   if ( err ) return console.error ( err );

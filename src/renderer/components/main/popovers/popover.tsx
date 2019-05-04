@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom';
 
 /* POPOVER */
 
-class Popover extends React.Component<any, any> {
+class Popover extends React.Component<{ open: boolean, anchor: string, className?: string, onBeforeOpen?: Function, onOpen?: Function, onBeforeClose?: Function, onClose?: Function }, {}> {
 
   $popover;
 

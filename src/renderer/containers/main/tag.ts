@@ -41,7 +41,7 @@ class Tag extends Container<TagState, MainCTX> {
     const tags = tag.split ( SEPARATOR ),
           obj = tags.reduce ( ( acc, tag ) => acc.tags && acc.tags[tag] || {}, { tags: this.ctx.tags.get () } );
 
-    return _.isEmpty ( obj ) ? undefined : obj as TagObj;
+    return _.isEmpty ( obj ) ? undefined : obj as TagObj; //FIXME: This type casting looks wrong
 
   }
 
@@ -127,7 +127,7 @@ class Tag extends Container<TagState, MainCTX> {
 
   }
 
-  scrollTo = ( tag: string | TagObj = this.state.tag ) => {
+  scrollTo = ( tag: string | TagObj = this.state.tag ): void => {
 
     if ( !tag ) return;
 

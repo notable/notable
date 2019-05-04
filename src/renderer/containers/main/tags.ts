@@ -31,9 +31,9 @@ class Tags extends Container<TagsState, MainCTX> {
 
   /* HELPERS */
 
-  _toggleNote = ( tags, note: NoteObj, add: boolean, clone: boolean = false ) => {
+  _toggleNote = ( tags: TagsObj, note: NoteObj, add: boolean, clone: boolean = false ) => {
 
-    function toggle ( parent, key: string, deletable: boolean = false ) {
+    function toggle ( parent: TagsObj, key: string, deletable: boolean = false ) {
       const tag: TagObj = parent[key];
       const index = tag.notes.findIndex ( n => n.checksum === note.checksum && n.filePath === note.filePath ); //FIXME: This should actually be `tag.notes.indexOf ( note )` but for some reason some times it doesn't work
       if ( add ) {
@@ -90,7 +90,7 @@ class Tags extends Container<TagsState, MainCTX> {
           const parts = tag.split ( SEPARATOR ),
                 currentParts: string[] = [];
 
-          parts.reduce ( ( tags, tag, index ) => {
+          parts.reduce ( ( tags: TagsObj | undefined, tag: string, index: number ) => {
 
             if ( !tags ) return;
 
@@ -145,15 +145,15 @@ class Tags extends Container<TagsState, MainCTX> {
 
   refresh = () => {
 
-    let tags = {};
+    let tags: TagsObj = {};
 
-    tags[ALL] = { icon: 'note', path: ALL, name: TagSpecialsNames.ALL, notes: [], tags: {} };
-    tags[FAVORITES] = { icon: 'star', path: FAVORITES, name: TagSpecialsNames.FAVORITES, notes: [], tags: {} };
-    tags[NOTEBOOKS] = { icon: 'notebook', iconCollapsed: 'notebook_multiple', path: NOTEBOOKS, name: TagSpecialsNames.NOTEBOOKS, notes: [], tags: {} };
-    tags[TAGS] = { path: TAGS, name: TagSpecialsNames.TAGS, notes: [], tags: {} };
-    tags[TEMPLATES] = { icon: 'tag_outline', iconCollapsed: 'tag_outline_multiple', path: TEMPLATES, name: TagSpecialsNames.TEMPLATES, notes: [], tags: {} };
-    tags[UNTAGGED] = { icon: 'tag_crossed', path: UNTAGGED, name: TagSpecialsNames.UNTAGGED, notes: [], tags: {} };
-    tags[TRASH] = { icon: 'delete', path: TRASH, name: TagSpecialsNames.TRASH, notes: [], tags: {} };
+    tags[ALL] = { icon: 'note', collapsed: false, path: ALL, name: TagSpecialsNames.ALL, notes: [], tags: {} };
+    tags[FAVORITES] = { icon: 'star', collapsed: false, path: FAVORITES, name: TagSpecialsNames.FAVORITES, notes: [], tags: {} };
+    tags[NOTEBOOKS] = { icon: 'notebook', iconCollapsed: 'notebook_multiple', collapsed: false, path: NOTEBOOKS, name: TagSpecialsNames.NOTEBOOKS, notes: [], tags: {} };
+    tags[TAGS] = { collapsed: false, path: TAGS, name: TagSpecialsNames.TAGS, notes: [], tags: {} };
+    tags[TEMPLATES] = { icon: 'tag_outline', iconCollapsed: 'tag_outline_multiple', collapsed: false, path: TEMPLATES, name: TagSpecialsNames.TEMPLATES, notes: [], tags: {} };
+    tags[UNTAGGED] = { icon: 'tag_crossed', collapsed: false, path: UNTAGGED, name: TagSpecialsNames.UNTAGGED, notes: [], tags: {} };
+    tags[TRASH] = { icon: 'delete', collapsed: false, path: TRASH, name: TagSpecialsNames.TRASH, notes: [], tags: {} };
 
     Object.values ( this.ctx.notes.get () ).forEach ( note => this._toggleNote ( tags, note, true ) );
 

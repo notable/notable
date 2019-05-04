@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import {ipcRenderer as ipc} from 'electron';
+import {ipcRenderer as ipc, IpcMessageEvent} from 'electron';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import CWD from '@renderer/containers/cwd';
@@ -9,16 +9,16 @@ import Main from '@renderer/containers/main';
 
 /* IPC */
 
-class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
+class IPC extends Component<{ containers: [IMain, ICWD]}, {}> {
 
   /* VARIABLES */
 
-  main = {} as IMain;
-  cwd = {} as ICWD;
+  main: IMain;
+  cwd: ICWD;
 
   /* CONSTRUCTOR */
 
-  constructor ( props ) {
+  constructor ( props: { containers: [IMain, ICWD] } ) {
 
     super ( props );
 
@@ -175,7 +175,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
 
   }
 
-  __windowFullscreenSet = ( event, isFullscreen? ) => {
+  __windowFullscreenSet = ( event: IpcMessageEvent, isFullscreen?: boolean ) => {
 
     this.main.window.toggleFullscreen ( isFullscreen );
 
@@ -295,7 +295,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, undefined> {
 
   }
 
-  __quickPanelToggle = ( event, force?: boolean ) => {
+  __quickPanelToggle = ( event: IpcMessageEvent, force?: boolean ) => {
 
     this.main.quickPanel.toggleOpen ( force );
 

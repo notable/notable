@@ -11,7 +11,7 @@ import Preview from './preview';
 
 /* SPLIT EDITOR */
 
-class SplitEditor extends React.PureComponent<any, any> {
+class SplitEditor extends React.PureComponent<{ isFocus: boolean, isZen: boolean, hasSidebar: boolean, content: string }, { content?: string }> {
 
   state = {
     content: undefined as string | undefined

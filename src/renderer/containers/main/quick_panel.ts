@@ -17,8 +17,8 @@ class QuickPanel extends Container<QuickPanelState, MainCTX> {
     itemIndex: 0,
     results: {
       empty: 'No results found',
-      items: [] as QuickPanelResultsItem[]
-    }
+      items: []
+    } as QuickPanelResults
   };
 
   /* HELPERS */

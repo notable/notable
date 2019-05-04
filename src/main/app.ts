@@ -20,7 +20,7 @@ class App {
 
   /* VARIABLES */
 
-  win: Window;
+  win: Window | undefined;
 
   /* CONSTRUCTOR */
 
@@ -132,7 +132,7 @@ class App {
 
   }
 
-  __beforeQuit = ( event ) => {
+  __beforeQuit = ( event: Event ) => {
 
     if ( !this.win || !this.win.win ) return;
 
@@ -246,7 +246,7 @@ class App {
 
   quit () {
 
-    app['isQuitting'] = true;
+    global.isQuitting = true;
 
     this.___beforeQuit_off ();
 

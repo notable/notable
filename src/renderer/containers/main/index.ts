@@ -35,7 +35,7 @@ class Main extends Container<MainState, MainCTX> {
     methods: /^(?!_|middleware|(?:(?:get|is|has)(?![a-z0-9]))|waitIdle)/
   };
 
-  _prevFlags;
+  _prevFlags?: ContextFlags;
 
   /* CONSTRUCTOR */
 
@@ -116,7 +116,7 @@ class Main extends Container<MainState, MainCTX> {
 
   middlewareFlagsUpdateIPCDebounced = _.debounce ( ( app: IMain ) => {
 
-    const flags: StateFlags = {
+    const flags: ContextFlags = {
       hasNote: !!app.note.get (),
       isAttachmentsEditing: app.attachments.isEditing (),
       isEditorEditing: app.editor.isEditing (),

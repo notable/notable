@@ -18,7 +18,7 @@ import QuickPanel from './modals/quick_panel';
 
 /* MAIN */
 
-class Main extends React.Component<any, undefined> {
+class Main extends React.Component<{ loading: boolean, refresh: Function, listen: Function, isFocus: boolean, isFullscreen: boolean, isZen: boolean, hasSidebar: boolean }, {}> {
 
   /* SPECIAL */
 

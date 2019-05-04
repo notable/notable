@@ -9,12 +9,12 @@ import Main from '@renderer/containers/main';
 
 /* GLOBAL PLUGINS */
 
-class GlobalPlugins extends Component<{ container: IMain }, undefined> {
+class GlobalPlugins extends Component<{ container: IMain }, {}> {
 
   /* VARIABLES */
 
-  _updaterTimeout: NodeJS.Timeout;
-  _updaterInterval: NodeJS.Timeout;
+  _updaterTimeout?: NodeJS.Timeout;
+  _updaterInterval?: NodeJS.Timeout;
 
   /* SPECIAL */
 
@@ -33,8 +33,8 @@ class GlobalPlugins extends Component<{ container: IMain }, undefined> {
 
   componentWillUnmount () {
 
-    clearTimeout ( this._updaterTimeout );
-    clearInterval ( this._updaterInterval );
+    if ( this._updaterTimeout ) clearTimeout ( this._updaterTimeout );
+    if ( this._updaterInterval ) clearInterval ( this._updaterInterval );
 
     $.$document.off ( 'click', this.__quickPanelClick );
 

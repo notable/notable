@@ -85,7 +85,7 @@ class Sorting extends Container<SortingState, MainCTX> {
           pinnedSortedByType = ( type === SortingTypes.ASC ) ? pinnedSortedBy : pinnedSortedBy.reverse (),
           unpinnedSortedByType = ( type === SortingTypes.ASC ) ? unpinnedSortedBy : unpinnedSortedBy.reverse ();
 
-    return pinnedSortedByType.concat ( unpinnedSortedByType ) as NoteObj[]; //TSC
+    return pinnedSortedByType.concat ( unpinnedSortedByType );
 
   }
 

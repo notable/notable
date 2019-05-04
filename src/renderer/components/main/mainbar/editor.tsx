@@ -9,7 +9,7 @@ import Monaco from './monaco';
 
 /* EDITOR */
 
-class Editor extends React.Component<any, undefined> {
+class Editor extends React.Component<{ onChange: Function, onUpdate: Function, filePath: string, content: string, autosave: Function, getMonaco: Function, setMonaco: Function, hasFocus: Function, forget: Function, focus: Function, save: Function, restore: Function, reset: Function }, {}> {
 
   _wasWindowBlurred: boolean = false;
 
@@ -33,7 +33,7 @@ class Editor extends React.Component<any, undefined> {
 
   }
 
-  __mount = ( editor ) => {
+  __mount = ( editor: MonacoEditor ) => {
 
     this.props.setMonaco ( editor );
 
@@ -54,7 +54,7 @@ class Editor extends React.Component<any, undefined> {
 
   }
 
-  __change = ( content ) => {
+  __change = ( content: string ) => {
 
     if ( !this.props.onChange ) return;
 
@@ -87,7 +87,7 @@ class Editor extends React.Component<any, undefined> {
 
   }
 
-  __update = ( content ) => {
+  __update = ( content: string ) => {
 
     this.props.reset ();
 

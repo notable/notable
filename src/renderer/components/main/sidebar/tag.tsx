@@ -15,7 +15,7 @@ const Tag = ({ style, tag, level, isLeaf, isActive, set, toggleCollapse }) => {
   const {name, path, collapsed, notes, icon, iconCollapsed} = tag,
         isRoot = ( level === 0 ),
         onClick = isActive ? _.noop : () => set ( path ),
-        onCollapserClick = e => {
+        onCollapserClick = ( e: React.MouseEvent ) => {
           e.stopPropagation ();
           toggleCollapse ( path );
         };

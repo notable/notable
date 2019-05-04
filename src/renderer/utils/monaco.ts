@@ -15,7 +15,7 @@ import Todo from './monaco_todo';
 
 const Monaco = {
 
-  editorOptions: <monaco.editor.IEditorOptions> {
+  editorOptions: {
     accessibilitySupport: 'off',
     colorDecorators: false,
     contextmenu: false,
@@ -57,13 +57,13 @@ const Monaco = {
     wordWrapColumn: 1000000,
     wordWrapMinified: false,
     wrappingIndent: 'same'
-  },
+  } as monaco.editor.IEditorOptions,
 
-  modelOptions: <monaco.editor.ITextModelUpdateOptions> {
+  modelOptions: {
     insertSpaces: true,
     tabSize: 2,
     trimAutoWhitespace: true
-  },
+  } as monaco.editor.ITextModelUpdateOptions,
 
   keybindings: {
 
@@ -107,7 +107,7 @@ const Monaco = {
       },
       handler ( accessor, editor: MonacoEditor ) {
 
-        if ( !Monaco.editorOptions.minimap ) Monaco.editorOptions.minimap = {}; //TSC
+        if ( !Monaco.editorOptions.minimap ) Monaco.editorOptions.minimap = {};
 
         Monaco.editorOptions.minimap.enabled = !Monaco.editorOptions.minimap.enabled;
 
@@ -166,7 +166,7 @@ const Monaco = {
       }
     }
 
-  },
+  } as { [command: string]: { options: any, handler: Function } | undefined },
 
   keybindingsPatched: {
 
@@ -224,7 +224,7 @@ const Monaco = {
       cmd._kbOpts.mac.primary = monaco.KeyMod.CtrlCmd | monaco.KeyMod.WinCtrl | monaco.KeyCode.UpArrow;
     }
 
-  },
+  } as { [command: string]: Function | false | undefined },
 
   themes: {
 
@@ -254,7 +254,11 @@ const Monaco = {
 
     Object.keys ( Monaco.keybindings ).forEach ( id => {
 
-      const {options, handler} = Monaco.keybindings[id];
+      const keybinding = Monaco.keybindings[id];
+
+      if ( !keybinding ) return;
+
+      const {options, handler} = keybinding;
 
       options.id = id;
       options.label = options.label || options.id;
@@ -265,7 +269,7 @@ const Monaco = {
           super ( options );
         }
 
-        runEditorCommand ( accessor, editor ) {
+        runEditorCommand ( accessor, editor: MonacoEditor ) {
           return handler ( accessor, editor );
         }
 

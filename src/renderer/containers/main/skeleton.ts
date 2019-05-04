@@ -13,7 +13,7 @@ class Skeleton extends Container<SkeletonState, MainCTX> {
 
   get = (): string => {
 
-    function transform ( doc ) {
+    function transform ( doc: Document ) {
       const $html = $(doc.documentElement);
       $html.find ( 'body > :not(#app)' ).remove ();
       $html.find ( '#app' ).children ().not ( '#main' ).remove ();

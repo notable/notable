@@ -50,9 +50,9 @@ const Highlighter = {
 
     if ( !language ) return str;
 
-    language = Highlighter.languagesAliases[language] || language;
+    const lang = Highlighter.languagesAliases[language] || language;
 
-    if ( !Highlighter.initLanguage ( language as string ) ) return str; //TSC
+    if ( !Highlighter.initLanguage ( lang ) ) return str;
 
     return Prism.highlight ( entities.decode ( str ), Prism.languages[language], language );
 

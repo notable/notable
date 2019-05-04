@@ -8,12 +8,12 @@ import {FixedSizeList} from 'react-window';
 
 /* TREE */
 
-class Tree extends React.Component<{ children, id: string, className?: string, data: any[], FallbackEmptyComponent?, fallbackEmptyMessage?: string, getHeight?: Function, getItemChildren?: Function, getItemKey?: Function, filterItem?: Function, isFlat?: boolean, isFixed?: boolean, isKeyed?: boolean }, { height: number, items: any[], levels: number[], isLeafs: boolean[] }> {
+class Tree extends React.Component<{ children, data: any[], selector: string, className?: string, FallbackEmptyComponent?, fallbackEmptyMessage?: string, getHeight?: Function, getItemChildren?: Function, getItemKey?: Function, filterItem?: Function, isFlat?: boolean, isFixed?: boolean, isKeyed?: boolean }, { height: number, items: any[], levels: number[], isLeafs: boolean[] }> {
 
   /* VARIABLES */
 
-  listRef = React.createRef () as any; //TSC
-  innerRef = React.createRef () as any; //TSC
+  listRef = React.createRef<FixedSizeList> ();
+  innerRef = React.createRef<HTMLElement> ();
 
   /* STATE */
 
@@ -52,7 +52,7 @@ class Tree extends React.Component<{ children, id: string, className?: string, d
 
     if ( this.listRef.current && this.innerRef.current ) {
 
-      const {scrollOffset} = this.listRef.current.state,
+      const {scrollOffset} = this.listRef.current.state as any, //TSC
             {scrollTop} = this.innerRef.current;
 
       if ( scrollOffset !== scrollTop ) {
@@ -73,7 +73,7 @@ class Tree extends React.Component<{ children, id: string, className?: string, d
 
   /* API */
 
-  scrollToItem = ( event, index ) => {
+  scrollToItem = ( event: Event, index: number ) => {
 
     if ( !this.listRef.current ) return;
 
@@ -89,7 +89,7 @@ class Tree extends React.Component<{ children, id: string, className?: string, d
 
   }
 
-  getHeight = ( items ) => {
+  getHeight = ( items: any[] ) => {
 
     return this.props.getHeight ? this.props.getHeight ( items ) : 0;
 
@@ -105,7 +105,7 @@ class Tree extends React.Component<{ children, id: string, className?: string, d
 
   }
 
-  getItem = ( index ) => {
+  getItem = ( index: number ) => {
 
     return this.state.items[index];
 
@@ -117,7 +117,7 @@ class Tree extends React.Component<{ children, id: string, className?: string, d
 
   }
 
-  getItemLevel = ( index ) => {
+  getItemLevel = ( index: number ) => {
 
     if ( this.props.isFlat ) return 0;
 
@@ -125,7 +125,7 @@ class Tree extends React.Component<{ children, id: string, className?: string, d
 
   }
 
-  getItemIsLeaf = ( index ) => {
+  getItemIsLeaf = ( index: number ) => {
 
     if ( this.props.isFlat ) return true;
 
@@ -133,7 +133,7 @@ class Tree extends React.Component<{ children, id: string, className?: string, d
 
   }
 
-  getItemKey = index => {
+  getItemKey = ( index: number ) => {
 
     const isNumber = _.isNumber ( index );
 
@@ -157,9 +157,9 @@ class Tree extends React.Component<{ children, id: string, className?: string, d
 
   filterItem = this.props.filterItem || _.constant ( true )
 
-  getItems = ( data, level = 0 ) => {
+  getItems = ( data: any[], level: number = 0 ) => {
 
-    if ( this.props.isFlat ) return { items: data.filter ( this.filterItem ), levels: [], isLeafs: [] };
+    if ( this.props.isFlat ) return { items: data.filter ( this.filterItem as any ), levels: [], isLeafs: [] }; //TSC
 
     const items: any[] = [],
           levels: number[] = [],

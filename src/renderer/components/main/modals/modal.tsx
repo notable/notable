@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom';
 
 /* MODAL */
 
-class Modal extends React.Component<any, any> {
+class Modal extends React.Component<{ open: boolean, onBeforeOpen?: Function, onOpen?: Function, onBeforeClose?: Function, onClose?: Function, className?: string }, {}> {
 
   $modal;
 

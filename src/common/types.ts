@@ -4,6 +4,12 @@
 declare const __static: string;
 declare const Svelto: any;
 
+declare module NodeJS  {
+  interface Global {
+    isQuitting?: boolean
+  }
+}
+
 /* CASH */
 
 //TODO: Update cash: https://github.com/kenwheeler/cash/issues/274
@@ -12,7 +18,7 @@ type cash = typeof import ( 'cash-dom' ).default;
 type Cash = ReturnType<cash>;
 
 declare const $: cash & {
-  [index: string]: any,
+  isEditable: ( ele: Element | null ) => boolean,
   $document: Cash,
   $window: Cash
 };
@@ -199,7 +205,7 @@ type MainState = {
 };
 
 type MainCTX = {
-  _prevFlags?: StateFlags,
+  _prevFlags?: ContextFlags,
   state: MainState,
   suspend (),
   unsuspend (),
@@ -248,7 +254,7 @@ type ICWD = CWDCTX & { ctx: CWDCTX };
 
 /* OTHERS */
 
-type StateFlags = {
+type ContextFlags = {
   hasNote: boolean,
   isAttachmentsEditing: boolean,
   isEditorEditing: boolean,
@@ -259,4 +265,10 @@ type StateFlags = {
   isNotePinned: boolean,
   isTagsEditing: boolean,
   isNoteTemplate: boolean
+};
+
+type PrintOptions = {
+  html?: string,
+  src?: string,
+  dst: string
 };

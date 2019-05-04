@@ -3,7 +3,7 @@
 
 import * as _ from 'lodash';
 import * as path from 'path';
-import {BrowserWindow} from 'electron';
+import {BrowserWindow, BrowserWindowConstructorOptions} from 'electron';
 import * as is from 'electron-is';
 import * as windowStateKeeper from 'electron-window-state';
 import pkg from '@root/package.json';
@@ -16,14 +16,14 @@ class Window {
   /* VARIABLES */
 
   name: string;
-  win: BrowserWindow;
-  options: object;
-  stateOptions: object;
+  win: BrowserWindow = {} as BrowserWindow; //TSC
+  options: BrowserWindowConstructorOptions;
+  stateOptions: windowStateKeeper.Options;
   _didFocus: boolean = false;
 
   /* CONSTRUCTOR */
 
-  constructor ( name, options = {}, stateOptions = {} ) {
+  constructor ( name: string, options: BrowserWindowConstructorOptions = {}, stateOptions: windowStateKeeper.Options = {} ) {
 
     this.name = name;
     this.options = options;

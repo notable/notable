@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import {MenuItem, MenuItemConstructorOptions} from 'electron';
 import contextMenu from 'electron-context-menu';
 import Dialog from 'electron-dialog';
 import * as is from 'electron-is';
@@ -12,7 +13,7 @@ import {TagSpecials} from '@renderer/utils/tags';
 
 /* CONTEXT MENU */
 
-class ContextMenu extends Component<{ container: IMain }, undefined> {
+class ContextMenu extends Component<{ container: IMain }, {}> {
 
   /* VARIABLES */
 
@@ -41,10 +42,10 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   }
 
-  _makeMenu = ( selector: string | Function = '*', items: any[] = [], itemsUpdater = _.noop ) => {
+  _makeMenu = ( selector: string | Function = '*', items: MenuItemConstructorOptions[] = [], itemsUpdater = _.noop ) => {
 
     contextMenu ({
-      prepend: () => items,
+      prepend: () => items as MenuItem[], //TSC: Looks like a bug in `electron-context-menu`?
       shouldShowMenu: ( event, { x, y } ) => {
 
         const ele = _.isString ( selector ) ? this._getItem ( x, y, selector ) : selector ( x, y );
@@ -187,7 +188,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   /* UPDATE */
 
-  updateAttachmentMenu = ( items ) => {
+  updateAttachmentMenu = ( items: MenuItem[] ) => {
 
     const fileName = $(this.ele).removeData ( 'filename' ).data ( 'filename' );
 
@@ -195,7 +196,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   }
 
-  updateNoteMenu = ( items ) => {
+  updateNoteMenu = ( items: MenuItem[] ) => {
 
     const filePath = $(this.ele).removeData ( 'filepath' ).data ( 'filepath' );
 
@@ -213,7 +214,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   }
 
-  updateTagMenu = ( items ) => {
+  updateTagMenu = ( items: MenuItem[] ) => {
 
     this.tag = $(this.ele).attr ( 'data-tag' );
 
@@ -224,7 +225,7 @@ class ContextMenu extends Component<{ container: IMain }, undefined> {
 
   }
 
-  updateTrashMenu = ( items ) => {
+  updateTrashMenu = ( items: MenuItem[] ) => {
 
     items[0].enabled = !this.props.container.trash.isEmpty ();
 

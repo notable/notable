@@ -96,7 +96,7 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
     const notes = this.getNotes (),
           index = notes.indexOf ( note );
 
-    let notesNext;
+    let notesNext: NoteObj[] = [];
 
     if ( force !== true && index >= 0 ) { // Remove
 
