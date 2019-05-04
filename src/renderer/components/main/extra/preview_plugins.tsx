@@ -2,7 +2,6 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {clipboard} from 'electron';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
@@ -73,7 +72,7 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
 
     if ( !$code.length ) return;
 
-    clipboard.writeText ( $code.text () );
+    this.props.container.clipboard.set ( $code.text () );
 
   }
 

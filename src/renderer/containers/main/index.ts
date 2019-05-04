@@ -6,6 +6,7 @@ import {ipcRenderer as ipc} from 'electron';
 import {Container, autosuspend, compose} from 'overstated';
 import Attachment from './attachment';
 import Attachments from './attachments';
+import Clipboard from './clipboard';
 import Editor from './editor';
 import Export from './export';
 import Import from './import';
@@ -190,6 +191,7 @@ class Main extends Container<MainState, MainCTX> {
 export default compose ({
   attachment: Attachment,
   attachments: Attachments,
+  clipboard: Clipboard,
   editor: Editor,
   export: Export,
   import: Import,

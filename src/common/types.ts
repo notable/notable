@@ -104,6 +104,8 @@ type AttachmentsState = {
   editing: boolean
 };
 
+type ClipboardState = {};
+
 type EditorState = {
   monaco?: MonacoEditor,
   editing: boolean,
@@ -186,6 +188,7 @@ type WindowState = {
 type MainState = {
   attachment: AttachmentState,
   attachments: AttachmentsState,
+  clipboard: ClipboardState,
   editor: EditorState,
   export: ExportState,
   import: ImportState,
@@ -216,6 +219,7 @@ type MainCTX = {
   waitIdle (),
   attachment: import ( '@renderer/containers/main/attachment' ).default,
   attachments: import ( '@renderer/containers/main/attachments' ).default,
+  clipboard: import ( '@renderer/containers/main/clipboard' ).default,
   editor: import ( '@renderer/containers/main/editor' ).default,
   export: import ( '@renderer/containers/main/export' ).default,
   import: import ( '@renderer/containers/main/import' ).default,

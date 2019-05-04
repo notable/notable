@@ -1,7 +1,6 @@
 
 /* IMPORT */
 
-import {clipboard} from 'electron';
 import {Container} from 'overstated';
 import Critical from '@renderer/utils/critical';
 
@@ -36,7 +35,7 @@ class Skeleton extends Container<SkeletonState, MainCTX> {
 
     const skeleton = this.get ();
 
-    clipboard.writeText ( skeleton );
+    this.ctx.clipboard.set ( skeleton );
 
     console.log ( 'Skeleton copied to the clipboard!' );
 
