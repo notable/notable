@@ -55,9 +55,9 @@ class QuickPanel extends React.Component<{ isOpen: boolean, setQuery: Function, 
     const {isOpen, toggleOpen, query, results} = this.props;
 
     return (
-      <Modal id="quick-panel" open={isOpen} onBeforeOpen={this.__beforeOpen} onBeforeClose={() => _.defer ( () => toggleOpen ( false ) )}>
+      <Modal className="quick-panel" open={isOpen} onBeforeOpen={this.__beforeOpen} onBeforeClose={() => _.defer ( () => toggleOpen ( false ) )}>
         <input ref={this.inputRef} placeholder="Open note or attachment..." className="autofocus card-header bordered small" defaultValue={query} onChange={this.onChange} />
-        <List id="list-quick-panel" className="card-block" data={results.items} getHeight={this.getHeight} getItemKey={this.getItemKey} fallbackEmptyMessage={results.empty}>{Item}</List>
+        <List className="list-quick-panel card-block" data={results.items} getHeight={this.getHeight} getItemKey={this.getItemKey} fallbackEmptyMessage={results.empty}>{Item}</List>
       </Modal>
     );
 

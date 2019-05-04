@@ -14,11 +14,11 @@ class Layout extends React.Component<{ resizable: boolean, direction: string, cl
 
   update = async () => {
 
-    const {id, resizable} = this.props;
+    const {resizable} = this.props;
 
     if ( !resizable ) return;
 
-    const $children = await Utils.qsaWait ( `#${id} > .layout, #${id} > .layout-content` );
+    const $children = await Utils.qsaWait ( `:scope > .layout, :scope > .layout-content`, this.$layout );
 
     if ( !$children || !$children.length ) return;
 
@@ -76,9 +76,9 @@ class Layout extends React.Component<{ resizable: boolean, direction: string, cl
 
   render () {
 
-    const {id, className, direction, resizable, children} = this.props;
+    const {className, direction, resizable, children} = this.props;
 
-    return <div id={id} className={`layout ${direction} ${resizable ? 'resizable' : ''} ${className || ''}`}>{children}</div>;
+    return <div className={`layout ${direction} ${resizable ? 'resizable' : ''} ${className || ''}`}>{children}</div>;
 
   }
 

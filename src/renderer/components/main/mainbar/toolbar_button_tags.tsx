@@ -11,9 +11,9 @@ import ToolbarButton from './toolbar_button';
 
 const TagsButton = ({ isEditing, toggleEditing }) => {
 
-  if ( !isEditing ) return <ToolbarButton id="popover-note-tags-trigger" icon="tag" title="Edit Tags" onClick={() => toggleEditing ()} />;
+  if ( !isEditing ) return <ToolbarButton className="popover-note-tags-trigger" icon="tag" title="Edit Tags" onClick={() => toggleEditing ()} />;
 
-  return <ToolbarButton id="popover-note-tags-trigger" icon="tag" title="Stop Editing Tags" isActive={true} onClick={() => toggleEditing ()} />;
+  return <ToolbarButton className="popover-note-tags-trigger" icon="tag" title="Stop Editing Tags" isActive={true} onClick={() => toggleEditing ()} />;
 
 }
 

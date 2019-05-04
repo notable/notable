@@ -49,7 +49,7 @@ class Main extends React.Component<{ loading: boolean, refresh: Function, listen
         <PreviewPlugins />
         <Shortcuts />
         <QuickPanel />
-        <Layout id="main" className={`app-wrapper ${isFullscreen ? 'fullscreen' : ''} ${hasSidebar ? 'focus' : ''} ${isZen ? 'zen' : ''}`} direction="horizontal" resizable={true} isFocus={isFocus} isZen={isZen} hasSidebar={hasSidebar}>
+        <Layout className={`main app-wrapper ${isFullscreen ? 'fullscreen' : ''} ${hasSidebar ? 'focus' : ''} ${isZen ? 'zen' : ''}`} direction="horizontal" resizable={true} isFocus={isFocus} isZen={isZen} hasSidebar={hasSidebar}>
           <Sidebar />
           <Middlebar />
           <Mainbar />

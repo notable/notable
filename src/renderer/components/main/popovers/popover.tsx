@@ -38,10 +38,10 @@ class Popover extends React.Component<{ open: boolean, anchor: string, className
 
   render () {
 
-    const {id, children} = this.props;
+    const {children, className} = this.props;
 
     return (
-      <div id={id} className="popover card bordered">
+      <div className={`popover card bordered ${className || ''}`}>
         {children}
       </div>
     );

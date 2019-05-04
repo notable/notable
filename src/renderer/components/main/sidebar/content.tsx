@@ -28,7 +28,7 @@ const Content = ({ isLoading, all, favorites, notebooks, tags, templates, untagg
 
   if ( !notebooks.notes.length && !templates.notes.length ) data.splice ( 3, 1, ...Tags.sort ( Object.values ( tags.tags ) ) ); // If this is the only nestable special tag, avoid using it
 
-  return <KeyedTree id="list-tags" className="layout-content" data={data} getHeight={getHeight} getItemChildren={getItemChildren} getItemKey={getItemKey} filterItem={filterItem}>{Tag}</KeyedTree>;
+  return <KeyedTree className="list-tags layout-content" data={data} getHeight={getHeight} getItemChildren={getItemChildren} getItemKey={getItemKey} filterItem={filterItem}>{Tag}</KeyedTree>;
 
 };
 

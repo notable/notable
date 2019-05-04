@@ -36,7 +36,7 @@ class Tagbox extends React.PureComponent<{ onChange: Function, tags: string[], c
     const {className, tags} = this.props;
 
     return (
-      <div className={`tagbox card-footer bordered ${className}`}>
+      <div className={`tagbox card-footer bordered ${className || ''}`}>
         <input defaultValue={tags} className="hidden" />
         <input autoFocus={true} placeholder="Add tags..." className="tagbox-partial autogrow autofocus compact small" />
       </div>

@@ -39,10 +39,10 @@ class Modal extends React.Component<{ open: boolean, onBeforeOpen?: Function, on
 
   render () {
 
-    const {id, children} = this.props;
+    const {className, children} = this.props;
 
     return (
-      <div id={id} className="modal card bordered">
+      <div className={`modal card bordered ${className || ''}`}>
         {children}
       </div>
     );

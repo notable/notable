@@ -746,7 +746,7 @@ class Note extends Container<NoteState, MainCTX> {
 
     if ( index === -1 ) return;
 
-    $('#list-notes').trigger ( 'scroll-to-item', index );
+    $('.list-notes').trigger ( 'scroll-to-item', index );
 
   }
 

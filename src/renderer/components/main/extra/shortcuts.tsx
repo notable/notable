@@ -101,7 +101,7 @@ class Shortcuts extends Component<{ container: IMain }, {}> {
 
     if ( this.props.container.editor.hasFocus () ) return null;
 
-    const $preview = $('#mainbar .preview');
+    const $preview = $('.mainbar .preview');
 
     if ( $preview.length ) { // Select preview
 

@@ -120,7 +120,7 @@ class Search extends Container<SearchState, MainCTX> {
 
   focus = () => {
 
-    const $input = $('#middlebar input[type="search"]');
+    const $input = $('.middlebar input[type="search"]');
 
     if ( !$input.length ) return;
 
@@ -130,7 +130,7 @@ class Search extends Container<SearchState, MainCTX> {
 
   hasFocus = (): boolean => {
 
-    return document.activeElement === $('#middlebar input[type="search"]')[0];
+    return document.activeElement === $('.middlebar input[type="search"]')[0];
 
   }
 

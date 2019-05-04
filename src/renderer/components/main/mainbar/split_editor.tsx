@@ -29,7 +29,7 @@ class SplitEditor extends React.PureComponent<{ isFocus: boolean, isZen: boolean
           content = _.isString ( this.state.content ) ? this.state.content : this.props.content;
 
     return (
-      <Layout id="split-editor" className="split-editor" direction="horizontal" resizable={true} isFocus={isFocus} isZen={isZen} hasSidebar={hasSidebar}>
+      <Layout className="split-editor" direction="horizontal" resizable={true} isFocus={isFocus} isZen={isZen} hasSidebar={hasSidebar}>
         <Editor onChange={this.__change} onUpdate={this.__change} />
         <Preview content={content} />
       </Layout>

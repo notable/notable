@@ -55,7 +55,7 @@ class QuickPanel extends Container<QuickPanelState, MainCTX> {
 
     if ( !item ) return;
 
-    if ( item.hasOwnProperty ( 'metadata' ) ) return this.ctx.note.set ( item as NoteObj );
+    if ( item.hasOwnProperty ( 'metadata' ) ) return this.ctx.note.set ( item as NoteObj, true );
 
     if ( item.hasOwnProperty ( 'fileName' ) ) return this.ctx.attachment.openInApp ( item as AttachmentObj );
 
@@ -93,7 +93,7 @@ class QuickPanel extends Container<QuickPanelState, MainCTX> {
 
     if ( index < 0 || index > results.items.length ) return;
 
-    $('#list-quick-panel').trigger ( 'scroll-to-item', index );
+    $('.list-quick-panel').trigger ( 'scroll-to-item', index );
 
   }
 

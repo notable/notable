@@ -27,7 +27,7 @@ class GlobalPlugins extends Component<{ container: IMain }, {}> {
 
     }
 
-    $.$document.on ( 'click', '#quick-panel .list-item', this.__quickPanelClick );
+    $.$document.on ( 'click', '.quick-panel .list-item', this.__quickPanelClick );
 
   }
 

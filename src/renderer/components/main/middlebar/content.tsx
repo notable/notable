@@ -18,7 +18,7 @@ const Content = ({ isLoading, notes }) => {
 
   if ( isLoading ) return null;
 
-  return <KeyedList id="list-notes" className="layout-content" data={notes} getHeight={getHeight} getItemKey={getItemKey} fallbackEmptyMessage="No notes found">{Note}</KeyedList>;
+  return <KeyedList className="list-notes layout-content" data={notes} getHeight={getHeight} getItemKey={getItemKey} fallbackEmptyMessage="No notes found">{Note}</KeyedList>;
 
 }
 

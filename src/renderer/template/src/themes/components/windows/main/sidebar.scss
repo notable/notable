@@ -3,7 +3,7 @@
 
 @mixin theme-window-main-sidebar ( $theme ) {
 
-  #sidebar {
+  .sidebar {
 
     background-color: map-get( $theme, 'sidebar.background' );
     color: map-get( $theme, 'sidebar.foreground' );

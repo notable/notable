@@ -15,12 +15,12 @@ class Skeleton extends Container<SkeletonState, MainCTX> {
 
     function transform ( doc: Document ) {
       const $html = $(doc.documentElement);
-      $html.find ( 'body > :not(#app)' ).remove ();
-      $html.find ( '#app' ).children ().not ( '#main' ).remove ();
-      $html.find ( '#main' ).children ().not ( '#sidebar, #middlebar, #mainbar' ).remove ();
-      $html.find ( '#sidebar' ).children ().remove ();
+      $html.find ( 'body > :not(.app)' ).remove ();
+      $html.find ( '.app' ).children ().not ( '.main' ).remove ();
+      $html.find ( '.main' ).children ().not ( '.sidebar, .middlebar, .mainbar' ).remove ();
+      $html.find ( '.sidebar' ).children ().remove ();
       $html.find ( '.layout-header, .layout-content' ).children ().remove ();
-      $html.find ( '#mainbar' ).children ().not ( '.layout-header, .layout-content' ).remove ();
+      $html.find ( '.mainbar' ).children ().not ( '.layout-header, .layout-content' ).remove ();
       $html.find ( '.editor, .preview' ).remove ();
       $html.find ( '*' ).removeAttr ( 'style' );
       $html.find ( '*' ).removeClass ( 'centerer xsmall resizable' );

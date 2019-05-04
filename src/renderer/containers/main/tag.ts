@@ -133,7 +133,7 @@ class Tag extends Container<TagState, MainCTX> {
 
     if ( _.isString ( tag ) ) return this.scrollTo ( this.get ( tag ) );
 
-    $('#list-tags').trigger ( 'scroll-to-item', tag );
+    $('.list-tags').trigger ( 'scroll-to-item', tag );
 
   }
 
@@ -199,7 +199,7 @@ class Tag extends Container<TagState, MainCTX> {
 
   navigate = ( modifier: number, wrap: boolean = true ) => {
 
-    const $tags = $('#sidebar .tag');
+    const $tags = $('.sidebar .tag');
 
     if ( !$tags.length ) return;
 
