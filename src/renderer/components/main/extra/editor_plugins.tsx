@@ -7,7 +7,7 @@ import Main from '@renderer/containers/main';
 
 /* EDITOR PLUGINS */
 
-class EditorPlugins extends Component<undefined, undefined> {
+class EditorPlugins extends Component<{}, {}> {
 
   /* SPECIAL */
 

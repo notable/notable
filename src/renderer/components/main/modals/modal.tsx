@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom';
 
 /* MODAL */
 
-class Modal extends React.Component<any, any> {
+class Modal extends React.Component<{ open: boolean, onBeforeOpen?: Function, onOpen?: Function, onBeforeClose?: Function, onClose?: Function, className?: string }, {}> {
 
   $modal;
 
@@ -39,10 +39,10 @@ class Modal extends React.Component<any, any> {
 
   render () {
 
-    const {id, children} = this.props;
+    const {className, children} = this.props;
 
     return (
-      <div id={id} className="modal card bordered">
+      <div className={`modal card bordered ${className || ''}`}>
         {children}
       </div>
     );

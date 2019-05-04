@@ -17,12 +17,12 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
 
   /* VARIABLES */
 
-  _listener;
+  _listener?: import ( 'chokidar' ).FSWatcher;
 
   /* STATE */
 
   state = {
-    attachments: {},
+    attachments: {} as AttachmentsObj,
     editing: false
   };
 
@@ -54,7 +54,7 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
 
       return acc;
 
-    }, {} );
+    }, {} as AttachmentsObj );
 
     return this.set ( attachments );
 
@@ -76,11 +76,11 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
       wait: 100
     });
 
-    const isFilePathSupported = ( filePath ) => {
+    const isFilePathSupported = ( filePath: string ) => {
       return Config.attachments.re.test ( filePath );
     };
 
-    const add = async ( filePath ) => {
+    const add = async ( filePath: string ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
       const attachment = await this.ctx.attachment.read ( filePath );
       if ( !attachment ) return;
@@ -89,7 +89,7 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
       await this.ctx.attachment.add ( attachment );
     };
 
-    const rename = async ( filePath, nextFilePath ) => {
+    const rename = async ( filePath: string, nextFilePath: string ) => {
       if ( !isFilePathSupported ( nextFilePath ) ) return unlink ( filePath );
       const nextAttachment = await this.ctx.attachment.read ( nextFilePath );
       if ( !nextAttachment ) return;
@@ -98,7 +98,7 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
       await this.ctx.attachment.replace ( attachment, nextAttachment );
     };
 
-    const unlink = async ( filePath ) => {
+    const unlink = async ( filePath: string ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
       const attachment = this.ctx.attachment.get ( filePath );
       if ( !attachment ) return;

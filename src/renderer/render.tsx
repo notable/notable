@@ -27,7 +27,7 @@ async function render () {
         </ErrorBoundary>
       </Provider>
     </AppContainer>,
-    document.getElementById ( 'app' )
+    document.getElementsByClassName ( 'app' )[0]
   );
 
 }

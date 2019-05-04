@@ -6,7 +6,7 @@ import {createElement} from 'react';
 
 /* IDLE */
 
-//TODO: Publish as `react-idle` or `react-idle-update` or something
+//TODO: Publish as `react-idle-render`
 
 class Idle extends React.Component<{ children: React.FC, timeout?: number }, {}> {
 

@@ -9,7 +9,7 @@ import Footer from './footer';
 /* CWD */
 
 const CWD = () => (
-  <div id="cwd" className="app-wrapper layout">
+  <div className="cwd app-wrapper layout">
     <Header />
     <Content />
     <Footer />

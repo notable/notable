@@ -7,18 +7,18 @@ import Utils from '@renderer/utils/utils';
 
 /* LAYOUT */
 
-class Layout extends React.Component<any, any> {
+class Layout extends React.Component<{ resizable: boolean, direction: string, className?: string, isFocus?: boolean, isZen?: boolean, hasSidebar?: boolean }, {}> {
 
   $layout;
-  dimensions: number[];
+  dimensions?: number[];
 
   update = async () => {
 
-    const {id, resizable} = this.props;
+    const {resizable} = this.props;
 
     if ( !resizable ) return;
 
-    const $children = await Utils.qsaWait ( `#${id} > .layout, #${id} > .layout-content` );
+    const $children = await Utils.qsaWait ( `:scope > .layout, :scope > .layout-content`, this.$layout );
 
     if ( !$children || !$children.length ) return;
 
@@ -42,7 +42,7 @@ class Layout extends React.Component<any, any> {
 
   }
 
-  __resize = ( event ) => {
+  __resize = ( event: Event ) => {
 
     if ( event.target === this.$layout[0] ) return;
 
@@ -76,9 +76,9 @@ class Layout extends React.Component<any, any> {
 
   render () {
 
-    const {id, className, direction, resizable, children} = this.props;
+    const {className, direction, resizable, children} = this.props;
 
-    return <div id={id} className={`layout ${direction} ${resizable ? 'resizable' : ''} ${className || ''}`}>{children}</div>;
+    return <div className={`layout ${direction} ${resizable ? 'resizable' : ''} ${className || ''}`}>{children}</div>;
 
   }
 

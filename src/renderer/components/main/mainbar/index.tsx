@@ -7,7 +7,7 @@ import Content from './content';
 /* MAINBAR */
 
 const Mainbar = () => (
-  <div id="mainbar" className="layout column">
+  <div className="mainbar layout column">
     <Content />
   </div>
 );

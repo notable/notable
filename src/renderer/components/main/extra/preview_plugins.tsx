@@ -9,7 +9,7 @@ import Main from '@renderer/containers/main';
 
 /* PREVIEW PLUGINS */
 
-class PreviewPlugins extends Component<{ container: IMain }, undefined> {
+class PreviewPlugins extends Component<{ container: IMain }, {}> {
 
   /* SPECIAL */
 
@@ -35,7 +35,7 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
 
   __noteClick = ( event ) => {
 
-    const filePath = $(event.currentTarget).data ( 'filepath' ),
+    const filePath = $(event.currentTarget).removeData ( 'filepath' ).data ( 'filepath' ),
           note = this.props.container.note.get ( filePath );
 
     this.props.container.note.set ( note, true );
@@ -58,7 +58,7 @@ class PreviewPlugins extends Component<{ container: IMain }, undefined> {
 
     const $input = $(event.currentTarget),
           checked = $input.prop ( 'checked' ),
-          nth = $input.data ( 'nth' );
+          nth = $input.removeData ( 'nth' ).data ( 'nth' );
 
     if ( !_.isNumber ( nth ) ) return;
 

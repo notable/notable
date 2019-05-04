@@ -14,8 +14,8 @@ import Tagbox from './tagbox';
 /* POPOVER NOTE TAGS */
 
 const PopoverNoteTags = ({ tags, isEditing, toggleEditing, replaceTags }) => (
-  <Popover open={isEditing} onBeforeClose={() => _.defer ( () => toggleEditing ( false ) )} anchor="#popover-note-tags-trigger">
-    <FixedList id="popover-note-tags-list" className="card-block" data={tags} fallbackEmptyMessage="No tags">{Tag}</FixedList>
+  <Popover open={isEditing} onBeforeClose={() => _.defer ( () => toggleEditing ( false ) )} anchor=".popover-note-tags-trigger">
+    <FixedList className="popover-note-tags-list card-block" data={tags} fallbackEmptyMessage="No tags">{Tag}</FixedList>
     <Tagbox className="card-footer" tags={_.clone ( tags )} onChange={tags => replaceTags ( undefined, Tags.sort ( tags ) )} />
   </Popover>
 );

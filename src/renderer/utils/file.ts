@@ -16,11 +16,11 @@ const Storage = { //TODO: This shouldn't be here
 
   /* HELPERS */
 
-  _wrapAction ( action ) {
+  _wrapAction ( action: Function ) {
 
-    return async function wrappedAction ( ...args ) {
+    return async function wrappedAction ( ...args: any[] ) {
       Storage.operations++;
-      const res = await action.apply ( this, args );
+      const res = await action.apply ( undefined, args );
       Storage.operations--;
       return res;
     };
@@ -47,7 +47,7 @@ const File = {
 
   /* HELPERS */
 
-  _handleError: async ( e, filePath, method, args ) => {
+  _handleError: async ( e: NodeJS.ErrnoException, filePath: string, method: Function, args: any[] ) => {
 
     if ( e.code === 'ENOENT' ) {
 

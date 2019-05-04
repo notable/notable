@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom';
 
 /* POPOVER */
 
-class Popover extends React.Component<any, any> {
+class Popover extends React.Component<{ open: boolean, anchor: string, className?: string, onBeforeOpen?: Function, onOpen?: Function, onBeforeClose?: Function, onClose?: Function }, {}> {
 
   $popover;
 
@@ -38,10 +38,10 @@ class Popover extends React.Component<any, any> {
 
   render () {
 
-    const {id, children} = this.props;
+    const {children, className} = this.props;
 
     return (
-      <div id={id} className="popover card bordered">
+      <div className={`popover card bordered ${className || ''}`}>
         {children}
       </div>
     );

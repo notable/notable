@@ -12,9 +12,9 @@ import Modal from './modal';
 
 /* QUICK PANEL */
 
-class QuickPanel extends React.Component<any, undefined> {
+class QuickPanel extends React.Component<{ isOpen: boolean, setQuery: Function, toggleOpen: Function, query: string, results: QuickPanelResults }, {}> {
 
-  inputRef = React.createRef () as any; //TSC
+  inputRef = React.createRef<HTMLInputElement> ();
 
   shouldComponentUpdate ( nextProps ) {
 
@@ -24,17 +24,19 @@ class QuickPanel extends React.Component<any, undefined> {
 
   onChange = _.debounce ( () => {
 
+    if ( !this.inputRef.current ) return;
+
     this.props.setQuery ( this.inputRef.current.value );
 
   }, 25 )
 
-  getHeight = ( items ) => {
+  getHeight = ( items: QuickPanelResultsNoteItem[] ) => {
 
     return Math.min ( items.length * 32, Math.min ( 400, ( window.innerHeight * .9 ) - 40 ) ); //UGLY: But it gets the job done, quickly
 
   }
 
-  getItemKey = ( item ) => {
+  getItemKey = ( item: QuickPanelResultsNoteItem ) => {
 
     return item.filePath;
 
@@ -42,7 +44,8 @@ class QuickPanel extends React.Component<any, undefined> {
 
   __beforeOpen = () => {
 
-    this.inputRef.current.value = '';
+    if ( this.inputRef.current ) this.inputRef.current.value = '';
+
     this.props.setQuery ( '' ); // Resetting state
 
   }
@@ -52,9 +55,9 @@ class QuickPanel extends React.Component<any, undefined> {
     const {isOpen, toggleOpen, query, results} = this.props;
 
     return (
-      <Modal id="quick-panel" open={isOpen} onBeforeOpen={this.__beforeOpen} onBeforeClose={() => _.defer ( () => toggleOpen ( false ) )}>
+      <Modal className="quick-panel" open={isOpen} onBeforeOpen={this.__beforeOpen} onBeforeClose={() => _.defer ( () => toggleOpen ( false ) )}>
         <input ref={this.inputRef} placeholder="Open note or attachment..." className="autofocus card-header bordered small" defaultValue={query} onChange={this.onChange} />
-        <List id="list-quick-panel" className="card-block" data={results.items} getHeight={this.getHeight} getItemKey={this.getItemKey} fallbackEmptyMessage={results.empty}>{Item}</List>
+        <List className="list-quick-panel card-block" data={results.items} getHeight={this.getHeight} getItemKey={this.getItemKey} fallbackEmptyMessage={results.empty}>{Item}</List>
       </Modal>
     );
 

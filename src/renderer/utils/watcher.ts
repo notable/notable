@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import {FSWatcher, WatchOptions} from 'chokidar';
 import * as fs from 'fs';
 
 /* IMPORT LAZY */
@@ -9,23 +10,56 @@ import * as fs from 'fs';
 const laxy = require ( 'laxy' ),
       chokidar = laxy ( () => require ( 'chokidar' ) )();
 
+/* TYPES */
+
+type ID = string | undefined;
+
+type Locks = {
+  [id: string]: Function
+};
+
+type LockOptions = {
+  locks: {
+    read: Locks,
+    write: Locks
+  },
+  handlers: {
+    free: Function,
+    override: Function,
+    overridden: Function
+  }
+};
+
+type Stats = {
+  [index: string]: fs.Stats
+};
+
+type Event = 'add' | 'change' | 'rename' | 'unlink';
+
+type Handlers = {
+  add?: Function,
+  change?: Function,
+  rename?: Function,
+  unlink?: Function
+};
+
 /* WATCHER */
 
 //TODO: Publish as `graceful-chokidar` or something
 //TODO: Maybe switch to `https://github.com/Axosoft/nsfw`
 
-function watcher ( root: string, options = {}, callbacks = {} ) {
+function watcher ( root: string, options: WatchOptions = {}, handlers: Handlers = {} ): FSWatcher {
 
   /* VARIABLES */
 
-  let stats = {}, // filePath => fs.Stats //TODO: If these values aren't accessed within X seconds they should be removed, for cleaning up some memory
-      locksAdd = {}, // id => releaseFn
-      locksUnlink = {}, // id => releaseFn
+  let stats: Stats = {}, // filePath => fs.Stats //TODO: If these values aren't accessed within X seconds they should be removed, for cleaning up some memory
+      locksAdd: Locks = {}, // id => releaseFn
+      locksUnlink: Locks = {}, // id => releaseFn
       renameTimeout = 150; // Amount of time to wait for the complementary add/unlink event
 
   /* HELPERS */
 
-  function getId ( filePath: string, stat?: fs.Stats ): string | undefined {
+  function getId ( filePath: string, stat?: fs.Stats ): ID {
 
     stat = stat || stats[filePath];
 
@@ -51,15 +85,15 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
   }
 
-  function getLock ( id: string | undefined, timeout: number, options: { locks: { read: {}, write: {} }, callbacks: { free: Function, override: Function, overridden: Function } } ) { //TODO: Find a more appropriate name
+  function getLock ( id: ID, timeout: number, options: LockOptions ) {
 
-    if ( !id ) return options.callbacks.free (); // Free
+    if ( !id ) return options.handlers.free (); // Free
 
     const release = options.locks.read[id];
 
     if ( release ) { // Override
 
-      options.callbacks.override ( release () );
+      options.handlers.override ( release () );
 
     } else {
 
@@ -67,7 +101,7 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
         delete options.locks.write[id];
 
-        options.callbacks.free ();
+        options.handlers.free ();
 
       }, timeout );
 
@@ -77,7 +111,7 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
         delete options.locks.write[id];
 
-        return options.callbacks.overridden ();
+        return options.handlers.overridden ();
 
       };
 
@@ -85,11 +119,13 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
 
   }
 
-  function emit ( event: string, args: any[] ) {
+  function emit ( event: Event, args: any[] ) {
 
-    if ( !callbacks[event] ) return;
+    const handler = handlers[event];
 
-    callbacks[event].apply ( undefined, args );
+    if ( !handler ) return;
+
+    handler.apply ( undefined, args );
 
   }
 
@@ -110,9 +146,9 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
         read: locksUnlink,
         write: locksAdd
       },
-      callbacks: {
+      handlers: {
         free: () => emit ( 'add', [filePath, stats] ),
-        override: prevPath => emit ( 'rename', [prevPath, filePath, stats] ),
+        override: ( prevPath: string ) => emit ( 'rename', [prevPath, filePath, stats] ),
         overridden: () => filePath
       }
     });
@@ -128,9 +164,9 @@ function watcher ( root: string, options = {}, callbacks = {} ) {
         read: locksAdd,
         write: locksUnlink
       },
-      callbacks: {
+      handlers: {
         free: () => emit ( 'unlink', [filePath] ),
-        override: newPath => emit ( 'rename', [filePath, newPath] ),
+        override: ( newPath: string ) => emit ( 'rename', [filePath, newPath] ),
         overridden: () => filePath
       }
     });

@@ -17,12 +17,12 @@ class Notes extends Container<NotesState, MainCTX> {
 
   /* VARIABLES */
 
-  _listener;
+  _listener?: import ( 'chokidar' ).FSWatcher;
 
   /* STATE */
 
   state = {
-    notes: {}
+    notes: {} as NotesObj
   };
 
   /* CONSTRUCTOR */
@@ -45,7 +45,7 @@ class Notes extends Container<NotesState, MainCTX> {
 
     const filePaths = Utils.normalizeFilePaths ( await glob ( Config.notes.glob, { cwd: notesPath, absolute: true, filesOnly: true } ) );
 
-    const notes = {};
+    const notes: NotesObj = {};
 
     await Promise.all ( filePaths.map ( async filePath => {
 
@@ -78,39 +78,48 @@ class Notes extends Container<NotesState, MainCTX> {
       wait: 100
     });
 
-    const optimizeBatch = ( batch ) => {
+    const optimizeBatch = ( batch: CallsBatch.type ) => {
       /* GET */
       let queueNext = batch.get ();
       /* SKIPPING UPDATES ON MULTIPLE ADDITIONS */
       const lastAddIndex = _.findLastIndex ( queueNext, call => call[0] === add );
-      queueNext = queueNext.map ( ( call, index ) => {
-        if ( call[0] === add && index < lastAddIndex ) call[1][1] = false;
+      queueNext = queueNext.map ( ( call, index: number ) => {
+        if ( call[0] === add && index < lastAddIndex ) {
+          if ( !call[1] ) call[1] = [];
+          call[1][1] = false;
+        }
         return call;
       });
       /* SKIPPING UPDATES ON MULTIPLE DELETIONS */
       const lastDeleteIndex = _.findLastIndex ( queueNext, call => call[0] === unlink );
-      queueNext = queueNext.map ( ( call, index ) => {
-        if ( call[0] === unlink && index < lastDeleteIndex ) call[1][1] = false;
+      queueNext = queueNext.map ( ( call, index: number ) => {
+        if ( call[0] === unlink && index < lastDeleteIndex ) {
+          if ( !call[1] ) call[1] = [];
+          call[1][1] = false;
+        }
         return call;
       });
       /* SKIPPING UPDATES ON MULTIPLE CHANGES & MULTIPLE CONSECUTIVE CHANGES TO THE SAME FILE */
       const lastChangeIndex = _.findLastIndex ( queueNext, call => call[0] === change );
-      queueNext = queueNext.filter ( ( call, index ) => {
+      queueNext = queueNext.filter ( ( call, index: number ) => {
         const callNext = queueNext[index + 1];
-        return !callNext || call[0] !== callNext[0] || call[1][0] !== callNext[1][0];
-      }).map ( ( call, index ) => {
-        if ( call[0] === change && index < lastChangeIndex ) call[1][1] = false;
+        return !callNext || call[0] !== callNext[0] || ( call[1] && callNext[1] && call[1][0] !== callNext[1][0] );
+      }).map ( ( call, index: number ) => {
+        if ( call[0] === change && index < lastChangeIndex ) {
+          if ( !call[1] ) call[1] = [];
+          call[1][1] = false;
+        }
         return call;
       });
       /* SET */
       batch.set ( queueNext );
     }
 
-    function isFilePathSupported ( filePath ) {
+    function isFilePathSupported ( filePath: string ) {
       return Config.notes.re.test ( filePath );
     }
 
-    const add = async ( filePath, _refresh?: boolean ) => {
+    const add = async ( filePath: string, _refresh?: boolean ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
       const note = await this.ctx.note.read ( filePath );
       if ( !note ) return;
@@ -119,12 +128,12 @@ class Notes extends Container<NotesState, MainCTX> {
       await this.ctx.note.add ( note, _refresh );
     };
 
-    const change = async ( filePath, _refresh?: boolean ) => {
+    const change = async ( filePath: string, _refresh?: boolean ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
       await rename ( filePath, filePath, _refresh );
     };
 
-    const rename = async ( filePath, nextFilePath, _refresh?: boolean ) => {
+    const rename = async ( filePath: string, nextFilePath: string, _refresh?: boolean ) => {
       if ( !isFilePathSupported ( nextFilePath ) ) {
         if ( isFilePathSupported ( filePath ) ) return unlink ( filePath );
         return;
@@ -135,21 +144,19 @@ class Notes extends Container<NotesState, MainCTX> {
       if ( !note ) return add ( nextFilePath );
       if ( this.ctx.note.is ( note, nextNote ) ) return;
       if ( note.metadata.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
-      if ( !nextNote.content.length && ( Math.abs ( note.metadata.modified.getTime () - nextNote.metadata.modified.getTime () ) < 1000 ) ) return; //FIXME: For some reason some times the note gets read as an empty string, maybe we are reading and writing at "the same" time and the file gets cleared?
-      const currentNote = this.ctx.note.get ();
+      if ( !nextNote.content.length && ( Math.abs ( note.metadata.modified.getTime () - nextNote.metadata.modified.getTime () ) < 1500 ) ) return; //FIXME: For some reason some times the note gets read as an empty string, maybe we are reading and writing at "the same" time and the file gets cleared?
       const editorData = this.ctx.editor.getData ();
-      if ( editorData && this.ctx.note.is ( nextNote, currentNote ) && editorData.modified && editorData.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
-      if ( currentNote && this.ctx.editor.isEditing () && this.ctx.note.is ( nextNote, currentNote, true ) ) { // Changes to the current note
-        const data = this.ctx.editor.getData ();
-        if ( data && data.content !== currentNote.plainContent ) { // The current content has not been saved
+      if ( editorData && editorData.filePath === filePath ) { // The current note has been renamed
+        if ( editorData.modified && editorData.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
+        if ( editorData.content !== nextNote.plainContent ) { // Changes to the current note
           const choice = Dialog.choice ( 'This note has been updated on disk, do you want to overwrite your current changes or keep them?', ['Overwrite Changes', 'Keep Changes'] );
-          if ( choice === 1 ) return await this.ctx.note.autosave ();
+          if ( choice === 1 ) return await this.ctx.note.autosave ( true );
         }
       }
       await this.ctx.note.replace ( note, nextNote, _refresh );
     };
 
-    const unlink = async ( filePath, _refresh?: boolean ) => {
+    const unlink = async ( filePath: string, _refresh?: boolean ) => {
       if ( !isFilePathSupported ( filePath ) ) return;
       const note = this.ctx.note.get ( filePath );
       if ( !note ) return;

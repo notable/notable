@@ -8,11 +8,13 @@ import Main from '@renderer/containers/main';
 
 /* SEARCH */
 
-class Search extends React.Component<any, undefined> {
+class Search extends React.Component<{ query: string, setQuery: Function, clear: any }, {}> { //TSC
 
-  ref = React.createRef () as any; //TSC
+  ref = React.createRef<HTMLInputElement> ();
 
   componentDidUpdate () {
+
+    if ( !this.ref.current ) return;
 
     if ( this.props.query === this.ref.current.value ) return;
 
@@ -21,6 +23,8 @@ class Search extends React.Component<any, undefined> {
   }
 
   onChange = _.debounce ( () => {
+
+    if ( !this.ref.current ) return;
 
     this.props.setQuery ( this.ref.current.value );
 

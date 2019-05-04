@@ -22,6 +22,9 @@ function PluginSkeletonOptimization ( compiler ) { // Loading heavy resources af
 
 const config = {
   resolve: {
+    alias: {
+      'react-dom': process.env.NODE_ENV !== 'production' ? '@hot-loader/react-dom' : 'react-dom'
+    },
     plugins: [
       new TSConfigPathsPlugin ()
     ]

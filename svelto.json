@@ -1,6 +1,9 @@
 {
-  "browsers": ["chrome >= 69"],
+  "browsers": ["chrome >= 73"],
   "components": {
+    "_": {
+      "rotation/keyframes": false
+    },
     "core": {
       "grid": false,
       "jquery/helpers/diff": false,
@@ -13,7 +16,8 @@
       "grid": false,
       "highlighted": false,
       "obscured": false,
-      "raisable": false
+      "raisable": false,
+      "target/keyframes": false
     },
     "lib": {
       "color": false,

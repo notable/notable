@@ -68,17 +68,17 @@ import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js';
 
 /* MONACO */
 
-class Monaco extends React.Component<{ language: string, theme: string, value: string, editorOptions?: monaco.editor.IEditorOptions, modelOptions?: monaco.editor.ITextModelUpdateOptions, className?: string, editorWillMount?: Function, editorDidMount?: Function, editorWillUnmount?: Function, editorDidUnmount?: Function, onBlur?: Function, onFocus?: Function, onChange?: Function, onUpdate?: Function, onScroll?: Function, container: IMain }, {}> {
+class Monaco extends React.Component<{ filePath: string, language: string, theme: string, value: string, editorOptions?: monaco.editor.IEditorOptions, modelOptions?: monaco.editor.ITextModelUpdateOptions, className?: string, editorWillMount?: Function, editorDidMount?: Function, editorWillUnmount?: Function, editorDidUnmount?: Function, editorWillChange?: Function, onBlur?: Function, onFocus?: Function, onChange?: Function, onUpdate?: Function, onScroll?: Function, container: IMain }, {}> {
 
   /* VARIABLES */
 
-  ref = React.createRef () as any; //TSC
-  editor: MonacoEditor;
+  ref = React.createRef<HTMLDivElement> ();
+  editor?: MonacoEditor;
   _currentValue: string = '';
   _currentChangeDate: Date | undefined = undefined;
-  _onChangeDebounced: Function;
   _preventOnChangeEvent: boolean = false;
-  _zoneTopId: number;
+  _onChangeDebounced?: Function;
+  _zoneTopId?: number;
 
   /* LIFECYCLE */
 
@@ -87,7 +87,9 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
     UMonaco.init ();
 
     if ( this.props.onChange ) {
+
       this._onChangeDebounced = _.debounce ( this.props.onChange as any, 25 ); //TSC
+
     }
 
     this._currentChangeDate = undefined;
@@ -130,7 +132,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
     }
 
-    if ( prevProps.language !== this.props.language ) {
+    if ( this.editor && prevProps.language !== this.props.language ) {
 
       const model = this.editor.getModel ();
 
@@ -148,13 +150,13 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
     }
 
-    if ( this.props.editorOptions && !_.isEqual ( prevProps.editorOptions, this.props.editorOptions ) ) {
+    if ( this.editor && this.props.editorOptions && !_.isEqual ( prevProps.editorOptions, this.props.editorOptions ) ) {
 
       this.editor.updateOptions ( this.props.editorOptions );
 
     }
 
-    if ( this.props.modelOptions && !_.isEqual ( prevProps.modelOptions, this.props.modelOptions ) ) {
+    if ( this.editor && this.props.modelOptions && !_.isEqual ( prevProps.modelOptions, this.props.modelOptions ) ) {
 
       const model = this.editor.getModel ();
 
@@ -180,6 +182,8 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
     this.editorUpdate ();
 
+    if ( nextProps.filePath !== this.props.filePath ) this.editorWillChange ();
+
     return nextProps.value !== this._currentValue;
 
   }
@@ -198,7 +202,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
   editorDidMount ( editor: MonacoEditor ) {
 
-    const {editorDidMount, editorDidUnmount, onBlur, onFocus, onChange, onScroll} = this.props;
+    const {editorDidMount, editorDidUnmount, onBlur, onFocus, onScroll} = this.props;
 
     editor.onDidChangeModel ( () => {
 
@@ -245,13 +249,33 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
       this._currentValue = value;
       this._currentChangeDate = new Date ();
 
-      if ( onChange && !this._preventOnChangeEvent ) {
+      if ( this._onChangeDebounced && !this._preventOnChangeEvent ) {
 
         this._onChangeDebounced ( value, event );
 
       }
 
     });
+
+  }
+
+  editorWillUnmount = () => {
+
+    if ( this.props.editorWillUnmount ) {
+
+      this.props.editorWillUnmount ();
+
+    }
+
+  }
+
+  editorWillChange = () => {
+
+    if ( this.props.editorWillChange ) {
+
+      this.props.editorWillChange ();
+
+    }
 
   }
 
@@ -267,6 +291,8 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
   editorUpdateDebounced = _.debounce ( this.editorUpdate, 25 )
 
   editorUpdateZones = () => {
+
+    if ( !this.editor ) return;
 
     const needTopZone = is.macOS () && this.props.container.window.isZen () && !this.props.container.window.isFullscreen (); //UGLY
 
@@ -288,7 +314,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
       if ( !this._zoneTopId ) return;
 
       this.editor.changeViewZones ( accessor => {
-        accessor.removeZone ( this._zoneTopId );
+        accessor.removeZone ( this._zoneTopId as number ); //TSC
         delete this._zoneTopId;
       });
 
@@ -304,8 +330,9 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
           dynamicOptions = this.editorWillMount (),
           finalEditorOptions = editorOptions || dynamicOptions ? _.merge ( {}, UMonaco.editorOptions, editorOptions || {}, dynamicOptions || {}, { model: null } ) : UMonaco.editorOptions;
 
-    this.editor = monaco.editor.create ( this.ref.current, finalEditorOptions ) as any; //TSC //UGLY
+    this.editor = monaco.editor.create ( this.ref.current!, finalEditorOptions ) as unknown as MonacoEditor; //TSC //UGLY
 
+    this.editor.getFilePath = () => this.props.filePath; //UGlY
     this.editor.getChangeDate = () => this._currentChangeDate; //UGlY
 
     if ( theme ) {
@@ -334,11 +361,7 @@ class Monaco extends React.Component<{ language: string, theme: string, value: s
 
   destroyMonaco () {
 
-    if ( this.props.editorWillUnmount ) {
-
-      this.props.editorWillUnmount ();
-
-    }
+    this.editorWillUnmount ();
 
     if ( !this.editor ) return;
 

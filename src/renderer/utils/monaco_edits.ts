@@ -39,7 +39,7 @@ const Edits = {
       } else {
         index += change.value.length;
       }
-    }));
+    })) as monaco.editor.IIdentifiedSingleEditOperation[]; //TSC
 
   },
 

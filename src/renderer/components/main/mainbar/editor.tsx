@@ -9,7 +9,7 @@ import Monaco from './monaco';
 
 /* EDITOR */
 
-class Editor extends React.Component<any, undefined> {
+class Editor extends React.Component<{ onChange: Function, onUpdate: Function, filePath: string, content: string, autosave: Function, getMonaco: Function, setMonaco: Function, hasFocus: Function, forget: Function, focus: Function, save: Function, restore: Function, reset: Function }, {}> {
 
   _wasWindowBlurred: boolean = false;
 
@@ -33,7 +33,7 @@ class Editor extends React.Component<any, undefined> {
 
   }
 
-  __mount = ( editor ) => {
+  __mount = ( editor: MonacoEditor ) => {
 
     this.props.setMonaco ( editor );
 
@@ -43,11 +43,18 @@ class Editor extends React.Component<any, undefined> {
 
   __unmount = () => {
 
+    this.props.autosave ();
     this.props.setMonaco ();
 
   }
 
-  __change = ( content ) => {
+  __editorChange = () => {
+
+    this.props.autosave ();
+
+  }
+
+  __change = ( content: string ) => {
 
     if ( !this.props.onChange ) return;
 
@@ -80,7 +87,7 @@ class Editor extends React.Component<any, undefined> {
 
   }
 
-  __update = ( content ) => {
+  __update = ( content: string ) => {
 
     this.props.reset ();
 
@@ -92,7 +99,7 @@ class Editor extends React.Component<any, undefined> {
 
   render () {
 
-    return <Monaco className="layout-content editor" language="markdown" theme="light" value={this.props.content} editorDidMount={this.__mount} editorWillUnmount={this.__unmount} onBlur={this.__blur} onFocus={this.__focus} onChange={this.__change} onUpdate={this.__update} onScroll={this.__scroll} />;
+    return <Monaco className="layout-content editor" filePath={this.props.filePath} language="markdown" theme="light" value={this.props.content} editorDidMount={this.__mount} editorWillUnmount={this.__unmount} editorWillChange={this.__editorChange} onBlur={this.__blur} onFocus={this.__focus} onChange={this.__change} onUpdate={this.__update} onScroll={this.__scroll} />;
 
   }
 
@@ -102,18 +109,25 @@ class Editor extends React.Component<any, undefined> {
 
 export default connect ({
   container: Main,
-  selector: ({ container, onChange, onUpdate }) => ({
-    onChange,
-    onUpdate,
-    content: container.note.getPlainContent (),
-    autosave: container.note.autosave,
-    getMonaco: container.editor.getMonaco,
-    setMonaco: container.editor.setMonaco,
-    hasFocus: container.editor.hasFocus,
-    forget: container.editor.editingState.forget,
-    focus: container.editor.editingState.focus,
-    save: container.editor.editingState.save,
-    restore: container.editor.editingState.restore,
-    reset: container.editor.editingState.reset
-  })
+  selector: ({ container, onChange, onUpdate }) => {
+
+    const note = container.note.get ();
+
+    return {
+      onChange,
+      onUpdate,
+      filePath: note.filePath,
+      content: container.note.getPlainContent ( note ),
+      autosave: container.note.autosave,
+      getMonaco: container.editor.getMonaco,
+      setMonaco: container.editor.setMonaco,
+      hasFocus: container.editor.hasFocus,
+      forget: container.editor.editingState.forget,
+      focus: container.editor.editingState.focus,
+      save: container.editor.editingState.save,
+      restore: container.editor.editingState.restore,
+      reset: container.editor.editingState.reset
+    };
+
+  }
 })( Editor );

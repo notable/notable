@@ -10,7 +10,7 @@ import pkg from '@root/package.json';
 
 /* ERROR BOUNDARY */
 
-class ErrorBoundary extends React.Component<any, { error?: Error }> {
+class ErrorBoundary extends React.Component<{}, { error?: Error }> {
 
   /* STATE */
 
@@ -55,7 +55,7 @@ class ErrorBoundary extends React.Component<any, { error?: Error }> {
     const isMacOS = is.macOS ();
 
     return (
-      <div id="error-boundary" className="app-wrapper layout">
+      <div className="error-boundary app-wrapper layout">
         {!isMacOS ? null : (
           <div className="layout-header titlebar">
             <span className="title">An Error Occurred!</span>

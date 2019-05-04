@@ -6,8 +6,8 @@ import * as React from 'react';
 
 /* TOOLBAR BUTTON */
 
-const ToolbarButton = ({ id = '' , icon, title, onClick = _.noop, isActive = false, color = '' }) => (
-  <div id={id ? id : undefined} className={`${isActive ? 'active text-accent' : ''} button bordered xsmall ${color}`} title={title} onClick={onClick}>
+const ToolbarButton = ({ icon, title, onClick = _.noop, isActive = false, color = '', className = '' }) => (
+  <div className={`${isActive ? 'active text-accent' : ''} button bordered xsmall ${color} ${className}`} title={title} onClick={onClick}>
     <i className="icon">{icon}</i>
   </div>
 );

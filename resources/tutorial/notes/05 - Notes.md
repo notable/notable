@@ -55,6 +55,6 @@ graph LR
 
 Notes can have attachments, because sooner or later you'll want to save a file in a note, be it a boarding pass for your next trip or something else.
 
-Attachments can be added by clicking the attachment into in the mainbar's toolbar. Attachments are simply copied into your data directory, under the `attachments` sub-directory.
+Attachments can be added by clicking the attachment icon in the mainbar's toolbar. Attachments are simply copied into your data directory, under the `attachments` sub-directory.
 
 You can open/remove them at any time.

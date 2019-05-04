@@ -10,7 +10,7 @@ import * as pify from 'pify';
 
 const Path = {
 
-  _allowedPaths: {}, // Map of filePath => timestamp, ensuring we don't return the same path mutliple times within some amount of time, in order to avoid race conditions //UGLY
+  _allowedPaths: {} as { [filePath: string]: number }, // Ensuring we don't return the same path mutliple times within some amount of time, in order to avoid race conditions //UGLY
 
   _checkAllowedPath ( filePath: string ): boolean {
 

@@ -34,7 +34,7 @@ const Tags = {
 
   sort ( tags: (TagObj | string)[] ) {
 
-    return _.sortBy ( tags, tag => ( tag.hasOwnProperty ( 'name' ) ? tag['name'] : tag ).toLowerCase ()  );
+    return _.sortBy ( tags, tag => ( _.isString ( tag ) ? tag : tag.name ).toLowerCase () );
 
   }
 

@@ -8,7 +8,7 @@ import Main from '@renderer/containers/main';
 
 /* SHORTCUTS */
 
-class Shortcuts extends Component<{ container: IMain }, undefined> {
+class Shortcuts extends Component<{ container: IMain }, {}> {
 
   /* VARIABLES */
 
@@ -60,7 +60,7 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
   /* KEYDOWN */
 
-  __keydown = event => {
+  __keydown = ( event: KeyboardEvent ) => {
 
     const isEditable = $.isEditable ( document.activeElement );
 
@@ -101,11 +101,13 @@ class Shortcuts extends Component<{ container: IMain }, undefined> {
 
     if ( this.props.container.editor.hasFocus () ) return null;
 
-    const $preview = $('#mainbar .preview');
+    const $preview = $('.mainbar .preview');
 
     if ( $preview.length ) { // Select preview
 
-      window.getSelection ().selectAllChildren ( $preview[0] );
+      const selection = window.getSelection ();
+
+      if ( selection && selection.selectAllChildren ) selection.selectAllChildren ( $preview[0] ); //TSC: useless if statement
 
     } else { // Select editor
 

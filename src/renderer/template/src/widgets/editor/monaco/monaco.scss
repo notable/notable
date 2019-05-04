@@ -13,4 +13,10 @@
     display: none;
   }
 
+  .slider,
+  .decorationsOverviewRuler,
+  .minimap-slider {
+    will-change: auto !important; /* It causes some sharpness problems */
+  }
+
 }

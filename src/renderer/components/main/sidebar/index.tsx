@@ -14,7 +14,7 @@ const Sidebar = ({ isFocus, isZen, hasSidebar }) => {
   if ( isFocus || isZen || !hasSidebar ) return null;
 
   return (
-    <div id="sidebar" className="layout column">
+    <div className="sidebar layout column">
       <Toolbar />
       <Content />
     </div>

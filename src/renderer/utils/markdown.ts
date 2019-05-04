@@ -14,6 +14,9 @@ import Utils from './utils';
 
 const {encodeFilePath} = Utils;
 
+delete showdown.helper.emojis['octocat']; // Special emoji, removing it
+delete showdown.helper.emojis['showdown']; // Special emoji, removing it
+
 /* MARKDOWN */
 
 const Markdown = {
@@ -96,20 +99,47 @@ const Markdown = {
 
     strip () {
 
+      const {emojis} = showdown.helper;
+
       return [
         { // Standalone syntax => Removing all of it
           type: 'language',
-          regex: /--+|==+|```+|~~~+|:\w+?:/gm,
+          regex: /--+|==+|```+|~~~+/gm,
           replace: () => ''
+        },
+        { // Emoji => Rendering it
+          type: 'language',
+          regex: /:(\S+?):/gm,
+          replace: ( match, $1 ) => emojis[$1] || ''
         },
         { // Wrap syntax => Removing only the wrapping syntax
           type: 'language',
-          regex: /_.*?_|\*.*?\*|~.*?~|`.*?`|\[.*?\]/gm,
+          regex: /_.*?_|\*.*?\*|~.*?~|`.*?`/gm,
           replace: match => match.slice ( 1, -1 )
+        },
+        { // Images => Removing all of it
+          type: 'language',
+          regex: /!\[[^\]]+?\]\([^)]+?\)/gm,
+          replace: () => ''
+        },
+        { // Links => Removing the url
+          type: 'language',
+          regex: /\[([^\]]+?)\](?:\([^)]+?\)|\[[^)]+?\])/gm,
+          replace: ( match, $1 ) => $1
+        },
+        { // Wikilinks => Preserving the title
+          type: 'language',
+          regex: /\[\[([^|\]]+?)(?:\|([^\]]+?))?\]\]/gm,
+          replace: ( match, $1 ) => $1
+        },
+        { // Ending header syntax => Removing the special part
+          type: 'language',
+          regex: /^(\s*#+\s.*?)(#+\s*?$)/gm,
+          replace: ( match, $1 ) => $1
         },
         { // Start syntax => Removing the special syntax
           type: 'language',
-          regex: /^(\s*)(?:>(?:\s*?>)*|#+|\d+\.|[*+-](?=\s))/gm, //TODO: If multiple of these get chained together this regex will fail
+          regex: /^(\s*)(?:>(?:\s*?>)*|#+\s|\d+\.|[*+-](?=\s)(?:\s*\[[xX ]\]\s*)?|\[[^\]]+?\]:.*)/gm, //TODO: If multiple of these get chained together this regex will fail
           replace: ( match, $1 ) => $1
         },
         { // HTML => Removing all of it
@@ -125,7 +155,7 @@ const Markdown = {
 
       return [{
         type: 'output',
-        regex: /<pre><code\s[^>]*(language-[^>]*)>([^]+?)<\/code><\/pre>/g,
+        regex: /<pre><code(\s[^>]*language-[^>]*)>([^]+?)<\/code><\/pre>/g,
         replace ( match, $1, $2 ) {
           try {
             const language = Highlighter.inferLanguage ( $1 );
@@ -188,7 +218,7 @@ const Markdown = {
 
     katex () {
 
-      let katex;
+      let katex: typeof import ( 'katex' );
 
       const init = _.once ( () => { // Lazy init for performance
         katex = require ( 'katex' );
@@ -523,19 +553,19 @@ const Markdown = {
 
   },
 
-  render: ( str: string ): string => {
+  render: ( str: string, limit: number ): string => {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
-    return Markdown.converters.preview ().makeHtml ( Markdown.limiter ( str ).trim () ); //FIXME: Strings starting with multiple empty lines aren't rendered properly
+    return Markdown.converters.preview ().makeHtml ( Markdown.limiter ( str, limit ).trim () ); //FIXME: Strings starting with multiple empty lines aren't rendered properly
 
   },
 
-  strip: ( str: string ): string => {
+  strip: ( str: string, limit: number ): string => {
 
     if ( !str || !Markdown.is ( str ) ) return str;
 
-    return Markdown.converters.strip ().makeHtml ( Markdown.limiter ( str ) ).trim ().replace ( Markdown.wrapperRe, '$1' );
+    return Markdown.converters.strip ().makeHtml ( Markdown.limiter ( str, limit ) ).trim ().replace ( Markdown.wrapperRe, '$1' );
 
   },
 

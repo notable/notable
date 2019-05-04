@@ -7,7 +7,7 @@ import * as yaml from 'js-yaml';
 
 /* GUTTER */
 
-const Gutter = { // Add/remove an empty line at the start/end //TODO: Maybe find a better name
+const Gutter = { // Add/remove an empty line at the start/end
 
   add ( str: string ): string {
 
@@ -33,7 +33,7 @@ const Parser = {
     lineWidth: 1000000
   },
 
-  parse ( str ) {
+  parse ( str: string ) {
 
     try {
 

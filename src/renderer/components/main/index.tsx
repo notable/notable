@@ -18,7 +18,7 @@ import QuickPanel from './modals/quick_panel';
 
 /* MAIN */
 
-class Main extends React.Component<any, undefined> {
+class Main extends React.Component<{ loading: boolean, refresh: Function, listen: Function, isFocus: boolean, isFullscreen: boolean, isZen: boolean, hasSidebar: boolean }, {}> {
 
   /* SPECIAL */
 
@@ -49,7 +49,7 @@ class Main extends React.Component<any, undefined> {
         <PreviewPlugins />
         <Shortcuts />
         <QuickPanel />
-        <Layout id="main" className={`app-wrapper ${isFullscreen ? 'fullscreen' : ''} ${hasSidebar ? 'focus' : ''} ${isZen ? 'zen' : ''}`} direction="horizontal" resizable={true} isFocus={isFocus} isZen={isZen} hasSidebar={hasSidebar}>
+        <Layout className={`main app-wrapper ${isFullscreen ? 'fullscreen' : ''} ${hasSidebar ? 'focus' : ''} ${isZen ? 'zen' : ''}`} direction="horizontal" resizable={true} isFocus={isFocus} isZen={isZen} hasSidebar={hasSidebar}>
           <Sidebar />
           <Middlebar />
           <Mainbar />

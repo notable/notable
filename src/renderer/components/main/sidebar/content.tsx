@@ -14,9 +14,9 @@ const {ALL, FAVORITES, NOTEBOOKS, TAGS, TEMPLATES, UNTAGGED, TRASH} = TagSpecial
 /* HELPERS */
 
 const getHeight = () => is.macOS () ? window.innerHeight - 38 : window.innerHeight, //UGLY: But it gets the job done, quickly
-      getItemChildren = tag => !tag.collapsed ? Tags.sort ( Object.values ( tag.tags ) ) : [],
-      getItemKey = item => item.path,
-      filterItem = item => !!item.notes.length || item.path === ALL;
+      getItemChildren = ( tag: TagObj ) => !tag.collapsed ? Tags.sort ( Object.values ( tag.tags ) ) : [],
+      getItemKey = ( tag: TagObj ) => tag.path,
+      filterItem = ( tag: TagObj ) => !!tag.notes.length || tag.path === ALL;
 
 /* CONTENT */
 
@@ -28,7 +28,7 @@ const Content = ({ isLoading, all, favorites, notebooks, tags, templates, untagg
 
   if ( !notebooks.notes.length && !templates.notes.length ) data.splice ( 3, 1, ...Tags.sort ( Object.values ( tags.tags ) ) ); // If this is the only nestable special tag, avoid using it
 
-  return <KeyedTree id="list-tags" className="layout-content" data={data} getHeight={getHeight} getItemChildren={getItemChildren} getItemKey={getItemKey} filterItem={filterItem}>{Tag}</KeyedTree>;
+  return <KeyedTree className="list-tags layout-content" data={data} getHeight={getHeight} getItemChildren={getItemChildren} getItemKey={getItemKey} filterItem={filterItem}>{Tag}</KeyedTree>;
 
 };
 

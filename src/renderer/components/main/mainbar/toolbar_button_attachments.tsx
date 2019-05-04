@@ -10,9 +10,9 @@ import ToolbarButton from './toolbar_button';
 
 const AttachmentsButton = ({ isEditing, toggleEditing }) => {
 
-  if ( !isEditing ) return <ToolbarButton id="popover-note-attachments-trigger" icon="paperclip" title="Edit Attachments" onClick={() => toggleEditing ()} />;
+  if ( !isEditing ) return <ToolbarButton className="popover-note-attachments-trigger" icon="paperclip" title="Edit Attachments" onClick={() => toggleEditing ()} />;
 
-  return <ToolbarButton id="popover-note-attachments-trigger" icon="paperclip" title="Stop Editing Attachments" isActive={true} onClick={() => toggleEditing ()} />;
+  return <ToolbarButton className="popover-note-attachments-trigger" icon="paperclip" title="Stop Editing Attachments" isActive={true} onClick={() => toggleEditing ()} />;
 
 };
 

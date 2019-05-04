@@ -2,18 +2,19 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import {MenuItemConstructorOptions} from 'electron';
 
 /* MENU */
 
 const Menu = {
 
-  filterTemplate ( template ) { // Removes items with `visible == false`
+  filterTemplate ( template: MenuItemConstructorOptions[] ): MenuItemConstructorOptions[] { // Removes items with `visible == false`
 
     return _.cloneDeepWith ( template, val => {
 
       if ( !_.isArray ( val ) ) return;
 
-      return val.filter ( ele => !_.isObject ( ele ) || !ele.hasOwnProperty ( 'visible' ) || ele.visible ).map ( Menu.filterTemplate );
+      return val.filter ( ele => ele && ( !ele.hasOwnProperty ( 'visible' ) || ele.visible ) ).map ( Menu.filterTemplate );
 
     });
 

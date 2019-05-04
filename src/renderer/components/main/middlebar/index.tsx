@@ -15,7 +15,7 @@ const Middlebar = ({ isFocus, isZen }) => {
   if ( isFocus || isZen ) return null;
 
   return (
-    <div id="middlebar" className="layout column">
+    <div className="middlebar layout column">
       <Toolbar />
       <Header />
       <Content />
