@@ -250,30 +250,36 @@ class Editor extends Container<EditorState, MainCTX> {
     if ( !monaco ) return '';
 
     const model = monaco.getModel (),
-          selection = monaco.getSelection ();
+          selections = monaco.getSelections ();
 
-    if ( !model || !selection ) return '';
+    if ( !model || !selections || !selections.length ) return '';
 
-    return model.getValueInRange ( selection );
+    return selections.map ( selection => model.getValueInRange ( selection ) ).join ( '\n' );
 
   }
 
-  _replaceSelectedText = ( text: string ): void => {
+  _replaceSelectedText = ( text: string, onlyFirst: boolean = false ): void => {
 
     const {monaco} = this.state;
 
     if ( !monaco ) return;
 
     const model = monaco.getModel (),
-          selection = monaco.getSelection ();
+          selections = monaco.getSelections ();
 
-    if ( !model || !selection ) return;
+    if ( !model || !selections || !selections.length ) return;
 
-    monaco.executeEdits ( '', [{
-      text,
-      range: selection,
-      forceMoveMarkers: true
-    }]);
+    for ( let i = 0, l = selections.length; i < l; i++ ) {
+
+      monaco.executeEdits ( '', [{
+        text,
+        range: selections[i],
+        forceMoveMarkers: true
+      }]);
+
+      if ( onlyFirst ) break;
+
+    }
 
   }
 
@@ -378,7 +384,7 @@ class Editor extends Container<EditorState, MainCTX> {
 
   paste = (): void => {
 
-    this._replaceSelectedText ( this.ctx.clipboard.get () );
+    this._replaceSelectedText ( this.ctx.clipboard.get (), true );
 
   }
 
