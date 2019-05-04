@@ -107,7 +107,7 @@ const Markdown = {
           regex: /--+|==+|```+|~~~+/gm,
           replace: () => ''
         },
-        { // Emoji => Removing it
+        { // Emoji => Rendering it
           type: 'language',
           regex: /:(\S+?):/gm,
           replace: ( match, $1 ) => emojis[$1] || ''
@@ -132,9 +132,14 @@ const Markdown = {
           regex: /\[\[([^|\]]+?)(?:\|([^\]]+?))?\]\]/gm,
           replace: ( match, $1 ) => $1
         },
+        { // Ending header syntax => Removing the special part
+          type: 'language',
+          regex: /^(\s*#+\s.*?)(#+\s*?$)/gm,
+          replace: ( match, $1 ) => $1
+        },
         { // Start syntax => Removing the special syntax
           type: 'language',
-          regex: /^(\s*)(?:>(?:\s*?>)*|#+|\d+\.|[*+-](?=\s)(?:\s*\[[xX ]\]\s*)?|\[[^\]]+?\]:.*)/gm, //TODO: If multiple of these get chained together this regex will fail
+          regex: /^(\s*)(?:>(?:\s*?>)*|#+\s|\d+\.|[*+-](?=\s)(?:\s*\[[xX ]\]\s*)?|\[[^\]]+?\]:.*)/gm, //TODO: If multiple of these get chained together this regex will fail
           replace: ( match, $1 ) => $1
         },
         { // HTML => Removing all of it
