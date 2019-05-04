@@ -24,6 +24,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
   componentDidMount () {
 
     this.initAttachmentMenu ();
+    this.initEditorMenu ();
     this.initNoteMenu ();
     this.initNoteTagMenu ();
     this.initTagMenu ();
@@ -88,6 +89,25 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
         click: () => this.props.container.note.removeAttachment ( undefined, this.attachment )
       }
     ], this.updateAttachmentMenu );
+
+  }
+
+  initEditorMenu = () => {
+
+    this._makeMenu ( '.monaco-editor', [
+      {
+        label: 'Cut',
+        click: this.props.container.editor.cut
+      },
+      {
+        label: 'Copy',
+        click: this.props.container.editor.copy
+      },
+      {
+        label: 'Paste',
+        click: this.props.container.editor.paste
+      }
+    ], this.updateEditorMenu );
 
   }
 
@@ -182,7 +202,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   initFallbackMenu = () => {
 
-    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .note, .tag:not([data-has-children]), .tag[data-has-children="true"], .tag[data-collapsed="true"], .tag[title="Trash"]' ) );
+    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .monaco-editor, .note, .tag:not([data-has-children]), .tag[data-has-children="true"], .tag[data-collapsed="true"], .tag[title="Trash"]' ) );
 
   }
 
@@ -193,6 +213,17 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
     const fileName = $(this.ele).removeData ( 'filename' ).data ( 'filename' );
 
     this.attachment = this.props.container.attachment.get ( fileName );
+
+  }
+
+  updateEditorMenu = ( items: MenuItem[] ) => {
+
+    const canCopy = !!this.props.container.editor._getSelectedText (),
+          canPaste = !!this.props.container.clipboard.get ();
+
+    items[0].visible = canCopy;
+    items[1].visible = canCopy;
+    items[2].visible = canPaste;
 
   }
 

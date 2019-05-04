@@ -241,6 +241,42 @@ class Editor extends Container<EditorState, MainCTX> {
 
   }
 
+  /* HELPERS */
+
+  _getSelectedText = (): string => {
+
+    const {monaco} = this.state;
+
+    if ( !monaco ) return '';
+
+    const model = monaco.getModel (),
+          selection = monaco.getSelection ();
+
+    if ( !model || !selection ) return '';
+
+    return model.getValueInRange ( selection );
+
+  }
+
+  _replaceSelectedText = ( text: string ): void => {
+
+    const {monaco} = this.state;
+
+    if ( !monaco ) return;
+
+    const model = monaco.getModel (),
+          selection = monaco.getSelection ();
+
+    if ( !model || !selection ) return;
+
+    monaco.executeEdits ( '', [{
+      text,
+      range: selection,
+      forceMoveMarkers: true
+    }]);
+
+  }
+
   /* API */
 
   isEditing = (): boolean => {
@@ -323,6 +359,26 @@ class Editor extends Container<EditorState, MainCTX> {
       content: monaco.getValue (),
       modified: monaco.getChangeDate ()
     };
+
+  }
+
+  cut = (): void => {
+
+    this.copy ();
+
+    this._replaceSelectedText ( '' );
+
+  }
+
+  copy = (): void => {
+
+    this.ctx.clipboard.set ( this._getSelectedText () );
+
+  }
+
+  paste = (): void => {
+
+    this._replaceSelectedText ( this.ctx.clipboard.get () );
 
   }
 
