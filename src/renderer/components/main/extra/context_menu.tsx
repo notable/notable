@@ -191,7 +191,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   initTrashMenu = () => {
 
-    this._makeMenu ( '.tag[title="Trash"]', [
+    this._makeMenu ( '.tag[data-tag="__TRASH__"]', [
       {
         label: 'Empty Trash',
         click: this.props.container.trash.empty
@@ -202,7 +202,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   initFallbackMenu = () => {
 
-    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .monaco-editor, .note, .tag:not([data-has-children]), .tag[data-has-children="true"], .tag[data-collapsed="true"], .tag[title="Trash"]' ) );
+    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .monaco-editor, .note, .tag:not([data-has-children]), .tag[data-has-children="true"], .tag[data-collapsed="true"], .tag[data-tag="__TRASH__"]' ) );
 
   }
 
