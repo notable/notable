@@ -374,17 +374,23 @@ class Editor extends Container<EditorState, MainCTX> {
 
     this._replaceSelectedText ( '' );
 
+    this.editingState.focus ();
+
   }
 
   copy = (): void => {
 
     this.ctx.clipboard.set ( this._getSelectedText () );
 
+    this.editingState.focus ();
+
   }
 
   paste = (): void => {
 
     this._replaceSelectedText ( this.ctx.clipboard.get (), true );
+
+    this.editingState.focus ();
 
   }
 
