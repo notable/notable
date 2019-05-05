@@ -12,6 +12,7 @@ import pkg from '@root/package.json';
 import Environment from '@common/environment';
 import UMenu from '@main/utils/menu';
 import About from './about';
+import Mermaid from './mermaid';
 import Route from './route';
 
 /* MAIN */
@@ -443,6 +444,7 @@ class Main extends Route {
     this.___flagsUpdate ();
     this.___navigateUrl ();
     this.___printPDF ();
+    this.___mermaidOpen ();
 
   }
 
@@ -639,6 +641,20 @@ class Main extends Route {
         });
       });
     });
+
+  }
+
+  /* MERMAID OPEN */
+
+  ___mermaidOpen = () => {
+
+    ipc.on ( 'mermaid-open', this.__mermaidOpen );
+
+  }
+
+  __mermaidOpen = ( event: Event, data: string ) => {
+
+    new Mermaid ( undefined, undefined, undefined, data ).init ();
 
   }
 
