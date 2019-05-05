@@ -8,9 +8,27 @@ import {createElement} from 'react';
 
 //TODO: Publish as `react-idle-render`
 
-class Idle extends React.Component<{ children: React.FC, timeout?: number }, {}> {
+class Idle extends React.Component<{ children: typeof React.Component | React.FunctionComponent<any>, timeout?: number }, {}> {
 
-  _idleId = null;
+  /* VARIABLES */
+
+  _idleId: number = 0;
+
+  /* LIFECYCLE */
+
+  componentWillMount () {
+
+    this.requestIdle ();
+
+  }
+
+  componentWillUnmount () {
+
+    if ( !this._idleId ) return;
+
+    cancelIdleCallback ( this._idleId );
+
+  }
 
   shouldComponentUpdate () {
 
@@ -20,19 +38,25 @@ class Idle extends React.Component<{ children: React.FC, timeout?: number }, {}>
 
   }
 
+  /* IDLE */
+
   requestIdle = () => {
 
-    if ( this._idleId ) window['cancelIdleCallback']( this._idleId );
+    if ( this._idleId ) return;
 
-    this._idleId = window['requestIdleCallback']( this.update, { timeout: this.props.timeout || 1000 } );
+    this._idleId = requestIdleCallback ( () => this.setIdle (), { timeout: this.props.timeout || 1000 } );
 
   }
 
-  update = () => {
+  setIdle = () => {
+
+    delete this._idleId;
 
     this.forceUpdate ();
 
   }
+
+  /* RENDER */
 
   render () {
 
