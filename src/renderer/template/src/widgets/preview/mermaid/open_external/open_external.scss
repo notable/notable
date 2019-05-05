@@ -1,0 +1,30 @@
+
+.preview {
+
+  .mermaid {
+
+    position: relative;
+
+    .mermaid-open-external {
+      position: absolute;
+      top: $gutter-half;
+      right: $gutter;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity $animation-fast;
+      z-index: 1;
+    }
+
+    &:hover .mermaid-open-external {
+      opacity: .5;
+      &:hover {
+        opacity: .75;
+      }
+      &:active {
+        opacity: 1;
+      }
+    }
+
+  }
+
+}

@@ -284,6 +284,18 @@ const Markdown = {
 
     },
 
+    mermaidOpenExternal () {
+
+      return [{
+        type: 'output',
+        regex: /<div class="mermaid">/g,
+        replace ( match ) {
+          return `${match}<div class="mermaid-open-external" title="Open in Separate Window"><i class="icon small">open_in_new</i></div>`;
+        }
+      }];
+
+    },
+
     checkbox () {
 
       let nth = 0;
@@ -512,11 +524,11 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {asciimath2tex, katex, mermaid, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, noProtocolLinks, wikilink} = Markdown.extensions;
+      const {asciimath2tex, katex, mermaid, mermaidOpenExternal, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, noProtocolLinks, wikilink} = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [asciimath2tex (), katex (), mermaid (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag (), noProtocolLinks ()]
+        extensions: [asciimath2tex (), katex (), mermaid (), mermaidOpenExternal (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag (), noProtocolLinks ()]
       });
 
       converter.setFlavor ( 'github' );

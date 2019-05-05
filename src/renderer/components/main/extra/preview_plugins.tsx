@@ -2,8 +2,10 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import {remote} from 'electron';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
+import pkg from '@root/package.json';
 import Main from '@renderer/containers/main';
 
 /* PREVIEW PLUGINS */
@@ -18,6 +20,7 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
     $.$document.on ( 'click', '.preview a.tag', this.__tagClick );
     $.$document.on ( 'click', '.preview input[type="checkbox"]', this.__checkboxClick );
     $.$document.on ( 'click', '.preview .copy', this.__copyClick );
+    $.$document.on ( 'click', '.preview .mermaid-open-external', this.__mermaidOpenExternalClick );
 
   }
 
@@ -73,6 +76,31 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
     if ( !$code.length ) return;
 
     this.props.container.clipboard.set ( $code.text () );
+
+  }
+
+  __mermaidOpenExternalClick = ( event ) => {
+
+    const $btn = $(event.currentTarget),
+          $svg = $btn.next ( 'svg' );
+
+    if ( !$svg.length ) return;
+
+    const html = $svg.clone ().removeAttr ( 'style' )[0].outerHTML, // Removing the style attribute, ensuring the svg is displayed at full-width
+          base64 = Buffer.from ( html ).toString ( 'base64' ),
+          dataurl = `data:image/svg+xml;base64,${base64}`;
+
+    //TODO: We should open this in the default browser instead, but it turns out that we can't open "data:*"" urls from here, perhaps we could set-up a special-purpose website to workaround this, something like https://notable.md/dataurl#data:image...
+
+    const win = new remote.BrowserWindow ({
+      backgroundColor: '#FFFFFF',
+      show: false,
+      title: `mermaid | ${pkg.productName}`
+    });
+
+    win.loadURL ( dataurl );
+
+    win.once ( 'ready-to-show', () => win.show () );
 
   }
 
