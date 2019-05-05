@@ -2,10 +2,10 @@
 /* IMPORT */
 
 import * as React from 'react';
+import Idle from 'react-idle-render';
 import {connect} from 'overstated';
 import Markdown from '@renderer/utils/markdown';
 import Main from '@renderer/containers/main';
-import Idle from '@renderer/components/main/idle';
 
 /* PREVIEW */
 

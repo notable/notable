@@ -10,18 +10,6 @@ declare module NodeJS  {
   }
 }
 
-type RequestIdleCallbackDeadline = {
-  readonly didTimeout: boolean,
-  timeRemaining: () => number
-};
-
-type RequestIdleCallbackOptions = {
-  timeout: number
-};
-
-declare function requestIdleCallback ( callback: ( deadline: RequestIdleCallbackDeadline ) => void, options?: RequestIdleCallbackOptions ): number;
-declare function cancelIdleCallback ( handle: number ): void;
-
 /* CASH */
 
 //TODO: Update cash: https://github.com/kenwheeler/cash/issues/274
