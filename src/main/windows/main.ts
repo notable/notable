@@ -606,7 +606,7 @@ class Main extends Route {
 
     if ( options.html ) {
 
-      win.loadURL ( `data:text/html;charset=utf-8,${options.html}` );
+      win.loadURL ( `data:text/html;base64,${Buffer.from ( options.html ).toString ( 'base64' )}` ); //FIXME: https://github.com/electron/electron/issues/18093
 
     } else if ( options.src ) {
 
