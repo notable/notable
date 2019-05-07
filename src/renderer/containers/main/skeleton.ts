@@ -1,8 +1,8 @@
 
 /* IMPORT */
 
+import critically from 'critically';
 import {Container} from 'overstated';
-import Critical from '@renderer/utils/critical';
 
 /* SKELETON */
 
@@ -10,7 +10,7 @@ class Skeleton extends Container<SkeletonState, MainCTX> {
 
   /* API */
 
-  get = (): string => {
+  get = async (): Promise<string> => {
 
     function transform ( doc: Document ) {
       const $html = $(doc.documentElement);
@@ -23,17 +23,20 @@ class Skeleton extends Container<SkeletonState, MainCTX> {
       $html.find ( '.editor, .preview' ).remove ();
       $html.find ( '*' ).removeAttr ( 'style' );
       $html.find ( '*' ).removeClass ( 'centerer xsmall resizable' );
-      $html.find ( 'head' ).children ().not ( 'meta[charset]' ).remove ();
+      $html.find ( 'head' ).children ().not ( 'meta[charset], style:not([data-critical]), link[rel="stylesheet"]' ).remove ();
       $html.find ( 'html' ).removeAttr ( 'class' );
+      $html.find ( '.tree, .list, .list-notes' ).removeClass ( 'tree list list-notes' );
     }
 
-    return Critical.get ({ transform });
+    const {html} = await critically ({ document, transform });
+
+    return html;
 
   }
 
-  getToClipboard = (): void => {
+  getToClipboard = async (): Promise<void> => {
 
-    const skeleton = this.get ();
+    const skeleton = await this.get ();
 
     this.ctx.clipboard.set ( skeleton );
 
