@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import critically from 'critically';
 import {ipcRenderer as ipc, remote} from 'electron';
 import Dialog from 'electron-dialog';
 import * as mime from 'mime-types';
@@ -56,7 +57,7 @@ class Export extends Container<ExportState, MainCTX> {
 
   renderers = {
 
-    html: async ( note: NoteObj, notePath: string, options = { base64: true, metadata: true } ) => {
+    html: async ( note: NoteObj, notePath: string, options = { base64: true, metadata: true, critical: true } ) => {
 
       let css = await this._getResources ([
         __non_webpack_require__.resolve ( 'katex/dist/katex.min.css' ), // Simply using `require` won't work with WebPack
@@ -68,8 +69,8 @@ class Export extends Container<ExportState, MainCTX> {
 
       if ( options.metadata ) {
         metadata.push (
-          `<meta name="metadata:attachments" content="${this.ctx.note.getAttachments ( note ).join ( ', ' )}">`,
           `<meta name="metadata:tags" content="${this.ctx.note.getTags ( note ).join ( ', ' )}">`,
+          `<meta name="metadata:attachments" content="${this.ctx.note.getAttachments ( note ).join ( ', ' )}">`,
           `<meta name="metadata:deleted" content="${this.ctx.note.isDeleted ()}">`,
           `<meta name="metadata:favorited" content="${this.ctx.note.isFavorited ()}">`,
           `<meta name="metadata:pinned" content="${this.ctx.note.isPinned ()}">`,
@@ -78,65 +79,51 @@ class Export extends Container<ExportState, MainCTX> {
         );
       }
 
+      let html = `
+        <html>
+          <head>
+            <meta charset="utf-8">
+            ${metadata.join ( '\n' )}
+            <title>${note.metadata.title}</title>
+            <style>${css}</style>
+          </head>
+          <body class="theme-light">
+            <div class="preview">
+              ${content}
+            </div>
+          </body>
+        </html>
+      `;
+
+      if ( options.critical ) {
+        html = ( await critically ({ html }) ).html;
+      }
+
       if ( options.base64 ) { // Images
         const re = /<img([^>]*?)src="file:\/\/([^"]*)"/gi;
-        const matches = stringMatches ( content, re );
+        const matches = stringMatches ( html, re );
         for ( let match of matches ) {
           const type = mime.lookup ( match[2] );
           const base64 = await File.read ( match[2], 'base64' );
           if ( mime && base64 ) {
-            content = content.replace ( match[0], `<img${match[1]}src="data:${type};base64,${base64}"` );
+            html = html.replace ( match[0], `<img${match[1]}src="data:${type};base64,${base64}"` );
           }
         }
       }
 
       if ( options.base64 ) { // Fonts
-
-        if ( content.includes ( '<i class="icon' ) ) { // Icon font
-          const re = /url\(([^)]*?IconFont[^)]*?\.woff2[^)]*?)\)/gi;
-          const matches = stringMatches ( css, re );
-          for ( let match of matches ) {
-            const type = mime.lookup ( match[1] );
-            const filePath = `${__static}/fonts/IconFont.woff2`;
-            const base64 = await File.read ( filePath, 'base64' );
-            if ( base64 ) {
-              css = css.replace ( match[0], `url(data:${type};base64,${base64})` );
-            }
+        const re = /url\("?([^)]*?\.woff2[^)]*?)"?\)/gi;
+        const matches = stringMatches ( html, re );
+        for ( let match of matches ) {
+          const filePath = /katex/i.test ( match[1] ) ? __non_webpack_require__.resolve ( `katex/dist/${match[1]}` ): `${__static}/fonts/IconFont.woff2`; // Simply using `require` won't work with WebPack //UGLY
+          const base64 = await File.read ( filePath, 'base64' );
+          if ( base64 ) {
+            html = html.replace ( match[0], `url(data:font/woff2;base64,${base64})` );
           }
         }
-
-        if ( content.includes ( '<span class="katex' ) ) { // KaTeX fonts
-          const re = /url\(([^)]*?KaTeX[^)]*?\.woff2[^)]*?)\)/gi;
-          const matches = stringMatches ( css, re );
-          for ( let match of matches ) {
-            const type = mime.lookup ( match[1] );
-            const filePath = __non_webpack_require__.resolve ( `katex/dist/fonts/${match[1].replace ( /^fonts\//, '' )}` ); // Simply using `require` won't work with WebPack
-            const base64 = await File.read ( filePath, 'base64' );
-            if ( base64 ) {
-              css = css.replace ( match[0], `url(data:${type};base64,${base64})` );
-            }
-          }
-        }
-
       }
 
-      return `
-<html>
-  <head>
-    <meta charset="utf-8">
-    ${metadata.join ( '\n    ' )}
-    <title>${note.metadata.title}</title>
-    <style>${css}</style>
-  </head>
-  <body class="theme-light">
-    <div class="preview">
-
-${content}
-
-    </div>
-  </body>
-</html>
-      `;
+      return html;
 
     },
 
