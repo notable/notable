@@ -137,6 +137,7 @@
     "asciimath2tex": "^1.1.0",
     "calls-batch": "^1.1.1",
     "chokidar": "^2.1.5",
+    "chokidar-watcher": "^1.0.0",
     "crc-32": "^1.2.0",
     "critically": "^1.0.0",
     "diff": "^4.0.1",

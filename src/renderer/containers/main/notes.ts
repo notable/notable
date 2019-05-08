@@ -3,13 +3,13 @@
 
 import * as _ from 'lodash';
 import CallsBatch from 'calls-batch';
+import watcher from 'chokidar-watcher';
 import Dialog from 'electron-dialog';
 import glob from 'tiny-glob';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import File from '@renderer/utils/file';
 import Utils from '@renderer/utils/utils';
-import watcher from '@renderer/utils/watcher';
 
 /* NOTES */
 
