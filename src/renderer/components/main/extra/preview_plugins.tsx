@@ -36,7 +36,7 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
 
   __noteClick = ( event ) => {
 
-    const filePath = $(event.currentTarget).removeData ( 'filepath' ).data ( 'filepath' ),
+    const filePath = $(event.currentTarget).data ( 'filepath' ),
           note = this.props.container.note.get ( filePath );
 
     this.props.container.note.set ( note, true );
@@ -59,7 +59,7 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
 
     const $input = $(event.currentTarget),
           checked = $input.prop ( 'checked' ),
-          nth = $input.removeData ( 'nth' ).data ( 'nth' );
+          nth = $input.data ( 'nth' );
 
     if ( !_.isNumber ( nth ) ) return;
 
