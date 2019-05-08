@@ -201,7 +201,7 @@
     "@types/react-window": "^1.8.0",
     "cash-dom": "^4.0.0",
     "del-cli": "^1.1.0",
-    "electron": "^5.0.0",
+    "electron": "^5.0.1",
     "electron-builder": "^20.39.0",
     "electron-builder-squirrel-windows": "^20.40.0",
     "electron-devtools-installer": "^2.2.4",
