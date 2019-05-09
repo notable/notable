@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import * as isShallowEqual from 'is-shallow-equal';
 import * as React from 'react';
 import {createElement} from 'react';
 import {FixedSizeList} from 'react-window';
@@ -51,7 +52,7 @@ class Tree extends React.Component<{ children, data: any[], className?: string, 
 
   shouldComponentUpdate ( propsNext, stateNext ) {
 
-    return this.state.items !== stateNext.items || this.state.height !== stateNext.height;
+    return this.state.height !== stateNext.height || !isShallowEqual ( this.state.items, stateNext.items );
 
   }
 
