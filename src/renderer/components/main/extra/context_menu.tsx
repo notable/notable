@@ -10,6 +10,7 @@ import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
 import {TagSpecials} from '@renderer/utils/tags';
+import {clipboard} from 'electron';
 
 /* CONTEXT MENU */
 
@@ -81,6 +82,10 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
         type: 'separator'
       },
       {
+        label: 'Copy',
+        click: () => clipboard.writeText ( this.attachment.fileName )
+      },
+      {
         label: 'Rename',
         click: () => Dialog.alert ( 'Simply rename the actual attachment file while Notable is open' )
       },
@@ -134,6 +139,10 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
         click: () => this.props.container.note.duplicate ( this.note )
       },
       {
+        label: 'Copy',
+        click: () => clipboard.writeText ( this.note.metadata.title )
+      },
+      {
         type: 'separator'
       },
       {
@@ -169,6 +178,10 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
       {
         label: 'Remove',
         click: () => this.props.container.note.removeTag ( undefined, $(this.ele).attr ( 'data-tag' ) )
+      },
+      {
+        label: 'Copy',
+        click: () => clipboard.writeText (  $(this.ele).attr ( 'data-tag' ) )
       }
     ]);
 
@@ -184,7 +197,14 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
       {
         label: 'Expand',
         click: () => this.props.container.tag.toggleCollapse ( this.tag, false )
-      }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Copy',
+        click: () => clipboard.writeText ( this.tag )
+      },
     ], this.updateTagMenu );
 
   }
