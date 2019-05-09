@@ -62,13 +62,13 @@ class Note extends Container<NoteState, MainCTX> {
 
   /* API */
 
-  new = async () => {
+  new = async ( title: string = 'Untitled' ) => {
 
     const {ext, path: notesPath} = Config.notes;
 
     if ( !notesPath ) return;
 
-    const {filePath, fileName} = await Path.getAllowedPath ( notesPath, `Untitled${ext}` ),
+    const {filePath, fileName} = await Path.getAllowedPath ( notesPath, `${title}${ext}` ),
           searchQuery = this.ctx.search.getQuery (),
           searchNotes = this.ctx.search.getNotes (),
           name = searchQuery && !searchNotes.length ? searchQuery : path.parse ( fileName ).name,
