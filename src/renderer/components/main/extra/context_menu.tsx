@@ -10,7 +10,7 @@ import {connect} from 'overstated';
 import * as path from 'path';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
-import {TagSpecials} from '@renderer/utils/tags';
+import Tags, {TagSpecials} from '@renderer/utils/tags';
 
 /* CONTEXT MENU */
 
@@ -296,7 +296,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
     const hasChildren = this.props.container.tag.hasChildren ( this.tag ),
           isCollapsed = hasChildren && this.props.container.tag.isCollapsed ( this.tag ),
-          isCopyable = !/^__.*__$/.test ( this.tag ); //TODO: Write a proper function for this somewhere
+          isCopyable = !Tags.isPrivate ( this.tag );
 
     items[0].visible = hasChildren && !isCollapsed;
     items[1].visible = hasChildren && isCollapsed;
