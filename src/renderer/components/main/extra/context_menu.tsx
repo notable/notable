@@ -7,10 +7,10 @@ import contextMenu from 'electron-context-menu';
 import Dialog from 'electron-dialog';
 import * as is from 'electron-is';
 import {connect} from 'overstated';
+import * as path from 'path';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
 import {TagSpecials} from '@renderer/utils/tags';
-import {clipboard} from 'electron';
 
 /* CONTEXT MENU */
 
@@ -24,23 +24,24 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   componentDidMount () {
 
+    this.initInputMenu ();
     this.initAttachmentMenu ();
-    this.initEditorMenu ();
     this.initNoteMenu ();
     this.initNoteTagMenu ();
     this.initTagMenu ();
     this.initTrashMenu ();
+    this.initEditorMenu ();
     this.initFallbackMenu ();
 
   }
 
   /* HELPERS */
 
-  _getItem = ( x, y, selector ) => {
+  _getItem = ( x, y, selector: string ): Element | undefined => {
 
     const eles = document.elementsFromPoint ( x, y );
 
-    return $(eles).filter ( selector )[0];
+    return eles.find ( ele => $(ele).is ( selector ) );
 
   }
 
@@ -83,7 +84,10 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
       },
       {
         label: 'Copy',
-        click: () => clipboard.writeText ( this.attachment.fileName )
+        click: () => this.props.container.clipboard.set ( this.attachment.fileName )
+      },
+      {
+        type: 'separator'
       },
       {
         label: 'Rename',
@@ -116,6 +120,12 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   }
 
+  initInputMenu = () => {
+
+    this._makeMenu ( ( x, y ) => this._getItem ( x, y, 'input, textarea' ) );
+
+  }
+
   initNoteMenu = () => {
 
     this._makeMenu ( '.note', [
@@ -139,8 +149,14 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
         click: () => this.props.container.note.duplicate ( this.note )
       },
       {
+        type: 'separator'
+      },
+      {
         label: 'Copy',
-        click: () => clipboard.writeText ( this.note.metadata.title )
+        click: () => {
+          const title = this.note ? this.props.container.note.getTitle ( this.note ) : path.parse ( $(this.ele).data ( 'filepath' ) ).name; // Maybe we are linking to a non-existent note
+          this.props.container.clipboard.set ( title );
+        }
       },
       {
         type: 'separator'
@@ -174,22 +190,25 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   initNoteTagMenu = () => {
 
-    this._makeMenu ( '.tag:not([data-has-children]):not(a)', [
-      {
-        label: 'Remove',
-        click: () => this.props.container.note.removeTag ( undefined, $(this.ele).attr ( 'data-tag' ) )
-      },
+    this._makeMenu ( '.popover-note-tags-list .tag', [
       {
         label: 'Copy',
-        click: () => clipboard.writeText (  $(this.ele).attr ( 'data-tag' ) )
+        click: () => this.props.container.clipboard.set ( this.tag )
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Remove',
+        click: () => this.props.container.note.removeTag ( undefined, this.tag )
       }
-    ]);
+    ], this.updateNoteTagMenu );
 
   }
 
   initTagMenu = () => {
 
-    this._makeMenu ( '.tag[data-has-children="true"], .tag[data-collapsed="true"]', [
+    this._makeMenu ( '.sidebar .tag', [
       {
         label: 'Collapse',
         click: () => this.props.container.tag.toggleCollapse ( this.tag, true )
@@ -203,8 +222,8 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
       },
       {
         label: 'Copy',
-        click: () => clipboard.writeText ( this.tag )
-      },
+        click: () => this.props.container.clipboard.set ( this.tag )
+      }
     ], this.updateTagMenu );
 
   }
@@ -222,7 +241,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   initFallbackMenu = () => {
 
-    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .monaco-editor, .note, .tag:not([data-has-children]), .tag[data-has-children="true"], .tag[data-collapsed="true"], .tag[data-tag="__TRASH__"]' ) );
+    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .monaco-editor, .note, .popover-note-tags-list .tag, .sidebar .tag, .tag[data-tag="__TRASH__"]' ) );
 
   }
 
@@ -241,9 +260,9 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
     const canCopy = !!this.props.container.editor._getSelectedText (),
           canPaste = !!this.props.container.clipboard.get ();
 
-    items[0].visible = canCopy;
-    items[1].visible = canCopy;
-    items[2].visible = canPaste;
+    items[0].enabled = canCopy;
+    items[1].enabled = canCopy;
+    items[2].enabled = canPaste;
 
   }
 
@@ -258,21 +277,31 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
           isTemplate = !!this.props.container.note.getTags ( this.note, TagSpecials.TEMPLATES ).length;
 
     items[3].visible = !!isTemplate;
-    items[6].visible = !isFavorited;
-    items[7].visible = !!isFavorited;
-    items[9].visible = !isDeleted;
-    items[10].visible = !!isDeleted;
+    items[8].visible = !isFavorited;
+    items[9].visible = !!isFavorited;
+    items[11].visible = !isDeleted;
+    items[12].visible = !!isDeleted;
+
+  }
+
+  updateNoteTagMenu = ( items: MenuItem[] ) => {
+
+    this.tag = $(this.ele).data ( 'tag' );
 
   }
 
   updateTagMenu = ( items: MenuItem[] ) => {
 
-    this.tag = $(this.ele).attr ( 'data-tag' );
+    this.tag = $(this.ele).data ( 'tag' );
 
-    const isCollapsed = this.props.container.tag.isCollapsed ( this.tag );
+    const hasChildren = this.props.container.tag.hasChildren ( this.tag ),
+          isCollapsed = hasChildren && this.props.container.tag.isCollapsed ( this.tag ),
+          isCopyable = !/^__.*__$/.test ( this.tag ); //TODO: Write a proper function for this somewhere
 
-    items[0].visible = !isCollapsed;
-    items[1].visible = isCollapsed;
+    items[0].visible = hasChildren && !isCollapsed;
+    items[1].visible = hasChildren && isCollapsed;
+    items[2].visible = hasChildren && isCopyable;
+    items[3].visible = isCopyable;
 
   }
 
