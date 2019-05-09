@@ -12,7 +12,7 @@ class Search extends Container<SearchState, MainCTX> {
 
   /* VARIABLES */
 
-  _prev: { [id: string]: { query?: string, state?: { notes: NotesState, sorting: SortingState, tags: TagsState, tag: TagState } } } = {}; // So that multiple subsearches are isolated from each other (middlebar, quick open...)
+  _prev: { [id: string]: { query?: string, notes?: NoteObj[], state?: { notes: NotesState, sorting: SortingState, tags: TagsState, tag: TagState } } } = {}; // So that multiple subsearches are isolated from each other (middlebar, quick open...)
 
   /* STATE */
 
@@ -72,20 +72,21 @@ class Search extends Container<SearchState, MainCTX> {
 
     const prev = this._prev[_prevId],
           prevQuery = prev.query,
+          prevNotes = prev.notes,
           prevState = prev.state;
 
     prev.query = query;
     const state = prev.state = _.pick ( this.ctx.state, ['notes', 'sorting', 'tags', 'tag'] );
 
-    if ( prevState ) {
+    if ( prevNotes && prevState ) {
 
       if ( query === prevQuery && prevState.notes === state.notes && prevState.tags === state.tags && prevState.tag === state.tag ) { // Simple reordering
 
-        return this.ctx.sorting.sort ( this.state.notes );
+        return prev.notes = this.ctx.sorting.sort ( prevNotes );
 
       } else if ( prevQuery && query.startsWith ( prevQuery ) && isShallowEqual ( prevState, state ) ) { // Sub-search
 
-        return this._filterNotesByQuery ( this.state.notes, filterContent, query );
+        return prev.notes = this._filterNotesByQuery ( prevNotes, filterContent, query );
 
       }
 
@@ -98,7 +99,7 @@ class Search extends Container<SearchState, MainCTX> {
           notesSorted = this.ctx.sorting.sort ( notesByQuery ),
           notesUnique = _.uniq ( notesSorted ); // If a note is in 2 sub-tags and we select a parent tag of both we will get duplicates
 
-    return notesUnique;
+    return prev.notes = notesUnique;
 
   }
 
