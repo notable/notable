@@ -208,7 +208,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   initTagMenu = () => {
 
-    this._makeMenu ( '.sidebar .tag', [
+    this._makeMenu ( '.sidebar .tag, .preview .tag', [
       {
         label: 'Collapse',
         click: () => this.props.container.tag.toggleCollapse ( this.tag, true )
@@ -241,7 +241,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   initFallbackMenu = () => {
 
-    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .monaco-editor, .note, .popover-note-tags-list .tag, .sidebar .tag, .tag[data-tag="__TRASH__"]' ) );
+    this._makeMenu ( ( x, y ) => !this._getItem ( x, y, '.attachment, .monaco-editor, .note, .popover-note-tags-list .tag, .sidebar .tag, .preview .tag, .tag[data-tag="__TRASH__"]' ) );
 
   }
 
