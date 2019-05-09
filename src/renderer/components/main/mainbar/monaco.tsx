@@ -294,7 +294,7 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
 
     if ( !this.editor ) return;
 
-    const needTopZone = is.macOS () && this.props.container.window.isZen () && !this.props.container.window.isFullscreen (); //UGLY
+    const needTopZone = is.macOS () && this.props.container.window.isZen () && !this.props.container.window.isFullscreen ();
 
     if ( needTopZone ) {
 

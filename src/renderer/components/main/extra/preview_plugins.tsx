@@ -63,7 +63,7 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
 
   __tagClick = ( event ) => {
 
-    const tag = $(event.currentTarget).attr ( 'data-tag' );
+    const tag = $(event.currentTarget).data ( 'tag' );
 
     this.props.container.tag.set ( tag );
 

@@ -12,8 +12,6 @@ declare module NodeJS  {
 
 /* CASH */
 
-//TODO: Update cash: https://github.com/kenwheeler/cash/issues/274
-
 type cash = typeof import ( 'cash-dom' ).default;
 type Cash = ReturnType<cash>;
 

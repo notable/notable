@@ -4,7 +4,13 @@
   padding: 0 !important;
 
   &-partial {
+
     margin: 0 !important;
+
+    .popover & {
+      min-width: 100% !important;
+    }
+
   }
 
 }

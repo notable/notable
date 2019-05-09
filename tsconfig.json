@@ -18,6 +18,7 @@
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "sourceMap": false,
+    "skipLibCheck": true,
     "strict": false,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,

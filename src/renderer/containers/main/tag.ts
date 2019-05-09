@@ -205,7 +205,7 @@ class Tag extends Container<TagState, MainCTX> {
 
     const index = $tags.index ( '.tag.active' ) + modifier,
           indexWrapped = wrap ? ( $tags.length + index ) % $tags.length : index,
-          tagNext = $tags.eq ( indexWrapped ).attr ( 'data-tag' );
+          tagNext = $tags.eq ( indexWrapped ).data ( 'tag' );
 
     if ( tagNext ) return this.ctx.tag.set ( tagNext );
 
