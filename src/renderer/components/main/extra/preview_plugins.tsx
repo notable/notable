@@ -3,7 +3,9 @@
 
 import * as _ from 'lodash';
 import {ipcRenderer as ipc} from 'electron';
+import Dialog from 'electron-dialog';
 import {connect} from 'overstated';
+import * as path from 'path';
 import {Component} from 'react-component-renderless';
 import Main from '@renderer/containers/main';
 
@@ -39,7 +41,21 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
     const filePath = $(event.currentTarget).data ( 'filepath' ),
           note = this.props.container.note.get ( filePath );
 
-    this.props.container.note.set ( note, true );
+    if ( note ) {
+
+      this.props.container.note.set ( note, true );
+
+    } else {
+
+      const shouldCreate = Dialog.confirm ( 'Note not found, do you want to create it?' );
+
+      if ( !shouldCreate ) return false;
+
+      const {name} = path.parse ( filePath );
+
+      this.props.container.note.new ( name );
+
+    }
 
     return false;
 
