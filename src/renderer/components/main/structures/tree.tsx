@@ -49,23 +49,6 @@ class Tree extends React.Component<{ children, data: any[], className?: string, 
 
   }
 
-  componentDidUpdate () {
-
-    if ( this.listRef.current && this.innerRef.current ) {
-
-      const {scrollOffset} = this.listRef.current.state as any, //TSC
-            {scrollTop} = this.innerRef.current;
-
-      if ( scrollOffset !== scrollTop ) {
-
-        this.listRef.current.setState ({ scrollOffset: scrollTop });
-
-      }
-
-    }
-
-  }
-
   shouldComponentUpdate ( propsNext, stateNext ) {
 
     return this.state.items !== stateNext.items || this.state.height !== stateNext.height;
