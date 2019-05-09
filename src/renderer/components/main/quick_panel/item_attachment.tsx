@@ -7,7 +7,7 @@ import ItemRaw from './item_raw';
 /* ITEM ATTACHMENT */
 
 const ItemAttachment = ({ index, style, item }) => (
-  <ItemRaw index={index} style={style} item={{ icon: 'paperclip', title: item.fileName }} />
+  <ItemRaw index={index} style={style} item={{ icon: 'paperclip', title: item.fileName }} className="attachment" attributes={{ 'data-filename': item.fileName }} />
 );
 
 /* EXPORT */
