@@ -12,7 +12,7 @@ import Modal from './modal';
 
 /* QUICK PANEL */
 
-class QuickPanel extends React.Component<{ isOpen: boolean, setQuery: Function, toggleOpen: Function, query: string, results: QuickPanelResults }, {}> {
+class QuickPanel extends React.Component<{ isOpen: boolean, setQuery: Function, toggleOpen: Function, query: string, results: QuickPanelResults, scrollTo: Function }, {}> {
 
   inputRef = React.createRef<HTMLInputElement> ();
 
@@ -48,6 +48,8 @@ class QuickPanel extends React.Component<{ isOpen: boolean, setQuery: Function, 
 
     this.props.setQuery ( '' ); // Resetting state
 
+    this.props.scrollTo ( 0 );
+
   }
 
   render () {
@@ -76,6 +78,7 @@ export default connect ({
     setQuery: container.quickPanel.setQuery,
     results: container.quickPanel.getResults (),
     setResults: container.quickPanel.setResults,
-    update: container.quickPanel.update
+    update: container.quickPanel.update,
+    scrollTo: container.quickPanel.scrollTo
   })
 })( QuickPanel );

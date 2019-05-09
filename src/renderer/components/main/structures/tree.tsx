@@ -90,6 +90,13 @@ class Tree extends React.Component<{ children, data: any[], className?: string, 
 
     this.listRef.current.scrollToItem ( index, 'auto' );
 
+    if ( index === 0 ) { //FIXME: https://github.com/bvaughn/react-window/issues/136
+      setTimeout ( () => {
+        if ( !this.outerRef.current ) return;
+        this.outerRef.current.scrollTop = 0
+      });
+    }
+
   }
 
   getHeight = ( items: any[] ) => {
