@@ -1,3 +1,35 @@
+### Version 1.5.0
+
+##### New Features
+- Added a dark theme
+- Editor: added cut/copy/paste support via the context menu
+- Mermaid: added a button for opening diagrams in a separate window
+- Prompting the user if he/she wants a new note to be created after clicking a link to a non-existent note
+- Added context menu actions for copying attachments/tags/notes names
+
+##### Improvements
+- Upgraded to Electron v5
+- Moved import/export menu entries under “File”
+- Markdown: improved stripping of headers, emojis, images, links, wikilinks and todos
+- Updater: prompting the user to update manually if necessary
+- Export: greatly reduced exported HTML size
+- Export: added a favicon to exported HTML notes
+- Export: ensuring codeblocks in exported PDFs don't need to be scrolled
+
+##### Bug Fixes
+- Saving notes more reliably
+- Monaco: fixed blurriness issue
+- Ensuring the highlighter outputs valid HTML
+- Decoding entities from inferred titles
+- Worked around a subtle Cash/React incompatibility
+- Avoiding using ids, as they may conflict with the rendered note
+- Fixed trash context menu
+- Context menus: improved reliability
+- Markdown: disabled characters capping on export
+- Quick Open: ensuring the context menu is provided for notes and attachments
+- Quick Open: ensuring it’s always scrolled all the way to the top when opening it
+- Quick Open: ensuring it always searches all notes
+
 ### Version 1.4.0
 
 ##### New Features
