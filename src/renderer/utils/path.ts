@@ -8,6 +8,8 @@ import * as pify from 'pify';
 
 /* PATH */
 
+//TODO: Publish this as `get-allowed-path` or something
+
 const Path = {
 
   _allowedPaths: {} as { [filePath: string]: number }, // Ensuring we don't return the same path mutliple times within some amount of time, in order to avoid race conditions //UGLY

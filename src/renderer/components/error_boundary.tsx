@@ -61,7 +61,7 @@ class ErrorBoundary extends React.Component<{}, { error?: Error }> {
             <span className="title">An Error Occurred!</span>
           </div>
         )}
-        <div className="layout-content container">
+        <div className="layout-content container sharp">
           {isMacOS ? null : (
             <h1 className="text-center">An Error Occurred!</h1>
           )}
