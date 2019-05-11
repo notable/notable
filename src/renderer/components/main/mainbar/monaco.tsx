@@ -110,63 +110,15 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
 
     this.editorUpdate ();
 
-    if ( this.props.value !== this._currentValue ) {
+    if ( this.props.value !== this._currentValue ) this.updateValue ( this.props.value );
 
-      this._currentValue = this.props.value;
+    if ( prevProps.language !== this.props.language ) this.updateLanguage ( this.props.language );
 
-      if ( this.editor ) {
+    if ( prevProps.theme !== this.props.theme ) this.updateTheme ( this.props.theme );
 
-        this._preventOnChangeEvent = true;
+    if ( this.props.editorOptions && !_.isEqual ( prevProps.editorOptions, this.props.editorOptions ) ) this.updateEditorOptions ( this.props.editorOptions );
 
-        this.editor.setValue ( this._currentValue );
-
-        if ( this.props.onUpdate ) {
-
-          this.props.onUpdate ( this._currentValue );
-
-        }
-
-        this._preventOnChangeEvent = false;
-
-      }
-
-    }
-
-    if ( this.editor && prevProps.language !== this.props.language ) {
-
-      const model = this.editor.getModel ();
-
-      if ( model ) {
-
-        monaco.editor.setModelLanguage ( model, this.props.language );
-
-      }
-
-    }
-
-    if ( prevProps.theme !== this.props.theme ) {
-
-      monaco.editor.setTheme ( this.props.theme );
-
-    }
-
-    if ( this.editor && this.props.editorOptions && !_.isEqual ( prevProps.editorOptions, this.props.editorOptions ) ) {
-
-      this.editor.updateOptions ( this.props.editorOptions );
-
-    }
-
-    if ( this.editor && this.props.modelOptions && !_.isEqual ( prevProps.modelOptions, this.props.modelOptions ) ) {
-
-      const model = this.editor.getModel ();
-
-      if ( model ) {
-
-        model.updateOptions ( this.props.modelOptions );
-
-      }
-
-    }
+    if ( this.props.modelOptions && !_.isEqual ( prevProps.modelOptions, this.props.modelOptions ) ) this.updateModelOptions ( this.props.modelOptions );
 
   }
 
@@ -178,13 +130,21 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
 
   }
 
-  shouldComponentUpdate ( nextProps ) {
+  shouldComponentUpdate ( nextProps ) { //TODO: Most of these update* functions should run in `componentDidMount`, but ensuring that the "value" doesn't get reset unnecessarily
 
     this.editorUpdate ();
 
     if ( nextProps.filePath !== this.props.filePath ) this.editorWillChange ();
 
-    return nextProps.value !== this._currentValue;
+    if ( nextProps.language !== this.props.language ) this.updateLanguage ( nextProps.language );
+
+    if ( nextProps.theme !== this.props.theme ) this.updateTheme ( nextProps.theme );
+
+    if ( nextProps.editorOptions && !_.isEqual ( this.props.editorOptions, nextProps.editorOptions ) ) this.updateEditorOptions ( nextProps.editorOptions );
+
+    if ( nextProps.modelOptions && !_.isEqual ( this.props.modelOptions, nextProps.modelOptions ) ) this.updateModelOptions ( nextProps.modelOptions );
+
+    return nextProps.value !== this.props.value && nextProps.value !== this._currentValue; //FIXME: This check might not be perfect
 
   }
 
@@ -368,6 +328,70 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
     this.editor.dispose ();
 
     delete this.editor;
+
+  }
+
+  /* UPDATE */
+
+  updateValue ( value: string ) {
+
+    this._currentValue = value;
+
+    if ( !this.editor ) return;
+
+    this._preventOnChangeEvent = true;
+
+    this.editor.setValue ( this._currentValue );
+
+    if ( this.props.onUpdate ) {
+
+      this.props.onUpdate ( this._currentValue );
+
+    }
+
+    this._preventOnChangeEvent = false;
+
+  }
+
+  updateLanguage ( language: string ) {
+
+    if ( !this.editor ) return;
+
+    const model = this.editor.getModel ();
+
+    if ( model ) {
+
+      monaco.editor.setModelLanguage ( model, language );
+
+    }
+
+  }
+
+  updateTheme ( theme: string ) {
+
+    monaco.editor.setTheme ( theme );
+
+  }
+
+  updateEditorOptions ( editorOptions: monaco.editor.IEditorOptions ) {
+
+    if ( !this.editor ) return;
+
+    this.editor.updateOptions ( editorOptions );
+
+  }
+
+  updateModelOptions ( modelOptions: monaco.editor.ITextModelUpdateOptions ) {
+
+    if ( !this.editor ) return;
+
+    const model = this.editor.getModel ();
+
+    if ( model ) {
+
+      model.updateOptions ( modelOptions );
+
+    }
 
   }
 

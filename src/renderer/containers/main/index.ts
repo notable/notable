@@ -20,6 +20,8 @@ import Skeleton from './skeleton';
 import Sorting from './sorting';
 import Tag from './tag';
 import Tags from './tags';
+import Theme from './theme';
+import Themes from './themes';
 import Trash from './trash';
 import Tutorial from './tutorial';
 import Window from './window';
@@ -127,7 +129,8 @@ class Main extends Container<MainState, MainCTX> {
       isNoteFavorited: app.note.isFavorited (),
       isNotePinned: app.note.isPinned (),
       isNoteTemplate: !!app.note.getTags ( undefined, TagSpecials.TEMPLATES ).length,
-      isTagsEditing: app.tags.isEditing ()
+      isTagsEditing: app.tags.isEditing (),
+      theme: app.theme.get ()
     };
 
     if ( _.isEqual ( app._prevFlags, flags ) ) return; // Nothing changed, no need to update the main process
@@ -147,6 +150,8 @@ class Main extends Container<MainState, MainCTX> {
   /* API */
 
   refresh = async () => {
+
+    await this.ctx.theme.update ();
 
     await this.ctx.attachments.refresh ();
     await this.ctx.notes.refresh ();
@@ -205,6 +210,8 @@ export default compose ({
   sorting: Sorting,
   tag: Tag,
   tags: Tags,
+  theme: Theme,
+  themes: Themes,
   trash: Trash,
   tutorial: Tutorial,
   window: Window

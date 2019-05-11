@@ -9,6 +9,7 @@ import * as LanguageMarkdown from 'monaco-editor/esm/vs/basic-languages/markdown
 import * as path from 'path';
 import Settings from '@common/settings';
 import ThemeLight from './monaco_light';
+import ThemeDark from './monaco_dark';
 import Todo from './monaco_todo';
 
 /* MONACO */
@@ -228,7 +229,8 @@ const Monaco = {
 
   themes: {
 
-    light: ThemeLight
+    light: ThemeLight,
+    dark: ThemeDark
 
   } as { [name: string]: monaco.editor.IStandaloneThemeData },
 

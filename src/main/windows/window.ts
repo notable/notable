@@ -8,6 +8,7 @@ import * as is from 'electron-is';
 import * as windowStateKeeper from 'electron-window-state';
 import pkg from '@root/package.json';
 import Environment from '@common/environment';
+import Settings from '@common/settings';
 
 /* WINDOW */
 
@@ -151,7 +152,7 @@ class Window {
 
     options = _.merge ( dimensions, {
       frame: !is.macOS (),
-      backgroundColor: '#F4F4F4',
+      backgroundColor: ( Settings.get ( 'theme' ) === 'light' ) ? '#F7F7F7' : '#0F0F0F', //TODO: This won't scale with custom themes
       icon: path.join ( __static, 'images', `icon.${is.windows () ? 'ico' : 'png'}` ),
       show: false,
       title: pkg.productName,

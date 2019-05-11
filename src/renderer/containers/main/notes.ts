@@ -147,7 +147,6 @@ class Notes extends Container<NotesState, MainCTX> {
       if ( !nextNote.content.length && ( Math.abs ( note.metadata.modified.getTime () - nextNote.metadata.modified.getTime () ) < 1500 ) ) return; //FIXME: For some reason some times the note gets read as an empty string, maybe we are reading and writing at "the same" time and the file gets cleared?
       const editorData = this.ctx.editor.getData ();
       if ( editorData && editorData.filePath === filePath ) { // The current note has been renamed
-        if ( editorData.modified && editorData.modified.getTime () > nextNote.metadata.modified.getTime () ) return;
         if ( editorData.content !== nextNote.plainContent ) { // Changes to the current note
           const choice = Dialog.choice ( 'This note has been updated on disk, do you want to overwrite your current changes or keep them?', ['Overwrite Changes', 'Keep Changes'] );
           if ( choice === 1 ) return await this.ctx.note.autosave ( true );

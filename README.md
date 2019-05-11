@@ -40,6 +40,10 @@ Part of this comparison is personal opinion: you may disagree on the UI front, t
 
 ## Demo
 
+### Dark Theme
+
+<img src="resources/demo/dark.png" alt="Dark Theme" width="750">
+
 ### Indefinitely Nestable Tags
 
 <img src="resources/demo/tags.png" alt="Indefinitely Nestable Tags" width="750">

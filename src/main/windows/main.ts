@@ -70,6 +70,26 @@ class Main extends Route {
             type: 'separator'
           },
           {
+            label: 'Theme',
+            submenu: [
+              {
+                type: 'checkbox',
+                label: 'Light',
+                click: () => this.win.webContents.send ( 'theme-set', 'light' ),
+                checked: !flags || flags.theme === 'light'
+              },
+              {
+                type: 'checkbox',
+                label: 'Dark',
+                click: () => this.win.webContents.send ( 'theme-set', 'dark' ),
+                checked: !!flags && flags.theme === 'dark'
+              }
+            ]
+          },
+          {
+            type: 'separator'
+          },
+          {
             role: 'services',
             submenu: [] ,
             visible: is.macOS ()

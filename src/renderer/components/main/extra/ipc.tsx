@@ -66,6 +66,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, {}> {
     ipc.on ( 'search-previous', this.__searchPrevious );
     ipc.on ( 'tag-next', this.__tagNext );
     ipc.on ( 'tag-previous', this.__tagPrevious );
+    ipc.on ( 'theme-set', this.__themeSet );
     ipc.on ( 'trash-empty', this.__trashEmpty );
     ipc.on ( 'tutorial-dialog', this.__tutorialDialog );
 
@@ -108,6 +109,7 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, {}> {
     ipc.removeListener ( 'search-previous', this.__searchPrevious );
     ipc.removeListener ( 'tag-next', this.__tagNext );
     ipc.removeListener ( 'tag-previous', this.__tagPrevious );
+    ipc.removeListener ( 'theme-set', this.__themeSet );
     ipc.removeListener ( 'trash-empty', this.__trashEmpty );
     ipc.removeListener ( 'tutorial-dialog', this.__tutorialDialog );
 
@@ -328,6 +330,12 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, {}> {
   __tagPrevious = () => {
 
     this.main.tag.previous ();
+
+  }
+
+  __themeSet = ( event: IpcMessageEvent, theme: string ) => {
+
+    this.main.theme.set ( theme );
 
   }
 

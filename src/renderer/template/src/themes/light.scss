@@ -116,6 +116,8 @@
   $preview-kbd-border: #DFE2E5;
   $preview-kbd-shadow: #959DA5;
   $preview-kbd-foreground: #444D56;
+  $preview-mark-background: $selection-background;
+  $preview-mark-foreground: $preview-foreground;
   $preview-hr-background: #E1E4E8;
 
   $katex-fbox-border: $preview-foreground;
@@ -253,6 +255,8 @@
     'preview.kbd.border': $preview-kbd-border,
     'preview.kbd.shadow': $preview-kbd-shadow,
     'preview.kbd.foreground': $preview-kbd-foreground,
+    'preview.mark.background': $preview-mark-background,
+    'preview.mark.foreground': $preview-mark-foreground,
     'preview.hr.background': $preview-hr-background,
     'katex.fbox.border': $katex-fbox-border,
     'highlighter.background': $highlighter-background,

@@ -79,6 +79,11 @@
       border-bottom-color: map-get( $theme, 'preview.kbd.shadow' );
     }
 
+    mark {
+      background-color: map-get( $theme, 'preview.mark.background' );
+      color: map-get( $theme, 'preview.mark.foreground' );
+    }
+
     hr {
       background-color: map-get( $theme, 'preview.hr.background' );
     }

@@ -59,6 +59,8 @@ class Export extends Container<ExportState, MainCTX> {
 
     html: async ( note: NoteObj, notePath: string, options = { base64: true, metadata: true, critical: true, favicon: true, scrollable: true } ) => {
 
+      //TODO: Perhaps we should update the theme we are exporting to, as long as it's light, in order to not waste huge amounts of ink
+
       let css = await this._getResources ([
         __non_webpack_require__.resolve ( 'katex/dist/katex.min.css' ), // Simply using `require` won't work with WebPack
         `${__static}/css/notable.min.css`

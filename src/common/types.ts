@@ -170,6 +170,14 @@ type TagsState = {
   editing: boolean
 };
 
+type ThemeState = {
+  theme: string
+};
+
+type ThemesState = {
+  themes: string[]
+};
+
 type TrashState = {};
 
 type TutorialState = {};
@@ -200,6 +208,8 @@ type MainState = {
   sorting: SortingState,
   tag: TagState,
   tags: TagsState,
+  theme: ThemeState,
+  themes: ThemesState,
   trash: TrashState,
   tutorial: TutorialState,
   window: WindowState
@@ -231,6 +241,8 @@ type MainCTX = {
   sorting: import ( '@renderer/containers/main/sorting' ).default,
   tag: import ( '@renderer/containers/main/tag' ).default,
   tags: import ( '@renderer/containers/main/tags' ).default,
+  theme: import ( '@renderer/containers/main/theme' ).default,
+  themes: import ( '@renderer/containers/main/themes' ).default,
   trash: import ( '@renderer/containers/main/trash' ).default,
   tutorial: import ( '@renderer/containers/main/tutorial' ).default,
   window: import ( '@renderer/containers/main/window' ).default
@@ -266,7 +278,8 @@ type ContextFlags = {
   isNoteFavorited: boolean,
   isNotePinned: boolean,
   isTagsEditing: boolean,
-  isNoteTemplate: boolean
+  isNoteTemplate: boolean,
+  theme: string //TODO: This isn't really a "flag", perhaps context keys should be arbitrary JSON-stringifiable values?
 };
 
 type PrintOptions = {
