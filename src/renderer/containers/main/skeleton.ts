@@ -18,9 +18,9 @@ class Skeleton extends Container<SkeletonState, MainCTX> {
       $html.find ( 'body' ).children ().not ( '.app, script[data-skeleton]' ).remove ();
       $html.find ( '.app' ).children ().not ( '.app-wrapper' ).remove ();
       $html.find ( '.app-wrapper' ).children ().not ( '.sidebar, .middlebar, .mainbar' ).remove ();
-      $html.find ( '.sidebar' ).children ().remove ();
+      $html.find ( '.sidebar' ).empty ();
       $html.find ( '.mainbar' ).children ().not ( '.layout-header' ).remove ();
-      $html.find ( '.layout-header,   .layout-content' ).children ().remove ();
+      $html.find ( '.layout-header, .layout-content' ).empty ();
       $html.removeAttr ( 'class' );
       $html.find ( '[style]' ).removeAttr ( 'style' );
       $html.find ( '.tree, .list, .list-notes, .resizable, .xsmall' ).removeClass ( 'tree list list-notes resizable xsmall' );

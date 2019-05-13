@@ -28,9 +28,12 @@ class Theme extends Container<ThemeState, MainCTX> {
 
   _updateDocument = ( doc: Document, theme: string ): void => {
 
-    const $body = $(doc.body);
+    const $body = $(doc.body),
+          cls = $body.attr ( 'class' );
 
-    $body.attr ( 'class', $body.attr ( 'class' ).replace ( /(^|\s)theme-([^\s"']+)/i, `$1theme-${theme}` ) ); //UGLY: and probably fragile too
+    if ( !cls ) return;
+
+    $body.attr ( 'class', cls.replace ( /(^|\s)theme-([^\s"']+)/i, `$1theme-${theme}` ) ); //UGLY: and probably fragile too
 
   }
 
