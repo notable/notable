@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import * as React from 'react';
 import {connect} from 'overstated';
 import Main from '@renderer/containers/main';
@@ -13,7 +13,7 @@ import NewButton from './toolbar_button_new';
 const Toolbar = ({ isFullscreen, hasSidebar }) => (
   <div className="layout-header toolbar">
     <div className="multiple grow">
-      {isFullscreen || hasSidebar || !is.macOS () ? null : (
+      {isFullscreen || hasSidebar || !is.macos ? null : (
         <div className="toolbar-semaphore-spacer"></div>
       )}
       <Search />

@@ -143,7 +143,6 @@
     "diff": "^4.0.1",
     "electron-context-menu": "^0.12.1",
     "electron-dialog": "^1.0.0",
-    "electron-is": "^3.0.0",
     "electron-store": "^2.0.0",
     "electron-updater": "^4.0.6",
     "electron-util": "^0.11.0",

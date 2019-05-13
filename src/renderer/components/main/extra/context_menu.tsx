@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import {MenuItem, MenuItemConstructorOptions} from 'electron';
 import contextMenu from 'electron-context-menu';
 import Dialog from 'electron-dialog';
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import {connect} from 'overstated';
 import * as path from 'path';
 import {Component} from 'react-component-renderless';
@@ -76,7 +76,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
         click: () => this.props.container.attachment.openInApp ( this.attachment )
       },
       {
-        label: `Reveal in ${is.macOS () ? 'Finder' : 'Folder'}`,
+        label: `Reveal in ${is.macos ? 'Finder' : 'Folder'}`,
         click: () => this.props.container.attachment.reveal ( this.attachment )
       },
       {
@@ -134,7 +134,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
         click: () => this.props.container.note.openInApp ( this.note )
       },
       {
-        label: `Reveal in ${is.macOS () ? 'Finder' : 'Folder'}`,
+        label: `Reveal in ${is.macos ? 'Finder' : 'Folder'}`,
         click: () => this.props.container.note.reveal ( this.note )
       },
       {

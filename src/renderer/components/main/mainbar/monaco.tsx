@@ -3,7 +3,7 @@
 
 import * as _ from 'lodash';
 import * as React from 'react';
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import {connect} from 'overstated';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
 import Main from '@renderer/containers/main';
@@ -254,7 +254,7 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
 
     if ( !this.editor ) return;
 
-    const needTopZone = is.macOS () && this.props.container.window.isZen () && !this.props.container.window.isFullscreen ();
+    const needTopZone = is.macos && this.props.container.window.isZen () && !this.props.container.window.isFullscreen ();
 
     if ( needTopZone ) {
 

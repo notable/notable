@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import * as React from 'react';
 import {connect} from 'overstated';
 import Main from '@renderer/containers/main';
@@ -13,7 +13,7 @@ const {ALL, FAVORITES, NOTEBOOKS, TAGS, TEMPLATES, UNTAGGED, TRASH} = TagSpecial
 
 /* HELPERS */
 
-const getHeight = () => is.macOS () ? window.innerHeight - 38 : window.innerHeight, //UGLY: But it gets the job done, quickly
+const getHeight = () => is.macos ? window.innerHeight - 38 : window.innerHeight, //UGLY: But it gets the job done, quickly
       getItemChildren = ( tag: TagObj ) => !tag.collapsed ? Tags.sort ( Object.values ( tag.tags ) ) : [],
       getItemKey = ( tag: TagObj ) => tag.path,
       filterItem = ( tag: TagObj ) => !!tag.notes.length || tag.path === ALL;

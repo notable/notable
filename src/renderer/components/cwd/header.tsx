@@ -2,13 +2,13 @@
 /* IMPORT */
 
 import * as React from 'react';
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 
 /* HEADER */
 
 const Header = () => {
 
-  if ( !is.macOS () ) return null;
+  if ( !is.macos ) return null;
 
   return (
     <div className="layout-header titlebar">

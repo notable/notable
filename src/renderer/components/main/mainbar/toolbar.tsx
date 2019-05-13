@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import * as React from 'react';
 import {connect} from 'overstated';
 import Main from '@renderer/containers/main';
@@ -19,12 +19,12 @@ import TrashPermanentlyButton from './toolbar_button_trash_permanently';
 
 const Toolbar = ({ hasNote, isFocus, isFullscreen, isZen, isSplit }) => {
 
-  if ( isZen ) return is.macOS () ? <div className="layout-header toolbar"></div> : null;
+  if ( isZen ) return is.macos ? <div className="layout-header toolbar"></div> : null;
 
   return (
     <div className="layout-header toolbar">
       <div className={`${!hasNote ? 'disabled' : ''} multiple grow`}>
-        {!isFocus || isFullscreen || !is.macOS () ? null : (
+        {!isFocus || isFullscreen || !is.macos ? null : (
           <div className="toolbar-semaphore-spacer"></div>
         )}
         <div className="multiple joined">

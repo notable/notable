@@ -3,7 +3,7 @@
 
 import * as _ from 'lodash';
 import {BrowserWindowConstructorOptions, Event, ipcMain as ipc, BrowserWindow, Menu, MenuItemConstructorOptions, shell} from 'electron';
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import * as windowStateKeeper from 'electron-window-state';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
@@ -92,27 +92,27 @@ class Main extends Route {
           {
             role: 'services',
             submenu: [] ,
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             type: 'separator',
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             role: 'hide',
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             role: 'hideothers',
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             role: 'unhide',
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             type: 'separator',
-            visible: is.macOS ()
+            visible: is.macos
           },
           { role: 'quit' }
         ]
@@ -157,7 +157,7 @@ class Main extends Route {
             click: () => this.win.webContents.send ( 'note-open-in-app' )
           },
           {
-            label: `Reveal in ${is.macOS () ? 'Finder' : 'Folder'}`,
+            label: `Reveal in ${is.macos ? 'Finder' : 'Folder'}`,
             accelerator: 'CmdOrCtrl+Alt+R',
             enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-reveal' )
@@ -291,7 +291,7 @@ class Main extends Route {
           },
           {
             type: 'separator',
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             label: 'Speech',
@@ -299,7 +299,7 @@ class Main extends Route {
               { role: 'startspeaking' },
               { role: 'stopspeaking' }
             ],
-            visible: is.macOS ()
+            visible: is.macos
           }
         ]
       },
@@ -355,7 +355,7 @@ class Main extends Route {
           { role: 'minimize' },
           {
             role: 'zoom',
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             type: 'separator'
@@ -400,11 +400,11 @@ class Main extends Route {
           },
           {
             type: 'separator',
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             role: 'front',
-            visible: is.macOS ()
+            visible: is.macos
           }
         ]
       },

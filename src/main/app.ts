@@ -3,7 +3,7 @@
 
 import {app, ipcMain as ipc, Event, Menu, MenuItemConstructorOptions, shell} from 'electron';
 import {autoUpdater as updater} from 'electron-updater';
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import * as fs from 'fs';
 import pkg from '@root/package.json';
 import Config from '@common/config';
@@ -96,7 +96,7 @@ class App {
 
   __windowAllClosed = () => {
 
-    if ( is.macOS () ) return this.initMenu ();
+    if ( is.macos ) return this.initMenu ();
 
     this.quit ();
 

@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import * as React from 'react';
 import {connect} from 'overstated';
 import Main from '@renderer/containers/main';
@@ -10,7 +10,7 @@ import Main from '@renderer/containers/main';
 
 const Toolbar = ({ isFullscreen }) => {
 
-  if ( !is.macOS () || isFullscreen ) return null;
+  if ( !is.macos || isFullscreen ) return null;
 
   return <div className="layout-header toolbar"></div>;
 

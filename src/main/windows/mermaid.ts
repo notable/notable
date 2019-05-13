@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import {BrowserWindowConstructorOptions, Menu, MenuItemConstructorOptions} from 'electron';
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import * as windowStateKeeper from 'electron-window-state';
 import pkg from '@root/package.json';
 import Environment from '@common/environment';
@@ -52,7 +52,7 @@ class Mermaid extends Route {
           { role: 'selectall' },
           {
             type: 'separator',
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             label: 'Speech',
@@ -60,7 +60,7 @@ class Mermaid extends Route {
               { role: 'startspeaking' },
               { role: 'stopspeaking' }
             ],
-            visible: is.macOS ()
+            visible: is.macos
           }
         ]
       },
@@ -91,7 +91,7 @@ class Mermaid extends Route {
           { role: 'minimize' },
           {
             role: 'zoom',
-            visible: is.macOS ()
+            visible: is.macos
           },
           { type: 'separator' },
           {
@@ -102,11 +102,11 @@ class Mermaid extends Route {
           },
           {
             type: 'separator',
-            visible: is.macOS ()
+            visible: is.macos
           },
           {
             role: 'front',
-            visible: is.macOS ()
+            visible: is.macos
           }
         ]
       }

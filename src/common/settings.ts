@@ -3,7 +3,7 @@
 
 import * as os from 'os';
 import * as Store from 'electron-store';
-import util from 'electron-util';
+import {darkMode} from 'electron-util';
 
 /* SETTINGS */
 
@@ -24,7 +24,7 @@ const Settings = new Store ({
       by: 'title',
       type: 'ascending'
     },
-    theme: util.darkMode.isEnabled ? 'dark' : 'light',
+    theme: darkMode.isEnabled ? 'dark' : 'light',
     tutorial: false // Did we import the tutorial yet?
   }
 });

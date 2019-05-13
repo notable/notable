@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import {shell} from 'electron';
-import * as is from 'electron-is';
+import {is} from 'electron-util';
 import githubIssueUrl from 'new-github-issue-url';
 import * as os from 'os';
 import * as React from 'react';
@@ -52,7 +52,7 @@ class ErrorBoundary extends React.Component<{}, { error?: Error }> {
 
     if ( !error ) return this.props.children;
 
-    const isMacOS = is.macOS ();
+    const isMacOS = is.macos;
 
     return (
       <div className="error-boundary app-wrapper layout">
