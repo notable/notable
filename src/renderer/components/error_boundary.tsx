@@ -1,9 +1,7 @@
 
 /* IMPORT */
 
-import {shell} from 'electron';
-import {is} from 'electron-util';
-import githubIssueUrl from 'new-github-issue-url';
+import {is, openNewGitHubIssue} from 'electron-util';
 import * as os from 'os';
 import * as React from 'react';
 import pkg from '@root/package.json';
@@ -34,13 +32,11 @@ class ErrorBoundary extends React.Component<{}, { error?: Error }> {
 
     if ( !error ) return;
 
-    const url = githubIssueUrl ({
+    openNewGitHubIssue ({
       repoUrl: pkg.homepage,
       title: `An error occurred: ${error.message}`,
       body: `- **OS Version**: ${os.platform} ${os.release}\n- **Notable Version**: v${pkg.version}\n\n\`\`\`\n${error.stack}\n\`\`\``
     });
-
-    shell.openExternal ( url );
 
   }
 
