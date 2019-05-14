@@ -1,3 +1,14 @@
+### Version 1.5.1
+
+##### Improvements
+- Auto-hiding the menu in the “Select Data Directory” window
+- MacOS: asking the user to move the app to `/Applications`
+
+##### Bug Fixes
+- Ensuring the Linux releases work
+- Updater: fixed link to latest linux release
+- Updater: fixed link to latest windows release
+
 ### Version 1.5.0
 
 ##### New Features
