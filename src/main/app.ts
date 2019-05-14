@@ -3,7 +3,7 @@
 
 import {app, ipcMain as ipc, Event, Menu, MenuItemConstructorOptions, shell} from 'electron';
 import {autoUpdater as updater} from 'electron-updater';
-import {is} from 'electron-util';
+import {enforceMacOSAppLocation, is} from 'electron-util';
 import * as fs from 'fs';
 import pkg from '@root/package.json';
 import Config from '@common/config';
@@ -165,6 +165,8 @@ class App {
   }
 
   __ready = () => {
+
+    enforceMacOSAppLocation ();
 
     this.initDebug ();
 
