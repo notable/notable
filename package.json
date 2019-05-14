@@ -11,8 +11,9 @@
     "compile": "npm run svelto:prod && npm run iconfont && npm run tutorial && npm run clean:deps && electron-webpack app --env.minify=false",
     "build:mac": "npm run compile && electron-builder --mac",
     "build:win": "npm run compile && electron-builder --win",
-    "build:linux": "npm run compile && electron-builder --linux",
-    "build:all": "npm run clean:releases && npm run compile && electron-builder -mwl",
+    "build:linux": "npm run compile && electron-builder --linux && npm run script:build:fixlatestlinux",
+    "build:all": "npm run clean:releases && npm run compile && electron-builder -mwl && npm run script:build:fixlatestlinux",
+    "script:build:fixlatestlinux": "node -e \"require ( './scripts/build/fix_latest_linux' )()\"",
     "svelto:dev": "svelto build --env development",
     "svelto:dev:watch": "npm run svelto:dev && svelto watch --env development",
     "svelto:prod": "svelto build",
@@ -36,6 +37,7 @@
   "build": {
     "appId": "com.fabiospampinato.notable",
     "copyright": "Copyright © 2018-present Fabio Spampinato",
+    "afterAllArtifactBuild": "scripts/build/hook_after_build.js",
     "afterPack": "scripts/build/hook_after_pack.js",
     "directories": {
       "output": "releases"
