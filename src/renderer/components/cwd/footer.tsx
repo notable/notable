@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import {connect} from 'overstated';
-import CWD from '@renderer/containers/cwd';
+import Main from '@renderer/containers/main';
 
 /* FOOTER */
 
@@ -23,9 +23,9 @@ const Footer = ({ select, selectDefault }) => (
 /* EXPORT */
 
 export default connect ({
-  container: CWD,
+  container: Main,
   selector: ({ container }) => ({
-    select: container.select,
-    selectDefault: container.selectDefault
+    select: container.cwd.select,
+    selectDefault: container.cwd.selectDefault
   })
 })( Footer );

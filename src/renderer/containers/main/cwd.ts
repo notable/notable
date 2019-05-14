@@ -6,17 +6,16 @@ import Dialog from 'electron-dialog';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 import * as os from 'os';
-import {Container, autosuspend, compose} from 'overstated';
+import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
 import * as pify from 'pify';
 import Config from '@common/config';
 import Settings from '@common/settings';
-import Tutorial from '@renderer/containers/main/tutorial';
 import File from '@renderer/utils/file';
 
 /* CWD */
 
-class CWD extends Container<CWDState, CWDCTX> {
+class CWD extends Container<CWDState, IMain> {
 
   /* CONSTRUCTOR */
 
@@ -38,7 +37,7 @@ class CWD extends Container<CWDState, CWDCTX> {
 
   set = async ( folderPath: string ) => {
 
-    if ( Config.cwd === folderPath ) return Dialog.alert ( 'This is already the current data directory' );
+    if ( Config.cwd === folderPath ) return Dialog.alert ( 'That is already the current data directory' );
 
     try {
 
@@ -122,6 +121,4 @@ class CWD extends Container<CWDState, CWDCTX> {
 
 /* EXPORT */
 
-export default compose ({
-  tutorial: Tutorial
-})( CWD ) as ICWD;
+export default CWD;

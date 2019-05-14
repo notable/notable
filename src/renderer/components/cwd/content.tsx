@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import {connect} from 'overstated';
-import CWD from '@renderer/containers/cwd';
+import Main from '@renderer/containers/main';
 
 /* CONTENT */
 
@@ -25,8 +25,8 @@ const Content = ({ select }) => (
 /* EXPORT */
 
 export default connect ({
-  container: CWD,
+  container: Main,
   selector: ({ container }) => ({
-    select: container.select
+    select: container.cwd.select
   })
 })( Content );

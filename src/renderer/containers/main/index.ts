@@ -7,6 +7,7 @@ import {Container, autosuspend, compose} from 'overstated';
 import Attachment from './attachment';
 import Attachments from './attachments';
 import Clipboard from './clipboard';
+import CWD from './cwd';
 import Editor from './editor';
 import Export from './export';
 import Import from './import';
@@ -197,6 +198,7 @@ export default compose ({
   attachment: Attachment,
   attachments: Attachments,
   clipboard: Clipboard,
+  cwd: CWD,
   editor: Editor,
   export: Export,
   import: Import,

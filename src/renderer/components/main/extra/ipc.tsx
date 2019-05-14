@@ -4,28 +4,11 @@
 import {ipcRenderer as ipc, IpcMessageEvent} from 'electron';
 import {connect} from 'overstated';
 import {Component} from 'react-component-renderless';
-import CWD from '@renderer/containers/cwd';
 import Main from '@renderer/containers/main';
 
 /* IPC */
 
-class IPC extends Component<{ containers: [IMain, ICWD]}, {}> {
-
-  /* VARIABLES */
-
-  main: IMain;
-  cwd: ICWD;
-
-  /* CONSTRUCTOR */
-
-  constructor ( props: { containers: [IMain, ICWD] } ) {
-
-    super ( props );
-
-    this.main = props.containers[0];
-    this.cwd = props.containers[1];
-
-  }
+class IPC extends Component<{container: IMain}, {}> {
 
   /* SPECIAL */
 
@@ -119,44 +102,44 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, {}> {
 
   __cwdChange = () => {
 
-    this.cwd.select ();
+    this.props.container.cwd.select ();
 
   }
 
   __cwdOpenInApp = () => {
 
-    this.cwd.openInApp ();
+    this.props.container.cwd.openInApp ();
 
   }
 
   __import = () => {
 
-    this.main.import.select ();
+    this.props.container.import.select ();
 
   }
 
   __exportHTML = () => {
 
-    this.main.export.exportHTML ();
+    this.props.container.export.exportHTML ();
 
   }
 
   __exportMarkdown = () => {
 
-    this.main.export.exportMarkdown ();
+    this.props.container.export.exportMarkdown ();
 
   }
 
   __exportPDF = () => {
 
-    this.main.export.exportPDF ();
+    this.props.container.export.exportPDF ();
 
   }
 
   __appQuit = async () => {
 
-    await this.main.note.autosave ();
-    await this.main.waitIdle ();
+    await this.props.container.note.autosave ();
+    await this.props.container.waitIdle ();
 
     ipc.send ( 'force-quit' );
 
@@ -164,8 +147,8 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, {}> {
 
   __windowClose = async () => {
 
-    await this.main.note.autosave ();
-    await this.main.waitIdle ();
+    await this.props.container.note.autosave ();
+    await this.props.container.waitIdle ();
 
     ipc.send ( 'force-close' );
 
@@ -173,181 +156,181 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, {}> {
 
   __windowFocusToggle = () => {
 
-    this.main.window.toggleFocus ();
+    this.props.container.window.toggleFocus ();
 
   }
 
   __windowFullscreenSet = ( event: IpcMessageEvent, isFullscreen?: boolean ) => {
 
-    this.main.window.toggleFullscreen ( isFullscreen );
+    this.props.container.window.toggleFullscreen ( isFullscreen );
 
   }
 
   __windowSidebarToggle = () => {
 
-    this.main.window.toggleSidebar ();
+    this.props.container.window.toggleSidebar ();
 
   }
 
   __windowZenToggle = () => {
 
-    this.main.window.toggleZen ();
+    this.props.container.window.toggleZen ();
 
   }
 
   __editorSplitToggle = () => {
 
-    this.main.editor.toggleSplit ();
+    this.props.container.editor.toggleSplit ();
 
   }
 
   __multiEditorSelectAll = () => {
 
-    this.main.multiEditor.selectAll ();
+    this.props.container.multiEditor.selectAll ();
 
   }
 
   __multiEditorSelectInvert = () => {
 
-    this.main.multiEditor.selectInvert ();
+    this.props.container.multiEditor.selectInvert ();
 
   }
 
   __multiEditorSelectClear = () => {
 
-    this.main.multiEditor.selectClear ();
+    this.props.container.multiEditor.selectClear ();
 
   }
 
   __noteEditAttachmentsToggle = () => {
 
-    this.main.attachments.toggleEditing ();
+    this.props.container.attachments.toggleEditing ();
 
   }
 
   __noteEditTagsToggle = () => {
 
-    this.main.tags.toggleEditing ();
+    this.props.container.tags.toggleEditing ();
 
   }
 
   __noteEditToggle = () => {
 
-    this.main.editor.toggleEditing ();
+    this.props.container.editor.toggleEditing ();
 
   }
 
   __noteFavoriteToggle = () => {
 
-    this.main.note.toggleFavorite ();
+    this.props.container.note.toggleFavorite ();
 
   }
 
   __noteMoveToTrash = () => {
 
-    this.main.note.toggleDeleted ( undefined, true );
+    this.props.container.note.toggleDeleted ( undefined, true );
 
   }
 
   __noteNew = () => {
 
-    this.main.note.new ();
+    this.props.container.note.new ();
 
   }
 
   __noteDuplicate = () => {
 
-    this.main.note.duplicate ();
+    this.props.container.note.duplicate ();
 
   }
 
   __noteDuplicateTemplate = () => {
 
-    this.main.note.duplicate ( undefined, true );
+    this.props.container.note.duplicate ( undefined, true );
 
   }
 
   __noteOpenInApp = () => {
 
-    this.main.note.openInApp ();
+    this.props.container.note.openInApp ();
 
   }
 
   __notePermanentlyDelete = () => {
 
-    this.main.note.delete ();
+    this.props.container.note.delete ();
 
   }
 
   __notePinToggle = () => {
 
-    this.main.note.togglePin ();
+    this.props.container.note.togglePin ();
 
   }
 
   __noteRestore = () => {
 
-    this.main.note.toggleDeleted ( undefined, false );
+    this.props.container.note.toggleDeleted ( undefined, false );
 
   }
 
   __noteReveal = () => {
 
-    this.main.note.reveal ();
+    this.props.container.note.reveal ();
 
   }
 
   __quickPanelToggle = ( event: IpcMessageEvent, force?: boolean ) => {
 
-    this.main.quickPanel.toggleOpen ( force );
+    this.props.container.quickPanel.toggleOpen ( force );
 
   }
 
   __searchFocus = () => {
 
-    this.main.search.focus ();
+    this.props.container.search.focus ();
 
   }
 
   __searchNext = () => {
 
-    this.main.search.next ();
+    this.props.container.search.next ();
 
   }
 
   __searchPrevious = () => {
 
-    this.main.search.previous ();
+    this.props.container.search.previous ();
 
   }
 
   __tagNext = () => {
 
-    this.main.tag.next ();
+    this.props.container.tag.next ();
 
   }
 
   __tagPrevious = () => {
 
-    this.main.tag.previous ();
+    this.props.container.tag.previous ();
 
   }
 
   __themeSet = ( event: IpcMessageEvent, theme: string ) => {
 
-    this.main.theme.set ( theme );
+    this.props.container.theme.set ( theme );
 
   }
 
   __trashEmpty = () => {
 
-    this.main.trash.empty ();
+    this.props.container.trash.empty ();
 
   }
 
   __tutorialDialog = () => {
 
-    this.main.tutorial.dialog ();
+    this.props.container.tutorial.dialog ();
 
   }
 
@@ -356,6 +339,6 @@ class IPC extends Component<{ containers: [IMain, ICWD]}, {}> {
 /* EXPORT */
 
 export default connect ({
-  containers: [Main, CWD],
+  container: Main,
   shouldComponentUpdate: false
 })( IPC );

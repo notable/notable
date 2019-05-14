@@ -104,6 +104,8 @@ type AttachmentsState = {
 
 type ClipboardState = {};
 
+type CWDState = {};
+
 type EditorState = {
   monaco?: MonacoEditor,
   editing: boolean,
@@ -228,6 +230,7 @@ type MainCTX = {
   attachment: import ( '@renderer/containers/main/attachment' ).default,
   attachments: import ( '@renderer/containers/main/attachments' ).default,
   clipboard: import ( '@renderer/containers/main/clipboard' ).default,
+  cwd: import ( '@renderer/containers/main/cwd' ).default,
   editor: import ( '@renderer/containers/main/editor' ).default,
   export: import ( '@renderer/containers/main/export' ).default,
   import: import ( '@renderer/containers/main/import' ).default,
@@ -249,22 +252,6 @@ type MainCTX = {
 };
 
 type IMain = MainCTX & { ctx: MainCTX };
-
-/* CWD */
-
-type CWDState = {};
-
-type CWDCTX = {
-  get (),
-  set (),
-  select (),
-  selectDefault (),
-  openInApp (),
-  dialog (),
-  tutorial: import ( '@renderer/containers/main/tutorial' ).default
-};
-
-type ICWD = CWDCTX & { ctx: CWDCTX };
 
 /* OTHERS */
 
