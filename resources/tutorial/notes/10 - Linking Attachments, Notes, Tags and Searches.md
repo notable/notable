@@ -1,10 +1,12 @@
 ---
-title: 10 - Linking Attachments/Notes/Tags
+title: '10 - Linking Attachments, Notes, Tags and Searches'
 tags: [Intermediate, Notebooks/Tutorial]
 attachments: [icon_small.png]
+created: '2018-12-27T18:53:01.510Z'
+modified: '2019-05-14T19:55:22.078Z'
 ---
 
-# 10 - Linking Attachments/Notes/Tags
+# 10 - Linking Attachments, Notes, Tags and Searches
 
 Sometimes, like when writing a tutorial for a note-taking app :wink:, you may need to link to other notes or embed a few attachments. Notable makes this easy for you.
 
@@ -69,3 +71,20 @@ Tags can be linked to, and linked to via a button. The `@tag` token is used for 
 [Basics](@tag/Basics)
 
 [](@tag/Basics)
+
+## Searches
+
+Searches can be linked to, and linked to via a button. The `@search` token is used for this.
+
+##### Syntax
+
+```markdown
+[linking](@search/linking)
+[](@search/linking)
+```
+
+##### Result
+
+[linking](@search/linking)
+
+[](@search/linking)

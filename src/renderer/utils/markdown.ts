@@ -381,7 +381,7 @@ const Markdown = {
 
       return [{
         type: 'language',
-        regex: `\\[([^\\]]*)\\]\\(((?:${Config.attachments.token}|${Config.notes.token}|${Config.tags.token})/[^\\)]*)\\)`,
+        regex: `\\[([^\\]]*)\\]\\(((?:${Config.attachments.token}|${Config.notes.token}|${Config.tags.token}|${Config.search.token})/[^\\)]*)\\)`,
         replace ( match, $1, $2, index, content ) {
           if ( Markdown.extensions.utilities.isInsideCode ( content, index, true ) ) return match;
           return `[${$1}](${encodeFilePath ( $2 )})`;
@@ -484,6 +484,31 @@ const Markdown = {
 
     },
 
+    search () {
+
+      const {token} = Config.search;
+
+      return [
+        { // Link Button
+          type: 'output',
+          regex: `<a(.*?)href="${token}/([^"]+)"(.*?)></a>`,
+          replace ( match, $1, $2, $3 ) {
+            $2 = decodeURI ( $2 );
+            return `<a${$1}href="#" class="search button highlight" data-query="${$2}"${$3}><i class="icon small">magnify</i><span>${$2}</span></a>`;
+          }
+        },
+        { // Link
+          type: 'output',
+          regex: `<a(.*?)href="${token}/([^"]+)"(.*?)>`,
+          replace ( match, $1, $2, $3 ) {
+            $2 = decodeURI ( $2 );
+            return `<a${$1}href="#" class="search" data-query="${$2}"${$3}><i class="icon xsmall">magnify</i>`;
+          }
+        }
+      ];
+
+    },
+
     noProtocolLinks () {
 
       return [{
@@ -524,11 +549,11 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {asciimath2tex, katex, mermaid, mermaidOpenExternal, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, noProtocolLinks, wikilink} = Markdown.extensions;
+      const {asciimath2tex, katex, mermaid, mermaidOpenExternal, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, search, noProtocolLinks, wikilink} = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [asciimath2tex (), katex (), mermaid (), mermaidOpenExternal (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag (), noProtocolLinks ()]
+        extensions: [asciimath2tex (), katex (), mermaid (), mermaidOpenExternal (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag (), search (), noProtocolLinks ()]
       });
 
       converter.setFlavor ( 'github' );

@@ -19,6 +19,7 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
 
     $.$document.on ( 'click', '.preview a.note', this.__noteClick );
     $.$document.on ( 'click', '.preview a.tag', this.__tagClick );
+    $.$document.on ( 'click', '.preview a.search', this.__searchClick );
     $.$document.on ( 'click', '.preview input[type="checkbox"]', this.__checkboxClick );
     $.$document.on ( 'click', '.preview .copy', this.__copyClick );
     $.$document.on ( 'click', '.preview .mermaid-open-external', this.__mermaidOpenExternalClick );
@@ -29,6 +30,7 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
 
     $.$document.off ( 'click', this.__noteClick );
     $.$document.off ( 'click', this.__tagClick );
+    $.$document.off ( 'click', this.__searchClick );
     $.$document.off ( 'click', this.__checkboxClick );
     $.$document.off ( 'click', this.__copyClick );
 
@@ -66,6 +68,16 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
     const tag = $(event.currentTarget).data ( 'tag' );
 
     this.props.container.tag.set ( tag );
+
+    return false;
+
+  }
+
+  __searchClick = ( event ) => {
+
+    const query = $(event.currentTarget).data ( 'query' );
+
+    this.props.container.search.setQuery ( query );
 
     return false;
 
