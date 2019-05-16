@@ -140,7 +140,7 @@
   "dependencies": {
     "asciimath2tex": "^1.1.0",
     "calls-batch": "^1.1.1",
-    "chokidar": "^2.1.5",
+    "chokidar": "^3.0.0",
     "chokidar-watcher": "^1.0.0",
     "crc-32": "^1.2.0",
     "critically": "^1.0.0",
@@ -182,7 +182,7 @@
     "tiny-glob": "^0.2.6"
   },
   "optionalDependencies": {
-    "fsevents": "^1.2.9"
+    "fsevents": "^2.0.7"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",
