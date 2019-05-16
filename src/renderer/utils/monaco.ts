@@ -36,7 +36,7 @@ const Monaco = {
     },
     lineDecorationsWidth: 3,
     lineHeight: 16 * .875 * 1.5,
-    lineNumbers: 'off',
+    lineNumbers: Settings.get ( 'monaco.editorOptions.lineNumbers' ),
     minimap: {
       enabled: Settings.get ( 'monaco.editorOptions.minimap.enabled' )
     },
@@ -95,6 +95,25 @@ const Monaco = {
             firstPositionDeltaTop: Infinity // Ensuring we are scrolling to the very top, important in zen mode
           }
         });
+      }
+    },
+
+    'editor.toggleLineNumbers': {
+      options: {
+        kbOpts: {
+          kbExpr: EditorContextKeys.editorTextFocus,
+          primary: monaco.KeyMod.Alt | monaco.KeyCode.KEY_L,
+          weight: 100
+        }
+      },
+      handler ( accessor, editor: MonacoEditor ) {
+
+        Monaco.editorOptions.lineNumbers = ( Monaco.editorOptions.lineNumbers === 'off' ) ? 'on' : 'off';
+
+        Settings.set ( 'monaco.editorOptions.lineNumbers', Monaco.editorOptions.lineNumbers );
+
+        editor.updateOptions ( Monaco.editorOptions );
+
       }
     },
 

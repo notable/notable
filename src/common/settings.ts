@@ -17,6 +17,7 @@ const Settings = new Store ({
         minimap: {
           enabled: false
         },
+        lineNumbers: 'off',
         wordWrap: 'bounded'
       }
     },
