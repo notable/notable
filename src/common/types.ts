@@ -32,6 +32,20 @@ type AttachmentsObj = {
   [fileName: string]: AttachmentObj
 };
 
+type ContextKeysObj = {
+  hasNote: boolean,
+  isAttachmentsEditing: boolean,
+  isEditorEditing: boolean,
+  isEditorSplitView: boolean,
+  isMultiEditorEditing: boolean,
+  isNoteDeleted: boolean,
+  isNoteFavorited: boolean,
+  isNotePinned: boolean,
+  isTagsEditing: boolean,
+  isNoteTemplate: boolean,
+  theme: string
+};
+
 type MonacoEditor = import ( 'monaco-editor/esm/vs/editor/editor.api.js' ).editor.ICodeEditor & {
   getChangeDate: () => Date | undefined,
   getFilePath: () => string
@@ -103,6 +117,8 @@ type AttachmentsState = {
 };
 
 type ClipboardState = {};
+
+type ContextKeysState = {};
 
 type CWDState = {};
 
@@ -197,6 +213,7 @@ type MainState = {
   attachment: AttachmentState,
   attachments: AttachmentsState,
   clipboard: ClipboardState,
+  contextKeys: ContextKeysState,
   editor: EditorState,
   export: ExportState,
   import: ImportState,
@@ -218,7 +235,6 @@ type MainState = {
 };
 
 type MainCTX = {
-  _prevFlags?: ContextFlags,
   state: MainState,
   suspend (),
   unsuspend (),
@@ -229,6 +245,7 @@ type MainCTX = {
   attachment: import ( '@renderer/containers/main/attachment' ).default,
   attachments: import ( '@renderer/containers/main/attachments' ).default,
   clipboard: import ( '@renderer/containers/main/clipboard' ).default,
+  contextKeys: import ( '@renderer/containers/main/context_keys' ).default,
   cwd: import ( '@renderer/containers/main/cwd' ).default,
   editor: import ( '@renderer/containers/main/editor' ).default,
   export: import ( '@renderer/containers/main/export' ).default,
@@ -253,20 +270,6 @@ type MainCTX = {
 type IMain = MainCTX & { ctx: MainCTX };
 
 /* OTHERS */
-
-type ContextFlags = {
-  hasNote: boolean,
-  isAttachmentsEditing: boolean,
-  isEditorEditing: boolean,
-  isEditorSplitView: boolean,
-  isMultiEditorEditing: boolean,
-  isNoteDeleted: boolean,
-  isNoteFavorited: boolean,
-  isNotePinned: boolean,
-  isTagsEditing: boolean,
-  isNoteTemplate: boolean,
-  theme: string //TODO: This isn't really a "flag", perhaps context keys should be arbitrary JSON-stringifiable values?
-};
 
 type PrintOptions = {
   html?: string,

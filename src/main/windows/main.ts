@@ -21,7 +21,7 @@ class Main extends Route {
 
   /* VARIABLES */
 
-  _prevContextFlags: ContextFlags | false = false;
+  _prevKeys: ContextKeysObj | false = false;
   _prevUpdateCheckTimestamp: number = 0;
 
   /* CONSTRUCTOR */
@@ -36,9 +36,9 @@ class Main extends Route {
 
   initLocalShortcuts () {}
 
-  initMenu ( flags: ContextFlags | false = this._prevContextFlags ) {
+  initMenu ( keys: ContextKeysObj | false = this._prevKeys ) {
 
-    this._prevContextFlags = flags; // Storing them because they are needed also when focusing to the window
+    this._prevKeys = keys; // Storing them because they are needed also when focusing to the window
 
     const updaterCanCheck = this._updaterCanCheck ();
 
@@ -76,13 +76,13 @@ class Main extends Route {
                 type: 'checkbox',
                 label: 'Light',
                 click: () => this.win.webContents.send ( 'theme-set', 'light' ),
-                checked: !flags || flags.theme === 'light'
+                checked: !keys || keys.theme === 'light'
               },
               {
                 type: 'checkbox',
                 label: 'Dark',
                 click: () => this.win.webContents.send ( 'theme-set', 'dark' ),
-                checked: !!flags && flags.theme === 'dark'
+                checked: !!keys && keys.theme === 'dark'
               }
             ]
           },
@@ -126,7 +126,7 @@ class Main extends Route {
           },
           {
             label: 'Export',
-            enabled: flags && ( flags.hasNote || flags.isMultiEditorEditing ),
+            enabled: keys && ( keys.hasNote || keys.isMultiEditorEditing ),
             submenu: [
               {
                 label: 'HTML',
@@ -153,13 +153,13 @@ class Main extends Route {
           {
             label: 'Open in Default App',
             accelerator: 'CmdOrCtrl+Alt+O',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            enabled: keys && keys.hasNote && !keys.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-open-in-app' )
           },
           {
             label: `Reveal in ${is.macos ? 'Finder' : 'Folder'}`,
             accelerator: 'CmdOrCtrl+Alt+R',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            enabled: keys && keys.hasNote && !keys.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-reveal' )
           },
           {
@@ -168,55 +168,55 @@ class Main extends Route {
           {
             label: 'New',
             accelerator: 'CmdOrCtrl+N',
-            enabled: flags && !flags.isMultiEditorEditing,
+            enabled: keys && !keys.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-new' )
           },
           {
             label: 'New from Template',
             accelerator: 'CmdOrCtrl+Alt+Shift+N',
-            enabled: flags && flags.hasNote && flags.isNoteTemplate && !flags.isMultiEditorEditing,
-            visible: flags && flags.hasNote && flags.isNoteTemplate,
+            enabled: keys && keys.hasNote && keys.isNoteTemplate && !keys.isMultiEditorEditing,
+            visible: keys && keys.hasNote && keys.isNoteTemplate,
             click: () => this.win.webContents.send ( 'note-duplicate-template' )
           },
           {
             label: 'Duplicate',
             accelerator: 'CmdOrCtrl+Shift+N',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            enabled: keys && keys.hasNote && !keys.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-duplicate' )
           },
           {
             type: 'separator'
           },
           {
-            label: flags && flags.hasNote && flags.isEditorEditing ? 'Stop Editing' : 'Edit',
+            label: keys && keys.hasNote && keys.isEditorEditing ? 'Stop Editing' : 'Edit',
             accelerator: 'CmdOrCtrl+E',
-            enabled: flags && flags.hasNote && !flags.isEditorSplitView && !flags.isMultiEditorEditing,
+            enabled: keys && keys.hasNote && !keys.isEditorSplitView && !keys.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-toggle' )
           },
           {
-            label: flags && flags.hasNote && flags.isTagsEditing ? 'Stop Editing Tags' : 'Edit Tags',
+            label: keys && keys.hasNote && keys.isTagsEditing ? 'Stop Editing Tags' : 'Edit Tags',
             accelerator: 'CmdOrCtrl+Shift+T',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            enabled: keys && keys.hasNote && !keys.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-tags-toggle' )
           },
           {
-            label: flags && flags.hasNote && flags.isAttachmentsEditing ? 'Stop Editing Attachments' : 'Edit Attachments',
+            label: keys && keys.hasNote && keys.isAttachmentsEditing ? 'Stop Editing Attachments' : 'Edit Attachments',
             accelerator: 'CmdOrCtrl+Shift+A',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            enabled: keys && keys.hasNote && !keys.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-edit-attachments-toggle' )
           },
           {
             type: 'separator'
           },
           {
-            label: flags && flags.hasNote && flags.isNoteFavorited ? 'Unfavorite' : 'Favorite',
+            label: keys && keys.hasNote && keys.isNoteFavorited ? 'Unfavorite' : 'Favorite',
             accelerator: 'CmdOrCtrl+D',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            enabled: keys && keys.hasNote && !keys.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-favorite-toggle' )
           },
           {
-            label: flags && flags.hasNote && flags.isNotePinned ? 'Unpin' : 'Pin',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
+            label: keys && keys.hasNote && keys.isNotePinned ? 'Unpin' : 'Pin',
+            enabled: keys && keys.hasNote && !keys.isMultiEditorEditing,
             click: () => this.win.webContents.send ( 'note-pin-toggle' )
           },
           {
@@ -225,29 +225,29 @@ class Main extends Route {
           {
             label: 'Move to Trash',
             accelerator: 'CmdOrCtrl+Backspace',
-            enabled: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isMultiEditorEditing,
-            visible: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isEditorEditing,
+            enabled: keys && keys.hasNote && !keys.isNoteDeleted && !keys.isMultiEditorEditing,
+            visible: keys && keys.hasNote && !keys.isNoteDeleted && !keys.isEditorEditing,
             click: () => this.win.webContents.send ( 'note-move-to-trash' )
           },
           {
             label: 'Move to Trash',
             accelerator: 'CmdOrCtrl+Alt+Backspace',
-            enabled: flags && flags.hasNote && !flags.isNoteDeleted && !flags.isMultiEditorEditing,
-            visible: flags && flags.hasNote && !flags.isNoteDeleted && flags.isEditorEditing,
+            enabled: keys && keys.hasNote && !keys.isNoteDeleted && !keys.isMultiEditorEditing,
+            visible: keys && keys.hasNote && !keys.isNoteDeleted && keys.isEditorEditing,
             click: () => this.win.webContents.send ( 'note-move-to-trash' )
           },
           {
             label: 'Restore',
             accelerator: 'CmdOrCtrl+Shift+Backspace',
-            enabled: flags && flags.hasNote && flags.isNoteDeleted && !flags.isMultiEditorEditing,
-            visible: flags && flags.hasNote && flags.isNoteDeleted,
+            enabled: keys && keys.hasNote && keys.isNoteDeleted && !keys.isMultiEditorEditing,
+            visible: keys && keys.hasNote && keys.isNoteDeleted,
             click: () => this.win.webContents.send ( 'note-restore' )
           },
           {
             label: 'Permanently Delete',
             accelerator: 'CmdOrCtrl+Alt+Shift+Backspace',
-            enabled: flags && flags.hasNote && !flags.isMultiEditorEditing,
-            visible: flags && flags.hasNote,
+            enabled: keys && keys.hasNote && !keys.isMultiEditorEditing,
+            visible: keys && keys.hasNote,
             click: () => this.win.webContents.send ( 'note-permanently-delete' )
           }
         ]
@@ -457,11 +457,11 @@ class Main extends Route {
 
     this.___blur ();
     this.___close ();
+    this.___contextKeysUpdate ();
     this.___focus ();
     this.___forceClose ();
     this.___fullscreenEnter ();
     this.___fullscreenLeave ();
-    this.___flagsUpdate ();
     this.___navigateUrl ();
     this.___printPDF ();
     this.___mermaidOpen ();
@@ -472,8 +472,8 @@ class Main extends Route {
 
     super.cleanup ();
 
+    ipc.removeListener ( 'context-keys-update', this.__contextKeysUpdate );
     ipc.removeListener ( 'force-close', this.__forceClose );
-    ipc.removeListener ( 'flags-update', this.__flagsUpdate );
     ipc.removeListener ( 'print-pdf', this.__printPDF );
 
   }
@@ -514,6 +514,20 @@ class Main extends Route {
     event.preventDefault ();
 
     this.win.webContents.send ( 'window-close' );
+
+  }
+
+  /* CONTEXT KEYS UPDATE */
+
+  ___contextKeysUpdate = () => {
+
+    ipc.on ( 'context-keys-update', this.__contextKeysUpdate );
+
+  }
+
+  __contextKeysUpdate = ( event: Event, keys: ContextKeysObj ) => {
+
+    this.initMenu ( keys );
 
   }
 
@@ -572,20 +586,6 @@ class Main extends Route {
   __fullscreenLeave = () => {
 
     this.win.webContents.send ( 'window-fullscreen-set', false );
-
-  }
-
-  /* FLAGS UPDATE */
-
-  ___flagsUpdate = () => {
-
-    ipc.on ( 'flags-update', this.__flagsUpdate );
-
-  }
-
-  __flagsUpdate = ( event: Event, flags: ContextFlags ) => {
-
-    this.initMenu ( flags );
 
   }
 

@@ -2,12 +2,12 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
-import {ipcRenderer as ipc} from 'electron';
 import {Container, autosuspend, compose} from 'overstated';
 import Attachment from './attachment';
 import Attachments from './attachments';
 import Clipboard from './clipboard';
 import CWD from './cwd';
+import ContextKeys from './context_keys';
 import Editor from './editor';
 import Export from './export';
 import Import from './import';
@@ -27,7 +27,6 @@ import Trash from './trash';
 import Tutorial from './tutorial';
 import Window from './window';
 import File from '@renderer/utils/file';
-import {TagSpecials} from '@renderer/utils/tags';
 
 /* MAIN */
 
@@ -38,8 +37,6 @@ class Main extends Container<MainState, MainCTX> {
   autosuspend = {
     methods: /^(?!_|middleware|(?:(?:get|is|has)(?![a-z0-9]))|waitIdle)/
   };
-
-  _prevFlags?: ContextFlags;
 
   /* CONSTRUCTOR */
 
@@ -60,7 +57,7 @@ class Main extends Container<MainState, MainCTX> {
     this.addMiddleware ( this.middlewareCloseQuickPanelPopovers );
     this.addMiddleware ( this.middlewareNoNote );
     this.addMiddleware ( this.middlewareResetEditor );
-    this.addMiddleware ( this.middlewareFlagsUpdateIPC );
+    this.addMiddleware ( _.debounce ( () => this.ctx.contextKeys.update (), 50 ) ); //UGLY `this.ctx` won't be defined immediately after calling this method
 
   }
 
@@ -118,36 +115,6 @@ class Main extends Container<MainState, MainCTX> {
 
   }
 
-  middlewareFlagsUpdateIPCDebounced = _.debounce ( ( app: IMain ) => {
-
-    const flags: ContextFlags = {
-      hasNote: !!app.note.get (),
-      isAttachmentsEditing: app.attachments.isEditing (),
-      isEditorEditing: app.editor.isEditing (),
-      isEditorSplitView: app.editor.isSplit (),
-      isMultiEditorEditing: app.multiEditor.isEditing (),
-      isNoteDeleted: app.note.isDeleted (),
-      isNoteFavorited: app.note.isFavorited (),
-      isNotePinned: app.note.isPinned (),
-      isNoteTemplate: !!app.note.getTags ( undefined, TagSpecials.TEMPLATES ).length,
-      isTagsEditing: app.tags.isEditing (),
-      theme: app.theme.get ()
-    };
-
-    if ( _.isEqual ( app._prevFlags, flags ) ) return; // Nothing changed, no need to update the main process
-
-    app._prevFlags = flags;
-
-    ipc.send ( 'flags-update', flags );
-
-  }, 50 )
-
-  middlewareFlagsUpdateIPC () {
-
-    this.middlewareFlagsUpdateIPCDebounced ( this as any ); //TSC
-
-  }
-
   /* API */
 
   reset = async () => {
@@ -196,6 +163,7 @@ export default compose ({
   attachments: Attachments,
   clipboard: Clipboard,
   cwd: CWD,
+  contextKeys: ContextKeys,
   editor: Editor,
   export: Export,
   import: Import,
