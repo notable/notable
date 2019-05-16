@@ -37,6 +37,12 @@ class Loading extends Container<LoadingState, MainCTX> {
 
   }
 
+  reset = () => {
+
+    return this.set ( true );
+
+  }
+
 }
 
 /* EXPORT */

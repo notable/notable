@@ -285,6 +285,14 @@ class Editor extends Container<EditorState, MainCTX> {
 
   /* API */
 
+  reset = () => {
+
+    return this.setState ({
+      monaco: undefined
+    });
+
+  }
+
   isEditing = (): boolean => {
 
     return this.state.editing;

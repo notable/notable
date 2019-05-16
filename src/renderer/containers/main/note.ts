@@ -776,6 +776,16 @@ class Note extends Container<NoteState, MainCTX> {
 
   }
 
+  reset = async () => {
+
+    await this.setState ({
+      note: undefined
+    });
+
+    return this.update ();
+
+  }
+
   replace = async ( note: NoteObj, nextNote: NoteObj, _refresh: boolean = true ) => {
 
     const isSameFile = ( note.filePath === nextNote.filePath ),

@@ -151,6 +151,14 @@ class Tag extends Container<TagState, MainCTX> {
 
   }
 
+  reset = async () => {
+
+    await this.set ( DEFAULT );
+
+    return this.update ();
+
+  }
+
   setFromNote = async ( note?: NoteObj ) => {
 
     if ( !note ) return;

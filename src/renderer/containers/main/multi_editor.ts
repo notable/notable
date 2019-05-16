@@ -60,6 +60,15 @@ class MultiEditor extends Container<MultiEditorState, MainCTX> {
 
   /* API */
 
+  reset = () => {
+
+    return this.setState ({
+      notes: [],
+      skippable: false
+    });
+
+  }
+
   toggleNoteRange = ( noteEnd: NoteObj ) => {
 
     const notesSelected = this.getNotes (),

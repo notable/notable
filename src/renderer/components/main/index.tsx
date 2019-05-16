@@ -18,7 +18,7 @@ import QuickPanel from './modals/quick_panel';
 
 /* MAIN */
 
-class Main extends React.Component<{ loading: boolean, refresh: Function, listen: Function, isFocus: boolean, isFullscreen: boolean, isZen: boolean, hasSidebar: boolean }, {}> {
+class Main extends React.Component<{ loading: boolean, reset: Function, listen: Function, isFocus: boolean, isFullscreen: boolean, isZen: boolean, hasSidebar: boolean }, {}> {
 
   /* SPECIAL */
 
@@ -26,11 +26,9 @@ class Main extends React.Component<{ loading: boolean, refresh: Function, listen
 
     if ( this.props.loading ) {
 
-      await this.props.refresh ();
+      await this.props.reset ();
 
     }
-
-    await this.props.listen ();
 
   }
 
@@ -66,8 +64,7 @@ class Main extends React.Component<{ loading: boolean, refresh: Function, listen
 export default connect ({
   container: MainContainer,
   selector: ({ container }) => ({
-    listen: container.listen,
-    refresh: container.refresh,
+    reset: container.reset,
     loading: container.loading.get (),
     isFocus: container.window.isFocus (),
     isFullscreen: container.window.isFullscreen (),

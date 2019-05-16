@@ -175,6 +175,17 @@ class Tags extends Container<TagsState, MainCTX> {
 
   }
 
+  reset = async () => {
+
+    await this.setState ({
+      tags: {},
+      editing: false
+    });
+
+    return this.refresh ();
+
+  }
+
   isEditing = (): boolean => {
 
     return this.state.editing;

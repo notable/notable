@@ -105,6 +105,19 @@ class Search extends Container<SearchState, MainCTX> {
 
   /* API */
 
+  reset = async () => {
+
+    this._prev = {};
+
+    await this.setState ({
+      query: '',
+      notes: []
+    });
+
+    return this.update ();
+
+  }
+
   getQuery = (): string => {
 
     return this.state.query;

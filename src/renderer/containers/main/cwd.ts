@@ -60,7 +60,18 @@ class CWD extends Container<CWDState, IMain> {
 
       }
 
-      ipc.send ( 'cwd-changed' );
+      if ( !this.ctx.loading.get () ) { // Already loaded, refreshing
+
+        await this.ctx.note.autosave ();
+        await this.ctx.loading.reset ();
+
+        setTimeout ( this.ctx.reset ); // Ensuring the app gets repainted first
+
+      } else { // Reopening
+
+        ipc.send ( 'cwd-changed' );
+
+      }
 
     } catch ( e ) {
 

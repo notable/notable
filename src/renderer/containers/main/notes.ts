@@ -63,7 +63,7 @@ class Notes extends Container<NotesState, MainCTX> {
 
   listen = () => {
 
-    if ( this._listener ) this._listener.close (); // In order to better support HMR
+    this.unlisten ();
 
     const batch = new CallsBatch ({
       preflush: () => {
@@ -172,6 +172,28 @@ class Notes extends Container<NotesState, MainCTX> {
       rename: Utils.batchify ( batch, rename ),
       unlink: Utils.batchify ( batch, unlink )
     });
+
+  }
+
+  unlisten = () => {
+
+    if ( !this._listener ) return;
+
+    this._listener.close ();
+
+  }
+
+  reset = async () => {
+
+    this.unlisten ();
+
+    await this.setState ({
+      notes: {}
+    });
+
+    await this.refresh ();
+
+    this.listen ();
 
   }
 

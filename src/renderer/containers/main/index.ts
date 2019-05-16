@@ -150,25 +150,22 @@ class Main extends Container<MainState, MainCTX> {
 
   /* API */
 
-  refresh = async () => {
+  reset = async () => {
 
     await this.ctx.theme.update ();
 
-    await this.ctx.attachments.refresh ();
-    await this.ctx.notes.refresh ();
-    await this.ctx.tags.refresh ();
-
-    await this.ctx.tag.update ();
-    await this.ctx.search.update ();
+    await this.ctx.loading.reset ();
+    await this.ctx.editor.reset ();
+    await this.ctx.multiEditor.reset ();
+    await this.ctx.attachments.reset ();
+    await this.ctx.notes.reset ();
+    await this.ctx.tags.reset ();
+    await this.ctx.tag.reset ();
+    await this.ctx.search.reset ();
+    await this.ctx.note.reset ();
+    await this.ctx.quickPanel.reset ();
 
     await this.ctx.loading.set ( false );
-
-  }
-
-  listen = () => {
-
-    this.ctx.attachments.listen ();
-    this.ctx.notes.listen ();
 
   }
 

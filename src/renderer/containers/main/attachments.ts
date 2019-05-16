@@ -62,7 +62,7 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
 
   listen = () => {
 
-    if ( this._listener ) this._listener.close (); // In order to better support HMR
+    this.unlisten ();
 
     const batch = new CallsBatch ({
       preflush: () => {
@@ -114,6 +114,29 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
       rename: Utils.batchify ( batch, rename ),
       unlink: Utils.batchify ( batch, unlink )
     });
+
+  }
+
+  unlisten = () => {
+
+    if ( !this._listener ) return;
+
+    this._listener.close ();
+
+  }
+
+  reset = async () => {
+
+    this.unlisten ();
+
+    await this.setState ({
+      attachments: {},
+      editing: false
+    });
+
+    await this.refresh ();
+
+    this.listen ();
 
   }
 

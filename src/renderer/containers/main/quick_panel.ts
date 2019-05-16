@@ -145,6 +145,17 @@ class QuickPanel extends Container<QuickPanelState, MainCTX> {
 
   }
 
+  reset = async () => {
+
+    await this.setState ({
+      open: false,
+      query: ''
+    });
+
+    return this.update ();
+
+  }
+
   update = () => {
 
     const results = this._searchBy ( this.state.query ),
