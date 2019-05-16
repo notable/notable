@@ -48,7 +48,7 @@ class Import extends Container<ImportState, MainCTX> {
     await EnexDump ({
       path: {
         src: [filePath],
-        dst: Config.cwd
+        dst: this.ctx.cwd.get ()
       },
       dump: {
         tags: [importTag]

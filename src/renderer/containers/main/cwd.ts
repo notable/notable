@@ -37,7 +37,7 @@ class CWD extends Container<CWDState, IMain> {
 
   set = async ( folderPath: string ) => {
 
-    if ( Config.cwd === folderPath ) return Dialog.alert ( 'That is already the current data directory' );
+    if ( this.get () === folderPath ) return Dialog.alert ( 'That is already the current data directory' );
 
     try {
 
@@ -112,7 +112,7 @@ class CWD extends Container<CWDState, IMain> {
 
   dialog = (): string | undefined => {
 
-    const cwd = Config.cwd,
+    const cwd = this.get (),
           defaultPath = cwd ? path.dirname ( cwd ) : os.homedir ();
 
     const folderPaths = remote.dialog.showOpenDialog ({

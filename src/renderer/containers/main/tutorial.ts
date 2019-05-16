@@ -8,7 +8,6 @@ import {Container, autosuspend} from 'overstated';
 import * as path from 'path';
 import * as pify from 'pify';
 import pkg from '@root/package.json';
-import Config from '@common/config';
 
 /* TUTORIAL */
 
@@ -28,7 +27,7 @@ class Tutorial extends Container<TutorialState, MainCTX> {
 
   import = async () => {
 
-    const cwd = Config.cwd;
+    const cwd = this.ctx.cwd.get ();
 
     if ( !cwd ) return;
 
