@@ -12,6 +12,7 @@ import * as pify from 'pify';
 import Config from '@common/config';
 import Settings from '@common/settings';
 import File from '@renderer/utils/file';
+import Markdown from '@renderer/utils/markdown';
 
 /* CWD */
 
@@ -64,6 +65,8 @@ class CWD extends Container<CWDState, IMain> {
 
         await this.ctx.note.autosave ();
         await this.ctx.loading.reset ();
+
+        Markdown.converters.refresh ();
 
         setTimeout ( this.ctx.reset ); // Ensuring the app gets repainted first
 

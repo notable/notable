@@ -547,40 +547,71 @@ const Markdown = {
 
   converters: {
 
-    preview: _.memoize ( () => {
+    preview: {
 
-      const {asciimath2tex, katex, mermaid, mermaidOpenExternal, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, search, noProtocolLinks, wikilink} = Markdown.extensions;
+      converter: { makeHtml: _.identity }, //UGLY
 
-      const converter = new showdown.Converter ({
-        metadata: true,
-        extensions: [asciimath2tex (), katex (), mermaid (), mermaidOpenExternal (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag (), search (), noProtocolLinks ()]
-      });
+      get: () => {
 
-      converter.setFlavor ( 'github' );
+        const {asciimath2tex, katex, mermaid, mermaidOpenExternal, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, search, noProtocolLinks, wikilink} = Markdown.extensions;
 
-      converter.setOption ( 'disableForced4SpacesIndentedSublists', true );
-      converter.setOption ( 'ghMentions', false );
-      converter.setOption ( 'smartIndentationFix', true );
-      converter.setOption ( 'smoothLivePreview', true );
+        const converter = new showdown.Converter ({
+          metadata: true,
+          extensions: [asciimath2tex (), katex (), mermaid (), mermaidOpenExternal (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag (), search (), noProtocolLinks ()]
+        });
 
-      return converter;
+        converter.setFlavor ( 'github' );
 
-    }),
+        converter.setOption ( 'disableForced4SpacesIndentedSublists', true );
+        converter.setOption ( 'ghMentions', false );
+        converter.setOption ( 'smartIndentationFix', true );
+        converter.setOption ( 'smoothLivePreview', true );
 
-    strip: _.memoize ( () => {
+        return converter;
 
-      const {strip} = Markdown.extensions;
+      },
 
-      const converter = new showdown.Converter ({
-        metadata: true,
-        extensions: [strip]
-      });
+      refresh: () => {
 
-      converter.setFlavor ( 'github' );
+        Markdown.converters.preview.converter = Markdown.converters.preview.get ();
 
-      return converter;
+      }
 
-    })
+    },
+
+    strip: {
+
+      converter: { makeHtml: _.identity }, //UGLY
+
+      get: () => {
+
+        const {strip} = Markdown.extensions;
+
+        const converter = new showdown.Converter ({
+          metadata: true,
+          extensions: [strip]
+        });
+
+        converter.setFlavor ( 'github' );
+
+        return converter;
+
+      },
+
+      refresh: () => {
+
+        Markdown.converters.strip.converter = Markdown.converters.strip.get ();
+
+      }
+
+    },
+
+    refresh: () => {
+
+      Markdown.converters.preview.refresh ();
+      Markdown.converters.strip.refresh ();
+
+    }
 
   },
 
@@ -590,19 +621,19 @@ const Markdown = {
 
   },
 
-  render: ( str: string, limit: number ): string => {
+  render: ( str: string, limit?: number ): string => {
 
     if ( !str || !Markdown.is ( str ) ) return `<p>${str}</p>`;
 
-    return Markdown.converters.preview ().makeHtml ( Markdown.limiter ( str, limit ).trim () );
+    return Markdown.converters.preview.converter.makeHtml ( Markdown.limiter ( str, limit ).trim () );
 
   },
 
-  strip: ( str: string, limit: number ): string => {
+  strip: ( str: string, limit?: number ): string => {
 
     if ( !str || !Markdown.is ( str ) ) return str;
 
-    return Markdown.converters.strip ().makeHtml ( Markdown.limiter ( str, limit ) ).trim ().replace ( Markdown.wrapperRe, '$1' );
+    return Markdown.converters.strip.converter.makeHtml ( Markdown.limiter ( str, limit ) ).trim ().replace ( Markdown.wrapperRe, '$1' );
 
   },
 
@@ -614,6 +645,8 @@ const Markdown = {
   }
 
 };
+
+Markdown.converters.refresh ();
 
 /* EXPORT */
 
