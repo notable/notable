@@ -78,7 +78,8 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
   _currentChangeDate: Date | undefined = undefined;
   _preventOnChangeEvent: boolean = false;
   _onChangeDebounced?: Function;
-  _zoneTopId?: number;
+  _zoneTitlebarId?: number;
+  _zonePaddingTopId?: number;
 
   /* LIFECYCLE */
 
@@ -166,7 +167,9 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
 
     editor.onDidChangeModel ( () => {
 
-      delete this._zoneTopId; // Zones are reset when changing the model
+      // Zones are reset when changing the model
+      delete this._zoneTitlebarId;
+      delete this._zonePaddingTopId;
 
       this.editorUpdate ();
 
@@ -244,41 +247,63 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
     if ( !this.editor ) return;
 
     this.editor.layout ();
+
     this.editorUpdateZones ();
 
   }
 
   editorUpdateDebounced = _.debounce ( this.editorUpdate, 25 )
 
-  editorUpdateZones = () => {
+  editorUpdateZone = ( zone: '_zoneTitlebarId' | '_zonePaddingTopId', isActive: boolean, options: Partial<monaco.editor.IViewZone> ) => {
 
     if ( !this.editor ) return;
 
-    const needTopZone = is.macos && this.props.container.window.isZen () && !this.props.container.window.isFullscreen ();
+    if ( isActive ) {
 
-    if ( needTopZone ) {
-
-      if ( this._zoneTopId ) return;
+      if ( this[zone] ) return; // Already active
 
       this.editor.changeViewZones ( accessor => {
-        this._zoneTopId = accessor.addZone ({
+
+        const zoneOptions = Object.assign ({
           domNode: document.createElement ( 'div' ),
-          afterLineNumber: 0,
-          heightInPx: 38,
+          afterLineNumber: -1,
           suppressMouseDown: true
-        });
+        }, options );
+
+        this[zone] = accessor.addZone ( zoneOptions );
+
       });
 
     } else {
 
-      if ( !this._zoneTopId ) return;
+      if ( !this[zone] ) return; // Not active
 
       this.editor.changeViewZones ( accessor => {
-        accessor.removeZone ( this._zoneTopId as number ); //TSC
-        delete this._zoneTopId;
+        accessor.removeZone ( this[zone] as number ); //TSC
+        delete this[zone];
       });
 
     }
+
+  }
+
+  editorUpdateZones = () => {
+
+    if ( !this.editor ) return;
+
+    const needsTitlebarZone = is.macos && this.props.container.window.isZen () && !this.props.container.window.isFullscreen ();
+
+    this.editorUpdateZone ( '_zonePaddingTopId', !needsTitlebarZone, {
+      afterLineNumber: 0,
+      heightInPx: 20
+    });
+
+    //TODO: Add a bottom zone as well, it like looks for some reason this is buggy and the zone doesn't get added reliably
+
+    this.editorUpdateZone ( '_zoneTitlebarId', needsTitlebarZone, {
+      afterLineNumber: 0,
+      heightInPx: 38
+    });
 
   }
 

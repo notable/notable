@@ -34,7 +34,7 @@ const Monaco = {
     lightbulb: {
       enabled: false
     },
-    lineDecorationsWidth: 3,
+    lineDecorationsWidth: 19, // It gives a bit of a padding to the left
     lineHeight: 16 * .875 * 1.5,
     lineNumbers: Settings.get ( 'monaco.editorOptions.lineNumbers' ),
     minimap: {

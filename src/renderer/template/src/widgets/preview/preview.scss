@@ -4,7 +4,7 @@
 .preview {
 
   user-select: text !important;
-  padding: $preview-spacing !important;
+  padding: $preview-spacing-y $preview-spacing-x !important;
   font-size: $preview-font-size;
   line-height: $preview-line-height;
 
