@@ -175,7 +175,6 @@
     "react-idle-render": "^1.0.0",
     "react-router-static": "^1.0.0",
     "react-window": "^1.8.1",
-    "sha1": "^1.1.1",
     "showdown": "^1.9.0",
     "string-matches": "^1.1.3",
     "tiny-glob": "^0.2.6"
