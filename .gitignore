@@ -37,3 +37,5 @@ bower_components
 node_modules
 dist
 releases
+webpack.report.main.html
+webpack.report.renderer.html

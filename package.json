@@ -13,6 +13,8 @@
     "build:win": "npm run compile && electron-builder --win && npm run script:build:fixlatestwin",
     "build:linux": "npm run compile && electron-builder --linux && npm run script:build:fixlatestlinux",
     "build:all": "npm run clean:releases && npm run compile && electron-builder -mwl && npm run script:build:fixlatestwin && npm run script:build:fixlatestlinux",
+    "bundle:analyze:main": "open webpack.report.main.html",
+    "bundle:analyze:renderer": "open webpack.report.renderer.html",
     "script:build:fixlatestlinux": "node -e \"require ( './scripts/build/fix_latest_linux' )()\"",
     "script:build:fixlatestwin": "node -e \"require ( './scripts/build/fix_latest_win' )()\"",
     "svelto:dev": "svelto build --env development",
@@ -28,11 +30,11 @@
   "electronWebpack": {
     "staticSourceDirectory": "src/renderer/template/dist",
     "main": {
-      "webpackConfig": "webpack.js"
+      "webpackConfig": "webpack.main.js"
     },
     "renderer": {
       "template": "src/renderer/index.html",
-      "webpackConfig": "webpack.js"
+      "webpackConfig": "webpack.renderer.js"
     }
   },
   "build": {
@@ -217,6 +219,7 @@
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.4.5",
     "webpack": "^4.31.0",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-exclude-assets-plugin": "^0.1.1"
   }
 }
