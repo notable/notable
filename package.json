@@ -160,7 +160,6 @@
     "is-shallow-equal": "^1.0.1",
     "js-yaml": "^3.13.1",
     "katex": "^0.10.2",
-    "laxy": "^1.0.0",
     "lodash": "^4.17.11",
     "mermaid": "^8.0.0",
     "mime-types": "^2.1.24",

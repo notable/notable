@@ -11,11 +11,6 @@ import File from '@renderer/utils/file';
 import Metadata from '@renderer/utils/metadata';
 import Path from '@renderer/utils/path';
 
-/* IMPORT LAZY */
-
-const laxy = require ( 'laxy' ),
-      EnexDump = laxy ( () => require ( 'enex-dump' ) )();
-
 /* IMPORT */
 
 class Import extends Container<ImportState, MainCTX> {
@@ -42,6 +37,8 @@ class Import extends Container<ImportState, MainCTX> {
   }
 
   _importEnex = async ( filePath: string ) => {
+
+    const EnexDump = require ( 'enex-dump' ); // Lazy loading for performance
 
     const importTag = this._getImportTag ( filePath );
 
