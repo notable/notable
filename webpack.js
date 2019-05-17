@@ -1,7 +1,8 @@
 
 /* IMPORT */
 
-const TerserPlugin = require ( 'terser-webpack-plugin' ),
+const ExcludeAssetsPlugin = require ( 'webpack-exclude-assets-plugin' ),
+      TerserPlugin = require ( 'terser-webpack-plugin' ),
       TSConfigPathsPlugin = require ( 'tsconfig-paths-webpack-plugin' ),
       webpack = require ( 'webpack' );
 
@@ -30,6 +31,11 @@ const config = {
     ]
   },
   plugins: [
+    new ExcludeAssetsPlugin ({
+      path: [
+        '\.(eot|ttf|woff)$' // Unused font formats
+      ]
+    }),
     new webpack.DefinePlugin ({
       'Environment.isDevelopment': JSON.stringify ( process.env.NODE_ENV !== 'production' )
     }),

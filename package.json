@@ -216,6 +216,7 @@
     "terser-webpack-plugin": "^1.2.4",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.4.5",
-    "webpack": "^4.31.0"
+    "webpack": "^4.31.0",
+    "webpack-exclude-assets-plugin": "^0.1.1"
   }
 }
