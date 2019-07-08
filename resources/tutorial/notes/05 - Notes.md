@@ -1,6 +1,8 @@
 ---
-title: 05 - Notes
 tags: [Basics, Notebooks/Tutorial]
+title: 05 - Notes
+created: '2019-04-30T21:17:06.073Z'
+modified: '2019-06-06T12:20:10.973Z'
 ---
 
 # 05 - Notes
@@ -23,13 +25,25 @@ Wrap a formula in `$$` to display it as a block:
 
 $$f{x} = \int_{-\infty}^\infty \hat f\xi\,e^{2 \pi i \xi x} \,d\xi$$
 
+Multi-line block formulas are supported too:
+
+$$
+\begin{pmatrix}
+   f(\alpha) & b        & c         \\
+   e         & f(\beta) & g         \\
+   i         & j        & f(\gamma)
+\end{pmatrix}
+$$
+
 Wrap it in `$` to display it inline: $e^{iπ} + 1 = 0$.
 
-The [mhchem](https://docs.moodle.org/36/en/Chemistry_notation_using_mhchem) syntax for writing chemical expressions is supported too:
+The [mhchem](https://mhchem.github.io/MathJax-mhchem) syntax for writing chemical expressions is supported too:
 
 $$\ce{ SO4^2- + Ba^2+ -> BaSO4 v }$$
 
-> **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a formula, and the ending `$` character musn't be followed by a digit. If you need to you can escape the `$` character with a backslash.
+> **Note**: In order to minimize conflicts there mustn't be spaces at the beginning and end of a single-line formula, and the ending `$` character musn't be followed by a digit. If you need to you can escape the `$` character with a backslash.
+
+> **Note**: If your formula contains a `$`, you will have to wrap it in either double `$$` or a code block in order to avoid clonflicts.
 
 #### AsciiMath
 

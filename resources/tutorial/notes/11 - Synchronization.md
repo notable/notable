@@ -1,7 +1,8 @@
 ---
-title: 11 - Synchronization
-pinned: false
 tags: [Advanced, Notebooks/Tutorial]
+title: 11 - Synchronization
+created: '2018-12-16T23:15:11.439Z'
+modified: '2019-06-06T12:20:11.054Z'
 ---
 
 # 11 - Synchronization

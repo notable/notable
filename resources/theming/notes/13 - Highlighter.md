@@ -1,13 +1,13 @@
 ---
+tags: [Basics, Notebooks/Theming]
 title: 13 - Highlighter
 created: '2019-03-02T01:11:58.083Z'
-modified: '2019-03-02T02:05:37.443Z'
-tags: [Plugins, Notebooks/Theming]
+modified: '2019-07-06T13:49:30.732Z'
 ---
 
 # 13 - Highlighter
 
-Markdown:
+## Markdown
 
 ```markdown
 # H1
@@ -36,7 +36,7 @@ Inline `code`
 &nbsp;
 ```
 
-HTML:
+## HTML
 
 ```html
 <!-- comment -->
@@ -44,7 +44,7 @@ HTML:
 <b attr="foo">html</b>
 ```
 
-JSON:
+## JSON
 
 ```json
 {
@@ -53,7 +53,7 @@ JSON:
 }
 ```
 
-Javascript:
+## Javascript
 
 ```javascript
 /*
@@ -69,7 +69,7 @@ function fnName () {
 }
 ```
 
-CSS:
+## CSS
 
 ```css
 #foo:before {
@@ -77,8 +77,18 @@ CSS:
 }
 ```
 
-Shell:
+## Shell
 
 ```shell
 echo 'foo' | true
 ```
+
+## Diff
+
+```diff
+@@ file.diff @@
+-javascript codeblock
++diff codeblock
+!different
+```
+

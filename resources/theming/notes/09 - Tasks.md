@@ -1,14 +1,19 @@
 ---
+tags: [Basics, Notebooks/Theming]
 title: 09 - Tasks
 created: '2019-03-02T01:06:18.650Z'
-modified: '2019-03-03T22:34:49.055Z'
-tags: [Basics, Notebooks/Theming]
+modified: '2019-06-30T21:54:22.825Z'
 ---
 
 # 09 - Tasks
 
+## List items
+
 - Normal list item
-- [ ] Empty (no space)
+- [] Empty (no space)
+
+## Task items
+
 - [ ] Empty (with space)
 - [x] Checked (lowercase)
-- [X] Checked (uppercase)
+- [x] Checked (uppercase)

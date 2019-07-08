@@ -1,9 +1,10 @@
 ---
+tags: [Notebooks/Theming, Plugins]
 title: 11 - Linking stuff
 created: '2019-03-02T01:10:24.556Z'
-modified: '2019-03-05T15:48:25.001Z'
-tags: [Notebooks/Theming, Plugins]
+modified: '2019-07-01T16:17:19.369Z'
 ---
+
 # 11 - Linking stuff
 
 ## Attachments
@@ -33,3 +34,10 @@ tags: [Notebooks/Theming, Plugins]
 [Basics](@tag/Basics)
 
 [](@tag/Basics)
+
+## Searches
+
+[linking](@search/linking)
+
+[](@search/linking)
+

@@ -1,3 +1,87 @@
+### Version 1.6.0
+
+##### New Features
+- Added support for linking to search queries
+- Added support for the "Diff" language
+- Added a menu entry for toggling the menu bar (Windows) (Linux)
+- Added a menu entry for making the app translucent (macOS) (Windows)
+- Added a shortcut for opening the current data directory
+- Added a shortcut for changing the current data directory
+- Editor: added a shortcut for toggling line numbers
+- Editor: added a shortcut for toggling scrolling beyond the last line
+- Editor: added support for quickly wrapping selections with the following characters: (, ], {, ‘, “, `, _, *, ~
+- Editor: added autocompletion support of the following characters sequences: ~~~, ```
+- Maximizing/unmaximazing the window when double-clicking the toolbars (macOS)
+- Released a custom folder icon (macOS)
+- Using natural sorting
+- Uploader: using custom notifications, ensuring they are always displayed even when “do not disturb” is enabled
+- KaTeX: added support for multi-line block expressions
+
+##### Improvements
+- Major portions of the codebase have been refactored or rewritten
+- Significantly improved performance
+  - Showing the main window ~30% faster on startup
+  - Targeting ES2019 rather than ES2015
+  - Replaced previous state-management library with [Overstated v2](https://github.com/fabiospampinato/overstated)
+  - Replaced previous shortcuts library with [shortcuts](https://github.com/fabiospampinato/shortcuts)
+  - Reloading the window instead of reopening it when changing data directory
+  - Minimized re-renderings when only part of the state changes
+  - Avoiding loading the “Stats” object for each note when modified/created metadata are available
+  - Filesystem watcher: exiting earlier on initial “add” events
+  - Rewritten front-matter library
+  - Markdown: rendering using [markdown-it](https://github.com/markdown-it/markdown-it) rather than [showdown](https://github.com/showdownjs/showdown)
+    - Small (~3KB) notes are now rendered up to 30x faster
+    - Large (~1MB) notes are now rendered up to 150x faster
+  - Markdown plugins: lazy loading expensive syntax plugins
+  - Lazy loading expensive modules and components
+  - Context-menus are registered and opened much faster
+  - Improved performance when adding attachments
+- Significantly reduced bloat
+  - Reduced dependencies from ~530 to ~150
+  - Reduced size of the shipped uncompressed codebase from 59MB to 16MB
+- Significantly improved TypeScript types strictness
+  - Reduced "implicit any"s from ~450 to 28
+- Significantly smaller app bundles
+  - Reduced most bundles size by ~10%
+  - Reduced `snap` bundle size by ~60%
+- Editor: greatly improved syntax highlighting
+- Editor: added margins to the top and left matching those found in preview
+- Preview: ensuring it’s easily scrollable with either arrow keys or the spacebar
+- Improved styling of inline code and code blocks
+- Markdown: removed 25k characters limit
+- MhChem: improved support for older expressions using the “\cf” macro
+- Tutorial: added a note about KaTeX expressions containing a “$”
+- Tutorial: updated link to MhChem docs
+- Comparison table: ensuring the CSS is entirely self-contained
+- Updater: checking for updates every 8h rather than every 24h
+
+##### Bug Fixes
+- Ensuring all emojis supported by GitHub are supported
+- Ensuring all external links are opened outside of the app
+- Ensuring only one window gets opened when opening a mermaid diagram in a separate window
+- Ensuring the app doesn’t quit when initially selecting the data directory (Windows) (Linux)
+- Implemented a partial workaround for an Electron bug that makes part of the window unresponsive (macOS)
+- Editor: auto-selecting a note’s title only if it’s untitled
+- Editor: ensuring the background color of the selection is consistent with the preview
+- Editor: ensuring it’s focused when mounted
+- Editor: saving its state more reliably
+- Editor: ensuring ordered lists starting like “1) ” are syntax-highlighted too
+- Split Editor: ensuring its focus is preserved while switching notes
+- Preview: removed flickering when re-rendering
+- Preview: ensuring scrolling position is preserved under the most common scenarios
+- Quick Open: ensuring notes are always sorted ascending by title, and the pinned status is ignored
+- Quick Open: ensuring notes not currently visible in the middlebar are still selectable
+- KaTeX: ensuring fraction lines are clearly visible
+- KaTeX/AsciiMath: improved support for lines containing more than 2 delimiters
+- KaTeX/AsciiMath: much more reliable rendering
+- Note: ensuring a note’s modified date is updated when necessary
+- Note: saving more reliably
+- Highlighter: fixed an issue regarding aliased languages
+- Fixed middlebar scrolling behavior when updating a note so that its position changes
+- Updater: avoiding checking for updates every time the data directory changes
+- Updater: showing a notification if the current app format is not supported
+- Tutorial: ensuring the “Welcome” note and the “Notebooks/Tutorial” tag are selected when importing the tutorial
+
 ### Version 1.5.1
 
 ##### Improvements

@@ -1,9 +1,10 @@
 ---
+tags: [Basics, Notebooks/Theming]
 title: 01 - Heading
 created: '2019-03-02T01:04:58.939Z'
-modified: '2019-03-05T15:58:20.946Z'
-tags: [Basics, Notebooks/Theming]
+modified: '2019-06-29T19:08:55.247Z'
 ---
+
 # 01 - Heading
 
 # H1
@@ -13,8 +14,11 @@ tags: [Basics, Notebooks/Theming]
 ##### H5
 ###### H6
 
+## With trailing hashes ##
+
 With equals
 ===
 
 With hyphens
 ---
+

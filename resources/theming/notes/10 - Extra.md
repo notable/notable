@@ -1,8 +1,8 @@
 ---
+tags: [Basics, Notebooks/Theming]
 title: 10 - Extra
 created: '2019-03-02T01:08:27.349Z'
-modified: '2019-03-02T02:05:37.437Z'
-tags: [Basics, Notebooks/Theming]
+modified: '2019-07-01T23:03:14.958Z'
 ---
 
 # 10 - Extra
@@ -18,9 +18,9 @@ Emoji :joy:
   <dd>Some sort of definition with a <a href="#">link</a></dd>
 </dl>
 
-### ~~_**`everything`**_~~ [link](#)
+### ~~_**`everything`**_~~ `code` :joy: [[wiki]] $\infty$ &0& [link](#)
 
-+ ~~_**`everything`**_~~ [link](#)
++ ~~_**`everything`**_~~ `code` :joy: [[wiki]] $\infty$ &0& [link](#)
 
 ***
 

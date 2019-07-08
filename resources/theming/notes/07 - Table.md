@@ -1,8 +1,8 @@
 ---
+tags: [Basics, Notebooks/Theming]
 title: 07 - Table
 created: '2019-03-02T01:07:23.016Z'
-modified: '2019-05-09T21:34:25.079Z'
-tags: [Basics, Notebooks/Theming]
+modified: '2019-06-30T22:32:19.575Z'
 ---
 
 # 07 - Table
@@ -14,3 +14,11 @@ tags: [Basics, Notebooks/Theming]
 | Bar        |          |                   |        |           |                                 |               |               |
 | Baz        |          |                   |        |           |                                 |               |               |
 | Qux        |          |                   |        |           |                                 |               |               |
+
+## Alignment
+
+| Loooooooong | Loooooooong | Loooooooong |
+| :---------- | :---------: | ----------: |
+| Foo         |     Foo     |         Foo |
+| Foo         |     Foo     |         Foo |
+

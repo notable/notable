@@ -1,7 +1,8 @@
 ---
-title: 02 - The Sidebar
-pinned: false
 tags: [Basics, Notebooks/Tutorial]
+title: 02 - The Sidebar
+created: '2019-03-12T15:20:40.392Z'
+modified: '2019-06-06T12:20:10.915Z'
 ---
 
 # 02 - The Sidebar
