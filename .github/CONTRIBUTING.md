@@ -35,7 +35,7 @@ Pull requests are especially welcome for issues labeled as [`bug`](https://githu
 Follow these steps in order to get Notable ready for development:
 
 ```bash
-git clone https://github.com/notable/notable.git
+git clone https://github.com/{YourUserName}/notable.git
 cd notable
 npm install
 npm run svelto:dev
