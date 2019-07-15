@@ -43,8 +43,8 @@ class Notes extends Container<NotesState, MainCTX> {
 
     if ( !notesPath || !await File.exists ( notesPath ) ) return;
 
-    const entries = await readdirp.promise(notesPath, { type: 'files', fileFilter: Config.notes.glob });
-    const filePaths = Utils.normalizeFilePaths ( entries.map(entry => entry.fullPath) );
+    const fileEntries = await readdirp.promise ( notesPath, { type: 'files', fileFilter: Config.notes.glob } );
+    const filePaths = Utils.normalizeFilePaths ( fileEntries.map ( entry => entry.fullPath ) );
 
     const notes: NotesObj = {};
 
