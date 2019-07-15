@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import CallsBatch from 'calls-batch';
 import watcher from 'chokidar-watcher';
 import Dialog from 'electron-dialog';
-import glob from 'tiny-glob';
+import readdirp from 'readdirp';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import File from '@renderer/utils/file';
@@ -43,7 +43,8 @@ class Notes extends Container<NotesState, MainCTX> {
 
     if ( !notesPath || !await File.exists ( notesPath ) ) return;
 
-    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.notes.glob, { cwd: notesPath, absolute: true, filesOnly: true } ) );
+    const entries = await readdirp.promise(notesPath, { type: 'files', fileFilter: Config.notes.glob });
+    const filePaths = Utils.normalizeFilePaths ( entries.map(entry => entry.fullPath) );
 
     const notes: NotesObj = {};
 
