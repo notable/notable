@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import CallsBatch from 'calls-batch';
 import watcher from 'chokidar-watcher';
 import {remote} from 'electron';
-import glob from 'tiny-glob';
+import readdirp from 'readdirp';
 import {Container, autosuspend} from 'overstated';
 import Config from '@common/config';
 import File from '@renderer/utils/file';
@@ -44,7 +44,8 @@ class Attachments extends Container<AttachmentsState, MainCTX> {
 
     if ( !attachmentsPath || !await File.exists ( attachmentsPath ) ) return;
 
-    const filePaths = Utils.normalizeFilePaths ( await glob ( Config.attachments.glob, { cwd: attachmentsPath, absolute: true, filesOnly: true } ) );
+    const fileEntries = await readdirp.promise ( attachmentsPath, { type: 'files', fileFilter: Config.attachments.glob } );
+    const filePaths = Utils.normalizeFilePaths ( fileEntries.map(entry => entry.fullPath ) );
 
     const attachments = filePaths.reduce ( ( acc, filePath ) => {
 
