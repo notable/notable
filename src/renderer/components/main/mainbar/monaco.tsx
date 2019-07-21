@@ -68,7 +68,7 @@ import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js';
 
 /* MONACO */
 
-class Monaco extends React.Component<{ filePath: string, language: string, theme: string, value: string, editorOptions?: monaco.editor.IEditorOptions, modelOptions?: monaco.editor.ITextModelUpdateOptions, className?: string, editorWillMount?: Function, editorDidMount?: Function, editorWillUnmount?: Function, editorDidUnmount?: Function, editorWillChange?: Function, onBlur?: Function, onFocus?: Function, onChange?: Function, onUpdate?: Function, onScroll?: Function, container: IMain }, {}> {
+class Monaco extends React.Component<{ filePath: string, language: string, theme: string, value: string, editorOptions?: monaco.editor.IEditorOptions, modelOptions?: monaco.editor.ITextModelUpdateOptions, className?: string, customStyle: Object, editorWillMount?: Function, editorDidMount?: Function, editorWillUnmount?: Function, editorDidUnmount?: Function, editorWillChange?: Function, onBlur?: Function, onFocus?: Function, onChange?: Function, onUpdate?: Function, onScroll?: Function, container: IMain }, {}> {
 
   /* VARIABLES */
 
@@ -117,6 +117,8 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
 
     if ( prevProps.theme !== this.props.theme ) this.updateTheme ( this.props.theme );
 
+    if ( !_.isEqual ( this.props.customStyle, prevProps.customStyle ) ) this.updateStyle ();
+
     if ( this.props.editorOptions && !_.isEqual ( prevProps.editorOptions, this.props.editorOptions ) ) this.updateEditorOptions ( this.props.editorOptions );
 
     if ( this.props.modelOptions && !_.isEqual ( prevProps.modelOptions, this.props.modelOptions ) ) this.updateModelOptions ( this.props.modelOptions );
@@ -140,6 +142,8 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
     if ( nextProps.language !== this.props.language ) this.updateLanguage ( nextProps.language );
 
     if ( nextProps.theme !== this.props.theme ) this.updateTheme ( nextProps.theme );
+
+    if ( !_.isEqual ( this.props.customStyle, nextProps.customStyle ) ) this.updateStyle ();
 
     if ( nextProps.editorOptions && !_.isEqual ( this.props.editorOptions, nextProps.editorOptions ) ) this.updateEditorOptions ( nextProps.editorOptions );
 
@@ -398,8 +402,13 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
 
   }
 
-  updateEditorOptions ( editorOptions: monaco.editor.IEditorOptions ) {
+  updateStyle () {
 
+    this.forceUpdate();
+
+  }
+
+  updateEditorOptions ( editorOptions: monaco.editor.IEditorOptions ) {
     if ( !this.editor ) return;
 
     this.editor.updateOptions ( editorOptions );
@@ -424,9 +433,9 @@ class Monaco extends React.Component<{ filePath: string, language: string, theme
 
   render () {
 
-    const {className} = this.props;
-
-    return <div ref={this.ref} className={`monaco-editor-wrapper ${className || ''}`} />;
+    const {className, customStyle} = this.props;
+    console.log("Custom style updated: ", customStyle);
+    return <div ref={this.ref} style={customStyle} className={`monaco-editor-wrapper ${className || ''}`} />;
 
   }
 

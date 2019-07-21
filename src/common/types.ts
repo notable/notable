@@ -204,7 +204,8 @@ type WindowState = {
   focus: boolean,
   fullscreen: boolean,
   sidebar: boolean,
-  zen: boolean
+  zen: boolean,
+  writer: boolean
 };
 
 /* MAIN */

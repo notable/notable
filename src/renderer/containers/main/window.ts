@@ -14,7 +14,8 @@ class Window extends Container<WindowState, MainCTX> {
     focus: false,
     fullscreen: remote.getCurrentWindow ().isFullScreen (),
     sidebar: true,
-    zen: false
+    zen: false,
+    writer: false
   };
 
   /* CONSTRUCTOR */
@@ -62,6 +63,18 @@ class Window extends Container<WindowState, MainCTX> {
   toggleZen = ( zen: boolean = !this.state.zen ) => {
 
     return this.setState ({ zen });
+
+  }
+
+  isWriter = (): boolean => {
+
+    return this.state.writer;
+
+  }
+
+  toggleWriter = ( writer: boolean = !this.state.writer ) => {
+
+    return this.setState ({ writer });
 
   }
 

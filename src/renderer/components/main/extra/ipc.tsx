@@ -26,6 +26,7 @@ class IPC extends Component<{container: IMain}, {}> {
     ipc.on ( 'window-fullscreen-set', this.__windowFullscreenSet );
     ipc.on ( 'window-sidebar-toggle', this.__windowSidebarToggle );
     ipc.on ( 'window-zen-toggle', this.__windowZenToggle );
+    ipc.on ( 'window-writer-toggle', this.__windowWriterToggle );
     ipc.on ( 'editor-split-toggle', this.__editorSplitToggle );
     ipc.on ( 'multi-editor-select-all', this.__multiEditorSelectAll );
     ipc.on ( 'multi-editor-select-invert', this.__multiEditorSelectInvert );
@@ -69,6 +70,7 @@ class IPC extends Component<{container: IMain}, {}> {
     ipc.removeListener ( 'window-fullscreen-set', this.__windowFullscreenSet );
     ipc.removeListener ( 'window-sidebar-toggle', this.__windowSidebarToggle );
     ipc.removeListener ( 'window-zen-toggle', this.__windowZenToggle );
+    ipc.removeListener ( 'window-writer-toggle', this.__windowWriterToggle );
     ipc.removeListener ( 'editor-split-toggle', this.__editorSplitToggle );
     ipc.removeListener ( 'multi-editor-select-all', this.__multiEditorSelectAll );
     ipc.removeListener ( 'multi-editor-select-invert', this.__multiEditorSelectInvert );
@@ -176,6 +178,12 @@ class IPC extends Component<{container: IMain}, {}> {
 
     this.props.container.window.toggleZen ();
 
+  }
+
+  __windowWriterToggle = () => {
+
+    this.props.container.window.toggleWriter ();
+    
   }
 
   __editorSplitToggle = () => {

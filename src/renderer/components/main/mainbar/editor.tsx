@@ -6,10 +6,14 @@ import * as React from 'react';
 import {connect} from 'overstated';
 import Main from '@renderer/containers/main';
 import Monaco from './monaco';
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
+import Config from '@common/config';
+
+
 
 /* EDITOR */
 
-class Editor extends React.Component<{ onChange: Function, onUpdate: Function, filePath: string, content: string, theme: string, autosave: Function, getMonaco: Function, setMonaco: Function, hasFocus: Function, forget: Function, focus: Function, save: Function, restore: Function, reset: Function }, {}> {
+class Editor extends React.Component<{ onChange: Function, onUpdate: Function, filePath: string, content: string, theme: string, isWriter: boolean, isEditing: boolean, editorOptions: monaco.editor.IEditorOptions, autosave: Function, getMonaco: Function, setMonaco: Function, hasFocus: Function, forget: Function, focus: Function, save: Function, restore: Function, reset: Function }, {}> {
 
   _wasWindowBlurred: boolean = false;
 
@@ -99,9 +103,24 @@ class Editor extends React.Component<{ onChange: Function, onUpdate: Function, f
 
   render () {
 
-    const {filePath, content, theme} = this.props;
+    const {filePath, content, theme, isWriter, isEditing, getMonaco} = this.props;
+    const editor          = getMonaco();
+    const charWidth       = editor && editor.getConfiguration().fontInfo.maxDigitWidth;
+    const wordWrapColumn  = Config.editor.wordWrapColumnWriterMode;
+    const editorTextAreaWidth = charWidth * wordWrapColumn + 40; // Magic number, to be defined
 
-    return <Monaco className="layout-content editor" filePath={filePath} language="markdown" theme={theme} value={content} editorDidMount={this.__mount} editorWillUnmount={this.__unmount} editorWillChange={this.__editorChange} onBlur={this.__blur} onFocus={this.__focus} onChange={this.__change} onUpdate={this.__update} onScroll={this.__scroll} />;
+    const customStyle = isWriter && isEditing ? {
+      width: editorTextAreaWidth + "px",
+      margin: "auto"
+    } : {}
+    
+    const editorOptions = isWriter && isEditing ? {
+      wordWrapColumn: Config.editor.wordWrapColumnWriterMode
+    } : {
+      wordWrapColumn: 1000000
+    };
+
+    return <Monaco className="layout-content editor" filePath={filePath} language="markdown" theme={theme} editorOptions={editorOptions} customStyle={customStyle} value={content} editorDidMount={this.__mount} editorWillUnmount={this.__unmount} editorWillChange={this.__editorChange} onBlur={this.__blur} onFocus={this.__focus} onChange={this.__change} onUpdate={this.__update} onScroll={this.__scroll} />;
 
   }
 
@@ -121,6 +140,8 @@ export default connect ({
       filePath: note.filePath,
       content: container.note.getPlainContent ( note ),
       theme: container.theme.get (),
+      isWriter: container.window.isWriter (),
+      isEditing: container.editor.isEditing (),
       autosave: container.note.autosave,
       getMonaco: container.editor.getMonaco,
       setMonaco: container.editor.setMonaco,

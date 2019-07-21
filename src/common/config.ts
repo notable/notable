@@ -51,6 +51,9 @@ const Config = {
       barHeight: 25,
       fontSize: 14
     }
+  },
+  editor: {
+    wordWrapColumnWriterMode: 80
   }
 };
 

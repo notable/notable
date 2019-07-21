@@ -345,6 +345,11 @@ class Main extends Route {
             label: 'Toggle Zen Mode',
             accelerator: 'CmdOrCtrl+Alt+Z',
             click: () => this.win.webContents.send ( 'window-zen-toggle' )
+          },
+          {
+            label: 'Toggle Writer Mode',
+            accelerator: 'CmdOrCtrl+Alt+W',
+            click: () => this.win.webContents.send ( 'window-writer-toggle' )
           }
         ]
       },
