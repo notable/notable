@@ -7,6 +7,8 @@ modified: '2019-06-06T12:20:10.999Z'
 
 # 07 - Shortcuts
 
+> An OS-specific version of this document is available via the `Help -> View Shortcuts` menu item.
+
 The following are macOS shortcuts, if you're using a different OS replace <kbd>Cmd</kbd> with <kbd>Ctrl</kbd>, or <kbd>Alt</kbd> if <kbd>Ctrl</kbd> is already used.
 
 ## Note
@@ -23,6 +25,7 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 - <kbd>Cmd+Shift+T</kbd> - Toggle tags editing.
 - <kbd>Cmd+Shift+A</kbd> - Toggle attachments editing.
 - <kbd>Cmd+D</kbd> - Toggle favorite.
+- <kbd>Cmd+Shift+D</kbd> - Toggle pin.
 - <kbd>Cmd+Backspace</kbd> - Move to trash, when previewing.
 - <kbd>Delete</kbd> - Move to trash, when previewing.
 - <kbd>Cmd+Alt+Backspace</kbd> - Move to trash, when editing.
@@ -88,3 +91,4 @@ The following are macOS shortcuts, if you're using a different OS replace <kbd>C
 - <kbd>Cmd+Alt+Z</kbd> - Toggle zen mode.
 - <kbd>Cmd+Shift+O</kbd> - Open Data Directory.
 - <kbd>Cmd+Shift+X</kbd> - Change Data Directory...
+- <kbd>F5</kbd> - Reload the window.

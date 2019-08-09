@@ -9,7 +9,7 @@ modified: '2019-06-06T12:20:11.013Z'
 
 You can import the following formats via `Notable -> Import`:
 
-- Markdown files with extension: `md`, `mkd`, `mdwn`, `mdown`, `markdown`, `markdn`, `mdtxt`, `mdtext` or `txt`.
+- Markdown files with extension: `md`, `mkd`, `mkdn`, `mdwn`, `mdown`, `markdown`, `markdn`, `mdtxt`, `mdtext` or `txt`.
 - Evernotes' exports with extension: `enex`.
 
 Alternatively you could also just put your Markdown notes into the `notes` sub-directory into your data directory.

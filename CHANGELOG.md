@@ -1,4 +1,65 @@
-### Version 1.6.0
+## Version 1.7.0
+
+##### New Features
+- Added support for adding image attachments via copy and paste
+- Added support for closing the window with `CtrlOrCmd+Shift+W`
+- Added a dialog asking for confirmation before closing a window
+- Added a shortcut for toggling pinning
+- Added support for writing subscripts
+- Added support for writing superscripts
+- Added support for writing footnotes
+- Added a menu entry for displaying a Markdown cheatsheet
+- Added a menu entry for displaying all the provided shortcuts
+  - Showing OS-specific shortcuts
+- Added a menu entry for displaying all the provided emojis
+- Added support for a custom `<markdown>` HTML tag, everything written inside it will be rendered as Markdown
+- Added support for linking to other notes using the `@note` token without explicitly providing the file extension
+- Added `.mkdn` to the list of supported Markdown extensions
+- Added support for importing HTML notes
+- Added support for importing Boostnote notes
+
+##### Improvements
+- Editor: improved formatting detection
+- Changelog: opening it inside the app
+- Comparison table: updated some cells
+- Tutorial: linking to the online version relevant to the currently installed version
+- Updater: detecting offline status
+- Ensured syntax highlighting when previewing and editing is always exactly the same
+- Ensured all pngs are losslessly compressed
+- Improved supports for manually encoded urls
+- Improved detection of code blocks
+- Changed shortcut for reloading the app to `F5`
+
+##### Bug Fixes
+- AsciiMath: ensured regular anchors are detected
+- AsciiMath: ensured autolinked anchors are detected
+- Editor: ensured pressing “esc” while having multiple cursors doesn’t close the editor
+- Export: ensured Monaco tokens styles are exported
+- Export: ensured mermaid diagrams are exported properly
+- KaTeX: ensured all borders/dividers/lines are clearly visible
+- Markdown: more reliable stripping
+- Preview: rendering tasks more reliably
+- Ensured links pointing to a local file are supported too
+- Improved detection of currently opened windows
+
+## Version 1.6.2
+
+##### New Features
+- Added a shortcut for reloading the window
+
+##### Improvements
+- Improved CommonMark v0.29 compatibility
+
+##### Bug Fixes
+- Metadata: fixed support for Windows-style line breaks
+- Tasks: ensuring the bullet point is not displayed
+
+## Version 1.6.1
+
+##### Bug Fixes
+- Metadata: ensuring empty strings are parsed correctly too
+
+## Version 1.6.0
 
 ##### New Features
 - Added support for linking to search queries
@@ -82,7 +143,7 @@
 - Updater: showing a notification if the current app format is not supported
 - Tutorial: ensuring the “Welcome” note and the “Notebooks/Tutorial” tag are selected when importing the tutorial
 
-### Version 1.5.1
+## Version 1.5.1
 
 ##### Improvements
 - Auto-hiding the menu in the “Select Data Directory” window
@@ -93,7 +154,7 @@
 - Updater: fixed link to latest linux release
 - Updater: fixed link to latest windows release
 
-### Version 1.5.0
+## Version 1.5.0
 
 ##### New Features
 - Added a dark theme
@@ -125,7 +186,7 @@
 - Quick Open: ensuring it’s always scrolled all the way to the top when opening it
 - Quick Open: ensuring it always searches all notes
 
-### Version 1.4.0
+## Version 1.4.0
 
 ##### New Features
 - Switched to the AGPL license
@@ -170,7 +231,7 @@
 - Writing/renaming notes less asynchronously
 - Waiting for any pending API or IO operations before closing the app
 
-### Version 1.3.0
+## Version 1.3.0
 
 ##### New Features
 - Updater: added a menu entry for checking for updates
@@ -223,7 +284,7 @@
 - Updater: ensuring secondary notifications are shown only when manually checking for updates
 - Updater: ensuring the menu gets properly restored after checking
 
-### Version 1.2.0
+## Version 1.2.0
 
 ##### New Features
 - Added a cross-platform “About” window
@@ -275,7 +336,7 @@
 - Markdown: properly encoding generated urls
 - Ensuring the currently active note remains active after editing its tags
 
-### Version 1.1.0
+## Version 1.1.0
 
 ##### New Features
 - Added support for `.txt` files
@@ -315,7 +376,7 @@
 - Ensuring there’s always a separator before the `Notable -> Quit` menu entry
 - Ensuring checkboxes are always displayed
 
-### Version 1.0.1
+## Version 1.0.1
 - Simplified import tag
 - Multi-Editor: improved confirmation messages for adding/removing tags
 - Tagbox: ensuring their never share the same name
@@ -338,5 +399,5 @@
 - Multi-Editor: skipping some work when possible
 - Ensuring the `Tags` special tag is never deleted
 
-### Version 1.0.0
+## Version 1.0.0
 - Initial release.

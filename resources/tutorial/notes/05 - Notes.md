@@ -2,14 +2,16 @@
 tags: [Basics, Notebooks/Tutorial]
 title: 05 - Notes
 created: '2019-04-30T21:17:06.073Z'
-modified: '2019-06-06T12:20:10.973Z'
+modified: '2019-07-27T15:38:12.690Z'
 ---
 
 # 05 - Notes
 
 ## Syntax
 
-Notes are written in [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown), so you can write emojis (`:joy:` -> :joy:), ~~strikethrough~~ text etc. in a familiar fashion.
+Notes are written in [GitHub-Flavored Markdown](https://guides.github.com/features/mastering-markdown), so you can write emojis (`:joy:` -> :joy:), ~~strikethrough~~ text etc. in a familiar fashion, additionally you can also write subscripts~example~, superscripts^example^ and footnotes[^1].
+
+[^1]: This is a footnote, you don't need to manually write it at the bottom of the document.
 
 This also means that your notes aren't locked into any proprietary format.
 
@@ -64,6 +66,18 @@ graph LR
   Tutorial --> Share
   Tutorial -.-> mermaid[Realize how cool mermaid is]
 ```
+
+#### `<markdown>` Tag
+
+Notable supports a custom `<markdown>` HTML tag. Anything written inside it will be rendered as Markdown. This is particularly useful when you have to write raw HTML but you still want to write Markdown inside it, like when using the `<details>` tag or when writing tables with multi-line content inside cells.
+
+<details>
+  <summary>Click to show more...</summary>
+  <markdown>
+- Embedded
+  - _Markdown_
+  </markdown>
+</details>
 
 ## Attachments
 

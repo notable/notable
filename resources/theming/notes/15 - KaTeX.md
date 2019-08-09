@@ -2,7 +2,7 @@
 tags: [Basics, Notebooks/Theming]
 title: 15 - KaTeX
 created: '2019-03-02T01:09:32.132Z'
-modified: '2019-07-01T16:32:21.521Z'
+modified: '2019-07-14T00:52:13.750Z'
 ---
 
 # 15 - KaTeX
@@ -11,7 +11,7 @@ Inline $e^{iπ} + \fbox{1} = 0$
 
 Single char $2$
 
-Fractions $\frac{1}{2}$, $1/2$
+Lines $\frac{1}{2}$, $1/2$, $\underline{x}$
 
 Block:
 
