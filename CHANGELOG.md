@@ -1,3 +1,8 @@
+## Version 1.7.1
+
+##### Bug Fixes
+- Ensuring exporting to HTML and PDF works even if Monaco has not been initialized yet
+
 ## Version 1.7.0
 
 ##### New Features
