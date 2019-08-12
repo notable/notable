@@ -1,3 +1,8 @@
+## Version 1.7.2
+
+##### Bug Fixes
+- Ensuring HTML and Enex files can be imported
+
 ## Version 1.7.1
 
 ##### Bug Fixes
