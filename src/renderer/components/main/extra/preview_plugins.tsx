@@ -102,7 +102,7 @@ class PreviewPlugins extends Component<{ container: IMain }, {}> {
 
     if ( !$code.length ) return;
 
-    this.props.container.clipboard.set ( $code.text () );
+    this.props.container.clipboard.set ( $code.text ().replace( /\u00a0/g, " " ) );
 
   }
 
