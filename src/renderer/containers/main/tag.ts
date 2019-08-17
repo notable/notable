@@ -61,8 +61,10 @@ class Tag extends Container<TagState, MainCTX> {
     if (tagObj) {
     
       const notes = tagObj.notes
+      
+      let suffix = notes.length !== 1 ? 's' : ''
 
-      if ( !Dialog.confirm ( `Are you sure you want to remove the tag "${tag}" from ${notes.length} notes?` ) ) return;
+      if ( !Dialog.confirm ( `Are you sure you want to remove the tag "${tag}" from ${notes.length} note${suffix}?` ) ) return;
       
       notes.forEach(note => this.ctx.note.removeTag(note, tag))
     
