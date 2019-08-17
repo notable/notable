@@ -21,7 +21,7 @@ const Tag = ({ style, tag, level, isLeaf, isActive, set, toggleCollapse }) => {
         };
 
   return (
-    <div style={style} className={`tag ${isActive ? 'active' : ''} level-${level} button list-item`} data-tag={path} data-has-children={!isLeaf} data-collapsed={collapsed} onClick={onClick}>
+    <div style={style} className={`tag ${isActive ? 'active' : ''} level-${level} button list-item`} data-tag={`"${String(path)}"`} data-has-children={!isLeaf} data-collapsed={collapsed} onClick={onClick}>
       {isRoot ? <i className="icon xsmall">{collapsed ? iconCollapsed || 'tag_multiple' : icon || 'tag'}</i> : null}
       {!isRoot && ( !isLeaf || collapsed ) ? <i className={`icon xsmall collapser ${collapsed ? 'rotate--90' : ''}`} onClick={onCollapserClick}>chevron_down</i> : null} {/* TODO: The collapser isn't animated because the whole list gets re-rendered */}
       {!isRoot && ( isLeaf && !collapsed ) ? <i className="icon xsmall">invisible</i> : null}

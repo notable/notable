@@ -13,7 +13,7 @@ const Tag = ({ tag, set, removeTag }) => {
   if ( !tag ) return null;
 
   return (
-    <div className="tag button list-item" data-tag={tag} onClick={() => set ( tag )}>
+    <div className="tag button list-item" data-tag={`"${String(tag)}"`} onClick={() => set ( tag )}>
       <span className="title small">{tag}</span>
       <i className="icon xxsmall actionable on-hover" onClick={e => { e.stopPropagation (); removeTag ( undefined, tag ); }}>close</i>
     </div>
