@@ -208,6 +208,7 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   initTagMenu = () => {
 
+    let self = this
     this._makeMenu ( '.sidebar .tag, .preview .tag', [
       {
         label: 'Collapse',
@@ -223,6 +224,13 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
       {
         label: 'Copy',
         click: () => this.props.container.clipboard.set ( this.tag )
+      },
+      {
+        label: 'Remove Tag',
+        click: () => this.props.container.tag.removeFromAllNotes( this.tag ),
+        get visible() {
+          return self.props.container.tag.isRemovable( self.tag )
+        }
       }
     ], this.updateTagMenu );
 

@@ -100,7 +100,8 @@ type TagObj = {
   iconCollapsed?: string,
   tags: {
     [name: string]: TagObj
-  }
+  },
+  removable: boolean
 };
 
 type TagsObj = {

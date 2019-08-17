@@ -3,6 +3,7 @@
 
 import * as _ from 'lodash';
 import {Container, autosuspend} from 'overstated';
+import Dialog from 'electron-dialog';
 import Tags, {TagSpecials} from '@renderer/utils/tags';
 
 const {SEPARATOR} = Tags;
@@ -42,6 +43,30 @@ class Tag extends Container<TagState, MainCTX> {
           obj = tags.reduce ( ( acc, tag ) => acc.tags && acc.tags[tag] || {}, { tags: this.ctx.tags.get () } );
 
     return _.isEmpty ( obj ) ? undefined : obj as TagObj; //FIXME: This type casting looks wrong
+
+  }
+
+  isRemovable = (tag: string): boolean => {
+
+    const obj = this.get( tag )
+
+    return obj !== undefined && obj.removable
+  
+  }
+
+  removeFromAllNotes = (tag: string): void => {
+
+    const tagObj = this.get( tag )
+
+    if (tagObj) {
+    
+      const notes = tagObj.notes
+
+      if ( !Dialog.confirm ( `Are you sure you want to remove the tag "${tag}" from ${notes.length} notes?` ) ) return;
+      
+      notes.forEach(note => this.ctx.note.removeTag(note, tag))
+    
+    }
 
   }
 
