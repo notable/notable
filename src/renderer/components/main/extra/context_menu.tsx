@@ -286,13 +286,13 @@ class ContextMenu extends Component<{ container: IMain }, {}> {
 
   updateNoteTagMenu = ( items: MenuItem[] ) => {
 
-    this.tag = $(this.ele).data ( 'tag' );
+    this.tag = String ( $(this.ele).data ( 'tag' ) );
 
   }
 
   updateTagMenu = ( items: MenuItem[] ) => {
 
-    this.tag = $(this.ele).data ( 'tag' );
+    this.tag = String( $(this.ele).data ( 'tag' ) );
 
     const hasChildren = this.props.container.tag.hasChildren ( this.tag ),
           isCollapsed = hasChildren && this.props.container.tag.isCollapsed ( this.tag ),
