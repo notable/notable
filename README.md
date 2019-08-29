@@ -66,7 +66,7 @@ There are multiple ways to contribute to this project, read about them [here](ht
 
 ## Related
 
-- **[dumper](https://github.com/fabiospampinato/enex-dump)**: Library for extracting attachments, notes and metadata out of formats used by popular note-taking apps.
+- **[dumper](https://github.com/notable/dumper)**: Library for extracting attachments, notes and metadata out of formats used by popular note-taking apps.
 
 ## License
 
