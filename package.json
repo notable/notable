@@ -146,6 +146,7 @@
     "chokidar-watcher": "^1.0.0",
     "crc-32": "^1.2.0",
     "critically": "^1.0.0",
+    "custom-electron-titlebar": "^3.1.0",
     "diff": "^4.0.1",
     "electron-context-menu": "^0.12.1",
     "electron-dialog": "^1.0.0",
