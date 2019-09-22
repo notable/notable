@@ -1,64 +1,104 @@
-# Notable ([DOWNLOAD](https://github.com/notable/notable/releases))
+# [Notable](https://notable.md)
 
 <p align="center">
-  <img src="resources/demo/main.png" alt="Notable" width="750">
+  <a href="https://img.notable.md/screenshot-main.png">
+    <img src="https://img.notable.md/screenshot-main.png" width="900" alt="Notable">
+  </a>
 </p>
 
-The Markdown-based note-taking app that doesn't suck.
+<p align="center">
+  <a href="https://download.notable.md">
+    <img src="https://img.notable.md/badge-download.png" height="42" alt="Download button" />
+  </a>
+</p>
 
-I couldn't find a note-taking app that ticked all the boxes I'm interested in: notes are written and rendered in GitHub-Flavored Markdown, no WYSIWYG, no proprietary formats, I can run a search & replace across all notes, notes support attachments, the app isn't bloated, the app has a pretty interface, tags are indefinitely nestable and can import Evernote notes (because that's what I was using before).
+---
+
+I couldn't find a note-taking app that ticked all the boxes I'm interested in: notes are written and rendered in GitHub Flavored Markdown, no WYSIWYG, no proprietary formats, I can run a search & replace across all notes, notes support attachments, the app isn't bloated, the app has a pretty interface, tags are indefinitely nestable and can import Evernote notes (because that's what I was using before).
 
 So I built my own.
 
-## Features
+## [Comparison](https://notable.md/static/images/comparison.png)
 
-```
-/path/to/your/data_directory
-├─┬ attachments
-│ ├── foo.ext
-│ ├── bar.ext
-│ └── …
-└─┬ notes
-  ├── foo.md
-  ├── bar.md
-  └── …
-```
-
-- **No proprietary formats**: Notable is just a pretty front-end for a folder structured as shown above. Notes are plain Markdown files, their metadata is stored as Markdown front matter. Attachments are also plain files, if you attach a `picture.jpg` to a note everything about it will be preserved, and it will remain accessible like any other file.
-
-- **Proper editor**: Notable doesn't use any WYSIWYG editor, you just write some Markdown and it gets rendered as GitHub-Flavored Markdown. The built-in editor is [Monaco Editor](https://github.com/Microsoft/monaco-editor), the same one VS Code uses, this means you get things like multi-cursor by default. If you need more advanced editing features with a single shortcut you can open the current note in your default Markdown editor.
-
-- **Indefinitely nestable tags**: Pretty much all other note-taking apps differentiate between notebooks, tags and templates. IMHO this unnecessarily complicates things. In Notable you can have root tags (`foo`), indefinitely nestable tags (`foo/bar`, `foo/.../qux`) and it still supports notebooks and templates, they are just special tags with a different icon (`Notebooks/foo`, `Templates/foo/bar`).
-
-Upon first instantiation, some tutorial notes will be added to the app, check them out for more in-depth details about the app and how to use it. You can also find the raw version [here](https://github.com/notable/notable/tree/v1.7.0/resources/tutorial/notes).
-
-## [Comparison](resources/comparison/table.png?raw=true)
-
-[![Click to Enlarge](resources/comparison/table.png)](resources/comparison/table.png?raw=true)
+[![Click to Enlarge](https://notable.md/static/images/comparison.png)](https://notable.md/static/images/comparison.png?raw=true)
 
 Part of this comparison is personal opinion: you may disagree on the UI front, things I consider bloat may be considered features by somebody else etc. but hopefully this comparison did a good job at illustrating the main differences.
 
-## Demo
+## Features
+
+### Markdown-based
+
+Notes are written in GitHub Flavored Markdown, and you can also write [KaTeX](https://katex.org) expressions, [Mermaid](https://github.com/knsv/mermaid) diagrams and so much more, check out our full [Markdown cheatsheet](https://cheatsheet.notable.md).
+
+Notable also gives you a very powerful Markdown editor, it's the same one VS Code uses in fact, so features like multi-cursors, a minimap and best-in-class syntax highlighting are built-in.
+
+<p align="center">
+  <a href="https://img.notable.md/screenshot-filesystem.png">
+    <img src="https://img.notable.md/screenshot-filesystem.png" width="800" alt="Filesystem" />
+  </a>
+</p>
+
+### No Vendor Lock-In
+
+Notes and attachments are simply stored on your disk, this is extremely portable and powerful: you could edit your notes with your favorite editor, have them synchronized via Dropbox, run Git on them, run a regex-based search and replace on them etc.
+
+<p align="center">
+  <a href="https://img.notable.md/screenshot-editor.png">
+    <img src="https://img.notable.md/screenshot-editor.png" width="800" alt="Editor" />
+  </a>
+</p>
 
 ### Dark Theme
 
-<img src="resources/demo/dark.png" alt="Dark Theme" width="750">
+A dark theme is also available. In the future support for [custom themes](https://github.com/notable/notable/issues/104) will be added as well.
 
-### Indefinitely Nestable Tags
+If you'd like to change a color or hide a button you are also free to do that via the Devtools.
 
-<img src="resources/demo/tags.png" alt="Indefinitely Nestable Tags" width="750">
+<p align="center">
+  <a href="https://img.notable.md/screenshot-dark.png">
+    <img src="https://img.notable.md/screenshot-dark.png" width="800" alt="Dark Theme" />
+  </a>
+</p>
 
-### Editor
+### Zen Mode
 
-<img src="resources/demo/editor.png" alt="Editor" width="750">
+Zen mode provides a minimalistic editing and reading experience, hiding everything that's not necessary.
+
+Notable is also keyboard friendly, has a [quick open](https://img.notable.md/screenshot-dark.png) window, and we'll soon add a [command palette](https://github.com/notable/notable/issues/338) too, so you won't have to click any buttons if you don't want to.
+
+<p align="center">
+  <a href="https://img.notable.md/screenshot-zen.png">
+    <img src="https://img.notable.md/screenshot-zen.png" width="800" alt="Zen Mode" />
+  </a>
+</p>
 
 ### Multi-Note Editor
 
-<img src="resources/demo/multi_editor.png" alt="Multi-Note Editor" width="750">
+A multi-note editor is available for quickly running an action, like favoriting, pinning, deleting, tagging etc., on multiple notes at once.
 
-### Split-Editor + Zen Mode + Quick Open
+If you need to run a more complex action on your notes remember that they are just file stored on your disk so you can do whatever you want with them.
 
-<img src="resources/demo/zen_mode-split_editor-quick_open.png" alt="Split-Editor + Zen Mode + Quick Open" width="750">
+<p align="center">
+  <a href="https://img.notable.md/screenshot-multieditor.png">
+    <img src="https://img.notable.md/screenshot-multieditor.png" width="800" alt="Multi-Note Editor" />
+  </a>
+</p>
+
+### Split Editor
+
+A split-editor is available for quickly checking out how your note will be rendered while you're editing it.
+
+<p align="center">
+  <a href="https://img.notable.md/screenshot-spliteditor.png">
+    <img src="https://img.notable.md/screenshot-spliteditor.png" width="800" alt="Split Editor" />
+  </a>
+</p>
+
+## More Features
+
+A lot more features are implemented, some of the most important ones are listed [here](https://notable.md/#more-features).
+
+Is a feature you care about currently missing? Make sure to browse the [issue tracker](https://github.com/notable/notable/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc) and add your ":+1:" reaction to the issues you care most about, as we also use those reactions to prioritize issues.
 
 ## Contributing
 
@@ -66,7 +106,7 @@ There are multiple ways to contribute to this project, read about them [here](ht
 
 ## Related
 
-- **[dumper](https://github.com/fabiospampinato/enex-dump)**: Library for extracting attachments, notes and metadata out of formats used by popular note-taking apps.
+- **[dumper](https://github.com/notable/dumper)**: Library for extracting attachments, notes and metadata out of formats used by popular note-taking apps.
 
 ## License
 
