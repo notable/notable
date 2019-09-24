@@ -53,7 +53,7 @@ class ErrorBoundary extends React.Component<{}, { error?: Error }> {
     return (
       <div className="error-boundary app-wrapper layout">
         {!isMacOS ? null : (
-          <div className="layout-header titlebar">
+          <div className="layout-header app-titlebar">
             <span className="title">An Error Occurred!</span>
           </div>
         )}

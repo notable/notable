@@ -11,7 +11,7 @@ const Header = () => {
   if ( !is.macos ) return null;
 
   return (
-    <div className="layout-header titlebar">
+    <div className="layout-header app-titlebar">
       <span className="title">Select Data Directory</span>
     </div>
   );
