@@ -76,13 +76,11 @@ class Main extends Route {
                 type: 'checkbox',
                 label: 'Light',
                 click: () => this.win.webContents.send ( 'theme-set', 'light' ),
-                checked: !keys || keys.theme === 'light'
               },
               {
                 type: 'checkbox',
                 label: 'Dark',
                 click: () => this.win.webContents.send ( 'theme-set', 'dark' ),
-                checked: !!keys && keys.theme === 'dark'
               }
             ]
           },
