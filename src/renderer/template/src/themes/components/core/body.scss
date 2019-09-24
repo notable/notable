@@ -6,4 +6,21 @@
     color: map-get( $theme, 'body.foreground' );
   }
 
+  ::-webkit-scrollbar {
+    background-color: map-get( $theme, 'scrollbar.background' );
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: map-get( $theme, 'scrollbar.thumb' );
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: map-get( $theme, 'scrollbar.thumbHover' );
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background-color: map-get( $theme, 'scrollbar.thumbActive' );
+  }
+
 }

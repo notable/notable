@@ -8,6 +8,11 @@
   $base-background-active: darken( $base-background, 3 );
   $base-border: darken( $base-background, 9 );
   $base-foreground: #F6F6F6;
+  
+  $scrollbar-background: rgba( $base-background, 0) ;
+  $scrollbar-thumb: lighten( $base-background, 20 );
+  $scrollbar-thumb-hover: lighten( $base-background, 50 );
+  $scrollbar-thumb-active: lighten( $base-background, 70 );
 
   $accent-background: #EF6C00;
   $accent-background-hover: lighten( $accent-background, 3 );
@@ -170,6 +175,10 @@
     'base.backgroundActive': $base-background-active,
     'base.border': $base-border,
     'base.foreground': $base-foreground,
+    'scrollbar.background': $scrollbar-background,
+    'scrollbar.thumb': $scrollbar-thumb,
+    'scrollbar.thumbHover': $scrollbar-thumb-hover,
+    'scrollbar.thumbActive': $scrollbar-thumb-active,
     'accent.background': $accent-background,
     'accent.backgroundHover': $accent-background-hover,
     'accent.backgroundActive': $accent-background-active,
