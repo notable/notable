@@ -9,4 +9,33 @@
   @include theme-window-main-middlebar ( $theme );
   @include theme-window-main-mainbar ( $theme );
 
+  .titlebar {
+    background-color: map-get( $theme, 'toolbar.background' ) !important;
+    color: map-get( $theme, 'base.foreground' ) !important;
+
+    .menubar .menubar-menu-container {
+      background-color: map-get( $theme, 'base.background' ) !important;
+
+      .action-menu-item {
+        background-color: map-get( $theme, 'base.background' ) !important;
+        color: map-get( $theme, 'base.foreground' ) !important;
+        cursor: default !important;
+
+        .submenu-indicator {
+          background-color: map-get( $theme, 'base.foreground' ) !important;
+        }
+      }
+
+      .action-menu-item:hover {
+        background-color: map-get( $theme, 'base.backgroundHover' ) !important;
+        text-decoration: none !important;
+      }
+    }
+
+    .window-controls-container > .window-icon-bg > .window-icon {
+      background-color: map-get( $theme, 'base.foreground' );
+    }
+
+  }
+
 }
