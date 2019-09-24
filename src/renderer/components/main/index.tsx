@@ -15,6 +15,7 @@ import IPC from './extra/ipc';
 import PreviewPlugins from './extra/preview_plugins';
 import Shortcuts from './extra/shortcuts';
 import QuickPanel from './modals/quick_panel';
+import CustomTitleBar from './extra/custom_title_bar';
 
 /* MAIN */
 
@@ -40,6 +41,7 @@ class Main extends React.Component<{ loading: boolean, reset: Function, listen: 
 
     return (
       <>
+        <CustomTitleBar />
         <ContextMenu />
         <EditorPlugins />
         <GlobalPlugins />

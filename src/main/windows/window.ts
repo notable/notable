@@ -151,7 +151,7 @@ class Window {
           dimensions = _.pick ( state, ['x', 'y', 'width', 'height'] );
 
     options = _.merge ( dimensions, {
-      frame: !is.macos,
+      frame: false,
       backgroundColor: ( Settings.get ( 'theme' ) === 'light' ) ? '#F7F7F7' : '#0F0F0F', //TODO: This won't scale with custom themes
       icon: path.join ( __static, 'images', `icon.${is.windows ? 'ico' : 'png'}` ),
       show: false,
