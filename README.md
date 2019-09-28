@@ -2,13 +2,13 @@
 
 <p align="center">
   <a href="https://img.notable.md/screenshot-main.png">
-    <img src="https://img.notable.md/screenshot-main.png" width="900" alt="Notable">
+    <img src="https://notable.md/static/images/screenshots/main_mac.png" width="900" alt="Notable">
   </a>
 </p>
 
 <p align="center">
   <a href="https://download.notable.md">
-    <img src="https://img.notable.md/badge-download.png" height="42" alt="Download button" />
+    <img src="https://notable.md/static/images/badges/download.png" height="42" alt="Download button" />
   </a>
 </p>
 
@@ -20,7 +20,7 @@ So I built my own.
 
 ## [Comparison](https://notable.md/static/images/comparison.png)
 
-[![Click to Enlarge](https://notable.md/static/images/comparison.png)](https://notable.md/static/images/comparison.png?raw=true)
+[![Click to Enlarge](https://notable.md/static/images/comparison.png)](https://notable.md/static/images/comparison.png)
 
 Part of this comparison is personal opinion: you may disagree on the UI front, things I consider bloat may be considered features by somebody else etc. but hopefully this comparison did a good job at illustrating the main differences.
 
@@ -33,8 +33,8 @@ Notes are written in GitHub Flavored Markdown, and you can also write [KaTeX](ht
 Notable also gives you a very powerful Markdown editor, it's the same one VS Code uses in fact, so features like multi-cursors, a minimap and best-in-class syntax highlighting are built-in.
 
 <p align="center">
-  <a href="https://img.notable.md/screenshot-filesystem.png">
-    <img src="https://img.notable.md/screenshot-filesystem.png" width="800" alt="Filesystem" />
+  <a href="https://img.notable.md/screenshot-editor.png">
+    <img src="https://notable.md/static/images/screenshots/editor_mac.png" width="800" alt="Editor" />
   </a>
 </p>
 
@@ -43,8 +43,8 @@ Notable also gives you a very powerful Markdown editor, it's the same one VS Cod
 Notes and attachments are simply stored on your disk, this is extremely portable and powerful: you could edit your notes with your favorite editor, have them synchronized via Dropbox, run Git on them, run a regex-based search and replace on them etc.
 
 <p align="center">
-  <a href="https://img.notable.md/screenshot-editor.png">
-    <img src="https://img.notable.md/screenshot-editor.png" width="800" alt="Editor" />
+  <a href="https://img.notable.md/screenshot-filesystem.png">
+    <img src="https://notable.md/static/images/screenshots/filesystem_mac.png" width="800" alt="Filesystem" />
   </a>
 </p>
 
@@ -56,7 +56,7 @@ If you'd like to change a color or hide a button you are also free to do that vi
 
 <p align="center">
   <a href="https://img.notable.md/screenshot-dark.png">
-    <img src="https://img.notable.md/screenshot-dark.png" width="800" alt="Dark Theme" />
+    <img src="https://notable.md/static/images/screenshots/dark_mac.png" width="800" alt="Dark Theme" />
   </a>
 </p>
 
@@ -68,7 +68,7 @@ Notable is also keyboard friendly, has a [quick open](https://img.notable.md/scr
 
 <p align="center">
   <a href="https://img.notable.md/screenshot-zen.png">
-    <img src="https://img.notable.md/screenshot-zen.png" width="800" alt="Zen Mode" />
+    <img src="https://notable.md/static/images/screenshots/zen_mac.png" width="800" alt="Zen Mode" />
   </a>
 </p>
 
@@ -80,7 +80,7 @@ If you need to run a more complex action on your notes remember that they are ju
 
 <p align="center">
   <a href="https://img.notable.md/screenshot-multieditor.png">
-    <img src="https://img.notable.md/screenshot-multieditor.png" width="800" alt="Multi-Note Editor" />
+    <img src="https://notable.md/static/images/screenshots/multieditor_mac.png" width="800" alt="Multi-Note Editor" />
   </a>
 </p>
 
@@ -90,7 +90,7 @@ A split-editor is available for quickly checking out how your note will be rende
 
 <p align="center">
   <a href="https://img.notable.md/screenshot-spliteditor.png">
-    <img src="https://img.notable.md/screenshot-spliteditor.png" width="800" alt="Split Editor" />
+    <img src="https://notable.md/static/images/screenshots/spliteditor_mac.png" width="800" alt="Split Editor" />
   </a>
 </p>
 
@@ -106,10 +106,9 @@ There are multiple ways to contribute to this project, read about them [here](ht
 
 ## Related
 
+- **[/r/Notable](https://www.reddit.com/r/Notable/)**: our subreddit, where day-to-day discussion happens.
 - **[dumper](https://github.com/notable/dumper)**: Library for extracting attachments, notes and metadata out of formats used by popular note-taking apps.
 
 ## License
 
-- **<= v1.3.0**: MIT © Fabio Spampinato.
-- **<= v1.5.1**: AGPLv3 © Fabio Spampinato.
-- **>= v1.6.0**: Not open-source. Notable has effectively become my full-time job, so I've decided to figure out how to make it sustainable first before figuring out how to license it, in order to make this less risky for me. Read more about this [here](https://github.com/notable/notable/issues/432) and [here](https://www.reddit.com/r/Notable/comments/bu86e8/update_on_v160/).
+Older versions of the app are open-sourced, read more about this [here](https://github.com/notable/notable/blob/master/SOURCE_CODE.md).
