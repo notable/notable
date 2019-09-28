@@ -1,9 +1,0 @@
-
-@mixin theme-window-main-mainbar ( $theme ) {
-
-  .mainbar {
-    background-color: map-get( $theme, 'mainbar.background' );
-    color: map-get( $theme, 'mainbar.foreground' );
-  }
-
-}

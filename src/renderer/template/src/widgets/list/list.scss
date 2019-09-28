@@ -1,7 +1,0 @@
-
-.list { /* TODO: Backport this to Svelto */
-  padding: 0 !important;
-  max-width: 100%;
-  overflow-x: hidden;
-  will-change: auto !important; /* Might be added by the library used for windowing, it causes some sharpness problems */
-}

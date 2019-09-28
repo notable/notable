@@ -8,7 +8,7 @@ Please note that this project is released with a [Code of Conduct](https://githu
 
 Submitting an issue, be it a bug report or a feature request, is one of the best ways to contribute to this project. Checking if everything works in your system and if the [latest commits](https://github.com/notable/notable/commits/master) work properly for you are both good ways to find bugs.
 
-Please search existing issues to avoid creating duplicates, we'd rather work on improving Notable than deal with duplicates.
+Please search existing issues to avoid creating duplicates.
 
 ### Improve issues
 
@@ -30,18 +30,4 @@ At least until Notable becomes self-sustaining I plan to maintain a [Patreon pag
 
 ### Submit a pull request
 
-Pull requests are especially welcome for issues labeled as [`bug`](https://github.com/notable/notable/issues?q=is%3Aissue+is%3Aopen+label%3Abug) or [`help wanted`](https://github.com/notable/notable/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22). Pull requests for other issues can be considered too but before working on them you should let us know that you'd like to submit one, so that we can tell you if a pull request can be considered for that particular issue, what the pull request should actually implement and how.
-
-Follow these steps in order to get Notable ready for development:
-
-```bash
-git clone https://github.com/notable/notable.git
-cd notable
-npm install
-npm run svelto:dev
-npm run monaco
-npm run iconfont
-npm run tutorial
-npm run dev # Terminal 1
-npm run svelto:dev:watch # Terminal 2
-```
+Although newer versions of the app are no longer open-source, you can still fork some older versions of the code and modify it, you might want to do that to experiment with radical new ideas. Read more about this [here](https://github.com/notable/notable/blob/master/SOURCE_CODE.md).
