@@ -1,3 +1,66 @@
+## Version 1.8.0
+
+##### New Features
+- Upgraded Electron to v7
+- Added a button for generating a share link (_Experimental_)
+  - Notes will be stored in the server only for 24h at maximum
+  - Features that require JavaScript to work won't work and only linked image attachments can be shared this way
+- Rewritten build toolchain
+  - Mac: disabled `pkg` bundle
+  - Mac: enabled notarization
+  - Windows: disabled `portable` bundle
+  - Windows: added support for 32-bit systems
+  - Linux: enabled `pacman` bundle
+- Implemented some telemetry data
+  - You can turn them off by setting `"telemetry": false` in `~/.notable.json`
+  - You can check what data is being transmitted via the "Network" section of the devtools
+  - IP addresses are anonymized by default (the last portion of your IPv4 gets zeroed)
+- Non-overlay scrollbars are now themed
+  - This improves the look of the dark theme under Windows significantly
+- Syntax highlighting: added support for ABAP, MIPS, pascaligo, Sophia ML and Twig
+- Mermaid: opening diagrams in the browser rather than in their own windows
+- Added an “Help -> Sponsor” menu item
+- Setted minimum allowed height to 250px
+- Setting minimum allowed width dynamically depending on the active view mode
+- Rewritten “Select Data Directory...” window as a modal window
+
+##### Improvements
+- Markdown: improved syntax highlighting for headers containing HTML entities
+- Setting dark appearance also when using dark themes
+- Updating window background color when changing themes
+- Updated `dmg` bundle's background image
+- Updated homepage url
+- Updated contact urls
+- Updated manual download URL
+- Updated some dependencies
+- Removed a few dependencies
+- Ensuring all dependencies are bundled via WebPack
+  - The size of the shipped minified codebase (minus Electron) is now about 5.5MB
+- Lazy loading some rarely used dependencies
+
+##### Bug Fixes
+- Syntax highlighting: ensuring “c++” is a supported language name
+- Ensuring single notes changes are detected properly
+- Fixed a race condition that could have lead to data loss when using third-party synchronization services
+- Fixed support for legacy CR line endings
+- More reliably retrieving and writing to unused paths
+- Retrying failed actions more reliably
+- Writing files atomically, ensuring files can’t get corruped while getting written to disk
+
+## Version 1.7.3
+
+##### Improvements
+- Markdown: improved syntax highlighting for lists starting with multiple list markers
+- Improved HTML entities detection
+- Using a more precise timestamp in pasted image attachments
+
+##### Bug Fixes
+- ASCIIMath: ensuring ampersands used inside KaTeX code aren’t considered as part of an ASCIIMath expression
+- Highlighter: ensuring it doesn’t break the “copy code to clipboard” feature
+- Editor: disabling default paste behavior more reliably
+- Ensuring only relative links to supported Markdown extensions will be recognized as links to notes
+- Retrieving “data-*” attributes more reliably, ensuring strings remain strings
+
 ## Version 1.7.2
 
 ##### Bug Fixes
