@@ -14,7 +14,16 @@
 
 ---
 
-I couldn't find a note-taking app that ticked all the boxes I'm interested in: notes are written and rendered in GitHub Flavored Markdown, no WYSIWYG, no proprietary formats, I can run a search & replace across all notes, notes support attachments, the app isn't bloated, the app has a pretty interface, tags are indefinitely nestable and can import Evernote notes (because that's what I was using before).
+I couldn't find a note-taking app that contained everything I was looking for:
+- Notes written and rendered in GitHub Flavored Markdown
+- WYSIWYG (What You See Is What You Get)
+- No proprietary formats
+- The ability to search for specific words across all notes and replace them if so desired
+- Support for attachments
+- Is not filled with unnecessary features that take up storage space 
+- Has a pretty interface
+- Indefinitely nestable tags
+- Ability to import Evernote notes (because that's what I was using before)
 
 So I built my own.
 
