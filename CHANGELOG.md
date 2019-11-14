@@ -1,3 +1,20 @@
+## Version 1.8.1
+
+##### Improvements
+- Updated Electron to v7.1.1
+- Syntax highlighting: added many language aliases supported by GitHub
+- Syntax highlighting: improved JSON language support
+
+##### Bug Fixes
+- More reliably detecting the front matter
+- Ensuring checkboxes ids are incremented properly
+- Ensuring heading ids are incremented properly
+- Ensuring heading ids are generated properly even when containing HTML elements
+- Ensuring Windows-style absolute paths and UNC paths are supported
+- Importing: more reliably importing `.enex` files
+- Importing: throwing an error for huge files (> 1GB)
+  - If you're hitting this error just import your notes in smaller chunks
+
 ## Version 1.8.0
 
 ##### New Features
