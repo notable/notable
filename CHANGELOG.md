@@ -1,3 +1,41 @@
+## Version 1.8.2
+
+##### Improvements
+- Cheatsheet: mentioning urls and emails wrapped in angle brackets
+- Link sharing: asking for confirmation before generating the shareable link
+- Link sharing: added support for querying `https://echo.notable.md/delete/[ID]` for immediately deleting a shared note
+- Editor: always showing the scrollbar, for consistency (Windows) (Linux)
+- Navigator: retrieving public IPv4 by querying `ip.notable.md` rather than `ipv4.icanhazip.com`
+- Navigator: retrieving online status by querying `ip.notable.md` rather than `api.github.com`
+- Syntax highlighting: added support for links and emails wrapped in angle brackets
+- Zen mode: showing a draggable titlebar on hover (macOS)
+- Showing a toast when copying a code block to the clipboard
+
+##### Bug Fixes
+- AsciiMath and KaTeX: improved expression detection when the expression starts with the `<` character
+- AsciiMath and KaTeX: ensuring the outputted HTML doesn’t get messed up by the Markdown compiler
+- KaTeX: improved multi-line block syntax highlighting
+- Editor: ensuring it receives the focus when creating or duplicating a note
+- Editor: improved state restoration logic
+- Export: ensuring base64-encoded font files are exported properly
+- Export: ensuring code blocks can wrap when exporting to PDF
+- Multi-editor: ensuring Shift-selecting works even when CtrlOrCmd is pressed
+- Multi-editor: ensuring the currently active note can be displayed as deselected
+- Tutorial: ensuring the online link works
+- Asking to select a data directory if the current one is unavailable
+- Improved support for HTML attributes that are wrapped in single quotes or unwrapped
+- Improved unfenced codeblocks detection
+- Showing an alert when switching to a data directory that doesn't contain any notes
+- Showing an error if the app can’t be moved into the `/Applications` folder (macOS)
+- Ensuring context menus account for the current zoom factor
+- Ensuring deeply nested mixed lists and tasks are properly aligned regardless of their order
+- Ensuring double quotes don’t get transformed to single quotes in code blocks
+- Ensuring filesystem events detected outside of the current data directory are ignored
+- Ensuring regexes that should only match horizontal whitespace characters don’t also match vertical ones
+- Ensuring relative paths are resolved relative to the actual file path of the current note
+- Ensuring that if the current data directory is removed or renamed the app detects it and reacts to it
+- Expading the necessary parent tags when selecting an hidden tag
+
 ## Version 1.8.1
 
 ##### Improvements
