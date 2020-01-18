@@ -1,3 +1,61 @@
+## Version 1.8.3
+
+##### Improvements
+- Cheatsheet: added a section about escaping
+- Cheatsheet: mentioning double- and triple-backticks inline code
+- Cheatsheet: mentioning emails wrapped in angle brackets
+- Cheatsheet: mentioning links with custom title attributes
+- Cheatsheet: opening `<details>` tags by default
+- Export: opening `<details>` elements by default when exporting to PDF
+- Export: using a slightly clearer folder export name
+- Improved default styling of `<details>` and `<summary>` elements
+- Importing from Evernote: preserving links to attachments, especially if they are web-clipped attachments
+- Importing from Evernote: preserving a link to the source of the web-clipped page
+- Importing from Boostnote: rewriting links to attachments
+- KaTeX: rendering “math” codeblock with it too
+- Menu: added “Alt+InitialCharacter” shortcuts for all main submenus
+- Light theme: improved active item contrast in the sidebar
+- Themes: updated scrollbar colors
+
+##### Bug Fixes
+- About window: ensuring it is rendered without extra/missing spacing across platforms
+- Context menu: ensuring extra separators are removed correctly
+- Context menu: ensuring menu items for pinning/unpinning a note are provided
+- Editor: more reliably showing scrollbars if necessary
+- Ensuring “Tags” gets uncollapsed too if necessary
+- Ensuring a paste action is not triggered when dragging with the mouse’s middle button (Linux)
+- Ensuring all ICANN TLDs are supported when auto-linking urls
+- Ensuring all special-use ICANN TLDs are supported when auto-linking urls
+- Ensuring each separate window remembers its own data directory after being reloaded
+- Ensuring file watching is always performed efficiently, even in signed production builds (macOS)
+- Ensuring links with a custom title attribute are parsed correctly
+- Ensuring links with no protocol are handled conrrectly inside `<img>` and `<source>` elements
+- Ensuring no other modal window can be opened while asking to select a data directory
+- Ensuring relative paths that don’t start with a dot are resolved too
+- Ensuring the app is reset properly when the current data directory becomes unavailable
+- Ensuring the preview of the current note gets refreshed when necessary
+- Exporting: more reliable detection of useful CSS
+- Fixed a bug that could have prevented the UI from updating after a particular series of filesystem events
+- Fixed an issue that caused multiple identical actions to occur instead of one
+- Fixed an issue regarding resolving absolute UNC-style paths
+- Fixed misalignment when dealing with multi-line code blocks nested in lists
+- Importing: improved conversion of text-align-ed tags
+- Importing: improved reliability when importing notes with non-string titles
+- Importing: more reliably importing large collections of notes
+- Importing from Evernote: more reliably importing web-clipped attachments
+- Markdown: improved double-backticks inline code detection
+- More reliable “rename” filesystem event detection
+- More reliable “change” filesystem event detection where the file gets unlinked and recreated quickly
+- More reliable `<markdown>` tag parsing
+- Multi-cursors: using “Ctrl+MouseEvent” rather than “Alt+MouseEvent” as the latter conflicts with OS-level shortcuts (Linux)
+- PHP: optimized syntax highlighting for snippets, making the starting `<?`/`<?php` token optional
+- Syntax highlighting: fixed support for strikethrough text under the dark theme
+- Syntax highlighting: improved double-backticks inline code detection
+- Syntax highlighting: improved handling of code blocks nested in lists
+- Syntax highlighting: improved support for triple-backticks (or more) inline code
+- Updater: avoiding showing the same toast multiple times at once whenever possible
+- Updater: ensuring a fresh online status is retrieved before attempting to check for updates
+
 ## Version 1.8.2
 
 ##### Improvements
