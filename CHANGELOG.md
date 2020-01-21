@@ -1,3 +1,18 @@
+## Version 1.8.4
+
+##### Improvements
+- Bundling OS-specific dependencies only when needed
+  - This removes a file from Windows bundles that tripped Windows Defender into finding a false positive
+- Importing: ensuring arbitrarily large notes collections containing arbitrarily many files with the same name are still imported correctly, assuming the underlying importing library can parse the collection in the first place
+
+##### Bug Fixes
+- Editor: disabled automatic clipboard copying when selecting in favor of being able to create multiple cursors while dragging with the middle click (Linux)
+- Ensuring both creation date and modification date are updated when duplicating a note
+- Ensuring paste actions when dragging with the middle click are only prevented inside the editor (Linux)
+- Fixed misalignment in loose task lists
+- Fixed some regexes that were wrongly expecting to match at least one character in certain places
+- Multi-cursors: using “Ctrl+MouseEvent” rather than “Alt+MouseEvent” as the latter switches the focus to the menu bar (Windows)
+
 ## Version 1.8.3
 
 ##### Improvements
