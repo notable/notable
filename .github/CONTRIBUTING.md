@@ -6,9 +6,9 @@ Please note that this project is released with a [Code of Conduct](https://githu
 
 ### Submit an issue
 
-Submitting an issue, be it a bug report or a feature request, is one of the best ways to contribute to this project. Checking if everything works in your system and if the [latest commits](https://github.com/notable/notable/commits/master) work properly for you are both good ways to find bugs.
+Submitting an issue, be it a bug report or a feature request, is one of the best ways to contribute to this project.
 
-Please search existing issues to avoid creating duplicates.
+Please search existing issues to avoid creating duplicates, we'd rather work on improving Notable than deal with duplicates.
 
 ### Improve issues
 
@@ -24,10 +24,10 @@ We also consider the number of ":+1:" an issue has when deciding if we are going
 
 We have a [subreddit](https://www.reddit.com/r/notable). Feel free to join us there, discussions not strictly related to the issue tracker are done there.
 
-### Join the Patreon
+### Become a sponsor
 
-At least until Notable becomes self-sustaining I plan to maintain a [Patreon page](https://www.patreon.com/fabiospampinato), feel free to support me there.
+At least until Notable becomes self-sustaining I plan to maintain a [Sponsorship page](https://github.com/sponsors/fabiospampinato) on GitHub, feel free to support me there.
 
 ### Submit a pull request
 
-Although newer versions of the app are no longer open-source, you can still fork some older versions of the code and modify it, you might want to do that to experiment with radical new ideas. Read more about this [here](https://github.com/notable/notable/blob/master/SOURCE_CODE.md).
+Even though newer versions of the app are no longer open-source I should still be able to port over most PRs you might want to submit against any of the published open-source versions. Read more about this [here](https://github.com/notable/notable/blob/master/SOURCE_CODE.md).
