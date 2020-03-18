@@ -104,10 +104,14 @@ Is a feature you care about currently missing? Make sure to browse the [issue tr
 
 There are multiple ways to contribute to this project, read about them [here](https://github.com/notable/notable/blob/master/.github/CONTRIBUTING.md).
 
-## Related
+## Useful Links
 
-- **[/r/Notable](https://www.reddit.com/r/Notable/)**: our subreddit, where day-to-day discussion happens.
-- **[dumper](https://github.com/notable/dumper)**: Library for extracting attachments, notes and metadata out of formats used by popular note-taking apps.
+- **[Tutorial](https://tutorial.notable.md)**: the online version of our built-in tutorial.
+- **[Cheatsheet](https://cheatsheet.notable.md)**: the online version of our built-in Markdown cheatsheet.
+- **[Website](https://notable.md)**: our official website, this is probably the best link to send to friends and coworkers when telling them about Notable.
+- **[Subreddit](https://www.reddit.com/r/Notable)**: we have a subreddit, where day-to-day discussion happens.
+- **[Donations](https://github.com/sponsors/fabiospampinato)**: you can financially support the project via this GitHub Sponsorship page.
+- **[Chat](https://chat.notable.md)**: we have a private real-time chat too, open exclusively to GitHub sponsors and (in the future) customers.
 
 ## License
 
