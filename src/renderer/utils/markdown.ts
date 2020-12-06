@@ -296,6 +296,15 @@ const Markdown = {
 
     },
 
+    mdCalc () {
+      const mdCalc = require('md-calc');
+
+      return [{
+        type: 'lang',
+        filter: (text: any) => mdCalc(text),
+      }]
+    },
+
     checkbox () {
 
       let nth = 0;
@@ -524,11 +533,11 @@ const Markdown = {
 
     preview: _.memoize ( () => {
 
-      const {asciimath2tex, katex, mermaid, mermaidOpenExternal, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, noProtocolLinks, wikilink} = Markdown.extensions;
+      const {asciimath2tex, katex, mermaid, mdCalc, mermaidOpenExternal, highlight, copy, checkbox, targetBlankLinks, resolveRelativeLinks, encodeSpecialLinks, attachment, note, tag, noProtocolLinks, wikilink} = Markdown.extensions;
 
       const converter = new showdown.Converter ({
         metadata: true,
-        extensions: [asciimath2tex (), katex (), mermaid (), mermaidOpenExternal (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag (), noProtocolLinks ()]
+        extensions: [asciimath2tex (), katex (), mermaid (), mdCalc (), mermaidOpenExternal (), highlight (), copy (), checkbox (), targetBlankLinks (), resolveRelativeLinks (), encodeSpecialLinks (), attachment (), wikilink (), note (), tag (), noProtocolLinks ()]
       });
 
       converter.setFlavor ( 'github' );
