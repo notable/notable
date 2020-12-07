@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://img.notable.app/screenshot-main.png">
-    <img src="https://notable.app/static/images/screenshots/main_mac.png" width="900" alt="Notable">
+    <img src="https://notable.app/static/images/screenshots/main_mac.png?no-webp" width="900" alt="Notable">
   </a>
 </p>
 
@@ -34,7 +34,7 @@ Notable also gives you a very powerful Markdown editor, it's the same one VS Cod
 
 <p align="center">
   <a href="https://img.notable.app/screenshot-editor.png">
-    <img src="https://notable.app/static/images/screenshots/editor_mac.png" width="800" alt="Editor" />
+    <img src="https://notable.app/static/images/screenshots/editor_mac.png?no-webp" width="800" alt="Editor" />
   </a>
 </p>
 
@@ -44,7 +44,7 @@ Notes and attachments are simply stored on your disk, this is extremely portable
 
 <p align="center">
   <a href="https://img.notable.app/screenshot-filesystem.png">
-    <img src="https://notable.app/static/images/screenshots/filesystem_mac.png" width="800" alt="Filesystem" />
+    <img src="https://notable.app/static/images/screenshots/filesystem_mac.png?no-webp" width="800" alt="Filesystem" />
   </a>
 </p>
 
@@ -56,7 +56,7 @@ If you'd like to change a color or hide a button you are also free to do that vi
 
 <p align="center">
   <a href="https://img.notable.app/screenshot-dark.png">
-    <img src="https://notable.app/static/images/screenshots/dark_mac.png" width="800" alt="Dark Theme" />
+    <img src="https://notable.app/static/images/screenshots/dark_mac.png?no-webp" width="800" alt="Dark Theme" />
   </a>
 </p>
 
@@ -68,7 +68,7 @@ Notable is also keyboard friendly, has a [quick open](https://img.notable.app/sc
 
 <p align="center">
   <a href="https://img.notable.app/screenshot-zen.png">
-    <img src="https://notable.app/static/images/screenshots/zen_mac.png" width="800" alt="Zen Mode" />
+    <img src="https://notable.app/static/images/screenshots/zen_mac.png?no-webp" width="800" alt="Zen Mode" />
   </a>
 </p>
 
@@ -80,7 +80,7 @@ If you need to run a more complex action on your notes remember that they are ju
 
 <p align="center">
   <a href="https://img.notable.app/screenshot-multieditor.png">
-    <img src="https://notable.app/static/images/screenshots/multieditor_mac.png" width="800" alt="Multi-Note Editor" />
+    <img src="https://notable.app/static/images/screenshots/multieditor_mac.png?no-webp" width="800" alt="Multi-Note Editor" />
   </a>
 </p>
 
@@ -90,7 +90,7 @@ A split-editor is available for quickly checking out how your note will be rende
 
 <p align="center">
   <a href="https://img.notable.app/screenshot-spliteditor.png">
-    <img src="https://notable.app/static/images/screenshots/spliteditor_mac.png" width="800" alt="Split Editor" />
+    <img src="https://notable.app/static/images/screenshots/spliteditor_mac.png?no-webp" width="800" alt="Split Editor" />
   </a>
 </p>
 
