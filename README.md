@@ -108,7 +108,9 @@ There are multiple ways to contribute to this project, read about them [here](ht
 
 - **[Chat](https://chat.notable.app)**: we have a public real-time chat, come join us there.
 - **[Cheatsheet](https://cheatsheet.notable.app)**: the online version of our built-in Markdown cheatsheet.
+- **[Customizations](https://github.com/notable/notable-customizations)**: collection of community-created customizations and tips.
 - **[Donations](https://github.com/sponsors/fabiospampinato)**: you can financially support the project via this GitHub Sponsorship page.
+- **[Insiders](https://github.com/notable/notable-insiders)**: alpha/beta releases are published here.
 - **[Subreddit](https://www.reddit.com/r/Notable)**: we have a subreddit, where day-to-day discussion happens.
 - **[Tutorial](https://tutorial.notable.app)**: the online version of our built-in tutorial.
 - **[Twitter](https://twitter.com/TheNotableApp)**: we have a Twitter account, where tips and general updates are posted.
